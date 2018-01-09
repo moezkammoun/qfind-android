@@ -17,22 +17,30 @@ public class ContainerActivity extends AppCompatActivity implements ContainerAct
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
-    ContainerActivityPresenterImpl containerActivityPresenterImpl;
+    ContainerActivityPresenterImpl containerActivityPresenterImpl = new ContainerActivityPresenterImpl();
+    Fragment fragment;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    return true;
-                case R.id.navigation_dashboard:
-                    return true;
-                case R.id.navigation_notifications:
-                    return true;
+                case R.id.favorite_categories_bottom_menu:
+                    fragment = new CategoryFragment();
+                    break;
+                case R.id.qfind_us_menu:
+                    fragment = new CategoryFragment();
+                    break;
+                case R.id.category_history_menu:
+                    fragment = new CategoryFragment();
+                    break;
+            }
+            if (fragment != null) {
+                containerActivityPresenterImpl.loadFragmentOnButtonClick(fragment);
             }
             return false;
         }
+
     };
 
     @Override
@@ -40,7 +48,7 @@ public class ContainerActivity extends AppCompatActivity implements ContainerAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
-        containerActivityPresenterImpl = new ContainerActivityPresenterImpl(this,new CategoryFragment());
+        containerActivityPresenterImpl.loadFragmentOncreate(this,new CategoryFragment());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
