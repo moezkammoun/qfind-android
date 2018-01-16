@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 
 public class ContainerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ContainerActivityView {
@@ -92,6 +93,7 @@ public class ContainerActivity extends AppCompatActivity
 
         containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setVisibility(View.GONE);
         hambergerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +132,9 @@ public class ContainerActivity extends AppCompatActivity
         } else if (id == R.id.contact_menu_item) {
 
         } else if (id == R.id.settings_menu_item) {
-
+            fragment = new SettingsFragment();
+            navigation.setVisibility(View.GONE);
+            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
         }
         drawer.closeDrawer(GravityCompat.END);
         return true;

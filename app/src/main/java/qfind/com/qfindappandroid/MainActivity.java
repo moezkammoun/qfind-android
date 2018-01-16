@@ -22,11 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    @BindView(R.id.arabic_button)
-    Button arabicButton;
     @BindView(R.id.findByCategoryBtn)
     Button findByCategoryBtn;
-    Locale myLocale;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,39 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        arabicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setLocale("ar");
-            }
-        });
-    }
-    public void setLocale(String lang) {
-        Configuration configuration = getResources().getConfiguration();
-        configuration.setLayoutDirection(new Locale(lang));
-        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
-        myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(MainActivity.this, MainActivity.class);
-        this.overridePendingTransition(0,0);
-        this.finish();
-        startActivity(refresh);
-//        refreshActivityFromFragment();
     }
-//    public void refreshActivityFromFragment() {
-//        Intent intent = getActivity().getIntent();
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-//                | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        getActivity().overridePendingTransition(0, 0);
-//        getActivity().finish();
-//
-//        getActivity().overridePendingTransition(0, 0);
-//        startActivity(intent);
-//    }
 
 }
