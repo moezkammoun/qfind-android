@@ -53,7 +53,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_category, container, false);
     }
-
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);

@@ -75,11 +75,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/findByCategoryBtn"
                 android:text="@string/find_by_category"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/arabic_button"
-                android:text="Arabic"/>
+
         </LinearLayout>
     </LinearLayout>
 
