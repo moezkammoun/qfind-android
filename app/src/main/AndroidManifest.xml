@@ -19,10 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".InformationPage.InformationPage">
+        </activity>
+
         <activity
             android:name=".categorycontaineractivity.ContainerActivity"
             android:label="@string/title_activity_contain"
             android:theme="@style/AppTheme.NoTitle">
+
         </activity>
     </application>
 
