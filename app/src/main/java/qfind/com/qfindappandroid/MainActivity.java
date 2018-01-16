@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         res.updateConfiguration(conf, dm);
         Intent refresh = new Intent(MainActivity.this, MainActivity.class);
         this.overridePendingTransition(0,0);
+        this.finish();
         startActivity(refresh);
 //        refreshActivityFromFragment();
     }

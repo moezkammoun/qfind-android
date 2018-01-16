@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.InformationPage.InformationPage;
@@ -71,7 +72,7 @@ public class ContainerActivity extends AppCompatActivity
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(null);
         setSupportActionBar(toolbar);
-         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         bottomNavigationMenu = navigation.getMenu();
         bottomNavigationMenu.findItem(R.id.favorite_categories_bottom_menu).setIcon(R.drawable.ic_home_black_24dp);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,6 +84,12 @@ public class ContainerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        // set navigation view width as half of screen
+        int width = getResources().getDisplayMetrics().widthPixels / 3;
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) navigationView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels - width;
+        navigationView.setLayoutParams(params);
+
         containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         hambergerMenu.setOnClickListener(new View.OnClickListener() {
@@ -107,23 +114,22 @@ public class ContainerActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.about_us_menu_item) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.qfinder_menu_item) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.terms_menu_item) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.contact_menu_item) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.settings_menu_item) {
 
         }
         drawer.closeDrawer(GravityCompat.END);

@@ -94,7 +94,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView,
             CustomSlider textSliderView = new CustomSlider(getContext());
             textSliderView
                     .image(adsImages.get(i))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setScaleType(BaseSliderView.ScaleType.CenterInside)
                     .setOnSliderClickListener(CategoryFragment.this);
             sliderLayout.addSlider(textSliderView);
         }
