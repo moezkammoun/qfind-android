@@ -10,6 +10,12 @@
     <dimen name="padding_50">50dp</dimen>
     <dimen name="padding_3">3dp</dimen>
     <dimen name="padding_1">1dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="toolbar_height">200dp</dimen>
+    <dimen name="image_height">30dp</dimen>
+    <dimen name="image_width">30dp</dimen>
+    <dimen name="text_size">25sp</dimen>
+    <dimen name="layout_marginTop">140dp</dimen>
     <dimen name="design_bottom_navigation_text_size" tools:override="true">16sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">20sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
@@ -18,3 +24,4 @@
     <dimen name="fab_margin">16dp</dimen>
 
 </resources>
+

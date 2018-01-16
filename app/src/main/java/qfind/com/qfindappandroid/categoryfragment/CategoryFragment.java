@@ -1,6 +1,7 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -23,14 +25,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 
-public class CategoryFragment extends Fragment implements CategoryFragmentView, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class CategoryFragment extends Fragment implements CategoryFragmentView,
+        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     @BindView(R.id.slider)
     SliderLayout sliderLayout;
     @BindView(R.id.category_item_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.category_text)
+    TextView category;
     private CategoryItemAdapter categoryItemAdapter;
     private List<Categories> categoriesList;
 
@@ -45,8 +51,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         super.onCreate(savedInstanceState);
         categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this);
 
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

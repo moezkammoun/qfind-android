@@ -1,5 +1,6 @@
 package qfind.com.qfindappandroid.categorycontaineractivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
@@ -47,7 +49,9 @@ public class ContainerActivity extends AppCompatActivity
                     fragment = new CategoryFragment();
                     break;
                 case R.id.qfind_us_menu:
-                    fragment = new CategoryFragment();
+//                    fragment = new CategoryFragment();
+                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
+                    startActivity(intent);
                     break;
                 case R.id.category_history_menu:
                     fragment = new CategoryFragment();
