@@ -31,12 +31,21 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_centerHorizontal="true"
                     android:textSize="@dimen/category_tittle_text"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
                     android:text="@string/settings"/>
             </RelativeLayout>
 
 
 
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_language"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/padding_10"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

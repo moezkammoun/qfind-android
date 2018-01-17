@@ -24,6 +24,7 @@ import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
+import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
 public class ContainerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ContainerActivityView {
@@ -93,7 +94,7 @@ public class ContainerActivity extends AppCompatActivity
 
         containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setVisibility(View.GONE);
+        navigation.setVisibility(View.VISIBLE);
         hambergerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +129,9 @@ public class ContainerActivity extends AppCompatActivity
         } else if (id == R.id.qfinder_menu_item) {
 
         } else if (id == R.id.terms_menu_item) {
-
+            fragment = new TermsandConditionFragment();
+            navigation.setVisibility(View.GONE);
+            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
         } else if (id == R.id.contact_menu_item) {
 
         } else if (id == R.id.settings_menu_item) {
