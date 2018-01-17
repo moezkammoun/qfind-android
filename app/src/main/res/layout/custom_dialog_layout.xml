@@ -11,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="@dimen/padding_15"
         android:textAlignment="center"
         android:text="@string/activity_reload_string"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="@dimen/dialog_text_size"
         android:textStyle="bold"/>
 
 
@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
+        android:paddingStart="@dimen/padding_50"
+        android:paddingEnd="@dimen/padding_50"
         android:orientation="horizontal" >
 
         <Button
@@ -41,7 +41,7 @@
             android:id="@+id/btn_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="@dimen/padding_15"
             android:background="@drawable/round_corner"
             android:clickable="true"
             android:text="@string/yes"
