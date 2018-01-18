@@ -52,6 +52,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_contain_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
