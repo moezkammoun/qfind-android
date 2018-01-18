@@ -35,7 +35,6 @@
             app:menu="@menu/activity_contain_drawer"
             app:itemTextColor="@color/color_white"
             android:theme="@style/NavigationViewCustomColor">
-
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
 

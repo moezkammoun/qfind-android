@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
             }
         });
 
-
         findByCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
         this.overridePendingTransition(0, 0);
         this.finish();
         startActivity(refresh);
-//        refreshActivityFromFragment();
     }
 
     @Override
@@ -160,15 +158,5 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
         drawer.closeDrawer(GravityCompat.END);
         return true;
     }
-//    public void refreshActivityFromFragment() {
-//        Intent intent = getActivity().getIntent();
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-//                | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        getActivity().overridePendingTransition(0, 0);
-//        getActivity().finish();
-//
-//        getActivity().overridePendingTransition(0, 0);
-//        startActivity(intent);
-//    }
 
 }
