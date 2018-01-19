@@ -3,4 +3,6 @@
     <string name="find_by_category">تجد حسب الفئات</string>
     <string name="categories_text">الاقسام</string>
     <string name="already_english">كنت بالفعل باللغة الإنجليزية</string>
+    <string name="search_results_text">نتيجة البحث</string>
+
 </resources>
