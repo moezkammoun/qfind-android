@@ -3,6 +3,7 @@ package qfind.com.qfindappandroid.categoryfragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.R;
 
 /**
@@ -13,13 +14,13 @@ public class CategoryFragmentModel {
     private List<Categories> categoriesList;
 
 
-    public ArrayList<String> getAdsImages() {
-        ArrayList<String> ads = new ArrayList<String>();
-        ads.add("http://androidblog.esy.es/images/cupcake-1.png");
-        ads.add("http://androidblog.esy.es/images/donut-2.png");
-        ads.add("http://androidblog.esy.es/images/eclair-3.png");
-        ads.add("http://androidblog.esy.es/images/froyo-4.png");
-        ads.add("http://androidblog.esy.es/images/gingerbread-5.png");
+    public ArrayList<Page> getAdsImages() {
+        ArrayList<Page> ads = new ArrayList<>();
+        ads.add(new Page("", R.drawable.banner));
+        ads.add(new Page("", R.drawable.car_service));
+        ads.add(new Page("", R.drawable.cloth_stores));
+        ads.add(new Page("", R.drawable.dentist));
+        ads.add(new Page("", R.drawable.exterior_designers));
         return ads;
     }
 

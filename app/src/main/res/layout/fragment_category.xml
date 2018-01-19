@@ -2,14 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/categories_background_color"
     tools:context="qfind.com.qfindappandroid.categoryfragment.CategoryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
-        android:background="@color/categoryPageBgColor"
+        android:layout_weight="11.58"
+        android:background="@color/categories_background_color"
         android:gravity="center">
 
         <TextView
@@ -19,32 +21,31 @@
             android:text="@string/categories_text"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/category_tittle_text"
-            android:textStyle="bold" />
+            android:textColor="@color/category_tittle_color"
+            android:textSize="@dimen/category_tittle_text" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.2">
+        android:layout_weight="30.52">
+        <cn.lightsky.infiniteindicator.InfiniteIndicator
+            android:id="@+id/indicator_default_circle"
+            app:indicator_type="indicator_default"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
 
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/slider"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
-        android:padding="@dimen/padding_3">
+        android:layout_weight="57.9"
+        android:padding="@dimen/padding_10">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/category_item_recycler_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:scrollbars="vertical"

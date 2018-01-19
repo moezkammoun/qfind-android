@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.InformationPage.InformationPage;
+import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
@@ -51,8 +52,9 @@ public class ContainerActivity extends AppCompatActivity
                     break;
                 case R.id.qfind_us_menu:
 //                    fragment = new CategoryFragment();
-                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
+                    Intent intent= new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    finish();
                     break;
                 case R.id.category_history_menu:
                     fragment = new CategoryFragment();
@@ -76,7 +78,7 @@ public class ContainerActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         bottomNavigationMenu = navigation.getMenu();
-        bottomNavigationMenu.findItem(R.id.favorite_categories_bottom_menu).setIcon(R.drawable.ic_home_black_24dp);
+        bottomNavigationMenu.findItem(R.id.favorite_categories_bottom_menu).setIcon(R.drawable.favourite_icon);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -94,7 +96,7 @@ public class ContainerActivity extends AppCompatActivity
 
         containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setVisibility(View.VISIBLE);
+        BottomNavigationViewHelper.removeShiftMode(navigation);
         hambergerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,13 +132,11 @@ public class ContainerActivity extends AppCompatActivity
 
         } else if (id == R.id.terms_menu_item) {
             fragment = new TermsandConditionFragment();
-            navigation.setVisibility(View.GONE);
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);
         } else if (id == R.id.contact_menu_item) {
 
         } else if (id == R.id.settings_menu_item) {
             fragment = new SettingsFragment();
-            navigation.setVisibility(View.GONE);
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);
         }
         drawer.closeDrawer(GravityCompat.END);
