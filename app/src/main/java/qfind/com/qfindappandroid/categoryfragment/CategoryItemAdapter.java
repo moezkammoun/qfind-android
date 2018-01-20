@@ -58,9 +58,14 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        Typeface mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
-                "fonts/Lato-Light.ttf");
-        // set TypeFace to the TextView or Edittext
+        Typeface mtypeFace = null ;
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/Lato-Light.ttf");
+        }else {
+            mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
         holder.categoryName.setTypeface(mtypeFace);
 
         Categories categories = categoriesList.get(position);

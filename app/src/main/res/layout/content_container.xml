@@ -5,7 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/padding_15"
+                android:paddingBottom="@dimen/padding_10"
+                android:paddingTop="@dimen/padding_10">
+
+                <ImageView
+                    android:id="@+id/sideMenu"
+                    android:layout_width="@dimen/padding_30"
+                    android:layout_height="@dimen/padding_30"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/hamburger_menu" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"

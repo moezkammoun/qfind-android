@@ -4,6 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="category_tittle_text">31sp</dimen>
     <dimen name="dialog_text_size">20sp</dimen>
+    <dimen name="text_size_19sp">19sp</dimen>
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_5">5dp</dimen>
     <dimen name="padding_40">40dp</dimen>
