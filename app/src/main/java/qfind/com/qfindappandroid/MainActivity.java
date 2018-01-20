@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,25 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
-
 import java.util.ArrayList;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.lightsky.infiniteindicator.IndicatorConfiguration;
+import cn.lightsky.infiniteindicator.InfiniteIndicator;
+import cn.lightsky.infiniteindicator.OnPageClickListener;
+import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragmentModel;
-import qfind.com.qfindappandroid.categoryfragment.CustomSlider;
+import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
 
-import static java.security.AccessController.getContext;
+import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
+import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
 
-public class MainActivity extends AppCompatActivity implements  BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener ,NavigationView.OnNavigationItemSelectedListener  {
+
+public class MainActivity extends AppCompatActivity implements  ViewPager.OnPageChangeListener, OnPageClickListener,NavigationView.OnNavigationItemSelectedListener  {
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
@@ -44,12 +43,10 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
     private ActionBarDrawerToggle toggle;
     @BindView(R.id.findByCategoryBtn)
     Button findByCategoryBtn;
-    @BindView(R.id.slider)
-    SliderLayout sliderLayout;
     @BindView(R.id.hamburger_menu)
     ImageView hamburgerMenu;
     Locale myLocale;
-
+    private InfiniteIndicator mAnimCircleIndicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
+        mAnimCircleIndicator = (InfiniteIndicator)findViewById(R.id.indicator_default_circle);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
@@ -79,30 +77,13 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, ContainerActivity.class);
                 startActivity(i);
+                finish();
             }
         });
-//        arabicButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                setLocale("ar");
-//            }
-//        });
-        ArrayList<String> adsImages;
-        CategoryFragmentModel  categoryFragmentModel = new CategoryFragmentModel();
-        adsImages = categoryFragmentModel.getAdsImages();
-        for (int i = 0; i < adsImages.size(); i++) {
-            CustomImageSlider textSliderView = new CustomImageSlider(getApplicationContext());
-            textSliderView
-                    .image(adsImages.get(i))
-                    .setScaleType(BaseSliderView.ScaleType.CenterInside)
-                    .setOnSliderClickListener(this);
-            sliderLayout.addSlider(textSliderView);
-        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(3000);
-        sliderLayout.addOnPageChangeListener(this);
+
+        loadAdsToSlider();
+
+
     }
 
     public void setLocale(String lang) {
@@ -131,9 +112,49 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
         }
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.END);
+        return true;
+    }
+    public void loadAdsToSlider(){
+        ArrayList<Page> adsImages;
+        CategoryFragmentModel  categoryFragmentModel = new CategoryFragmentModel();
+        adsImages = categoryFragmentModel.getAdsImages();
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
+                    .imageLoader(new PicassoLoader())
+                    .isStopWhileTouch(true)
+                    .onPageChangeListener(this)
+                    .scrollDurationFactor(6)
+                    .internal(3000)
+                    .isLoop(true)
+                    .isAutoScroll(true)
+                    .onPageClickListener(this)
+                    .direction(LEFT)
+                    .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                    .build();
+            mAnimCircleIndicator.init(configuration);
+            mAnimCircleIndicator.notifyDataChange(adsImages);
+        } else {
+            IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
+                    .imageLoader(new PicassoLoader())
+                    .isStopWhileTouch(true)
+                    .onPageChangeListener(this)
+                    .internal(3000)
+                    .scrollDurationFactor(6)
+                    .isLoop(true)
+                    .isAutoScroll(true)
+                    .onPageClickListener(this)
+                    .direction(RIGHT)
+                    .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                    .build();
+            mAnimCircleIndicator.init(configuration);
+            mAnimCircleIndicator.notifyDataChange(adsImages);
+        }
     }
 
     @Override
@@ -152,11 +173,7 @@ public class MainActivity extends AppCompatActivity implements  BaseSliderView.O
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public void onPageClick(int position, Page page) {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.END);
-        return true;
     }
-
 }

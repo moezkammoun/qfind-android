@@ -1,6 +1,7 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,6 +57,16 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+
+        Typeface mtypeFace = null ;
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/Lato-Light.ttf");
+        }else {
+            mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
+        holder.categoryName.setTypeface(mtypeFace);
 
         Categories categories = categoriesList.get(position);
         holder.categoryName.setText(categories.getItem());
