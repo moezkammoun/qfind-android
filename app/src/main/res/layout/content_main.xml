@@ -53,15 +53,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext"
-                android:drawableEnd="@drawable/ic_menu_share"
-                android:drawableStart="@drawable/ic_menu_share"
                 android:gravity="center"
                 android:hint="@string/search_hint"
                 android:padding="@dimen/padding_10"
                 android:textSize="15sp" />
 
         </LinearLayout>
-
+        <!--android:drawableEnd="@drawable/ic_menu_share"-->
+        <!--android:drawableStart="@drawable/ic_menu_share"-->
+        <!--android:drawableLeft="@drawable/ic_menu_share"-->
+        <!--android:drawableRight="@drawable/ic_menu_share"-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -88,10 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:background="@color/color_dark_blue"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/text_size_15"
                 android:padding="@dimen/padding_20"
-                android:text="@string/find_by_category" />
+                android:text="@string/find_by_category"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/text_size_15" />
 
         </LinearLayout>
     </LinearLayout>
