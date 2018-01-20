@@ -50,7 +50,6 @@ public class InformationPage extends AppCompatActivity implements NavigationView
     BottomNavigationView navigation;
     ArrayList<InformationPageModel> informationPages;
     ActionBarDrawerToggle toggle;
-//    ContainerActivityPresenter containerActivityPresenter = new ContainerActivityPresenter();
     Fragment fragment;
     Menu bottomNavigationMenu;
 

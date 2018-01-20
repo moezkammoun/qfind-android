@@ -24,11 +24,12 @@ import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
 public class ContainerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ContainerActivityView {
+        implements NavigationView.OnNavigationItemSelectedListener, ContainerActivityView{
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
@@ -127,7 +128,8 @@ public class ContainerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.about_us_menu_item) {
-            // Handle the camera action
+            fragment = new SearchResultsFragment();
+            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
         } else if (id == R.id.qfinder_menu_item) {
 
         } else if (id == R.id.terms_menu_item) {
