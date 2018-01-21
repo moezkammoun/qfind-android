@@ -12,27 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_10"
-        android:paddingEnd="@dimen/padding_20"
-        android:paddingStart="@dimen/padding_20"
-        android:weightSum="1">
+        android:paddingEnd="@dimen/padding_15"
+        android:paddingStart="@dimen/padding_15">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".35">
+            android:layout_weight="43.85">
+
             <cn.lightsky.infiniteindicator.InfiniteIndicator
                 android:id="@+id/indicator_default_circle"
-                app:indicator_type="indicator_default"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_width="match_parent"/>
+                app:indicator_type="indicator_default" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".2">
+            android:layout_weight="12.52">
 
             <TextView
                 android:layout_width="match_parent"
@@ -43,29 +42,55 @@
                 android:textSize="@dimen/text_size_15" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".19">
+            android:layout_weight="9.18"
+            android:background="@drawable/edit_text_border"
+            android:orientation="vertical">
 
-            <EditText
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext"
-                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/edit_text_bg"
+                android:ems="10"
                 android:hint="@string/search_hint"
-                android:padding="@dimen/padding_10"
-                android:textSize="15sp" />
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete|textAutoCorrect"
+                android:paddingStart="@dimen/home_hit_padding"
+                android:paddingEnd="@dimen/home_hit_padding"
+                android:textSize="@dimen/home_page_find_today_text">
 
-        </LinearLayout>
-        <!--android:drawableEnd="@drawable/ic_menu_share"-->
-        <!--android:drawableStart="@drawable/ic_menu_share"-->
-        <!--android:drawableLeft="@drawable/ic_menu_share"-->
-        <!--android:drawableRight="@drawable/ic_menu_share"-->
+            </AutoCompleteTextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:paddingBottom="@dimen/padding_5"
+                android:paddingTop="@dimen/padding_5"
+                android:src="@drawable/logo" />
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingBottom="@dimen/padding_10"
+                android:paddingTop="@dimen/padding_10"
+                android:src="@drawable/search" />
+
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".05"
+            android:layout_weight="17"
             android:gravity="center">
 
             <TextView
@@ -78,7 +103,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".20"
+            android:layout_weight="13.88"
             android:gravity="bottom"
             android:orientation="vertical">
 
@@ -94,6 +119,11 @@
                 android:textSize="@dimen/text_size_15" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.57" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

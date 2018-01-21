@@ -1,5 +1,6 @@
 package qfind.com.qfindappandroid.categorycontaineractivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,16 +34,26 @@ import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
 public class ContainerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ContainerActivityView{
+        implements NavigationView.OnNavigationItemSelectedListener, ContainerActivityView {
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @BindView(R.id.sideMenu)
     ImageView hambergerMenu;
+    @BindView(R.id.search_icon)
+    ImageView searchButton;
+    @BindView(R.id.autoCompleteEditText)
+    AutoCompleteTextView autoCompleteTextView;
+
     ContainerActivityPresenter containerActivityPresenter = new ContainerActivityPresenter();
     Fragment fragment;
     Menu bottomNavigationMenu;
     DrawerLayout drawer;
+    View keyboard;
+    InputMethodManager imm;
+    Intent intent;
+    Boolean isSearchResults;
+    ArrayAdapter<String> adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -53,7 +68,7 @@ public class ContainerActivity extends AppCompatActivity
                     break;
                 case R.id.qfind_us_menu:
 //                    fragment = new CategoryFragment();
-                    Intent intent= new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
                     break;
@@ -109,8 +124,38 @@ public class ContainerActivity extends AppCompatActivity
             }
         });
 
+        String[] FINDINGS = new String[]{
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+        };
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, FINDINGS);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!autoCompleteTextView.getText().toString().equals("")) {
+                    Toast.makeText(ContainerActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
+                    keyboard = getCurrentFocus();
+                    if (keyboard != null) {
+                        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
+                    }
+                    fragment = new SearchResultsFragment();
+                    containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+                }
+            }
+        });
+
+        intent = getIntent();
+        isSearchResults = intent.getBooleanExtra("SHOW_RESULTS", false);
+        if (isSearchResults) {
+            fragment = new SearchResultsFragment();
+            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+        }
     }
+
 
     @Override
     public void onBackPressed() {
