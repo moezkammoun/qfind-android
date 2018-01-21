@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
@@ -55,7 +56,7 @@ public class ContainerActivity extends AppCompatActivity
                     startActivity(intent);
                     break;
                 case R.id.category_history_menu:
-                    fragment = new CategoryFragment();
+                    fragment = new HistoryFragment();
                     break;
             }
             if (fragment != null) {
