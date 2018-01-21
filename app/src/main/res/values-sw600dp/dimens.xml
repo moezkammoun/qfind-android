@@ -8,4 +8,6 @@
     <dimen name="search_results_back_image_size">55dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="alignment_padding">0dp</dimen>
+    <dimen name="home_page_find_today_text">17sp</dimen>
+    <dimen name="toolbar_find_today_hint">15sp</dimen>
 </resources>

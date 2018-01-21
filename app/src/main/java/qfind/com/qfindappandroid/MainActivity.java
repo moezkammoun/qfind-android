@@ -3,12 +3,12 @@ package qfind.com.qfindappandroid;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +16,15 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
@@ -34,7 +39,7 @@ import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
 
 
-public class MainActivity extends AppCompatActivity implements  ViewPager.OnPageChangeListener, OnPageClickListener,NavigationView.OnNavigationItemSelectedListener  {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnPageClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
@@ -45,8 +50,16 @@ public class MainActivity extends AppCompatActivity implements  ViewPager.OnPage
     Button findByCategoryBtn;
     @BindView(R.id.hamburger_menu)
     ImageView hamburgerMenu;
+    @BindView(R.id.search_icon)
+    ImageView searchButton;
+    @BindView(R.id.autoCompleteEditText)
+    AutoCompleteTextView autoCompleteTextView;
+
     Locale myLocale;
     private InfiniteIndicator mAnimCircleIndicator;
+    Typeface mTypeFace;
+    Intent navigationIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +68,18 @@ public class MainActivity extends AppCompatActivity implements  ViewPager.OnPage
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
-        mAnimCircleIndicator = (InfiniteIndicator)findViewById(R.id.indicator_default_circle);
+        mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
+
+        String[] FINDINGS = new String[]{
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, FINDINGS);
+        autoCompleteTextView.setAdapter(adapter);
 
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,18 +92,41 @@ public class MainActivity extends AppCompatActivity implements  ViewPager.OnPage
             }
         });
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!autoCompleteTextView.getText().toString().equals("")) {
+                    Toast.makeText(MainActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
+                    navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+                    navigationIntent.putExtra("SHOW_RESULTS", true);
+                    startActivity(navigationIntent);
+                }
+            }
+        });
         findByCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, ContainerActivity.class);
-                startActivity(i);
-                finish();
+                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+                navigationIntent.putExtra("SHOW_RESULTS", false);
+                startActivity(navigationIntent);
             }
         });
 
         loadAdsToSlider();
+        setFontTypeForText();
 
+    }
 
+    public void setFontTypeForText() {
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mTypeFace = Typeface.createFromAsset(this.getAssets(),
+                    "fonts/Lato-Regular.ttf");
+        } else {
+            mTypeFace = Typeface.createFromAsset(this.getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
+
+        autoCompleteTextView.setTypeface(mTypeFace);
     }
 
     public void setLocale(String lang) {
@@ -120,9 +163,10 @@ public class MainActivity extends AppCompatActivity implements  ViewPager.OnPage
         drawer.closeDrawer(GravityCompat.END);
         return true;
     }
-    public void loadAdsToSlider(){
+
+    public void loadAdsToSlider() {
         ArrayList<Page> adsImages;
-        CategoryFragmentModel  categoryFragmentModel = new CategoryFragmentModel();
+        CategoryFragmentModel categoryFragmentModel = new CategoryFragmentModel();
         adsImages = categoryFragmentModel.getAdsImages();
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()

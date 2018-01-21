@@ -30,7 +30,8 @@
             android:name=".categorycontaineractivity.ContainerActivity"
             android:label="@string/title_activity_contain"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoTitle">
+            android:theme="@style/AppTheme.NoTitle"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
     </application>

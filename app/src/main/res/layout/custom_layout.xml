@@ -8,7 +8,7 @@
         android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"
+        android:src="@drawable/main_logo"
         android:layout_gravity="center"
         android:padding="8dp"/>
 </LinearLayout>

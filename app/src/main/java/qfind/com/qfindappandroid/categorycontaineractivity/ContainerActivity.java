@@ -1,5 +1,6 @@
 package qfind.com.qfindappandroid.categorycontaineractivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,9 +17,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.MainActivity;
@@ -29,7 +34,9 @@ import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
 public class ContainerActivity extends AppCompatActivity
+
         implements ContainerActivityView {
+
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
@@ -65,10 +72,20 @@ public class ContainerActivity extends AppCompatActivity
     LinearLayout sideMenuContactUslayout;
     @BindView(R.id.settings_layout)
     LinearLayout sideMenuSettingslayout;
+    public Typeface mtypeFace;
+    @BindView(R.id.search_icon)
+    ImageView searchButton;
+    @BindView(R.id.autoCompleteEditText)
+    AutoCompleteTextView autoCompleteTextView;
     ContainerActivityPresenter containerActivityPresenter = new ContainerActivityPresenter();
     Fragment fragment;
-    //Menu bottomNavigationMenu;
-    public Typeface mtypeFace;
+    View keyboard;
+    InputMethodManager imm;
+    Intent intent;
+    Boolean isSearchResults;
+    ArrayAdapter<String> adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +112,38 @@ public class ContainerActivity extends AppCompatActivity
         setupHamburgerClickListener();
         setupSideMenuItemClickListener();
 
+        String[] FINDINGS = new String[]{
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+        };
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, FINDINGS);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!autoCompleteTextView.getText().toString().equals("")) {
+                    Toast.makeText(ContainerActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
+                    keyboard = getCurrentFocus();
+                    if (keyboard != null) {
+                        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
+                    }
+                    fragment = new SearchResultsFragment();
+                    containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+                }
+            }
+        });
+
+        intent = getIntent();
+        isSearchResults = intent.getBooleanExtra("SHOW_RESULTS", false);
+        if (isSearchResults) {
+            fragment = new SearchResultsFragment();
+            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+        }
     }
+
 
     @Override
     public void onBackPressed() {
