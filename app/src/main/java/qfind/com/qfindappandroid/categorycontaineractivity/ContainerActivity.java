@@ -26,9 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -85,6 +87,31 @@ public class ContainerActivity extends AppCompatActivity
     Boolean isSearchResults;
     ArrayAdapter<String> adapter;
 
+//<<<<<<< HEAD
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.favorite_categories_bottom_menu:
+////                    bottomNavigationMenu.findItem(R.id.qfind_us_menu).setIcon(R.drawable.ic_home_black_24dp);
+////                    bottomNavigationMenu.findItem(R.id.category_history_menu).setIcon(R.drawable.ic_home_black_24dp);
+//                    fragment = new CategoryFragment();
+//                    break;
+//                case R.id.qfind_us_menu:
+////                    fragment = new CategoryFragment();
+//                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
+//                    startActivity(intent);
+//                    break;
+//                case R.id.category_history_menu:
+//                    fragment = new HistoryFragment();
+//                    break;
+//            }
+//            if (fragment != null) {
+//                containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+//            }
+//            return true;
+//        }
+//=======
+//>>>>>>> master
 
 
     @Override
@@ -113,7 +140,8 @@ public class ContainerActivity extends AppCompatActivity
         setupSideMenuItemClickListener();
 
         String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
+                "الفندق", "الفندق","الفندق"
         };
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
@@ -182,7 +210,7 @@ public class ContainerActivity extends AppCompatActivity
                     finish();
                     break;
                 case R.id.category_history_menu:
-                    fragment = new CategoryFragment();
+                    fragment = new HistoryFragment();
                     break;
             }
             if (fragment != null) {

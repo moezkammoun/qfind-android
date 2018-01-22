@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
-    android:background="#658363">
+    android:background="@drawable/toolbar_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,14 +24,16 @@
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/ic_menu_send" />
+                app:srcCompat="@drawable/white_back"
+                />
 
             <ImageView
                 android:id="@+id/hamburger_menu"
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/hamburger_black" />
+                android:src="@drawable/hamburger_icon" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -46,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
+                android:textColor="@color/color_white"
                 android:text="@string/information_main_title"
                 android:textSize="@dimen/text_size" />
         </LinearLayout>
@@ -54,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/padding_3"
             android:paddingTop="@dimen/padding_3"
             android:weightSum="1">
 
@@ -62,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                app:srcCompat="@drawable/ic_menu_share" />
+                app:srcCompat="@drawable/share" />
 
             <TextView
                 android:layout_width="0dp"
@@ -75,7 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:gravity="end"
+                android:textColor="@color/color_white"
                 android:singleLine="true"
+                android:textSize="@dimen/text_size_20"
                 android:text="@string/information_sub_title" />
 
         </LinearLayout>
@@ -84,15 +88,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/padding_3"
-            android:paddingTop="@dimen/padding_3"
+            android:paddingBottom="@dimen/padding_5"
             android:weightSum="1">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                app:srcCompat="@drawable/ic_menu_gallery" />
+                android:layout_gravity="start"
+                app:srcCompat="@drawable/white_star" />
 
             <TextView
                 android:layout_width="0dp"

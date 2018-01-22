@@ -23,8 +23,9 @@
     <dimen name="toolbar_height">200dp</dimen>
     <dimen name="image_height">30dp</dimen>
     <dimen name="image_width">30dp</dimen>
-    <dimen name="text_size">25sp</dimen>
+    <dimen name="text_size">32sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
     <dimen name="layout_marginTop">140dp</dimen>
     <dimen name="design_bottom_navigation_text_size" tools:override="true">16sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">20sp</dimen>
