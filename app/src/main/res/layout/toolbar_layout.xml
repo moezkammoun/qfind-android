@@ -31,7 +31,7 @@
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/hamburger" />
+                android:src="@drawable/hamburger_black" />
         </RelativeLayout>
 
         <LinearLayout
