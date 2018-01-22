@@ -161,11 +161,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mTypeFace = Typeface.createFromAsset(this.getAssets(),
                     "fonts/Lato-Regular.ttf");
-//            autoCompleteTextView.setTextDirection(View.TEXT_DIRECTION_LTR);
         } else {
             mTypeFace = Typeface.createFromAsset(this.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
-//            autoCompleteTextView.setTextDirection(View.TEXT_DIRECTION_RTL);
         }
 
         autoCompleteTextView.setTypeface(mTypeFace);
