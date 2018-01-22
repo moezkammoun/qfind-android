@@ -1,18 +1,17 @@
 package qfind.com.qfindappandroid;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +35,9 @@ import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragmentModel;
 import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
+import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
+import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
+import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
@@ -43,22 +47,49 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
-    @BindView(R.id.drawer)
-    DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     @BindView(R.id.findByCategoryBtn)
     Button findByCategoryBtn;
     @BindView(R.id.hamburger_menu)
     ImageView hamburgerMenu;
+    @BindView(R.id.side_menu_hamburger)
+    ImageView sideMenuHamburger;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.side_menu_tittle_txt)
+    TextView sideMenuTittleTxt;
+    @BindView(R.id.side_menu_about_us_txt)
+    TextView sideMenuAboutUsTxt;
+    @BindView(R.id.side_menu_qfinder_txt)
+    TextView sideMenuQfinderTxt;
+    @BindView(R.id.side_menu_terms_condition_txt)
+    TextView sideMenuTermAndConditionTxt;
+    @BindView(R.id.side_menu_contact_us_txt)
+    TextView sideMenuContactUsTxt;
+    @BindView(R.id.side_menu_settings_txt)
+    TextView sideMenuSettingsTxt;
+    @BindView(R.id.about_us_layout)
+    LinearLayout sideMenuAboutUslayout;
+    @BindView(R.id.qfinder_layout)
+    LinearLayout sideMenuQfinderlayout;
+    @BindView(R.id.terms_and_condition_layout)
+    LinearLayout sideMenuTermsandConditionlayout;
+    @BindView(R.id.contact_us_layout)
+    LinearLayout sideMenuContactUslayout;
+    @BindView(R.id.settings_layout)
+    LinearLayout sideMenuSettingslayout;
     @BindView(R.id.search_icon)
     ImageView searchButton;
     @BindView(R.id.autoCompleteEditText)
     AutoCompleteTextView autoCompleteTextView;
-
+    Fragment fragment;
     Locale myLocale;
     private InfiniteIndicator mAnimCircleIndicator;
     Typeface mTypeFace;
     Intent navigationIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +100,17 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
+
+        int width = getResources().getDisplayMetrics().widthPixels / 3;
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) navigationView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels - width;
+        navigationView.setLayoutParams(params);
+        setupHamburgerClickListener();
+        setupSideMenuItemClickListener();
 
         String[] FINDINGS = new String[]{
                 "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
@@ -85,10 +123,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawerLayout.isDrawerOpen(Gravity.END)) {
-                    drawerLayout.closeDrawer(Gravity.END);
+                if (drawer.isDrawerOpen(Gravity.END)) {
+                    drawer.closeDrawer(Gravity.END);
                 } else {
-                    drawerLayout.openDrawer(Gravity.END);
+                    drawer.openDrawer(Gravity.END);
                 }
             }
         });
@@ -118,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
+
     public void setFontTypeForText() {
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mTypeFace = Typeface.createFromAsset(this.getAssets(),
@@ -132,27 +171,33 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         autoCompleteTextView.setTypeface(mTypeFace);
     }
 
-    public void setLocale(String lang) {
-        Configuration configuration = getResources().getConfiguration();
-        configuration.setLayoutDirection(new Locale(lang));
-        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+    public void drawerOpenCloseHandler() {
+        if (drawer.isDrawerOpen(Gravity.END)) {
+            drawer.closeDrawer(Gravity.END);
+        } else {
+            drawer.openDrawer(Gravity.END);
+        }
+    }
 
-        myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(MainActivity.this, MainActivity.class);
-        this.overridePendingTransition(0, 0);
-        this.finish();
-        startActivity(refresh);
+    public void setupHamburgerClickListener() {
+        hamburgerMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerOpenCloseHandler();
+            }
+        });
+        sideMenuHamburger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerOpenCloseHandler();
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.END)) {
-            drawerLayout.closeDrawer(Gravity.END);
+        if (drawer.isDrawerOpen(Gravity.END)) {
+            drawer.closeDrawer(Gravity.END);
         } else {
             super.onBackPressed();
         }
@@ -165,6 +210,65 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
         return true;
+    }
+
+    public void setupSideMenuItemClickListener() {
+        sideMenuAboutUslayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fragment = new SearchResultsFragment();
+                loadFragment();
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuQfinderlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuTermsandConditionlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                if (!(f instanceof TermsandConditionFragment)) {
+                    fragment = new TermsandConditionFragment();
+                    loadFragment();
+                }
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuContactUslayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuSettingslayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                if (!(f instanceof SettingsFragment)) {
+                    fragment = new SettingsFragment();
+                    loadFragment();
+                }
+
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+
+    }
+
+    public void loadFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void loadAdsToSlider() {
