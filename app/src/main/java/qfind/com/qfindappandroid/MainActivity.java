@@ -43,7 +43,7 @@ import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
 
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, OnPageClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, OnPageClickListener {
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
@@ -52,40 +52,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     Button findByCategoryBtn;
     @BindView(R.id.hamburger_menu)
     ImageView hamburgerMenu;
-    @BindView(R.id.side_menu_hamburger)
-    ImageView sideMenuHamburger;
-    @BindView(R.id.nav_view)
-    NavigationView navigationView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
-    @BindView(R.id.side_menu_tittle_txt)
-    TextView sideMenuTittleTxt;
-    @BindView(R.id.side_menu_about_us_txt)
-    TextView sideMenuAboutUsTxt;
-    @BindView(R.id.side_menu_qfinder_txt)
-    TextView sideMenuQfinderTxt;
-    @BindView(R.id.side_menu_terms_condition_txt)
-    TextView sideMenuTermAndConditionTxt;
-    @BindView(R.id.side_menu_contact_us_txt)
-    TextView sideMenuContactUsTxt;
-    @BindView(R.id.side_menu_settings_txt)
-    TextView sideMenuSettingsTxt;
-    @BindView(R.id.about_us_layout)
-    LinearLayout sideMenuAboutUslayout;
-    @BindView(R.id.qfinder_layout)
-    LinearLayout sideMenuQfinderlayout;
-    @BindView(R.id.terms_and_condition_layout)
-    LinearLayout sideMenuTermsandConditionlayout;
-    @BindView(R.id.contact_us_layout)
-    LinearLayout sideMenuContactUslayout;
-    @BindView(R.id.settings_layout)
-    LinearLayout sideMenuSettingslayout;
-    @BindView(R.id.search_icon)
+    @BindView(R.id.home_search_icon)
     ImageView searchButton;
-    @BindView(R.id.autoCompleteEditText)
+    @BindView(R.id.homeAutoCompleteEditText)
     AutoCompleteTextView autoCompleteTextView;
-    Fragment fragment;
-    Locale myLocale;
     private InfiniteIndicator mAnimCircleIndicator;
     Typeface mTypeFace;
     Intent navigationIntent;
@@ -100,20 +70,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(false);
-        toggle.syncState();
-
-        int width = getResources().getDisplayMetrics().widthPixels / 3;
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) navigationView.getLayoutParams();
-        params.width = getResources().getDisplayMetrics().widthPixels - width;
-        navigationView.setLayoutParams(params);
         setupHamburgerClickListener();
-        setupSideMenuItemClickListener();
 
         String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
+                "Restaurant", "الفندق", "الفندق", "الفندق"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
@@ -122,11 +83,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawer.isDrawerOpen(Gravity.END)) {
-                    drawer.closeDrawer(Gravity.END);
-                } else {
-                    drawer.openDrawer(Gravity.END);
-                }
+                drawerOpenCloseHandler();
             }
         });
 
@@ -136,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 if (!autoCompleteTextView.getText().toString().equals("")) {
                     Toast.makeText(MainActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
                     navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                    navigationIntent.putExtra("SHOW_RESULTS", true);
+                    navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
                     startActivity(navigationIntent);
                 }
             }
@@ -145,45 +102,69 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             @Override
             public void onClick(View view) {
                 navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                navigationIntent.putExtra("SHOW_RESULTS", false);
+                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
                 startActivity(navigationIntent);
             }
         });
 
         loadAdsToSlider();
-        setFontTypeForText();
 
     }
 
-
-    public void setFontTypeForText() {
-        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            mTypeFace = Typeface.createFromAsset(this.getAssets(),
-                    "fonts/Lato-Regular.ttf");
-        } else {
-            mTypeFace = Typeface.createFromAsset(this.getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
-        }
-
-        autoCompleteTextView.setTypeface(mTypeFace);
+    @Override
+    protected boolean useToolbar() {
+        return false;
     }
 
-    public void drawerOpenCloseHandler() {
-        if (drawer.isDrawerOpen(Gravity.END)) {
-            drawer.closeDrawer(Gravity.END);
-        } else {
-            drawer.openDrawer(Gravity.END);
-        }
+    @Override
+    protected boolean useBottomBar() {
+        return false;
     }
+
+    @Override
+    public void setupSideMenuItemClickListener() {
+        sideMenuAboutUsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
+                startActivity(navigationIntent);
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SETTINGS.toString());
+                startActivity(navigationIntent);
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+
+    }
+
 
     public void setupHamburgerClickListener() {
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerOpenCloseHandler();
-            }
-        });
-        sideMenuHamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerOpenCloseHandler();
@@ -193,80 +174,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(Gravity.END)) {
-            drawer.closeDrawer(Gravity.END);
+        if (fullView.isDrawerOpen(Gravity.END)) {
+            fullView.closeDrawer(Gravity.END);
         } else {
             super.onBackPressed();
         }
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.END);
-        return true;
-    }
-
-    public void setupSideMenuItemClickListener() {
-        sideMenuAboutUslayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fragment = new SearchResultsFragment();
-                loadFragment();
-                drawer.closeDrawer(GravityCompat.END);
-            }
-        });
-        sideMenuQfinderlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                drawer.closeDrawer(GravityCompat.END);
-            }
-        });
-        sideMenuTermsandConditionlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                if (!(f instanceof TermsandConditionFragment)) {
-                    fragment = new TermsandConditionFragment();
-                    loadFragment();
-                }
-                drawer.closeDrawer(GravityCompat.END);
-            }
-        });
-        sideMenuContactUslayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                drawer.closeDrawer(GravityCompat.END);
-            }
-        });
-        sideMenuSettingslayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                if (!(f instanceof SettingsFragment)) {
-                    fragment = new SettingsFragment();
-                    loadFragment();
-                }
-
-                drawer.closeDrawer(GravityCompat.END);
-            }
-        });
-
-    }
-
-    public void loadFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     public void loadAdsToSlider() {
         ArrayList<Page> adsImages;
