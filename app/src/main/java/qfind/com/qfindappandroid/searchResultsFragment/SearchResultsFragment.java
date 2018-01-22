@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +27,8 @@ public class SearchResultsFragment extends Fragment {
     ResultsAdapter resultsAdapter;
     List<SearchedItem> searchedItemList;
     SearchedItem item;
-    private Typeface mTypeFace;
+    Typeface mTypeFace;
+    ImageView backButton;
 
     public SearchResultsFragment() {
         // Required empty public constructor
@@ -46,6 +48,7 @@ public class SearchResultsFragment extends Fragment {
         mTextViewEmpty = (TextView) view.findViewById(R.id.textViewEmpty);
         mProgressBarLoading = (ProgressBar) view.findViewById(R.id.progressBarLoading);
         pageTitle = (TextView) view.findViewById(R.id.search_title);
+        backButton = (ImageView) view.findViewById(R.id.back_button);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -61,7 +64,7 @@ public class SearchResultsFragment extends Fragment {
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mTypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Bold.ttf");
-        }else {
+        } else {
             mTypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
@@ -135,6 +138,12 @@ public class SearchResultsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFontTypeForText();
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -146,5 +155,4 @@ public class SearchResultsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 }

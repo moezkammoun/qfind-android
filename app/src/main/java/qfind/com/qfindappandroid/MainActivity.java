@@ -73,8 +73,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         setupHamburgerClickListener();
 
         String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
-                "Restaurant", "الفندق", "الفندق", "الفندق"
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
+                "الفندق", "الفندق","الفندق"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
