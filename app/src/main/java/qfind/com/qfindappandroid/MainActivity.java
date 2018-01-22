@@ -154,8 +154,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setFontTypeForText();
 
     }
-
-
     public void setFontTypeForText() {
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mTypeFace = Typeface.createFromAsset(this.getAssets(),

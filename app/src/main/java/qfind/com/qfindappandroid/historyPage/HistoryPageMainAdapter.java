@@ -47,7 +47,6 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
         public ItemRowHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
         }
     }
 
@@ -68,8 +67,6 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
         holder.recycler_view_list.setLayoutManager
                 (new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         holder.recycler_view_list.setAdapter(historyPageDataAdapter);
-
-
     }
 
     @Override

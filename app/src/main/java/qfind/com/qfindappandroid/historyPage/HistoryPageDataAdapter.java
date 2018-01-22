@@ -47,11 +47,9 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
 
     @Override
     public HistoryPageDataAdapter.SingleItemRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_card_layout, null);
         View viewHolder= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.history_card_layout, null, false);
         viewHolder.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-//        return new ViewOffersHolder(viewHolder);
         SingleItemRowHolder mh = new SingleItemRowHolder(viewHolder);
         return mh;
     }
