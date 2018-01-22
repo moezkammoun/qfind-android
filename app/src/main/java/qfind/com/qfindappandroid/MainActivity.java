@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         toggle.syncState();
 
         String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
+                "الفندق", "الفندق","الفندق"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
@@ -121,9 +122,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mTypeFace = Typeface.createFromAsset(this.getAssets(),
                     "fonts/Lato-Regular.ttf");
+//            autoCompleteTextView.setTextDirection(View.TEXT_DIRECTION_LTR);
         } else {
             mTypeFace = Typeface.createFromAsset(this.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
+//            autoCompleteTextView.setTextDirection(View.TEXT_DIRECTION_RTL);
         }
 
         autoCompleteTextView.setTypeface(mTypeFace);

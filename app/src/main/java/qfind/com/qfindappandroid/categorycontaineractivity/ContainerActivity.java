@@ -113,7 +113,8 @@ public class ContainerActivity extends AppCompatActivity
         setupSideMenuItemClickListener();
 
         String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
+                "الفندق", "الفندق","الفندق"
         };
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
