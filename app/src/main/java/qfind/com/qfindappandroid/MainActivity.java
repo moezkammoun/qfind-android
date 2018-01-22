@@ -113,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setupSideMenuItemClickListener();
 
         String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant"
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
+                "الفندق", "الفندق","الفندق"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
