@@ -39,7 +39,7 @@
                 android:paddingTop="@dimen/padding_5"
                 android:textColor="@color/category_tittle_color"
                 android:text="@string/qfind_of_the_day"
-                android:textSize="@dimen/text_size_25" />
+                android:textSize="@dimen/text_size_15" />
         </LinearLayout>
 
         <LinearLayout
@@ -127,7 +127,7 @@
                 android:background="@drawable/toolbar_bg"
                 android:text="@string/find_by_category"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/text_size_15" />
+                android:textSize="@dimen/text_size_20" />
 
         </LinearLayout>
 
