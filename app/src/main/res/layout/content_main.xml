@@ -5,21 +5,18 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/categoryPageBgColor"
     tools:context="qfind.com.qfindappandroid.MainActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingEnd="@dimen/padding_15"
-        android:paddingStart="@dimen/padding_15">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="43.85">
-
+            android:layout_weight="39.85">
             <cn.lightsky.infiniteindicator.InfiniteIndicator
                 android:id="@+id/indicator_default_circle"
                 android:layout_width="match_parent"
@@ -31,67 +28,80 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="12.52">
+            android:layout_weight="12.52"
+            android:paddingEnd="@dimen/padding_15"
+            android:paddingStart="@dimen/padding_15">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/padding_5"
+                android:textColor="@color/category_tittle_color"
                 android:text="@string/qfind_of_the_day"
                 android:textSize="@dimen/text_size_15" />
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9.18"
-            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_15"
+            android:paddingEnd="@dimen/padding_15"
             android:orientation="vertical">
-
-
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteEditText"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:background="@drawable/edit_text_bg"
-                android:ems="10"
-                android:hint="@string/search_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="textAutoComplete|textAutoCorrect"
-                android:paddingStart="@dimen/home_hit_padding"
-                android:paddingEnd="@dimen/home_hit_padding"
-                android:textSize="@dimen/home_page_find_today_text">
+                android:layout_height="0dp"
+                android:layout_weight="9.18"
+                android:background="@drawable/edit_text_border"
+                android:orientation="vertical">
 
-            </AutoCompleteTextView>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:paddingBottom="@dimen/padding_5"
-                android:paddingTop="@dimen/padding_5"
-                android:src="@drawable/logo" />
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/edit_text_bg"
+                    android:ems="10"
+                    android:hint="@string/search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:paddingEnd="@dimen/home_hit_padding"
+                    android:paddingStart="@dimen/home_hit_padding"
+                    android:textSize="@dimen/home_page_find_today_text">
 
-            <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:paddingBottom="@dimen/padding_10"
-                android:paddingTop="@dimen/padding_10"
-                android:src="@drawable/search" />
+                </AutoCompleteTextView>
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="@dimen/padding_5"
+                    android:paddingTop="@dimen/padding_5"
+                    android:src="@drawable/logo" />
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingTop="@dimen/padding_10"
+                    android:src="@drawable/search" />
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="17"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingEnd="@dimen/padding_15"
+            android:paddingStart="@dimen/padding_15">
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,20 +113,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="13.88"
+            android:layout_weight="10.88"
             android:gravity="bottom"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/padding_15"
+            android:paddingStart="@dimen/padding_15">
 
             <Button
                 android:id="@+id/findByCategoryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@color/color_dark_blue"
-                android:padding="@dimen/padding_20"
+                android:background="@drawable/toolbar_bg"
                 android:text="@string/find_by_category"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/text_size_15" />
+                android:textSize="@dimen/text_size_20" />
 
         </LinearLayout>
 
@@ -126,12 +137,12 @@
             android:layout_weight="3.57" />
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        app:menu="@menu/activity_contain_drawer">
+    <!--<android.support.design.widget.NavigationView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="end"-->
+    <!--app:menu="@menu/activity_contain_drawer">-->
 
-    </android.support.design.widget.NavigationView>
+    <!--</android.support.design.widget.NavigationView>-->
 
 </android.support.v4.widget.DrawerLayout>
