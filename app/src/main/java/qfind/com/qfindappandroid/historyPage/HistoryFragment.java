@@ -48,8 +48,8 @@ public class HistoryFragment extends Fragment {
 
         ArrayList<HistoryPageMainModel> arrayListMain= new ArrayList<HistoryPageMainModel>();
         ArrayList<String> days = new ArrayList<String>();
-        days.add("today");
-        days.add("yesterday");
+        days.add("Today");
+        days.add("Yesterday");
 
         for (int i = 0; i < 2; i++) {
             HistoryPageMainModel mainModel = new HistoryPageMainModel();

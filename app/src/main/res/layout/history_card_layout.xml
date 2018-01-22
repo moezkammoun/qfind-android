@@ -7,11 +7,13 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_5"
+        android:layout_marginStart="@dimen/padding_5"
         card_view:cardBackgroundColor="@color/color_white"
-        card_view:cardMaxElevation="@dimen/padding_3"
-        card_view:cardElevation="@dimen/padding_1"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardPreventCornerOverlap="false">
+        card_view:cardElevation="@dimen/padding_3"
+        card_view:cardMaxElevation="@dimen/card_elevation"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"

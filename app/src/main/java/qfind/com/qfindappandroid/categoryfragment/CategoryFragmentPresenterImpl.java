@@ -5,6 +5,8 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.lightsky.infiniteindicator.Page;
+
 /**
  * Created by dilee on 07-01-2018.
  */
@@ -15,7 +17,7 @@ public class CategoryFragmentPresenterImpl {
     List<Categories> categories;
     CategoryFragmentView categoryFragmentView;
     CategoryFragmentModel categoryFragmentModel;
-    ArrayList<String> adsImagesList;
+    ArrayList<Page> adsImagesList;
 
     public CategoryFragmentPresenterImpl(CategoryFragmentView categoryFragmentView) {
         this.categoryFragmentView = categoryFragmentView;

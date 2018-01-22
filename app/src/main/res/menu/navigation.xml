@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/favorite_categories_bottom_menu"
-        android:icon="@drawable/ic_home_black_24dp" />
+        android:icon="@drawable/favourite_icon" />
 
     <item
         android:id="@+id/qfind_us_menu"
-        android:icon="@drawable/ic_dashboard_black_24dp" />
+        android:icon="@drawable/logo" />
 
     <item
         android:id="@+id/category_history_menu"
-        android:icon="@drawable/ic_notifications_black_24dp" />
+        android:icon="@drawable/time" />
 
 </menu>

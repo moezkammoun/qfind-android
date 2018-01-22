@@ -19,7 +19,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="about_us">About us</string>
     <string name="how_to_become_qfinder">How to become Qfinder</string>
-    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="menu">MENU</string>
     <string name="contact_us">Contact us</string>
     <string name="settings">Settings</string>
     <string name="english">English</string>
@@ -40,6 +41,7 @@
     <string name="categories_text">Categories</string>
     <string name="history_text">History</string>
     <string name="title_activity_contain">ContainActivity</string>
-
+    <string name="search_results_text">Search Results</string>
+    <string name="no_data_text">No data</string>
 
 </resources>
