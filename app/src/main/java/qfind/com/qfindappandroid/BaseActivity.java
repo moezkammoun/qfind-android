@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
@@ -40,11 +41,9 @@ import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFrag
 public class BaseActivity extends AppCompatActivity {
 
 
-    LinearLayout sideMenuAboutUsLayout;
-    LinearLayout sideMenuQFinderLayout;
-    LinearLayout sideMenuTermsAndConditionLayout;
-    LinearLayout sideMenuContactUsLayout;
-    LinearLayout sideMenuSettingsLayout;
+    protected LinearLayout sideMenuAboutUsLayout, sideMenuQFinderLayout, sideMenuTermsAndConditionLayout,
+            sideMenuContactUsLayout, sideMenuSettingsLayout;
+
     TextView sideMenuTittleTxt;
 
     TextView sideMenuAboutUsTxt;
@@ -57,7 +56,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView sideMenuSettingsTxt;
     Toolbar toolbar;
     Fragment fragment;
-    DrawerLayout fullView;
+    protected DrawerLayout fullView;
     ImageView sideMenuHamburger, hamburger;
     ArrayAdapter<String> adapter;
     ImageView searchButton;

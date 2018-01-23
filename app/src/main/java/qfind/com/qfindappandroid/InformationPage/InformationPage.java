@@ -1,5 +1,6 @@
 package qfind.com.qfindappandroid.InformationPage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,13 +18,20 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
@@ -31,8 +39,12 @@ import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivityPresenter;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivityView;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.historyPage.HistoryFragment;
+import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
+import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
+import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 
-public class InformationPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class InformationPage extends BaseActivity {
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
@@ -44,46 +56,51 @@ public class InformationPage extends AppCompatActivity implements NavigationView
     TextView mainTitle;
     @BindView(R.id.sub_title)
     TextView subTitle;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
+    @BindView(R.id.normal_toolbar)
+    LinearLayout normalToolbar;
+    @BindView(R.id.info_toolbar)
+    LinearLayout infoToolbar;
+    @BindView(R.id.info_container)
+    LinearLayout infoContainer;
+    @BindView(R.id.frame_container)
+    FrameLayout frameLayout;
+    @BindView(R.id.info_toolbar_layout)
+    LinearLayout infoToolbarContainer;
+
+
     ArrayList<InformationPageModel> informationPages;
     ActionBarDrawerToggle toggle;
     Fragment fragment;
     Menu bottomNavigationMenu;
+    ArrayAdapter<String> adapter;
+    ImageView searchButton, sideMenu;
+    AutoCompleteTextView autoCompleteTextView;
+    View keyboard;
+    InputMethodManager imm;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+
+    public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
-//                    bottomNavigationMenu.findItem(R.id.qfind_us_menu).setIcon(R.drawable.ic_home_black_24dp);
-//                    bottomNavigationMenu.findItem(R.id.category_history_menu).setIcon(R.drawable.ic_home_black_24dp);
-//                    fragment = new CategoryFragment();
-                    Intent homeIntent= new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(homeIntent);
+                    fragment = new CategoryFragment();
                     break;
                 case R.id.qfind_us_menu:
-
-//                    fragment = new CategoryFragment();
-                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
+                    Intent intent = new Intent(getApplicationContext(), InformationPage.class);
                     startActivity(intent);
                     break;
                 case R.id.category_history_menu:
-//                    fragment = new CategoryFragment();
-                    Intent conteIntent= new Intent(getApplicationContext(), ContainerActivity.class);
-                    startActivity(conteIntent);
+                    fragment = new HistoryFragment();
                     break;
             }
             if (fragment != null) {
-//                containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                loadFragment(fragment);
+                hideInfoView();
             }
             return true;
         }
@@ -100,57 +117,61 @@ public class InformationPage extends AppCompatActivity implements NavigationView
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(false);
-        toggle.syncState();
-        bottomNavigationMenu = navigation.getMenu();
-        bottomNavigationMenu.findItem(R.id.favorite_categories_bottom_menu)
-                .setIcon(R.drawable.ic_home_black_24dp);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        autoCompleteTextView = (AutoCompleteTextView) infoToolbarContainer.findViewById(R.id.autoCompleteEditText);
+        searchButton = (ImageView) infoToolbarContainer.findViewById(R.id.search_icon);
+        sideMenu = (ImageView) infoToolbarContainer.findViewById(R.id.sideMenu);
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawerLayout.isDrawerOpen(Gravity.END)) {
-                    drawerLayout.closeDrawer(Gravity.END);
-                } else {
-                    drawerLayout.openDrawer(Gravity.END);
+                drawerOpenCloseHandler();
+            }
+        });
+        sideMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerOpenCloseHandler();
+            }
+        });
+        informationPages = new ArrayList<>();
+
+        informationPages.add(new InformationPageModel(R.drawable.phone_icon,
+                R.drawable.dot_icon, "00974 5551 5566", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.web_icon,
+                R.drawable.dot_icon, "www.4season.com", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.location_icon,
+                R.drawable.dot_icon, "Doha", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.clock_icon,
+                R.drawable.dot_icon, "9:30 am-6:30 pm", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.mail_icon,
+                R.drawable.dot_icon, "mo@hotmail.com", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.facebook_icon,
+                R.drawable.dot_icon, "4season", R.drawable.right_arrow));
+
+        String[] FINDINGS = new String[]{
+                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
+                "Restaurant", "الفندق", "الفندق", "الفندق"
+        };
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, FINDINGS);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!autoCompleteTextView.getText().toString().equals("")) {
+                    Toast.makeText(InformationPage.this, "Finding...", Toast.LENGTH_SHORT).show();
+                    keyboard = getCurrentFocus();
+                    if (keyboard != null) {
+                        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
+                    }
+                    fragment = new SearchResultsFragment();
+                    loadFragment(fragment);
                 }
             }
         });
-
-
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // hide back button
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                // show hamberger icon
-                toggle.syncState();
-            }
-        });
-
-
-//        mainTitle.setText("Thiruvananthapuram Museum");
-//        subTitle.setText("Pattom,Thiruvanathapuram");
-
-        informationPages = new ArrayList<>();
-
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "qwerty", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "asdfg", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "123454", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "fgfdg", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "ggfkyw", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "ywrtiyq", R.drawable.ic_menu_send));
-
-
 
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
         recyclerView.addItemDecoration(dividerItemDecoration);
@@ -162,6 +183,15 @@ public class InformationPage extends AppCompatActivity implements NavigationView
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected boolean useToolbar() {
+        return false;
+    }
+
+    @Override
+    protected boolean useBottomBar() {
+        return false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -171,44 +201,75 @@ public class InformationPage extends AppCompatActivity implements NavigationView
     }
 
     @Override
+    public void setupSideMenuItemClickListener() {
+        sideMenuAboutUsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                if (!(fragment instanceof TermsandConditionFragment)) {
+                    InformationPage.this.fragment = new TermsandConditionFragment();
+                    loadFragment(InformationPage.this.fragment);
+                }
+                fullView.closeDrawer(GravityCompat.END);
+                hideInfoView();
+            }
+        });
+        sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fullView.closeDrawer(GravityCompat.END);
+            }
+        });
+        sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                if (!(fragment instanceof SettingsFragment)) {
+                    InformationPage.this.fragment = new SettingsFragment();
+                    loadFragment(InformationPage.this.fragment);
+                }
+                fullView.closeDrawer(GravityCompat.END);
+                hideInfoView();
+            }
+        });
+
+    }
+
+    public void hideInfoView() {
+        infoToolbar.setVisibility(View.GONE);
+        infoContainer.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.END)) {
-            drawerLayout.closeDrawer(Gravity.END);
+        if (fullView.isDrawerOpen(Gravity.END)) {
+            fullView.closeDrawer(Gravity.END);
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
-        return super.onOptionsItemSelected(item);
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.END);
-        return true;
-    }
-
-
-//    @Override
-//    public void loadFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_container, fragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-//    }
 }
 
