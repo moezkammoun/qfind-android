@@ -14,7 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
@@ -34,13 +37,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     @BindView(R.id.category_item_recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.category_text)
-    TextView category;
+    @BindView(R.id.sub_category_back_button)
+    ImageView subCategoryBackButton;
+    @BindView(R.id.category_fragment_tittle_text)
+    TextView categoryFragmentTittleText;
     private CategoryItemAdapter categoryItemAdapter;
     private List<Categories> categoriesList;
     private InfiniteIndicator mAnimCircleIndicator;
     CategoryFragmentPresenterImpl categoryFragmentPresenterImpl;
     public Typeface mtypeFace;
+    RecyclerViewClickListener recyclerViewClickListener;
+    public static int categoryPageStatus;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -49,7 +56,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this);
 
     }
 
@@ -64,10 +70,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        setupRecyclerViewClickListener();
         setFontTypeForText();
+        initialSetUp();
         mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
+
         categoryFragmentPresenterImpl.getImagesForAds();
-        categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+            categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+        } else {
+            //categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
+        }
     }
 
 
@@ -155,12 +168,56 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Bold.ttf");
-        }else {
+        } else {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
 
-        category.setTypeface(mtypeFace);
+        categoryFragmentTittleText.setTypeface(mtypeFace);
+    }
+
+    public void setupRecyclerViewClickListener() {
+        recyclerViewClickListener = new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+                    categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
+                    CategoryPageCurrentStatus.categoryPageStatus = 2;
+                    categoryFragmentTittleText.setText(R.string.sub_categoies_text);
+                    subCategoryBackButton.setVisibility(View.VISIBLE);
+                    setClickListenerForSubCategoryButton();
+                } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+                    Intent intent = new Intent(getActivity(), InformationPage.class);
+                    startActivity(intent);
+                }
+            }
+        };
+    }
+
+    public void initialSetUp() {
+        if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
+            subCategoryBackButton.setVisibility(View.GONE);
+        }
+        CategoryPageCurrentStatus.categoryPageStatus = 1;
+        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
+        categoryFragmentTittleText.setText(R.string.categories_text);
+
+    }
+
+    public void setClickListenerForSubCategoryButton() {
+        subCategoryBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setSubCategoryBackButtonClickAction();
+            }
+        });
+    }
+
+    public void setSubCategoryBackButtonClickAction() {
+        categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+        CategoryPageCurrentStatus.categoryPageStatus = 1;
+        categoryFragmentTittleText.setText(R.string.categories_text);
+        subCategoryBackButton.setVisibility(View.GONE);
     }
 
 }

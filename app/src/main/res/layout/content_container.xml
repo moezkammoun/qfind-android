@@ -82,7 +82,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:paddingBottom="@dimen/padding_10"
                     android:paddingTop="@dimen/padding_10"
-                    android:src="@drawable/hamburger_menu" />
+                    android:src="@drawable/hamburger_menu_white" />
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 

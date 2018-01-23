@@ -39,6 +39,8 @@
         android:visibility="invisible"
         app:itemIconTint="@color/bottom_nav_style">
 
+
     </android.support.design.widget.BottomNavigationView>
 
 </RelativeLayout>
+

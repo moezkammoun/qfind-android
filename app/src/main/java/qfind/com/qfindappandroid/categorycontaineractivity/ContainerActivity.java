@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
-
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.AppConfig;
 import qfind.com.qfindappandroid.BaseActivity;
@@ -24,6 +23,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     Intent intent;
     String fragmentToShow;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         if (fragmentToShow.equals(AppConfig.Fragments.SEARCH_RESULTS.toString())) {
             fragment = new SearchResultsFragment();
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-
         } else if (fragmentToShow.equals(AppConfig.Fragments.SETTINGS.toString())) {
             fragment = new SettingsFragment();
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);

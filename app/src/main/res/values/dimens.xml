@@ -3,7 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="category_tittle_text">31sp</dimen>
+    <dimen name="settings_tittle_text_size">32sp</dimen>
     <dimen name="dialog_text_size">20sp</dimen>
+    <dimen name="select_language_text_size">24sp</dimen>
+    <dimen name="setting_button__text_size">35sp</dimen>
+
+    <dimen name="category_card_item_text_size">15sp</dimen>
+    <dimen name="sub_category_card_item_text_size">13sp</dimen>
+    <dimen name="sub_category_card_description_text_size">11sp</dimen>
+
     <dimen name="text_size_19sp">19sp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>

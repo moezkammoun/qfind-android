@@ -36,7 +36,7 @@
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/hamburger_menu" />
+                android:src="@drawable/hamburger_menu_white" />
         </RelativeLayout>
 
         <LinearLayout
@@ -177,7 +177,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="@dimen/padding_10"
             android:paddingTop="@dimen/padding_10"
-            android:src="@drawable/hamburger_menu" />
+            android:src="@drawable/hamburger_black" />
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

@@ -18,9 +18,11 @@ public class CategoryFragmentPresenterImpl {
     CategoryFragmentView categoryFragmentView;
     CategoryFragmentModel categoryFragmentModel;
     ArrayList<Page> adsImagesList;
+    RecyclerViewClickListener recyclerViewClickListener;
 
-    public CategoryFragmentPresenterImpl(CategoryFragmentView categoryFragmentView) {
+    public CategoryFragmentPresenterImpl(CategoryFragmentView categoryFragmentView,RecyclerViewClickListener recyclerViewClickListener) {
         this.categoryFragmentView = categoryFragmentView;
+        this.recyclerViewClickListener = recyclerViewClickListener;
 
     }
 
@@ -33,9 +35,16 @@ public class CategoryFragmentPresenterImpl {
 
     public void getCategoryItemsDetails(Context context) {
         categories = new ArrayList<>();
-        categoryItemAdapter = new CategoryItemAdapter(context, categories);
+        categoryItemAdapter = new CategoryItemAdapter(context, categories,recyclerViewClickListener);
         categoryFragmentView.setCategoryItemRecyclerView(categoryItemAdapter);
         categories.addAll(categoryFragmentModel.getCategoriesDetails());
+        categoryItemAdapter.notifyDataSetChanged();
+    }
+    public void getSubCategoryItemsDetails(Context context) {
+        categories = new ArrayList<>();
+        categoryItemAdapter = new CategoryItemAdapter(context, categories,recyclerViewClickListener);
+        categoryFragmentView.setCategoryItemRecyclerView(categoryItemAdapter);
+        categories.addAll(categoryFragmentModel.getSubCategoriesDetails());
         categoryItemAdapter.notifyDataSetChanged();
     }
 

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class HistoryFragment extends Fragment {
     Typeface mtypeFace;
     @BindView(R.id.history_title)
     TextView history;
+    @BindView(R.id.back_button)
+    ImageView backButton;
 
 
     public HistoryFragment() {
@@ -115,12 +118,8 @@ public class HistoryFragment extends Fragment {
             HistoryPageMainModel mainModel = new HistoryPageMainModel();
             mainModel.setDay(days.get(i));
             ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
-            for (int j = 0; j <2; j++) {
+            for (int j = 0; j <categoryItems.length; j++) {
                 singleItem.add(new HistoryPageDataModel(categoryItems[j],thumbnails[j],categoryItemsDescription[j]));
-//                singleItem.add(new HistoryPageDataModel("car service", R.drawable.car_service));
-//                singleItem.add(new HistoryPageDataModel("cloth_stores", R.drawable.cloth_stores));
-//                singleItem.add(new HistoryPageDataModel("dentist", R.drawable.dentist));
-//                singleItem.add(new HistoryPageDataModel("exterior_designers", R.drawable.exterior_designers));
             }
             mainModel.setHistoryPageDataModels(singleItem);
             arrayListMain.add(mainModel);
@@ -130,6 +129,13 @@ public class HistoryFragment extends Fragment {
         HistoryPageMainAdapter adapter = new HistoryPageMainAdapter(arrayListMain,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     public void setFontTypeForText() {
@@ -144,6 +150,7 @@ public class HistoryFragment extends Fragment {
         history.setTypeface(mtypeFace);
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -154,8 +161,5 @@ public class HistoryFragment extends Fragment {
         super.onDetach();
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }
