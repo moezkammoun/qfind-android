@@ -44,9 +44,11 @@
             android:layout_marginLeft="@dimen/search_results_padding"
             android:layout_marginRight="@dimen/search_results_padding"
             android:fadeScrollbars="false"
-            android:scrollbarSize="@dimen/padding_10"
+            android:scrollbarSize="@dimen/padding_50"
             android:scrollbarStyle="outsideInset"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:nestedScrollingEnabled="false"
+            />
 
         <ProgressBar
             android:id="@+id/progressBarLoading"
