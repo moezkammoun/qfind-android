@@ -1,6 +1,7 @@
 package qfind.com.qfindappandroid.historyPage;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
     private String day;
     private ArrayList<HistoryPageMainModel> dataList;
     private Context mContext;
+    Typeface mtypeFace;
 
 //    public HistoryPageMainAdapter() {
 //    }
@@ -32,7 +34,6 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
 
         this.dataList = dataList;
         this.mContext = mContext;
-        System.out.println("**main adapter");
     }
 
     public class ItemRowHolder extends RecyclerView.ViewHolder {
@@ -55,7 +56,20 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
     public HistoryPageMainAdapter.ItemRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_row_layout, null);
         ItemRowHolder itemRowHolder = new ItemRowHolder(v);
+        setFontTypeForText();
         return itemRowHolder;
+    }
+
+    public void setFontTypeForText() {
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
+                    "fonts/Lato-Bold.ttf");
+        }else {
+            mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
+
+
     }
 
     @Override
@@ -63,6 +77,7 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
 
         ArrayList singleSectionItems = dataList.get(position).getHistoryPageDataModels();
         HistoryPageDataAdapter historyPageDataAdapter = new HistoryPageDataAdapter(singleSectionItems, mContext);
+        holder.history_row_text.setTypeface(mtypeFace);
         holder.history_row_text.setText(dataList.get(position).getDay());
         holder.recycler_view_list.setHasFixedSize(true);
         holder.recycler_view_list.setLayoutManager
