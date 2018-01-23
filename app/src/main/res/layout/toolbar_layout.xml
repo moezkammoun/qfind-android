@@ -4,36 +4,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_height"
-    android:background="@drawable/toolbar_bg">
+    android:layout_height="wrap_content"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp">
 
     <LinearLayout
+        android:id="@+id/info_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_bg"
         android:orientation="vertical"
+        android:padding="@dimen/padding_20"
+        android:visibility="visible"
         android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/padding_20"
-            android:paddingEnd="@dimen/padding_20">
+            android:paddingEnd="@dimen/padding_5"
+            android:paddingStart="@dimen/padding_5">
 
             <ImageView
                 android:id="@+id/back_button"
-                android:layout_width="@dimen/image_width"
-                android:layout_height="@dimen/image_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/white_back"
-                />
+                app:srcCompat="@drawable/white_back_icon" />
 
             <ImageView
                 android:id="@+id/hamburger_menu"
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/hamburger_icon" />
-
+                android:src="@drawable/hamburger_menu_white" />
         </RelativeLayout>
 
         <LinearLayout
@@ -48,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textColor="@color/color_white"
                 android:text="@string/information_main_title"
-                android:textSize="@dimen/text_size" />
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/info_title_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                app:srcCompat="@drawable/share" />
+                app:srcCompat="@drawable/share_icon" />
 
             <TextView
                 android:layout_width="0dp"
@@ -77,10 +80,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:gravity="end"
-                android:textColor="@color/color_white"
                 android:singleLine="true"
-                android:textSize="@dimen/text_size_20"
-                android:text="@string/information_sub_title" />
+                android:text="@string/information_sub_title"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/text_size_20" />
 
         </LinearLayout>
 
@@ -94,9 +97,9 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".1"
                 android:layout_gravity="start"
-                app:srcCompat="@drawable/white_star" />
+                android:layout_weight=".1"
+                app:srcCompat="@drawable/star_icon" />
 
             <TextView
                 android:layout_width="0dp"
@@ -104,6 +107,77 @@
                 android:layout_weight=".9"
                 android:gravity="center" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/normal_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/toolbar_bg"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_10"
+        android:paddingEnd="@dimen/padding_10"
+        android:paddingStart="@dimen/padding_10"
+        android:paddingTop="@dimen/padding_10"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="72.82"
+            android:background="@drawable/edit_text_border"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/edit_text_bg"
+                android:ems="10"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete|textAutoCorrect"
+                android:paddingEnd="@dimen/home_hit_padding"
+                android:paddingStart="@dimen/home_hit_padding"
+                android:textColor="@color/black"
+                android:textColorHint="#cac9c9"
+                android:textSize="@dimen/toolbar_find_today_hint">
+
+            </AutoCompleteTextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:paddingBottom="@dimen/padding_5"
+                android:paddingTop="@dimen/padding_5"
+                android:src="@drawable/logo" />
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackground"
+                android:paddingBottom="@dimen/padding_10"
+                android:paddingTop="@dimen/padding_10"
+                android:src="@drawable/search" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/sideMenu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="22.5"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingBottom="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_10"
+            android:src="@drawable/hamburger_black" />
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

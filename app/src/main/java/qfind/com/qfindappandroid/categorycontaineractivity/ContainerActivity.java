@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.ArrayAdapter;
-
+import android.view.Gravity;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.AppConfig;
 import qfind.com.qfindappandroid.BaseActivity;
@@ -48,6 +47,14 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (fullView.isDrawerOpen(Gravity.END)) {
+            fullView.closeDrawer(Gravity.END);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public void onResume() {
