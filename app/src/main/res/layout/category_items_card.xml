@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/color_white"
-        card_view:cardMaxElevation="@dimen/padding_3"
         card_view:cardElevation="@dimen/padding_3"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardPreventCornerOverlap="false">
+        card_view:cardMaxElevation="@dimen/padding_3"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical">
+
                 <ImageView
                     android:id="@+id/category_thumbnail"
                     android:layout_width="@dimen/padding_40"
@@ -30,16 +31,42 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/main_category_card_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@color/color_white">
+                android:background="@color/color_white"
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/category_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/padding_5"
                     android:textAlignment="textStart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sub_category_card_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/sub_category_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/sub_category_item_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_3"
+                    android:gravity="center" />
             </LinearLayout>
 
 

@@ -87,33 +87,6 @@ public class ContainerActivity extends AppCompatActivity
     Boolean isSearchResults;
     ArrayAdapter<String> adapter;
 
-//<<<<<<< HEAD
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.favorite_categories_bottom_menu:
-////                    bottomNavigationMenu.findItem(R.id.qfind_us_menu).setIcon(R.drawable.ic_home_black_24dp);
-////                    bottomNavigationMenu.findItem(R.id.category_history_menu).setIcon(R.drawable.ic_home_black_24dp);
-//                    fragment = new CategoryFragment();
-//                    break;
-//                case R.id.qfind_us_menu:
-////                    fragment = new CategoryFragment();
-//                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
-//                    startActivity(intent);
-//                    break;
-//                case R.id.category_history_menu:
-//                    fragment = new HistoryFragment();
-//                    break;
-//            }
-//            if (fragment != null) {
-//                containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-//            }
-//            return true;
-//        }
-//=======
-//>>>>>>> master
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

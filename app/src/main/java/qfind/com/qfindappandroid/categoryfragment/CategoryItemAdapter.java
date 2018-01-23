@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -26,25 +27,49 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     private Context mContext;
     private List<Categories> categoriesList;
+    //private List<Categories> subCategoriesList;
+    private RecyclerViewClickListener mListener;
+    Categories categories;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Nullable
         @BindView(R.id.category_item)
         TextView categoryName;
         @Nullable
         @BindView(R.id.category_thumbnail)
         ImageView categoryThumbnail;
+        @Nullable
+        @BindView(R.id.main_category_card_item)
+        LinearLayout mainCategoryCardItemLayout;
+        @Nullable
+        @BindView(R.id.sub_category_card_item)
+        LinearLayout subCategoryCardItemLayout;
+        @Nullable
+        @BindView(R.id.sub_category_item_name)
+        TextView subCategoryName;
+        @Nullable
+        @BindView(R.id.sub_category_item_description)
+        TextView subCategoryDescription;
 
-        public MyViewHolder(View view) {
+
+        public MyViewHolder(View view,RecyclerViewClickListener listener) {
             super(view);
             ButterKnife.bind(this, view);
+            mListener = listener;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
         }
     }
 
 
-    public CategoryItemAdapter(Context mContext, List<Categories> categoriesList) {
+    public CategoryItemAdapter(Context mContext, List<Categories> categoriesList,RecyclerViewClickListener listener) {
         this.mContext = mContext;
         this.categoriesList = categoriesList;
+        this.mListener = listener;
     }
 
     @Override
@@ -52,7 +77,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.category_items_card, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new MyViewHolder(itemView,mListener);
     }
 
     @Override
@@ -66,10 +91,25 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-        holder.categoryName.setTypeface(mtypeFace);
+        if (CategoryPageCurrentStatus.categoryPageStatus==1){
+            holder.subCategoryCardItemLayout.setVisibility(View.GONE);
+            holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
+            holder.categoryName.setTypeface(mtypeFace);
+            categories = categoriesList.get(position);
+            holder.categoryName.setText(categories.getItem());
+            Picasso.with(mContext).load(categories.getThumbnail()).into(holder.categoryThumbnail);
 
-        Categories categories = categoriesList.get(position);
-        holder.categoryName.setText(categories.getItem());
+
+        }else {
+            holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
+            holder.subCategoryCardItemLayout.setVisibility(View.VISIBLE);
+            holder.subCategoryName.setTypeface(mtypeFace);
+            holder.subCategoryDescription.setTypeface(mtypeFace);
+            categories = categoriesList.get(position);
+            holder.subCategoryName.setText(categories.getSubCategoryName());
+            holder.subCategoryDescription.setText(categories.getSubCategoryDescription());
+            Picasso.with(mContext).load(categories.getThumbnail()).into(holder.categoryThumbnail);
+        }
         // loading album cover using Picasso library
         Picasso.with(mContext).load(categories.getThumbnail()).into(holder.categoryThumbnail);
 
