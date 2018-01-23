@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
@@ -32,7 +33,7 @@ import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivityPres
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivityView;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 
-public class InformationPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class InformationPage extends BaseActivity {
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
@@ -44,51 +45,51 @@ public class InformationPage extends AppCompatActivity implements NavigationView
     TextView mainTitle;
     @BindView(R.id.sub_title)
     TextView subTitle;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
-    @BindView(R.id.navigation)
-    BottomNavigationView navigation;
+//    @BindView(R.id.drawer_layout)
+//    DrawerLayout drawerLayout;
+//    @BindView(R.id.navigation)
+//    BottomNavigationView navigation;
     ArrayList<InformationPageModel> informationPages;
     ActionBarDrawerToggle toggle;
     Fragment fragment;
     Menu bottomNavigationMenu;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.favorite_categories_bottom_menu:
-//                    bottomNavigationMenu.findItem(R.id.qfind_us_menu).setIcon(R.drawable.ic_home_black_24dp);
-//                    bottomNavigationMenu.findItem(R.id.category_history_menu).setIcon(R.drawable.ic_home_black_24dp);
-//                    fragment = new CategoryFragment();
-                    Intent homeIntent= new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(homeIntent);
-                    break;
-                case R.id.qfind_us_menu:
-
-//                    fragment = new CategoryFragment();
-                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
-                    startActivity(intent);
-                    break;
-                case R.id.category_history_menu:
-//                    fragment = new CategoryFragment();
-                    Intent conteIntent= new Intent(getApplicationContext(), ContainerActivity.class);
-                    startActivity(conteIntent);
-                    break;
-            }
-            if (fragment != null) {
-//                containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-            return true;
-        }
-
-    };
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.favorite_categories_bottom_menu:
+////                    bottomNavigationMenu.findItem(R.id.qfind_us_menu).setIcon(R.drawable.ic_home_black_24dp);
+////                    bottomNavigationMenu.findItem(R.id.category_history_menu).setIcon(R.drawable.ic_home_black_24dp);
+////                    fragment = new CategoryFragment();
+//                    Intent homeIntent= new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(homeIntent);
+//                    break;
+//                case R.id.qfind_us_menu:
+//
+////                    fragment = new CategoryFragment();
+//                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
+//                    startActivity(intent);
+//                    break;
+//                case R.id.category_history_menu:
+////                    fragment = new CategoryFragment();
+//                    Intent conteIntent= new Intent(getApplicationContext(), ContainerActivity.class);
+//                    startActivity(conteIntent);
+//                    break;
+//            }
+//            if (fragment != null) {
+////                containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_container, fragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//            return true;
+//        }
+//
+//    };
 
 
     @Override
@@ -101,35 +102,30 @@ public class InformationPage extends AppCompatActivity implements NavigationView
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(false);
-        toggle.syncState();
-        bottomNavigationMenu = navigation.getMenu();
-        bottomNavigationMenu.findItem(R.id.favorite_categories_bottom_menu)
-                .setIcon(R.drawable.ic_home_black_24dp);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawerLayout.setDrawerListener(toggle);
+//        toggle.setDrawerIndicatorEnabled(false);
+//        toggle.syncState();
+//        bottomNavigationMenu = navigation.getMenu();
+//        bottomNavigationMenu.findItem(R.id.favorite_categories_bottom_menu)
+//                .setIcon(R.drawable.ic_home_black_24dp);
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawerLayout.isDrawerOpen(Gravity.END)) {
-                    drawerLayout.closeDrawer(Gravity.END);
-                } else {
-                    drawerLayout.openDrawer(Gravity.END);
-                }
-            }
+                drawerOpenCloseHandler();}
         });
 
 
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // hide back button
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                // show hamberger icon
-                toggle.syncState();
-            }
-        });
+//        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // hide back button
+//                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+////                // show hamberger icon
+//                toggle.syncState();
+//            }
+//        });
 
 
 //        mainTitle.setText("Thiruvananthapuram Museum");
@@ -137,18 +133,18 @@ public class InformationPage extends AppCompatActivity implements NavigationView
 
         informationPages = new ArrayList<>();
 
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "qwerty", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "asdfg", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "123454", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "fgfdg", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "ggfkyw", R.drawable.ic_menu_send));
-        informationPages.add(new InformationPageModel(R.drawable.ic_menu_gallery,
-                R.drawable.ic_menu_camera, "ywrtiyq", R.drawable.ic_menu_send));
+        informationPages.add(new InformationPageModel(R.drawable.phone_icon,
+                R.drawable.dot_icon, "00974 5551 5566", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.web_icon,
+                R.drawable.dot_icon, "www.4season.com", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.location_icon,
+                R.drawable.dot_icon, "Doha", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.clock_icon,
+                R.drawable.dot_icon, "9:30 am-6:30 pm", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.mail_icon,
+                R.drawable.dot_icon, "mo@hotmail.com", R.drawable.right_arrow));
+        informationPages.add(new InformationPageModel(R.drawable.facebook_icon,
+                R.drawable.dot_icon, "4season", R.drawable.right_arrow));
 
 
 
@@ -172,8 +168,8 @@ public class InformationPage extends AppCompatActivity implements NavigationView
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.END)) {
-            drawerLayout.closeDrawer(Gravity.END);
+        if (fullView.isDrawerOpen(Gravity.END)) {
+            fullView.closeDrawer(Gravity.END);
         } else {
             super.onBackPressed();
         }
@@ -194,13 +190,13 @@ public class InformationPage extends AppCompatActivity implements NavigationView
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.END);
-        return true;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.END);
+//        return true;
+//    }
 
 
 //    @Override

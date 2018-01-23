@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
@@ -52,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView sideMenuSettingsTxt;
     Toolbar toolbar;
     Fragment fragment;
-    DrawerLayout fullView;
+    protected DrawerLayout fullView;
     ImageView sideMenuHamburger, hamburger;
     ArrayAdapter<String> adapter;
     ImageView searchButton;
@@ -161,7 +162,7 @@ public class BaseActivity extends AppCompatActivity {
                     fragment = new CategoryFragment();
                     break;
                 case R.id.qfind_us_menu:
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), InformationPage.class);
                     startActivity(intent);
                     break;
                 case R.id.category_history_menu:

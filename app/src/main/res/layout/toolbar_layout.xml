@@ -16,7 +16,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/padding_20"
             android:paddingEnd="@dimen/padding_20">
 
             <ImageView
@@ -24,15 +23,14 @@
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/white_back"
-                />
+                app:srcCompat="@drawable/white_back" />
 
             <ImageView
                 android:id="@+id/hamburger_menu"
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/hamburger_icon" />
+                android:src="@drawable/hamburger_menu" />
         </RelativeLayout>
 
         <LinearLayout
@@ -47,9 +45,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textColor="@color/color_white"
                 android:text="@string/information_main_title"
-                android:textSize="@dimen/text_size" />
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/info_title_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                app:srcCompat="@drawable/share" />
+                app:srcCompat="@drawable/share_icon" />
 
             <TextView
                 android:layout_width="0dp"
@@ -76,10 +74,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:gravity="end"
-                android:textColor="@color/color_white"
                 android:singleLine="true"
-                android:textSize="@dimen/text_size_20"
-                android:text="@string/information_sub_title" />
+                android:text="@string/information_sub_title"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/text_size_20" />
 
         </LinearLayout>
 
@@ -93,9 +91,9 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".1"
                 android:layout_gravity="start"
-                app:srcCompat="@drawable/white_star" />
+                android:layout_weight=".1"
+                app:srcCompat="@drawable/star_icon" />
 
             <TextView
                 android:layout_width="0dp"
