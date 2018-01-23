@@ -6,17 +6,17 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -24,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
@@ -87,33 +87,6 @@ public class ContainerActivity extends AppCompatActivity
     Boolean isSearchResults;
     ArrayAdapter<String> adapter;
 
-//<<<<<<< HEAD
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.favorite_categories_bottom_menu:
-////                    bottomNavigationMenu.findItem(R.id.qfind_us_menu).setIcon(R.drawable.ic_home_black_24dp);
-////                    bottomNavigationMenu.findItem(R.id.category_history_menu).setIcon(R.drawable.ic_home_black_24dp);
-//                    fragment = new CategoryFragment();
-//                    break;
-//                case R.id.qfind_us_menu:
-////                    fragment = new CategoryFragment();
-//                    Intent intent= new Intent(getApplicationContext(), InformationPage.class);
-//                    startActivity(intent);
-//                    break;
-//                case R.id.category_history_menu:
-//                    fragment = new HistoryFragment();
-//                    break;
-//            }
-//            if (fragment != null) {
-//                containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-//            }
-//            return true;
-//        }
-//=======
-//>>>>>>> master
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +143,6 @@ public class ContainerActivity extends AppCompatActivity
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);
         }
     }
-
 
     @Override
     public void onBackPressed() {

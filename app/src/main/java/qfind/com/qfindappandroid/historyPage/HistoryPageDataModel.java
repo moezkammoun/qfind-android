@@ -9,13 +9,15 @@ public class HistoryPageDataModel {
     String pageName;
     //    String url;
     int images;
+    String description;
 
     public HistoryPageDataModel() {
     }
 
-    public HistoryPageDataModel(String pageName, int images) {
+    public HistoryPageDataModel(String pageName, int images, String description) {
         this.pageName = pageName;
         this.images = images;
+        this.description = description;
     }
 
 //    public HistoryPageDataModel(String pageName, String url, int images) {
@@ -47,4 +49,13 @@ public class HistoryPageDataModel {
 //    public void setUrl(String url) {
 //        this.url = url;
 //    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
