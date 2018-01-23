@@ -26,8 +26,9 @@
 
                 <ImageView
                     android:id="@+id/category_thumbnail"
-                    android:layout_width="@dimen/padding_40"
-                    android:layout_height="@dimen/padding_40" />
+                    android:layout_width="@dimen/padding_50"
+                    android:layout_height="@dimen/padding_50"
+                    android:scaleType="fitXY" />
             </LinearLayout>
 
             <LinearLayout
@@ -43,30 +44,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/padding_5"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/category_card_item_text_size" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/sub_category_card_item"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/color_white"
-                android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/sub_category_item_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center" />
+                   android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/sub_category_card_item_text_size" />
 
                 <TextView
                     android:id="@+id/sub_category_item_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_3"
-                    android:gravity="center" />
+                    android:layout_marginTop="@dimen/padding_1"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/sub_category_card_item_text_size" />
+
             </LinearLayout>
 
 

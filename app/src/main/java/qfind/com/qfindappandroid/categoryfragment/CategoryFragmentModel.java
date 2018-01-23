@@ -66,33 +66,40 @@ public class CategoryFragmentModel {
     public List<Categories> getSubCategoriesDetails() {
 
         String[] subCategoryItems = new String[]{
-                "Ministries",
-                "Restaurants",
-                "Exterior Designers",
-                "Hospitals",
-                "Clothing Stores",
-                "Hypermarkets",
-                "Hotels and Resorts",
-                "Interior Designers",
-                "Car Service",
-                "Shopping malls",
-                "toy stores",
-                "Dentist"
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel"
+
 
         };
         String[] subCategoryItemsDescription = new String[]{
-                "Ministries",
-                "Restaurants",
-                "Exterior Designers",
-                "Hospitals",
-                "Clothing Stores",
-                "Hypermarkets",
-                "Hotels and Resorts",
-                "Interior Designers",
-                "Car Service",
-                "Shopping malls",
-                "toy stores",
-                "Dentist"
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor,",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor"
 
         };
         int[] thumbnails = new int[]{
@@ -112,7 +119,7 @@ public class CategoryFragmentModel {
         };
         Categories categories;
         categoriesList = new ArrayList<>();
-        for (int i = 0; i < subCategoryItems.length; i++) {
+        for (int i = 0; i < thumbnails.length; i++) {
             categories= new Categories( subCategoryItems[i],subCategoryItemsDescription[i],thumbnails[i]);
             categoriesList.add(categories);
         }

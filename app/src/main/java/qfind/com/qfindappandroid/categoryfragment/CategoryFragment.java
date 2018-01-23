@@ -27,6 +27,7 @@ import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
+import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
@@ -70,15 +71,15 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setupRecyclerViewClickListener();
-        initialSetUp();
         setFontTypeForText();
+        initialSetUp();
         mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
 
         categoryFragmentPresenterImpl.getImagesForAds();
         if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
             categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
         } else {
-            categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
+            //categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
         }
     }
 
@@ -185,15 +186,18 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     categoryFragmentTittleText.setText(R.string.sub_categoies_text);
                     subCategoryBackButton.setVisibility(View.VISIBLE);
                     setClickListenerForSubCategoryButton();
-                } else {
-
+                } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+                    Intent intent = new Intent(getActivity(), InformationPage.class);
+                    startActivity(intent);
                 }
             }
         };
     }
 
     public void initialSetUp() {
-        subCategoryBackButton.setVisibility(View.GONE);
+        if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
+            subCategoryBackButton.setVisibility(View.GONE);
+        }
         CategoryPageCurrentStatus.categoryPageStatus = 1;
         categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
         categoryFragmentTittleText.setText(R.string.categories_text);

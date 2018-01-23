@@ -43,6 +43,7 @@
     <string name="history_text">History</string>
     <string name="title_activity_contain">ContainActivity</string>
     <string name="search_results_text">Search Results</string>
+    <string name="favorites_text">Favorites</string>
     <string name="no_data_text">No data</string>
 
 </resources>
