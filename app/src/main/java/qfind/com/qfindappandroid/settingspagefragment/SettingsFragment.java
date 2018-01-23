@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.MainActivity;
@@ -29,7 +32,13 @@ public class SettingsFragment extends Fragment {
     Button arabicButton;
     @BindView(R.id.back_button)
     ImageView backButton;
+    @BindView(R.id.setting_text)
+    TextView settingsText;
+    @BindView(R.id.select_language_text)
+    TextView selectLanguageText;
     Locale myLocale;
+    public Typeface mtypeFace;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -51,31 +60,8 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        arabicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getResources().getConfiguration().locale.getLanguage().equals("en"))
-                    showDialog("ar");
-                else
-                    Toast.makeText(getContext(), getResources().getString(R.string.already_english), Toast.LENGTH_SHORT).show();
-            }
-        });
-        englishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getResources().getConfiguration().locale.getLanguage().equals("ar"))
-                    showDialog("en");
-                else
-                    Toast.makeText(getContext(), getResources().getString(R.string.already_english), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+        setButtonClickListener();
+        setFontTypeForText();
     }
 
     public void setLocale(String lang) {
@@ -93,7 +79,7 @@ public class SettingsFragment extends Fragment {
         //this.finish();
         //startActivity(refresh);
         refreshActivityFromFragment();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               refreshFragment();
+        //refreshFragment();
     }
 
     public void refreshActivityFromFragment() {
@@ -144,6 +130,54 @@ public class SettingsFragment extends Fragment {
         dialog.show();
     }
 
+    public void setButtonClickListener() {
+        arabicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getResources().getConfiguration().locale.getLanguage().equals("en"))
+                    showDialog("ar");
+                else
+                    Toast.makeText(getContext(), getResources().getString(R.string.already_english), Toast.LENGTH_SHORT).show();
+            }
+        });
+        englishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getResources().getConfiguration().locale.getLanguage().equals("ar"))
+                    showDialog("en");
+                else
+                    Toast.makeText(getContext(), getResources().getString(R.string.already_english), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
+    }
+
+    public void setFontTypeForText() {
+        mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/GE_SS_Unique_Light.otf");
+        arabicButton.setTypeface(mtypeFace);
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Lato-Bold.ttf");
+            settingsText.setTypeface(mtypeFace);
+            mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Lato-Light.ttf");
+        } else {
+            mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
+
+        selectLanguageText.setTypeface(mtypeFace);
+        englishButton.setTypeface(mtypeFace);
+
+    }
 
 
 }

@@ -33,6 +33,7 @@
                 android:layout_height="@dimen/image_height"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/hamburger_icon" />
+
         </RelativeLayout>
 
         <LinearLayout

@@ -63,6 +63,67 @@ public class CategoryFragmentModel {
         }
         return categoriesList;
     }
+    public List<Categories> getSubCategoriesDetails() {
 
+        String[] subCategoryItems = new String[]{
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel",
+                "Four Season Hotel"
+
+
+        };
+        String[] subCategoryItemsDescription = new String[]{
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor,",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor",
+                "Lorem ipsum dolor"
+
+        };
+        int[] thumbnails = new int[]{
+                R.drawable.car_service,
+                R.drawable.cloth_stores,
+                R.drawable.dentist,
+                R.drawable.exterior_designers,
+                R.drawable.hypermarket,
+                R.drawable.interior_designers,
+                R.drawable.restaurents,
+                R.drawable.toy_store,
+                R.drawable.car_service,
+                R.drawable.cloth_stores,
+                R.drawable.dentist,
+                R.drawable.car_service,
+                R.drawable.cloth_stores
+        };
+        Categories categories;
+        categoriesList = new ArrayList<>();
+        for (int i = 0; i < thumbnails.length; i++) {
+            categories= new Categories( subCategoryItems[i],subCategoryItemsDescription[i],thumbnails[i]);
+            categoriesList.add(categories);
+        }
+        return categoriesList;
+    }
 
 }

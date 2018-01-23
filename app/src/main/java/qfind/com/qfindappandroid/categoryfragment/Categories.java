@@ -7,6 +7,8 @@ package qfind.com.qfindappandroid.categoryfragment;
 public class Categories {
     private String item;
     private int thumbnail;
+    private String subCategoryName;
+    private String subCategoryDescription;
 
     public Categories() {
     }
@@ -15,11 +17,17 @@ public class Categories {
         this.item = item;
         this.thumbnail = thumbnail;
     }
+    public Categories(String subCategoryName, String subCategoryDescription,int thumbnail) {
+        this.subCategoryName = subCategoryName;
+        this.subCategoryDescription = subCategoryDescription;
+        this.thumbnail = thumbnail;
+    }
 
     public String getItem() {
         return item;
     }
-
+    public String getSubCategoryName(){return subCategoryName;}
+    public String getSubCategoryDescription(){return subCategoryDescription;}
     public void setItem(String item) {
         this.item = item;
     }

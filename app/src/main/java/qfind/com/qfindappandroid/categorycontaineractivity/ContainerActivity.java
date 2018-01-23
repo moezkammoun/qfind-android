@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.ArrayAdapter;
 
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.AppConfig;
@@ -21,11 +22,8 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     ContainerActivityPresenter containerActivityPresenter = new ContainerActivityPresenter();
     Fragment fragment;
     Intent intent;
-    //<<<<<<< HEAD
-//    Boolean isSearchResults;
-//    ArrayAdapter<String> adapter;
-//=======
     String fragmentToShow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +37,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         if (fragmentToShow.equals(AppConfig.Fragments.SEARCH_RESULTS.toString())) {
             fragment = new SearchResultsFragment();
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-//<<<<<<<HEAD
-//        }
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        if (drawer.isDrawerOpen(GravityCompat.END)) {
-//            drawer.closeDrawer(GravityCompat.END);
-//        } else {
-//            super.onBackPressed();
-//=======
         } else if (fragmentToShow.equals(AppConfig.Fragments.SETTINGS.toString())) {
             fragment = new SettingsFragment();
             containerActivityPresenter.loadFragmentOnButtonClick(fragment);
