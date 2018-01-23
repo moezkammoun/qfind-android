@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
@@ -158,7 +159,7 @@ public class BaseActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
-                    fragment = new CategoryFragment();
+                    fragment = new FavoriteFragment();
                     break;
                 case R.id.qfind_us_menu:
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
