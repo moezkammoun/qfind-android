@@ -36,11 +36,9 @@ import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFrag
 public class BaseActivity extends AppCompatActivity {
 
 
-    LinearLayout sideMenuAboutUsLayout;
-    LinearLayout sideMenuQFinderLayout;
-    LinearLayout sideMenuTermsAndConditionLayout;
-    LinearLayout sideMenuContactUsLayout;
-    LinearLayout sideMenuSettingsLayout;
+    protected LinearLayout sideMenuAboutUsLayout, sideMenuQFinderLayout, sideMenuTermsAndConditionLayout,
+            sideMenuContactUsLayout, sideMenuSettingsLayout;
+
     TextView sideMenuTittleTxt;
 
     TextView sideMenuAboutUsTxt;
@@ -162,7 +160,7 @@ public class BaseActivity extends AppCompatActivity {
                     fragment = new CategoryFragment();
                     break;
                 case R.id.qfind_us_menu:
-                    Intent intent = new Intent(getApplicationContext(), InformationPage.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.category_history_menu:

@@ -11,14 +11,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey">
-
-        <include layout="@layout/toolbar_layout"></include>
+        android:background="@color/categories_background_color">
 
         <LinearLayout
+            android:id="@+id/info_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/toolbar_layout"></include>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/info_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/padding_30">
+            android:layout_above="@id/navigation"
+            android:padding="@dimen/padding_30"
+            android:visibility="visible">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -35,23 +44,24 @@
         </LinearLayout>
 
         <FrameLayout
-            android:visibility="gone"
             android:id="@+id/frame_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/dummy_navigation"
-            android:layout_below="@id/dummy_appBarLayout" />
+            android:layout_above="@id/navigation"
+            android:layout_below="@id/info_toolbar_layout"
+            android:visibility="visible" />
 
         <android.support.design.widget.BottomNavigationView
-            android:id="@+id/dummy_navigation"
+            android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/color_white"
-            android:visibility="invisible"
-            app:itemIconTint="@color/bottom_nav_style">
+            app:itemIconTint="@color/bottom_nav_style"
+            app:menu="@menu/navigation">
 
         </android.support.design.widget.BottomNavigationView>
+
 
 
     </RelativeLayout>
