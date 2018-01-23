@@ -110,7 +110,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="@color/color_dark_gray"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         android:theme="@style/NavigationViewCustomColor"
         app:itemTextColor="@color/color_white">
 
