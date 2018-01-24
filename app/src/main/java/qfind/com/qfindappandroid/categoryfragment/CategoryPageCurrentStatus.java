@@ -5,5 +5,5 @@ package qfind.com.qfindappandroid.categoryfragment;
  */
 
 public class CategoryPageCurrentStatus {
-    public static int categoryPageStatus;
+    public static int categoryPageStatus = 1;
 }

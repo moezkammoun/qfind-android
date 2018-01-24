@@ -68,6 +68,7 @@ public class BaseActivity extends AppCompatActivity {
     Typeface mTypeFace;
     LinearLayout infoToolbar, normalToolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +92,6 @@ public class BaseActivity extends AppCompatActivity {
         fullView.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
-        //navigationView = (NavigationView) fullView.findViewById(R.id.nav_view);
-        //setNavigationViewSize();
         sideMenuAboutUsLayout = (LinearLayout) fullView.findViewById(R.id.about_us_layout);
         sideMenuQFinderLayout = (LinearLayout) fullView.findViewById(R.id.qfinder_layout);
         sideMenuTermsAndConditionLayout = (LinearLayout) fullView.findViewById(R.id.terms_and_condition_layout);
@@ -102,6 +101,7 @@ public class BaseActivity extends AppCompatActivity {
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteEditText);
         searchButton = (ImageView) findViewById(R.id.search_icon);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setItemIconTintList(null);
         hamburger = (ImageView) findViewById(R.id.sideMenu);
         sideMenuTittleTxt = (TextView) findViewById(R.id.side_menu_tittle_txt);
         sideMenuAboutUsTxt = (TextView) findViewById(R.id.side_menu_about_us_txt);
@@ -339,21 +339,6 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuTermAndConditionTxt.setTypeface(mTypeFace);
         sideMenuContactUsTxt.setTypeface(mTypeFace);
         sideMenuSettingsTxt.setTypeface(mTypeFace);
-    }
-
-    public void setNavigationViewSize() {
-//        Rect rectangle = new Rect();
-//        Window window = getWindow();
-//        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-//        int statusBarHeight = rectangle.top;
-////        int contentViewTop =
-////                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-////        int titleBarHeight= contentViewTop - statusBarHeight;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//            params.setMargins(0, statusBarHeight, 0, 0);
-//            navigationView.setLayoutParams(params);
-//        }
     }
 
 }

@@ -2,10 +2,12 @@ package qfind.com.qfindappandroid.settingspagefragment;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -74,6 +76,11 @@ public class SettingsFragment extends Fragment {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+
+        SharedPreferences qfindPreferences= PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = qfindPreferences.edit();
+        editor.putString("AppLanguage",lang);
+        editor.commit();
         //Intent refresh = new Intent(MainActivity.this, MainActivity.class);
         //this.overridePendingTransition(0,0);
         //this.finish();
