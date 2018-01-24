@@ -101,6 +101,7 @@ public class BaseActivity extends AppCompatActivity {
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteEditText);
         searchButton = (ImageView) findViewById(R.id.search_icon);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setItemIconTintList(null);
         hamburger = (ImageView) findViewById(R.id.sideMenu);
         sideMenuTittleTxt = (TextView) findViewById(R.id.side_menu_tittle_txt);
         sideMenuAboutUsTxt = (TextView) findViewById(R.id.side_menu_about_us_txt);

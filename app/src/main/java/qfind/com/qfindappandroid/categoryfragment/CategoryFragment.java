@@ -1,6 +1,6 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -16,11 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
@@ -69,18 +66,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
         ButterKnife.bind(this, view);
         setupRecyclerViewClickListener();
         setFontTypeForText();
         initialSetUp();
-        mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
+        setClickListenerForSubCategoryButton();
 
-        categoryFragmentPresenterImpl.getImagesForAds();
-        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
-            categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
-        } else {
-            //categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
-        }
     }
 
 
@@ -185,22 +177,39 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     CategoryPageCurrentStatus.categoryPageStatus = 2;
                     categoryFragmentTittleText.setText(R.string.sub_categoies_text);
                     subCategoryBackButton.setVisibility(View.VISIBLE);
-                    setClickListenerForSubCategoryButton();
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
                     Intent intent = new Intent(getActivity(), InformationPage.class);
                     startActivity(intent);
+
                 }
             }
         };
     }
 
     public void initialSetUp() {
-        if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
-            subCategoryBackButton.setVisibility(View.GONE);
+        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+            if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
+                subCategoryBackButton.setVisibility(View.GONE);
+            }
+            categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
+            categoryFragmentTittleText.setText(R.string.categories_text);
+            categoryFragmentPresenterImpl.getImagesForAds();
+            categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+
+        } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+            if (subCategoryBackButton.getVisibility() == View.GONE) {
+                subCategoryBackButton.setVisibility(View.VISIBLE);
+            }
+            categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
+            categoryFragmentTittleText.setText(R.string.sub_categoies_text);
+            categoryFragmentPresenterImpl.getImagesForAds();
+            categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
         }
-        CategoryPageCurrentStatus.categoryPageStatus = 1;
-        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
-        categoryFragmentTittleText.setText(R.string.categories_text);
+
+
+
+
+
 
     }
 

@@ -104,6 +104,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                 navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
                 startActivity(navigationIntent);
+                finish();
             }
         });
 

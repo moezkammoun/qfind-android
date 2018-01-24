@@ -60,6 +60,8 @@ public class InformationPage extends BaseActivity {
     BottomNavigationView navigation;
     @BindView(R.id.normal_toolbar)
     LinearLayout normalToolbar;
+    @BindView(R.id.back_button)
+    ImageView backButton;
     @BindView(R.id.info_toolbar)
     LinearLayout infoToolbar;
     @BindView(R.id.info_container)
@@ -113,6 +115,7 @@ public class InformationPage extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information_page);
         ButterKnife.bind(this);
+        setBackButtonClickListener();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -271,5 +274,18 @@ public class InformationPage extends BaseActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+    public void setBackButtonClickListener(){
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(InformationPage.this, ContainerActivity.class);
+//                startActivity(intent);
+//                finish();
+                onBackPressed();
+            }
+        });
+
+    }
+
 }
 

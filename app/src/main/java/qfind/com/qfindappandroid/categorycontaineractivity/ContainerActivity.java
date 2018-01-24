@@ -11,6 +11,7 @@ import qfind.com.qfindappandroid.AppConfig;
 import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -29,7 +30,9 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
-        containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
+
+        //containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
+        loadFirstFrgmentWithoutBackStack(new CategoryFragment());
 
         intent = getIntent();
         fragmentToShow = intent.getStringExtra("SHOW_FRAGMENT");
@@ -51,7 +54,11 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onBackPressed() {
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
-        } else {
+        } else if(CategoryPageCurrentStatus.categoryPageStatus==2){
+          //  ((CategoryFragment) fragment).setSubCategoryBackButtonClickAction();
+            CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+            fragment.setSubCategoryBackButtonClickAction();
+        }else {
             super.onBackPressed();
         }
     }
@@ -66,6 +73,12 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void loadFirstFrgmentWithoutBackStack(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
 

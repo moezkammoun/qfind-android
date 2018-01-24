@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="find_by_category">تجد حسب الفئات</string>
-    <string name="categories_text">الاقسام</string>
-    <string name="already_english">كنت بالفعل باللغة الإنجليزية</string>
-    <string name="search_results_text">نتيجة البحث</string>
-    <string name="search_hint">ما تريد أن تجد اليوم؟</string>
+
+    <string name="qfind_of_the_day">كيوفايند اليوم</string>
+    <string name="search_hint">ماذا تريد أن تجد اليوم؟</string>
+    <string name="or">أو</string>
+    <string name="find_by_category">ابحث بالفئة</string>
+    <string name="action_settings">الإعدادات</string>
+    <string name="about_us">معلومات عنا</string>
+    <string name="how_to_become_qfinder">كيف تكون كيوفايندر</string>
+    <string name="terms_and_conditions">الشروط والأحكام</string>
+    <string name="menu">القائمة</string>
+    <string name="contact_us">لتجدنا</string>
+    <string name="settings">الإعدادات</string>
+    <string name="arabic">عربى</string>
+    <string name="today">اليوم</string>
+    <string name="yesterday">الأمس</string>
+    <string name="select_language">اختيار اللغة</string>
+    <string name="categories_text">الفئات</string>
+    <string name="history_text">تاريخ البحث</string>
+    <string name="title_activity_contain">ContainActivity</string>
+    <string name="search_results_text">نتائج البحث</string>
+    <string name="favorites_text">المفضلة</string>
+
+
+    <!--<string name="app_name">QFindAppandroid</string>-->
+    <string name="english">English</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="already_english">you are already in english</string>
+    <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
+    <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
+   </string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sub_categoies_text">Hotel</string>
+    <string name="no_data_text">No data</string>
 </resources>
