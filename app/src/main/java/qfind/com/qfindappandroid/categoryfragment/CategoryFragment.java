@@ -27,7 +27,6 @@ import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
-import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
@@ -187,8 +186,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     subCategoryBackButton.setVisibility(View.VISIBLE);
                     setClickListenerForSubCategoryButton();
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
-                    Intent intent = new Intent(getActivity(), InformationPage.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getActivity(), InformationPage.class);
+//                    startActivity(intent);
                 }
             }
         };

@@ -29,10 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import qfind.com.qfindappandroid.InformationPage.InformationPage;
-import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -57,17 +56,17 @@ public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
-    ImageView sideMenuHamburger, hamburger;
+    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton;
     ArrayAdapter<String> adapter;
     ImageView searchButton;
-    AutoCompleteTextView autoCompleteTextView;
+    protected AutoCompleteTextView autoCompleteTextView;
     View keyboard;
     InputMethodManager imm;
     BottomNavigationView bottomNavigationView;
     FrameLayout activityContainer;
     ActionBarDrawerToggle toggle;
     Typeface mTypeFace;
-    //NavigationView navigationView;
+    LinearLayout infoToolbar, normalToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +109,10 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuTermAndConditionTxt = (TextView) findViewById(R.id.side_menu_terms_condition_txt);
         sideMenuContactUsTxt = (TextView) findViewById(R.id.side_menu_contact_us_txt);
         sideMenuSettingsTxt = (TextView) findViewById(R.id.side_menu_settings_txt);
+        infoHamburger = (ImageView) findViewById(R.id.hamburger_info);
+        infoToolbar = (LinearLayout) findViewById(R.id.info_toolbar);
+        normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
+        infoBackButton = (ImageView) findViewById(R.id.back_button_info);
 
         setupSideMenuItemClickListener();
         setFontTypeForText();
@@ -127,6 +130,18 @@ public class BaseActivity extends AppCompatActivity {
                 drawerOpenCloseHandler();
             }
         });
+        infoHamburger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerOpenCloseHandler();
+            }
+        });
+        infoBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         String[] FINDINGS = new String[]{
                 "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
                 "Restaurant", "الفندق", "الفندق", "الفندق"
@@ -140,7 +155,6 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!autoCompleteTextView.getText().toString().equals("")) {
-                    Toast.makeText(BaseActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
                     keyboard = getCurrentFocus();
                     if (keyboard != null) {
                         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -148,6 +162,8 @@ public class BaseActivity extends AppCompatActivity {
                     }
                     fragment = new SearchResultsFragment();
                     loadFragment(fragment);
+                } else {
+                    Toast.makeText(BaseActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -170,6 +186,7 @@ public class BaseActivity extends AppCompatActivity {
                 case R.id.qfind_us_menu:
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    fragment = null;
                     break;
                 case R.id.category_history_menu:
                     fragment = new HistoryFragment();
@@ -177,11 +194,29 @@ public class BaseActivity extends AppCompatActivity {
             }
             if (fragment != null) {
                 loadFragment(fragment);
+                showNormalToolbar();
             }
             return true;
         }
 
     };
+
+    @Override
+    public void onBackPressed() {
+        if (fullView.isDrawerOpen(Gravity.END)) {
+            fullView.closeDrawer(Gravity.END);
+        } else {
+            if (autoCompleteTextView.getText() != null) {
+                autoCompleteTextView.setText(null);
+                autoCompleteTextView.clearFocus();
+            }
+            if (getCurrentFragment() instanceof InformationFragment)
+                showInfoToolbar();
+            else
+                showNormalToolbar();
+            super.onBackPressed();
+        }
+    }
 
     protected boolean useToolbar() {
         return true;
@@ -204,12 +239,14 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                showNormalToolbar();
             }
         });
         sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                showNormalToolbar();
             }
         });
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
@@ -221,38 +258,69 @@ public class BaseActivity extends AppCompatActivity {
                     BaseActivity.this.fragment = new TermsandConditionFragment();
                     loadFragment(BaseActivity.this.fragment);
                 }
-
                 fullView.closeDrawer(GravityCompat.END);
+                showNormalToolbar();
             }
         });
         sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                if (!(fragment instanceof InformationFragment)) {
+                    BaseActivity.this.fragment = new InformationFragment();
+                    loadFragment(BaseActivity.this.fragment);
+                }
                 fullView.closeDrawer(GravityCompat.END);
+                showInfoToolbar();
             }
         });
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 if (!(fragment instanceof SettingsFragment)) {
                     BaseActivity.this.fragment = new SettingsFragment();
                     loadFragment(BaseActivity.this.fragment);
                 }
-
                 fullView.closeDrawer(GravityCompat.END);
+                showNormalToolbar();
             }
         });
 
     }
 
+    public void showInfoToolbar() {
+        normalToolbar.setVisibility(View.GONE);
+        infoToolbar.setVisibility(View.VISIBLE);
+    }
+
+    public void showNormalToolbar() {
+        normalToolbar.setVisibility(View.VISIBLE);
+        infoToolbar.setVisibility(View.GONE);
+    }
+
+
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
         transaction.addToBackStack(null);
         transaction.commit();
+        if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
+            autoCompleteTextView.setText(null);
+            autoCompleteTextView.clearFocus();
+        }
+    }
+
+    protected int getFragmentCount() {
+        return getSupportFragmentManager().getBackStackEntryCount();
+    }
+
+    private Fragment getFragmentAt(int index) {
+        return getFragmentCount() > 0 ? getSupportFragmentManager().findFragmentByTag(Integer.toString(index)) : null;
+    }
+
+    protected Fragment getCurrentFragment() {
+        return getFragmentAt(getFragmentCount() - 2);
     }
 
     public void setFontTypeForText() {
@@ -272,7 +340,8 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuContactUsTxt.setTypeface(mTypeFace);
         sideMenuSettingsTxt.setTypeface(mTypeFace);
     }
-    public void setNavigationViewSize(){
+
+    public void setNavigationViewSize() {
 //        Rect rectangle = new Rect();
 //        Window window = getWindow();
 //        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
