@@ -12,6 +12,7 @@ import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -56,10 +57,14 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
         } else if(CategoryPageCurrentStatus.categoryPageStatus==2){
-          //  ((CategoryFragment) fragment).setSubCategoryBackButtonClickAction();
-            CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-            fragment.setSubCategoryBackButtonClickAction();
-        }else {
+            fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+            if ((fragment instanceof InformationFragment)) {
+                super.onBackPressed();
+            }else if ((fragment instanceof CategoryFragment)){
+                CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                fragment.setSubCategoryBackButtonClickAction();
+            }
+          }else {
             super.onBackPressed();
         }
     }
@@ -82,5 +87,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
+
 
 }

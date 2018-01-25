@@ -67,6 +67,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setLocale(String lang) {
+        int language = 1;
         Configuration configuration = getResources().getConfiguration();
         configuration.setLayoutDirection(new Locale(lang));
         getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
@@ -76,18 +77,22 @@ public class SettingsFragment extends Fragment {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-
-        SharedPreferences qfindPreferences= PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = qfindPreferences.edit();
-        editor.putString("AppLanguage",lang);
-        editor.commit();
-        //Intent refresh = new Intent(MainActivity.this, MainActivity.class);
-        //this.overridePendingTransition(0,0);
-        //this.finish();
-        //startActivity(refresh);
-        refreshActivityFromFragment();
-        //refreshFragment();
-    }
+        if (lang.equalsIgnoreCase("en")) {
+            language = 1;
+        }else if(lang.equalsIgnoreCase("ar")){
+            language = 2;
+        }
+            SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = qfindPreferences.edit();
+            editor.putInt("AppLanguage", language);
+            editor.commit();
+            //Intent refresh = new Intent(MainActivity.this, MainActivity.class);
+            //this.overridePendingTransition(0,0);
+            //this.finish();
+            //startActivity(refresh);
+            refreshActivityFromFragment();
+            //refreshFragment();
+        }
 
     public void refreshActivityFromFragment() {
         Intent intent = getActivity().getIntent();
