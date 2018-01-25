@@ -1,14 +1,14 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+
+
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,18 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
-import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
@@ -182,9 +183,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     categoryFragmentTittleText.setText(R.string.sub_categoies_text);
                     subCategoryBackButton.setVisibility(View.VISIBLE);
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
-                    Intent intent = new Intent(getActivity(), InformationPage.class);
-                    startActivity(intent);
-
+                    InformationFragment informationFragment = new InformationFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_container, informationFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    
                 }
             }
         };
@@ -209,10 +214,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             categoryFragmentPresenterImpl.getImagesForAds();
             categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
         }
-
-
-
-
 
 
     }

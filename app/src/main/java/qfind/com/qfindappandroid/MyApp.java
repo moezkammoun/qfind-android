@@ -51,25 +51,24 @@ public class MyApp extends Application {
     public void registerTheApp() {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<RegistrationDetails> call = apiService.getAccessToken(clientId,clientSecret);
+        Call<RegistrationDetails> call = apiService.getAccessToken(clientId, clientSecret);
         call.enqueue(new Callback<RegistrationDetails>() {
             @Override
             public void onResponse(Call<RegistrationDetails> call, Response<RegistrationDetails> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         RegistrationDetails registrationDetails = response.body();
-                        if (registrationDetails.getCode().equals("200")){
+                        if (registrationDetails.getCode().equals("200")) {
                             SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = qfindPreferences.edit();
                             editor.putString("AccessToken", registrationDetails.getAccessToken());
                             editor.commit();
-                        }else
-                        {
+                        } else {
                             Util.showToast("unauthorized access", getApplicationContext());
                         }
                     }
 
-                }else {
+                } else {
                     Util.showToast("Error in connecting the server", getApplicationContext());
 
                 }

@@ -1,4 +1,4 @@
-package qfind.com.qfindappandroid.InformationPage;
+package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
 import android.os.Build;
@@ -20,12 +20,12 @@ import qfind.com.qfindappandroid.R;
  * Created by MoongedePC on 08-Jan-18.
  */
 
-public class InformationPageAdapter extends RecyclerView.Adapter<InformationPageAdapter.InformationPageViewHolder> {
+public class InformationFragmentAdapter extends RecyclerView.Adapter<InformationFragmentAdapter.InformationPageViewHolder> {
 
     private Context mcontext;
-    private ArrayList<InformationPageModel> informationPages;
+    private ArrayList<InformationFragmentModel> informationPages;
 
-    public InformationPageAdapter(Context mcontext, ArrayList<InformationPageModel> informationPages) {
+    public InformationFragmentAdapter(Context mcontext, ArrayList<InformationFragmentModel> informationPages) {
         this.mcontext = mcontext;
         this.informationPages = informationPages;
     }
@@ -63,7 +63,7 @@ public class InformationPageAdapter extends RecyclerView.Adapter<InformationPage
     @Override
     public void onBindViewHolder(InformationPageViewHolder holder, int position) {
 
-        InformationPageModel informationPage = informationPages.get(position);
+        InformationFragmentModel informationPage = informationPages.get(position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.info_icon.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_icon(), mcontext.getTheme()));
             holder.info_point.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_point(), mcontext.getTheme()));

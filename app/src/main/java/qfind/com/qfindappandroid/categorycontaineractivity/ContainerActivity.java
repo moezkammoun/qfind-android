@@ -12,6 +12,7 @@ import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -22,7 +23,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     ContainerActivityPresenter containerActivityPresenter = new ContainerActivityPresenter();
     Fragment fragment;
     Intent intent;
-    String fragmentToShow;
+    String fragmentToShow, searchText;
 
 
     @Override
@@ -32,22 +33,23 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         ButterKnife.bind(this);
 
         //containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
-        loadFirstFrgmentWithoutBackStack(new CategoryFragment());
+        loadFragmentWithoutBackStack(new CategoryFragment());
 
         intent = getIntent();
         fragmentToShow = intent.getStringExtra("SHOW_FRAGMENT");
+        searchText = intent.getStringExtra("SEARCH_TEXT");
         if (fragmentToShow.equals(AppConfig.Fragments.SEARCH_RESULTS.toString())) {
             fragment = new SearchResultsFragment();
-            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+            loadFragmentWithoutBackStack(fragment);
         } else if (fragmentToShow.equals(AppConfig.Fragments.SETTINGS.toString())) {
             fragment = new SettingsFragment();
-            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
+            loadFragmentWithoutBackStack(fragment);
         } else if (fragmentToShow.equals(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString())) {
             fragment = new TermsandConditionFragment();
-            containerActivityPresenter.loadFragmentOnButtonClick(fragment);
-        } else if (fragmentToShow.equals(AppConfig.Fragments.CATEGORIES.toString())) {
-
-        }
+            loadFragmentWithoutBackStack(fragment);
+        } 
+        if (searchText != null)
+            autoCompleteTextView.setText(searchText);
     }
 
     @Override
@@ -55,10 +57,14 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
         } else if(CategoryPageCurrentStatus.categoryPageStatus==2){
-          //  ((CategoryFragment) fragment).setSubCategoryBackButtonClickAction();
-            CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-            fragment.setSubCategoryBackButtonClickAction();
-        }else {
+            fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+            if ((fragment instanceof InformationFragment)) {
+                super.onBackPressed();
+            }else if ((fragment instanceof CategoryFragment)){
+                CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                fragment.setSubCategoryBackButtonClickAction();
+            }
+          }else {
             super.onBackPressed();
         }
     }
@@ -68,15 +74,15 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         super.onResume();
     }
 
-    @Override
-    public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+//    @Override
+//    public void loadFragment(Fragment fragment) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frame_container, fragment);
+//        transaction.commit();
+//
+//    }
 
-    public void loadFirstFrgmentWithoutBackStack(Fragment fragment){
+    public void loadFragmentWithoutBackStack(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
