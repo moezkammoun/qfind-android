@@ -278,9 +278,6 @@ public class InformationPage extends BaseActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(InformationPage.this, ContainerActivity.class);
-//                startActivity(intent);
-//                finish();
                 onBackPressed();
             }
         });
