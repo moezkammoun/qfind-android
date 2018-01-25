@@ -16,15 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
-import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
@@ -178,9 +179,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     categoryFragmentTittleText.setText(R.string.sub_categoies_text);
                     subCategoryBackButton.setVisibility(View.VISIBLE);
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
-                    Intent intent = new Intent(getActivity(), InformationPage.class);
-                    startActivity(intent);
-
+//                    Intent intent = new Intent(getActivity(), InformationPage.class);
+//                    startActivity(intent);
                 }
             }
         };
@@ -205,10 +205,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             categoryFragmentPresenterImpl.getImagesForAds();
             categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
         }
-
-
-
-
 
 
     }

@@ -50,12 +50,16 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private ActionBarDrawerToggle toggle;
     @BindView(R.id.findByCategoryBtn)
     Button findByCategoryBtn;
-    @BindView(R.id.hamburger_menu)
+    @BindView(R.id.hamburger_home)
     ImageView hamburgerMenu;
     @BindView(R.id.home_search_icon)
     ImageView searchButton;
     @BindView(R.id.homeAutoCompleteEditText)
     AutoCompleteTextView autoCompleteTextView;
+    @BindView(R.id.q_find_of_the_day)
+    TextView qFindOfTheDayText;
+    @BindView(R.id.or)
+    TextView orText;
     private InfiniteIndicator mAnimCircleIndicator;
     Typeface mTypeFace;
     Intent navigationIntent;
@@ -74,7 +78,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         String[] FINDINGS = new String[]{
                 "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
-                "الفندق", "الفندق","الفندق"
+                "الفندق", "الفندق", "الفندق"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
@@ -91,10 +95,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             @Override
             public void onClick(View view) {
                 if (!autoCompleteTextView.getText().toString().equals("")) {
-                    Toast.makeText(MainActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
                     navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                     navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
+                    navigationIntent.putExtra("SEARCH_TEXT", autoCompleteTextView.getText().toString());
                     startActivity(navigationIntent);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -104,11 +110,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                 navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
                 startActivity(navigationIntent);
-                finish();
             }
         });
 
         loadAdsToSlider();
+        setFontTypeForHomeText();
 
     }
 
@@ -182,6 +188,22 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
     }
 
+    public void setFontTypeForHomeText() {
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/Lato-Bold.ttf");
+            findByCategoryBtn.setTypeface(mTypeFace);
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/Lato-Regular.ttf");
+        } else {
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+            findByCategoryBtn.setTypeface(mTypeFace);
+        }
+        qFindOfTheDayText.setTypeface(mTypeFace);
+        orText.setTypeface(mTypeFace);
+        autoCompleteTextView.setTypeface(mTypeFace);
+    }
 
     public void loadAdsToSlider() {
         ArrayList<Page> adsImages;
@@ -218,6 +240,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             mAnimCircleIndicator.init(configuration);
             mAnimCircleIndicator.notifyDataChange(adsImages);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        autoCompleteTextView.setText(null);
     }
 
     @Override

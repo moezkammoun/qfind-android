@@ -3,10 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="category_tittle_text">31sp</dimen>
-    <dimen name="settings_tittle_text_size">32sp</dimen>
+    <dimen name="settings_tittle_text_size">24sp</dimen>
     <dimen name="dialog_text_size">20sp</dimen>
-    <dimen name="select_language_text_size">24sp</dimen>
-    <dimen name="setting_button__text_size">35sp</dimen>
+    <dimen name="select_language_text_size">18sp</dimen>
+    <dimen name="setting_button__text_size">26sp</dimen>
 
     <dimen name="category_card_item_text_size">15sp</dimen>
     <dimen name="sub_category_card_item_text_size">13sp</dimen>
@@ -17,6 +17,7 @@
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_8">8dp</dimen>
     <dimen name="padding_40">40dp</dimen>
     <dimen name="padding_15">15dp</dimen>
     <dimen name="padding_30">30dp</dimen>
@@ -30,7 +31,7 @@
     <dimen name="text_size">32sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
-    <dimen name="layout_marginTop">140dp</dimen>
+    <dimen name="layout_marginTop">80dp</dimen>
     <dimen name="design_bottom_navigation_text_size" tools:override="true">16sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">20sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
@@ -50,5 +51,7 @@
     <dimen name="home_hit_padding">45dp</dimen>
     <dimen name="toolbar_find_today_hint">11sp</dimen>
     <dimen name="info_title_text_size">38sp</dimen>
+    <dimen name="q_find_of_the_day_text_size">18sp</dimen>
+    <dimen name="what_to_find_today_text_size">16sp</dimen>
 </resources>
 
