@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -181,14 +182,17 @@ public class BaseActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
+                    item.setCheckable(true);
                     fragment = new FavoriteFragment();
                     break;
                 case R.id.qfind_us_menu:
+                    item.setCheckable(true);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     fragment = null;
                     break;
                 case R.id.category_history_menu:
+                    item.setCheckable(true);
                     fragment = new HistoryFragment();
                     break;
             }
@@ -341,4 +345,20 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuSettingsTxt.setTypeface(mTypeFace);
     }
 
+    public void setupBottomNavigationBar() {
+        fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        bottomNavigationView.setSelected(false);
+        if ((fragment instanceof HistoryFragment)) {
+            bottomNavigationView.getMenu().getItem(2).setCheckable(true);
+        } else if ((fragment instanceof FavoriteFragment)) {
+            bottomNavigationView.getMenu().getItem(0).setCheckable(true);
+        } else {
+            Menu menu = bottomNavigationView.getMenu();
+            for (int i = 0, size = menu.size(); i < size; i++) {
+                MenuItem item = menu.getItem(i);
+                item.setCheckable(false);
+            }
+        }
+
+    }
 }

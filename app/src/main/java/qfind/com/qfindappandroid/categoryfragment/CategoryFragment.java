@@ -3,8 +3,10 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +31,7 @@ import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 
@@ -77,6 +80,9 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         setFontTypeForText();
         initialSetUp();
         setClickListenerForSubCategoryButton();
+        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+//        SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+//        Util.showToast("token"+qfindPreferences.getString("AccessToken",""), getContext());
 
     }
 
@@ -189,7 +195,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     fragmentTransaction.replace(R.id.frame_container, informationFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    
+                    ((ContainerActivity)getActivity()).showInfoToolbar();
                 }
             }
         };

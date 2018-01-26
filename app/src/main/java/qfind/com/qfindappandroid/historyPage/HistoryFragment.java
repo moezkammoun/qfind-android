@@ -20,6 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
 
 
@@ -136,6 +137,7 @@ public class HistoryFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
     }
 
     public void setFontTypeForText() {

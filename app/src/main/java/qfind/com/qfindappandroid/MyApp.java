@@ -43,8 +43,10 @@ public class MyApp extends Application {
         } else {
 
         }
+        if (!qfindPreferences.getBoolean("AuthTokenStatus", false)) {
+            registerTheApp();
+        }
 
-        registerTheApp();
 
     }
 
@@ -62,6 +64,7 @@ public class MyApp extends Application {
                             SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = qfindPreferences.edit();
                             editor.putString("AccessToken", registrationDetails.getAccessToken());
+                            editor.putBoolean("AuthTokenStatus",true);
                             editor.commit();
                         } else {
                             Util.showToast("unauthorized access", getApplicationContext());

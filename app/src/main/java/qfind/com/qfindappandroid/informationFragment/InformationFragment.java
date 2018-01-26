@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 
 
 public class InformationFragment extends Fragment {
@@ -40,6 +41,9 @@ public class InformationFragment extends Fragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
         InformationFragmentAdapter adapter = new InformationFragmentAdapter(getContext(), getInformationData());
         recyclerView.setAdapter(adapter);
+        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+
+
         return view;
     }
 

@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 
 public class SettingsFragment extends Fragment {
     @BindView(R.id.english_button)
@@ -64,6 +65,7 @@ public class SettingsFragment extends Fragment {
         ButterKnife.bind(this, view);
         setButtonClickListener();
         setFontTypeForText();
+        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
     }
 
     public void setLocale(String lang) {
