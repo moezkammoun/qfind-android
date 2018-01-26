@@ -40,8 +40,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:paddingTop="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
                         android:scaleType="centerCrop"
                         android:src="@drawable/main_logo" />
 
@@ -66,17 +66,24 @@
         android:layout_below="@id/appBarLayout"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="39.85">
+
+            <ImageView
+                android:id="@+id/ads_place_holder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner" />
 
             <cn.lightsky.infiniteindicator.InfiniteIndicator
                 android:id="@+id/indicator_default_circle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:indicator_type="indicator_default" />
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -164,9 +171,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:text="@string/or"
                 android:textColor="@color/category_tittle_color"
-                android:textSize="@dimen/q_find_of_the_day_text_size"
-                android:text="@string/or" />
+                android:textSize="@dimen/q_find_of_the_day_text_size" />
         </LinearLayout>
 
         <LinearLayout

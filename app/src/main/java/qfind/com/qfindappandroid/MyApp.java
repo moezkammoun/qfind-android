@@ -67,12 +67,12 @@ public class MyApp extends Application {
                             editor.putBoolean("AuthTokenStatus",true);
                             editor.commit();
                         } else {
-                            Util.showToast("unauthorized access", getApplicationContext());
+                            Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
                         }
                     }
 
                 } else {
-                    Util.showToast("Error in connecting the server", getApplicationContext());
+                    Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
 
                 }
 
@@ -80,7 +80,7 @@ public class MyApp extends Application {
 
             @Override
             public void onFailure(Call<RegistrationDetails> call, Throwable t) {
-                Util.showToast("Check your internet connections", getApplicationContext());
+                Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
 
             }
         });
