@@ -3,6 +3,7 @@ package qfind.com.qfindappandroid.InformationPage;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.BaseActivity;
+import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.MainActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
@@ -40,6 +42,9 @@ import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivityPres
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivityView;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
+import qfind.com.qfindappandroid.historyPage.HistoryItem;
+import qfind.com.qfindappandroid.historyPage.HistoryPageDataModel;
+import qfind.com.qfindappandroid.historyPage.HistoryPageMainModel;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -134,6 +139,17 @@ public class InformationPage extends BaseActivity {
             }
         });
         informationPages = new ArrayList<>();
+
+        DataBaseHandler db = new DataBaseHandler(this);
+//        HistoryPageMainModel mainModel = new HistoryPageMainModel();
+//        HistoryPageDataModel dataModel = new HistoryPageDataModel();
+//        mainModel.setDay("Today");
+        HistoryItem dataModel= new HistoryItem();
+        dataModel.setDay("Today");
+        dataModel.setTitke(getIntent().getStringExtra("title"));
+//        dataModel.setImages(getIntent().getIntExtra("thumbnail"));
+        dataModel.setDescription(getIntent().getStringExtra("description"));
+        db.addHistory(dataModel);
 
         informationPages.add(new InformationPageModel(R.drawable.phone_icon,
                 R.drawable.dot_icon, "00974 5551 5566", R.drawable.right_arrow));

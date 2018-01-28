@@ -5,4 +5,7 @@
     <string name="already_english">كنت بالفعل باللغة الإنجليزية</string>
     <string name="search_results_text">نتيجة البحث</string>
     <string name="search_hint">ما تريد أن تجد اليوم؟</string>
+    <string name="history_text">تاريخ البحث</string>
+    <string name="favorites_text">ابحث بالفئة</string>
+
 </resources>

@@ -188,6 +188,9 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     setClickListenerForSubCategoryButton();
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
                     Intent intent = new Intent(getActivity(), InformationPage.class);
+                    intent.putExtra("thumbnail", R.drawable.cloth_stores);
+                    intent.putExtra("title","Four Season Hotel");
+                    intent.putExtra("description","Lorem ipsum dolor");
                     startActivity(intent);
                 }
             }

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
 
@@ -114,15 +116,23 @@ public class HistoryFragment extends Fragment {
 
         };
 
-        for (int i = 0; i < 2; i++) {
-            HistoryPageMainModel mainModel = new HistoryPageMainModel();
-            mainModel.setDay(days.get(i));
-            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
-            for (int j = 0; j <categoryItems.length; j++) {
-                singleItem.add(new HistoryPageDataModel(categoryItems[j],thumbnails[j],categoryItemsDescription[j]));
-            }
-            mainModel.setHistoryPageDataModels(singleItem);
-            arrayListMain.add(mainModel);
+//        for (int i = 0; i < 2; i++) {
+//            HistoryPageMainModel mainModel = new HistoryPageMainModel();
+//            mainModel.setDay(days.get(i));
+//            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
+//            for (int j = 0; j <categoryItems.length; j++) {
+//                singleItem.add(new HistoryPageDataModel(categoryItems[j],thumbnails[j],categoryItemsDescription[j]));
+//            }
+//            mainModel.setHistoryPageDataModels(singleItem);
+//            arrayListMain.add(mainModel);
+//        }
+        DataBaseHandler db= new DataBaseHandler(getContext());
+        Log.d("Reading: ", "Reading all contacts..");
+        List<HistoryItem> contacts = db.getAllContacts();
+        for (HistoryItem cn : contacts) {
+            String log = "Id: " + cn.getId() + " ,Name: " + cn.getTitke() + " ,Phone: " + cn.getDescription();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
         }
 
         recyclerView.setHasFixedSize(true);

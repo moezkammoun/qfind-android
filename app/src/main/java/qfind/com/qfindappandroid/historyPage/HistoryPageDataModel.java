@@ -6,6 +6,7 @@ package qfind.com.qfindappandroid.historyPage;
 
 public class HistoryPageDataModel {
 
+    int id;
     String pageName;
     //    String url;
     int images;
@@ -25,6 +26,14 @@ public class HistoryPageDataModel {
 //        this.url = url;
 //        this.images = images;
 //    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getImages() {
         return images;

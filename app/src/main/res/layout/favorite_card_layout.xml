@@ -67,8 +67,7 @@
                 android:layout_width="@dimen/search_results_image_size"
                 android:layout_height="@dimen/search_results_image_size"
                 android:layout_alignParentEnd="true"
-                android:padding="@dimen/padding_15"
-                android:src="@drawable/favourite_icon"
+                android:src="@drawable/favorite_red"
                 android:scaleType="fitXY" />
 
         </RelativeLayout>
