@@ -1,8 +1,6 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
 
-
-
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -183,13 +181,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     categoryFragmentTittleText.setText(R.string.sub_categoies_text);
                     subCategoryBackButton.setVisibility(View.VISIBLE);
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
-                    InformationFragment informationFragment = new InformationFragment();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frame_container, informationFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                    
+                    ((ContainerActivity) getActivity()).loadFragment(new InformationFragment());
+                    ((ContainerActivity) getActivity()).showInfoToolbar();
                 }
             }
         };

@@ -239,14 +239,12 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
-                showNormalToolbar();
             }
         });
         sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
-                showNormalToolbar();
             }
         });
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
@@ -265,13 +263,7 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                if (!(fragment instanceof InformationFragment)) {
-                    BaseActivity.this.fragment = new InformationFragment();
-                    loadFragment(BaseActivity.this.fragment);
-                }
                 fullView.closeDrawer(GravityCompat.END);
-                showInfoToolbar();
             }
         });
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
