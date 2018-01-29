@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
+
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.AppConfig;
 import qfind.com.qfindappandroid.BaseActivity;
@@ -47,7 +48,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         } else if (fragmentToShow.equals(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString())) {
             fragment = new TermsandConditionFragment();
             loadFragmentWithoutBackStack(fragment);
-        } 
+        }
         if (searchText != null)
             autoCompleteTextView.setText(searchText);
     }
@@ -56,15 +57,15 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onBackPressed() {
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
-        } else if(CategoryPageCurrentStatus.categoryPageStatus==2){
+        } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
             fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-            if ((fragment instanceof InformationFragment)) {
-                super.onBackPressed();
-            }else if ((fragment instanceof CategoryFragment)){
+            if ((fragment instanceof CategoryFragment)) {
                 CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 fragment.setSubCategoryBackButtonClickAction();
+            } else {
+                super.onBackPressed();
             }
-          }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -82,7 +83,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
 //
 //    }
 
-    public void loadFragmentWithoutBackStack(Fragment fragment){
+    public void loadFragmentWithoutBackStack(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
