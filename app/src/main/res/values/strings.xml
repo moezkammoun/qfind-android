@@ -38,6 +38,8 @@
     <string name="search_results_text">Search Results</string>
     <string name="favorites_text">Favorites</string>
     <string name="no_data_text">No data</string>
+    <string name="something_went_wrong">Oops! something went wrong</string>
+
     <string name="please_type">Please type something to find!</string>
     <string name="error_in_connecting">Error in connecting the server</string>
     <string name="check_network">Check your internet connections</string>

@@ -1,8 +1,6 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
 
-
-
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -33,7 +31,13 @@ import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
+import qfind.com.qfindappandroid.categorycontaineractivity.MainCategoryItemList;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
+import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
+import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
@@ -53,6 +57,10 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     public Typeface mtypeFace;
     RecyclerViewClickListener recyclerViewClickListener;
     public static int categoryPageStatus;
+    ArrayList<MainCategoryItemList> mainCategoryItemList;
+    ArrayList<SubCategoryItemList> subCategoryItemList;
+    String accessToken;
+    SharedPreferences qFindPreferences;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -76,11 +84,12 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         super.onViewCreated(view, savedInstanceState);
         mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
         ButterKnife.bind(this, view);
+        qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         setupRecyclerViewClickListener();
         setFontTypeForText();
         initialSetUp();
         setClickListenerForSubCategoryButton();
-        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
 //        SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 //        Util.showToast("token"+qfindPreferences.getString("AccessToken",""), getContext());
 
@@ -184,10 +193,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             @Override
             public void onClick(View view, int position) {
                 if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
-                    categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
-                    CategoryPageCurrentStatus.categoryPageStatus = 2;
-                    categoryFragmentTittleText.setText(R.string.sub_categoies_text);
-                    subCategoryBackButton.setVisibility(View.VISIBLE);
+                    getSubCategoryItemDetails(mainCategoryItemList.get(position).getCategoryId());
+
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
                     InformationFragment informationFragment = new InformationFragment();
                     FragmentManager fragmentManager = getFragmentManager();
@@ -195,30 +202,29 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     fragmentTransaction.replace(R.id.frame_container, informationFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    ((ContainerActivity)getActivity()).showInfoToolbar();
+                    ((ContainerActivity) getActivity()).showInfoToolbar();
                 }
             }
         };
     }
 
     public void initialSetUp() {
+        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(),this, recyclerViewClickListener);
         if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
             if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
                 subCategoryBackButton.setVisibility(View.GONE);
             }
-            categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
             categoryFragmentTittleText.setText(R.string.categories_text);
             categoryFragmentPresenterImpl.getImagesForAds();
-            categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+            categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
 
         } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
             if (subCategoryBackButton.getVisibility() == View.GONE) {
                 subCategoryBackButton.setVisibility(View.VISIBLE);
             }
-            categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
             categoryFragmentTittleText.setText(R.string.sub_categoies_text);
             categoryFragmentPresenterImpl.getImagesForAds();
-            categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
+            categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
         }
 
 
@@ -234,10 +240,61 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     }
 
     public void setSubCategoryBackButtonClickAction() {
-        categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+        categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
         CategoryPageCurrentStatus.categoryPageStatus = 1;
         categoryFragmentTittleText.setText(R.string.categories_text);
         subCategoryBackButton.setVisibility(View.GONE);
+    }
+    public void setSubCategoryListOnInfoPageBackClick(){
+        categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
+        CategoryPageCurrentStatus.categoryPageStatus = 2;
+    }
+
+    public void setRecyclerViewDatas(ArrayList<MainCategoryItemList> mainCategoryItemList) {
+        this.mainCategoryItemList = mainCategoryItemList;
+        categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
+
+    }
+
+    public void getSubCategoryItemDetails(int categoryId) {
+        int mainCategoryId = categoryId;
+        accessToken = qFindPreferences.getString("AccessToken", null);
+        if (accessToken != null) {
+            ApiInterface apiService =
+                    ApiClient.getClient().create(ApiInterface.class);
+            Call<SubCategory> call = apiService.getSubCategory(accessToken, qFindPreferences.getInt("AppLanguage", 1), mainCategoryId);
+            call.enqueue(new Callback<SubCategory>() {
+                @Override
+                public void onResponse(Call<SubCategory> call, Response<SubCategory> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            SubCategory subCategory = response.body();
+                            if (subCategory.getCode().equals("200")) {
+                                subCategoryItemList = subCategory.getSubCategoryItemList();
+                                categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
+                                CategoryPageCurrentStatus.categoryPageStatus = 2;
+                                categoryFragmentTittleText.setText(R.string.sub_categoies_text);
+                                subCategoryBackButton.setVisibility(View.VISIBLE);
+
+                            } else {
+                                Util.showToast(getResources().getString(R.string.something_went_wrong), getContext());
+                            }
+                        }
+
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SubCategory> call, Throwable t) {
+                    Util.showToast(getResources().getString(R.string.check_network), getContext());
+
+                }
+            });
+
+        }
     }
 
 }

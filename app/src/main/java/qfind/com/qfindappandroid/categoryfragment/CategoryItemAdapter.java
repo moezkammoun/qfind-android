@@ -15,11 +15,13 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.MainCategoryItemList;
 
 /**
  * Created by dilee on 07-01-2018.
@@ -28,10 +30,11 @@ import qfind.com.qfindappandroid.R;
 public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Categories> categoriesList;
-    //private List<Categories> subCategoriesList;
+    ArrayList<MainCategoryItemList> mainCategoryItemList;
     private RecyclerViewClickListener mListener;
-    Categories categories;
+    ArrayList<SubCategoryItemList> subCategoryItemList;
+    byte categoryPageNumber;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Nullable
@@ -54,7 +57,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         TextView subCategoryDescription;
 
 
-        public MyViewHolder(View view,RecyclerViewClickListener listener) {
+        public MyViewHolder(View view, RecyclerViewClickListener listener) {
             super(view);
             ButterKnife.bind(this, view);
             mListener = listener;
@@ -68,10 +71,18 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     }
 
 
-    public CategoryItemAdapter(Context mContext, List<Categories> categoriesList,RecyclerViewClickListener listener) {
+    public CategoryItemAdapter(Context mContext, ArrayList<MainCategoryItemList> mainCategoryItemList, RecyclerViewClickListener listener) {
         this.mContext = mContext;
-        this.categoriesList = categoriesList;
+        this.mainCategoryItemList = mainCategoryItemList;
         this.mListener = listener;
+        this.categoryPageNumber = categoryPageNumber;
+    }
+
+    public CategoryItemAdapter(Context mContext, ArrayList<SubCategoryItemList> subCategoryItemList, RecyclerViewClickListener listener, byte categoryPageNumber, String tester) {
+        this.mContext = mContext;
+        this.subCategoryItemList = subCategoryItemList;
+        this.mListener = listener;
+        this.categoryPageNumber = categoryPageNumber;
     }
 
     @Override
@@ -79,48 +90,63 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.category_items_card, parent, false);
 
-        return new MyViewHolder(itemView,mListener);
+        return new MyViewHolder(itemView, mListener);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        Typeface mtypeFace = null ;
+        Typeface mtypeFace = null;
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/Lato-Light.ttf");
-        }else {
+        } else {
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-        if (CategoryPageCurrentStatus.categoryPageStatus==1){
+        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
             holder.subCategoryCardItemLayout.setVisibility(View.GONE);
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.categoryName.setTypeface(mtypeFace);
-            categories = categoriesList.get(position);
-            holder.categoryName.setText(categories.getItem());
-            Picasso.with(mContext).load(categories.getThumbnail()).into(holder.categoryThumbnail);
+            holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
+            Picasso.with(mContext).load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).into(holder.categoryThumbnail);
 
-
-        }else {
+        } else {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
             holder.subCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.subCategoryName.setTypeface(mtypeFace);
             holder.subCategoryDescription.setTypeface(mtypeFace);
-            categories = categoriesList.get(position);
-            holder.subCategoryName.setText(categories.getSubCategoryName());
-            holder.subCategoryDescription.setText(categories.getSubCategoryDescription());
-            Picasso.with(mContext).load(categories.getThumbnail()).into(holder.categoryThumbnail);
+            holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
+            holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
+            Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
         }
-        // loading album cover using Picasso library
-        Picasso.with(mContext).load(categories.getThumbnail()).into(holder.categoryThumbnail);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return categoriesList.size();
+        if (categoryPageNumber == 1) {
+            if (mainCategoryItemList != null)
+                return mainCategoryItemList.size();
+            else return 0;
+        }else  if (categoryPageNumber == 2) {
+            if (subCategoryItemList != null)
+                return subCategoryItemList.size();
+            else return 0;
+        }else {
+            return 0;
+        }
+    }
+
+    public void addCategoryListValues(ArrayList<MainCategoryItemList> mainCategoryItemList,byte categoryPageNumber){
+        this.mainCategoryItemList = mainCategoryItemList;
+        this.categoryPageNumber = categoryPageNumber;
+    }
+
+    public void addSubCategoryListValues(ArrayList<SubCategoryItemList> subCategoryItemList,byte categoryPageNumber){
+        this.subCategoryItemList = subCategoryItemList;
+        this.categoryPageNumber = categoryPageNumber;
     }
 
 
