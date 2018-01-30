@@ -43,14 +43,12 @@ public class CategoryFragmentPresenterImpl {
         this.mainCategoryItemList = mainCategoryItemList;
         byte a=1;
         categoryItemAdapter.addCategoryListValues(mainCategoryItemList,a);
-        //categoryFragmentView.setCategoryItemRecyclerView(categoryItemAdapter);
         categoryItemAdapter.notifyDataSetChanged();
     }
     public void getSubCategoryItemsDetails(ArrayList<SubCategoryItemList> subCategoryItemList) {
         this.subCategoryItemList = subCategoryItemList;
         byte a=2;
         categoryItemAdapter.addSubCategoryListValues(subCategoryItemList,a);
-        //categoryFragmentView.setCategoryItemRecyclerView(categoryItemAdapter);
         categoryItemAdapter.notifyDataSetChanged();
     }
 

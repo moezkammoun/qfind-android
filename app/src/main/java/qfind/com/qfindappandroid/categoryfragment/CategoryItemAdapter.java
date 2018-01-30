@@ -75,15 +75,8 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         this.mContext = mContext;
         this.mainCategoryItemList = mainCategoryItemList;
         this.mListener = listener;
-        this.categoryPageNumber = categoryPageNumber;
     }
 
-    public CategoryItemAdapter(Context mContext, ArrayList<SubCategoryItemList> subCategoryItemList, RecyclerViewClickListener listener, byte categoryPageNumber, String tester) {
-        this.mContext = mContext;
-        this.subCategoryItemList = subCategoryItemList;
-        this.mListener = listener;
-        this.categoryPageNumber = categoryPageNumber;
-    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -108,17 +101,20 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.subCategoryCardItemLayout.setVisibility(View.GONE);
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.categoryName.setTypeface(mtypeFace);
-            holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
-            Picasso.with(mContext).load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).into(holder.categoryThumbnail);
-
+            if (mainCategoryItemList != null) {
+                holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
+                Picasso.with(mContext).load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).into(holder.categoryThumbnail);
+            }
         } else {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
             holder.subCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.subCategoryName.setTypeface(mtypeFace);
             holder.subCategoryDescription.setTypeface(mtypeFace);
-            holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
-            holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
-            Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
+            if (subCategoryItemList != null) {
+                holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
+                holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
+                Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
+            }
         }
 
 
@@ -130,21 +126,21 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             if (mainCategoryItemList != null)
                 return mainCategoryItemList.size();
             else return 0;
-        }else  if (categoryPageNumber == 2) {
+        } else if (categoryPageNumber == 2) {
             if (subCategoryItemList != null)
                 return subCategoryItemList.size();
             else return 0;
-        }else {
+        } else {
             return 0;
         }
     }
 
-    public void addCategoryListValues(ArrayList<MainCategoryItemList> mainCategoryItemList,byte categoryPageNumber){
+    public void addCategoryListValues(ArrayList<MainCategoryItemList> mainCategoryItemList, byte categoryPageNumber) {
         this.mainCategoryItemList = mainCategoryItemList;
         this.categoryPageNumber = categoryPageNumber;
     }
 
-    public void addSubCategoryListValues(ArrayList<SubCategoryItemList> subCategoryItemList,byte categoryPageNumber){
+    public void addSubCategoryListValues(ArrayList<SubCategoryItemList> subCategoryItemList, byte categoryPageNumber) {
         this.subCategoryItemList = subCategoryItemList;
         this.categoryPageNumber = categoryPageNumber;
     }

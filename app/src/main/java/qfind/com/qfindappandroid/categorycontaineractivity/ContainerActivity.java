@@ -32,7 +32,6 @@ import retrofit2.Response;
 
 public class ContainerActivity extends BaseActivity implements ContainerActivityView {
 
-    ContainerActivityPresenter containerActivityPresenter = new ContainerActivityPresenter();
     Fragment fragment;
     Intent intent;
     String fragmentToShow, searchText, accessToken;
@@ -45,7 +44,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        //containerActivityPresenter.loadFragmentOncreate(this, new CategoryFragment());
         getMainCategoryItemsList();
         loadFragmentWithoutBackStack(new CategoryFragment());
         intent = getIntent();
@@ -63,7 +61,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         }
         if (searchText != null)
             autoCompleteTextView.setText(searchText);
-        checkClickListenerForBackStack();
+
 
     }
 
@@ -71,15 +69,9 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onBackPressed() {
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
-        }
-        if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+        } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
             fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-            if ((fragment instanceof InformationFragment)) {
-                super.onBackPressed();
-                CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                fragment.setSubCategoryListOnInfoPageBackClick();
-
-            } else if ((fragment instanceof CategoryFragment)) {
+            if ((fragment instanceof CategoryFragment)) {
                 CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 fragment.setSubCategoryBackButtonClickAction();
             } else {
@@ -97,31 +89,10 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         setupBottomNavigationBar();
     }
 
-//    @Override
-//    public void loadFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_container, fragment);
-//        transaction.commit();
-//
-//    }
-
     public void loadFragmentWithoutBackStack(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
-    }
-
-    public void checkClickListenerForBackStack() {
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                if ((f instanceof InformationFragment)) {
-                    showInfoToolbar();
-                }
-
-            }
-        });
     }
 
     public void getMainCategoryItemsList() {
@@ -129,7 +100,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         if (accessToken != null) {
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
-            Call<MainCategory> call = apiService.getMainCategory(accessToken,qFindPreferences.getInt("AppLanguage", 1));
+            Call<MainCategory> call = apiService.getMainCategory(accessToken, qFindPreferences.getInt("AppLanguage", 1));
             call.enqueue(new Callback<MainCategory>() {
                 @Override
                 public void onResponse(Call<MainCategory> call, Response<MainCategory> response) {

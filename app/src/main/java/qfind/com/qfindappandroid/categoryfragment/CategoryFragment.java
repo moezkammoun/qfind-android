@@ -1,7 +1,7 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
-
 import android.content.SharedPreferences;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +50,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @BindView(R.id.category_fragment_tittle_text)
     TextView categoryFragmentTittleText;
     private CategoryItemAdapter categoryItemAdapter;
-    private List<Categories> categoriesList;
     private InfiniteIndicator mAnimCircleIndicator;
     CategoryFragmentPresenterImpl categoryFragmentPresenterImpl;
     public Typeface mtypeFace;
@@ -59,7 +57,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     public static int categoryPageStatus;
     ArrayList<MainCategoryItemList> mainCategoryItemList;
     ArrayList<SubCategoryItemList> subCategoryItemList;
-    String accessToken;
+    String accessToken, subCategoryName;
     SharedPreferences qFindPreferences;
 
     public CategoryFragment() {
@@ -76,7 +74,9 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        View v = inflater.inflate(R.layout.fragment_category, container, false);
+
+        return v;
     }
 
     @Override
@@ -90,8 +90,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         initialSetUp();
         setClickListenerForSubCategoryButton();
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
-//        SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//        Util.showToast("token"+qfindPreferences.getString("AccessToken",""), getContext());
 
     }
 
@@ -193,23 +191,21 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             @Override
             public void onClick(View view, int position) {
                 if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
-                    getSubCategoryItemDetails(mainCategoryItemList.get(position).getCategoryId());
+                    subCategoryName = mainCategoryItemList.get(position).getCategoryName();
+                    getSubCategoryItemDetails(mainCategoryItemList.get(position).getCategoryId(),
+                            subCategoryName);
 
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
-                    InformationFragment informationFragment = new InformationFragment();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frame_container, informationFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                    ((ContainerActivity) getActivity()).showInfoToolbar();
+                    loadInformationFragmentWithBundle(subCategoryItemList.get(position).getSubCategoryId(),
+                            subCategoryItemList.get(position).getSubCategoryName());
+                    ((ContainerActivity) getActivity()).showInfoToolbar( subCategoryItemList.get(position).getSubCategoryName());
                 }
             }
         };
     }
 
     public void initialSetUp() {
-        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(),this, recyclerViewClickListener);
+        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(), this, recyclerViewClickListener);
         if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
             if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
                 subCategoryBackButton.setVisibility(View.GONE);
@@ -222,7 +218,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             if (subCategoryBackButton.getVisibility() == View.GONE) {
                 subCategoryBackButton.setVisibility(View.VISIBLE);
             }
-            categoryFragmentTittleText.setText(R.string.sub_categoies_text);
+            categoryFragmentTittleText.setText(subCategoryName);
             categoryFragmentPresenterImpl.getImagesForAds();
             categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
         }
@@ -245,10 +241,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         categoryFragmentTittleText.setText(R.string.categories_text);
         subCategoryBackButton.setVisibility(View.GONE);
     }
-    public void setSubCategoryListOnInfoPageBackClick(){
-        categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
-        CategoryPageCurrentStatus.categoryPageStatus = 2;
-    }
+
 
     public void setRecyclerViewDatas(ArrayList<MainCategoryItemList> mainCategoryItemList) {
         this.mainCategoryItemList = mainCategoryItemList;
@@ -256,7 +249,22 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     }
 
-    public void getSubCategoryItemDetails(int categoryId) {
+    public void loadInformationFragmentWithBundle(int subCategoryId,String subCategoryNameForInfoPage) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("subCategoryId", subCategoryId);
+        bundle.putString("subCategoryName", subCategoryNameForInfoPage);
+
+        InformationFragment informationFragment = new InformationFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        informationFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container, informationFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+
+    }
+
+    public void getSubCategoryItemDetails(int categoryId, final String subCategoryName) {
         int mainCategoryId = categoryId;
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
@@ -273,7 +281,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 subCategoryItemList = subCategory.getSubCategoryItemList();
                                 categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
                                 CategoryPageCurrentStatus.categoryPageStatus = 2;
-                                categoryFragmentTittleText.setText(R.string.sub_categoies_text);
+                                categoryFragmentTittleText.setText(subCategoryName);
                                 subCategoryBackButton.setVisibility(View.VISIBLE);
 
                             } else {

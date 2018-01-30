@@ -28,6 +28,7 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragmentModel;
+import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
 import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
 import qfind.com.qfindappandroid.homeactivty.AdsData;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
@@ -79,6 +80,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
+        CategoryPageCurrentStatus.categoryPageStatus = 1;
         setupHamburgerClickListener();
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         accessToken = qFindPreferences.getString("AccessToken", null);
@@ -230,7 +232,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
         } else {
-            super.onBackPressed();
+            finishAffinity();
         }
     }
 
