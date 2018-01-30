@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -222,8 +224,21 @@ public class BaseActivity extends AppCompatActivity {
 //                showNormalToolbar();
 //            else
             showNormalToolbar();
-                super.onBackPressed();
+            super.onBackPressed();
         }
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
+            return true;
+        else {
+            Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+            return false;
+        }
+
     }
 
     protected boolean useToolbar() {
@@ -305,13 +320,15 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
-        transaction.addToBackStack(null);
-        transaction.commit();
-        if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
-            autoCompleteTextView.setText(null);
-            autoCompleteTextView.clearFocus();
+        if (isNetworkAvailable()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
+            transaction.addToBackStack(null);
+            transaction.commit();
+            if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
+                autoCompleteTextView.setText(null);
+                autoCompleteTextView.clearFocus();
+            }
         }
     }
 

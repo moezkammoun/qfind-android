@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">QFindAppandroid</string>
     <string name="qfind_of_the_day">كيوفايند اليوم</string>
     <string name="search_hint">ماذا تريد أن تجد اليوم؟</string>
     <string name="or">أو</string>
@@ -13,6 +13,19 @@
     <string name="contact_us">لتجدنا</string>
     <string name="settings">الإعدادات</string>
     <string name="arabic">عربى</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="information_main_title">Four Season Hotel</string>
+    <string name="information_sub_title">West Bay</string>
+    <string name="title_activity_container">ContainerActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="something_went_wrong">Oops! something went wrong</string>
+    <string name="please_type">Please type something to find!</string>
+    <string name="error_in_connecting">Error in connecting the server</string>
+    <string name="check_network">Check your internet connections</string>
+    <string name="un_authorised">Unauthorized access</string>
     <string name="today">اليوم</string>
     <string name="yesterday">الأمس</string>
     <string name="select_language">اختيار اللغة</string>
