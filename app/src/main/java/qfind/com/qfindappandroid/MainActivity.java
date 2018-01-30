@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -111,10 +109,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             @Override
             public void onClick(View view) {
                 if (!autoCompleteTextView.getText().toString().equals("")) {
-                    navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                    navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
-                    navigationIntent.putExtra("SEARCH_TEXT", autoCompleteTextView.getText().toString());
-                    startActivity(navigationIntent);
+                    if (isNetworkAvailable()) {
+                        navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+                        navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
+                        navigationIntent.putExtra("SEARCH_TEXT", autoCompleteTextView.getText().toString());
+                        startActivity(navigationIntent);
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
                 }
@@ -123,9 +123,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         findByCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
-                startActivity(navigationIntent);
+                if (isNetworkAvailable()) {
+                    navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+                    navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
+                    startActivity(navigationIntent);
+                }
             }
         });
         getQFind();
@@ -144,14 +146,14 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         updatedDate = qFindPreferences.getInt("UPDATED_ON", 0);
         if (updatedDate == 0) {
             updateAds();
-            Util.showToast("first launch", getApplicationContext());
+//            Util.showToast("first launch", getApplicationContext());
         } else {
             if (isAdExpired(updatedDate)) {
                 updateAds();
-                Util.showToast("Expired", getApplicationContext());
+//                Util.showToast("Expired", getApplicationContext());
             } else {
                 getAdsFromPreference();
-                Util.showToast("not expired", getApplicationContext());
+//                Util.showToast("not expired", getApplicationContext());
             }
         }
     }
@@ -245,9 +247,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
-                startActivity(navigationIntent);
+//                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+//                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
+//                startActivity(navigationIntent);
+                showFragment(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
                 fullView.closeDrawer(GravityCompat.END);
             }
         });
@@ -260,15 +263,23 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SETTINGS.toString());
-                startActivity(navigationIntent);
+//                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+//                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SETTINGS.toString());
+//                startActivity(navigationIntent);
+                showFragment(AppConfig.Fragments.SETTINGS.toString());
                 fullView.closeDrawer(GravityCompat.END);
             }
         });
 
     }
 
+    public void showFragment(String fragment) {
+        if (isNetworkAvailable()) {
+            navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+            navigationIntent.putExtra("SHOW_FRAGMENT", fragment);
+            startActivity(navigationIntent);
+        }
+    }
 
     public void setupHamburgerClickListener() {
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
