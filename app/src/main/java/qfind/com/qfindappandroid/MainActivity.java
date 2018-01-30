@@ -17,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +29,7 @@ import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.categoryfragment.CategoryFragmentModel;
 import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
-import qfind.com.qfindappandroid.homeactivty.AdsData;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
@@ -68,6 +69,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     SharedPreferences.OnSharedPreferenceChangeListener listener;
     ArrayList<Page> ads;
     QFindOfTheDayDetails qfindOfTheDayDetails;
+    Integer updatedDate;
+    Date d;
+    SimpleDateFormat sdf;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         getSupportActionBar().setHomeButtonEnabled(true);
         mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
         setupHamburgerClickListener();
+
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         accessToken = qFindPreferences.getString("AccessToken", null);
 
         String[] FINDINGS = new String[]{
@@ -122,7 +129,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         setFontTypeForHomeText();
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                getQFind();
+                if (key.equals("AccessToken"))
+                    getQFind();
             }
         };
         qFindPreferences.registerOnSharedPreferenceChangeListener(listener);
@@ -130,6 +138,22 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     public void getQFind() {
         accessToken = qFindPreferences.getString("AccessToken", null);
+        updatedDate = qFindPreferences.getInt("UPDATED_ON", 0);
+        if (updatedDate == 0) {
+            updateAds();
+            Util.showToast("first launch", getApplicationContext());
+        } else {
+            if (isAdExpired(updatedDate)) {
+                updateAds();
+                Util.showToast("Expired", getApplicationContext());
+            } else {
+                getAdsFromPreference();
+                Util.showToast("not expired", getApplicationContext());
+            }
+        }
+    }
+
+    public void updateAds() {
         if (accessToken != null) {
             apiService = ApiClient.getClient().create(ApiInterface.class);
             Call<QFindOfTheDayDetails> call = apiService.getQFindOfTheDay(accessToken);
@@ -137,14 +161,18 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 @Override
                 public void onResponse(Call<QFindOfTheDayDetails> call, Response<QFindOfTheDayDetails> response) {
                     if (response.isSuccessful()) {
+                        int i;
                         if (response.body() != null) {
                             qfindOfTheDayDetails = response.body();
                             if (qfindOfTheDayDetails.getCode().equals("200")) {
-                                ads = new ArrayList<>();
-                                for (int i = 0; i < qfindOfTheDayDetails.getAdsData().getImages().size(); i++) {
-                                    ads.add(new Page("", qfindOfTheDayDetails.getAdsData().getImages().get(i)));
+                                editor = qFindPreferences.edit();
+                                for (i = 0; i < qfindOfTheDayDetails.getAdsData().getImages().size(); i++) {
+                                    editor.putString("AD" + (i + 1), qfindOfTheDayDetails.getAdsData().getImages().get(i));
                                 }
-                                loadAdsToSlider(ads);
+                                editor.putInt("COUNT", (i));
+                                editor.putInt("UPDATED_ON", getCurrentDate());
+                                editor.commit();
+                                getAdsFromPreference();
                             } else {
                                 Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
                             }
@@ -161,6 +189,30 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 }
             });
         }
+
+    }
+
+    public boolean isAdExpired(Integer updatedDate) {
+        boolean isExpired;
+        if (updatedDate != getCurrentDate())
+            isExpired = true;
+        else
+            isExpired = false;
+        return isExpired;
+    }
+
+    public int getCurrentDate() {
+        d = new Date();
+        sdf = new SimpleDateFormat("dd");
+        return Integer.valueOf(sdf.format(d));
+    }
+
+    public void getAdsFromPreference() {
+        ads = new ArrayList<>();
+        for (int i = 0; i < qFindPreferences.getInt("COUNT", 0); i++) {
+            ads.add(new Page("", qFindPreferences.getString("AD" + (i + 1), null)));
+        }
+        loadAdsToSlider(ads);
     }
 
     @Override
