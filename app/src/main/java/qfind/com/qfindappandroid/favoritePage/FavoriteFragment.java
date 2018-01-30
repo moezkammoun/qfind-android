@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.historyPage.HistoryPageMainAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.ResultsAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
@@ -129,7 +130,7 @@ public class FavoriteFragment extends Fragment {
         favoriteAdapter adapter = new favoriteAdapter(getContext(),favoriteModelList);
         favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         favoriteView.setAdapter(adapter);
-
+        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
     }
 
     @Override

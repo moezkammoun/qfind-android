@@ -39,7 +39,7 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/emptyTextView"
+            android:id="@+id/empty_text_view_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/layout_marginTop"

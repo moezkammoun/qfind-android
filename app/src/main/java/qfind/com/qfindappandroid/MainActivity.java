@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,6 +30,7 @@ import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
+import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
 import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
@@ -83,6 +85,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
+        CategoryPageCurrentStatus.categoryPageStatus = 1;
         setupHamburgerClickListener();
 
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -281,7 +284,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
         } else {
-            super.onBackPressed();
+            finishAffinity();
         }
     }
 

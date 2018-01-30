@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -67,6 +68,8 @@ public class BaseActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     Typeface mTypeFace;
     LinearLayout infoToolbar, normalToolbar;
+    TextView infoToolBarMainTittleTxtView;
+    String infoToolBarTittle;
 
 
     @Override
@@ -111,6 +114,7 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuSettingsTxt = (TextView) findViewById(R.id.side_menu_settings_txt);
         infoHamburger = (ImageView) findViewById(R.id.hamburger_info);
         infoToolbar = (LinearLayout) findViewById(R.id.info_toolbar);
+        infoToolBarMainTittleTxtView = (TextView) findViewById(R.id.main_title);
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
 
@@ -181,14 +185,18 @@ public class BaseActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
+                    item.setCheckable(true);
                     fragment = new FavoriteFragment();
                     break;
                 case R.id.qfind_us_menu:
+                    item.setCheckable(true);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     fragment = null;
                     break;
                 case R.id.category_history_menu:
+                    item.setCheckable(true);
                     fragment = new HistoryFragment();
                     break;
             }
@@ -210,11 +218,11 @@ public class BaseActivity extends AppCompatActivity {
                 autoCompleteTextView.setText(null);
                 autoCompleteTextView.clearFocus();
             }
-            if (getCurrentFragment() instanceof InformationFragment)
-                showInfoToolbar();
-            else
-                showNormalToolbar();
-            super.onBackPressed();
+//            if (!(getCurrentFragment() instanceof InformationFragment))
+//                showNormalToolbar();
+//            else
+            showNormalToolbar();
+                super.onBackPressed();
         }
     }
 
@@ -281,9 +289,13 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void showInfoToolbar() {
+    public void showInfoToolbar(String tittle) {
+
+        infoToolBarTittle = tittle;
         normalToolbar.setVisibility(View.GONE);
         infoToolbar.setVisibility(View.VISIBLE);
+        infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
+
     }
 
     public void showNormalToolbar() {
@@ -333,4 +345,20 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuSettingsTxt.setTypeface(mTypeFace);
     }
 
+    public void setupBottomNavigationBar() {
+        fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        bottomNavigationView.setSelected(false);
+        if ((fragment instanceof HistoryFragment)) {
+            bottomNavigationView.getMenu().getItem(2).setCheckable(true);
+        } else if ((fragment instanceof FavoriteFragment)) {
+            bottomNavigationView.getMenu().getItem(0).setCheckable(true);
+        } else {
+            Menu menu = bottomNavigationView.getMenu();
+            for (int i = 0, size = menu.size(); i < size; i++) {
+                MenuItem item = menu.getItem(i);
+                item.setCheckable(false);
+            }
+        }
+
+    }
 }

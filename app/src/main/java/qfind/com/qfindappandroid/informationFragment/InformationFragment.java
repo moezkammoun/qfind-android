@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
@@ -30,12 +32,13 @@ public class InformationFragment extends Fragment {
     RecyclerView recyclerView;
     private ApiResponse apiResponse;
     SharedPreferences qFindPreferences;
-    String accessToken;
+    String accessToken, infoPageTittle;
     ApiInterface apiService;
     ServiceProviderData serviceProviderData;
     InformationFragmentAdapter adapter;
     ProgressBar progressBar;
     TextView emptyTextView;
+    int subCategoryId;
 
     public InformationFragment() {
         // Required empty public constructor
@@ -52,16 +55,27 @@ public class InformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_information, container, false);
+        Bundle bundle = getArguments();
+        subCategoryId = bundle.getInt("subCategoryId");
+        infoPageTittle = bundle.getString("subCategoryName");
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBarLoading);
-        emptyTextView = (TextView) view.findViewById(R.id.emptyTextView);
+        emptyTextView = (TextView) view.findViewById(R.id.empty_text_view_info);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
         adapter = new InformationFragmentAdapter(getContext(), informationData);
         recyclerView.setAdapter(adapter);
-        getServiceProviderData();
-        return view;
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
+        ((ContainerActivity) getActivity()).showInfoToolbar(infoPageTittle);
+        getServiceProviderData(subCategoryId);
+        memoryLeakingCode();
     }
 
     public ArrayList<InformationFragmentModel> getInformationData() {
@@ -80,12 +94,12 @@ public class InformationFragment extends Fragment {
         return informationData;
     }
 
-    public void getServiceProviderData() {
+    public void getServiceProviderData(int subCategoryId) {
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
             apiService = ApiClient.getClient().create(ApiInterface.class);
-            Call<ApiResponse> call = apiService.getServiceProviderData(accessToken, 1, 2, "");
+            Call<ApiResponse> call = apiService.getServiceProviderData(accessToken, 1, subCategoryId, "");
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -128,6 +142,10 @@ public class InformationFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public void memoryLeakingCode(){
+
     }
 
 }
