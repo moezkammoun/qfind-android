@@ -69,6 +69,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:id="@+id/slider_layout"
             android:layout_weight="39.85">
 
             <ImageView
@@ -79,10 +80,11 @@
                 android:src="@drawable/banner" />
 
             <cn.lightsky.infiniteindicator.InfiniteIndicator
-                android:id="@+id/indicator_default_circle"
+                android:id="@+id/main_indicator_default_circle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:indicator_type="indicator_default" />
+
         </RelativeLayout>
 
 

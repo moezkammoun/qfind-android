@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
+import qfind.com.qfindappandroid.PicassoLoader;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
@@ -50,16 +51,22 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @BindView(R.id.category_fragment_tittle_text)
     TextView categoryFragmentTittleText;
     private CategoryItemAdapter categoryItemAdapter;
-    private InfiniteIndicator mAnimCircleIndicator;
     CategoryFragmentPresenterImpl categoryFragmentPresenterImpl;
     public Typeface mtypeFace;
     RecyclerViewClickListener recyclerViewClickListener;
-    public static int categoryPageStatus;
     ArrayList<MainCategoryItemList> mainCategoryItemList;
     ArrayList<SubCategoryItemList> subCategoryItemList;
     String accessToken, subCategoryName;
     SharedPreferences qFindPreferences;
-
+    @Nullable
+    @BindView(R.id.progressBarLoading)
+    ProgressBar progressBar;
+    @Nullable
+    @BindView(R.id.empty_text_view_info)
+    TextView emptyTextView;
+    private IndicatorConfiguration configurationForFragment;
+    private InfiniteIndicator mAnimCircleIndicator;
+    private PicassoLoader picassoLoaderForFragment;
     public CategoryFragment() {
         // Required empty public constructor
     }
@@ -88,6 +95,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         setupRecyclerViewClickListener();
         setFontTypeForText();
         initialSetUp();
+        if (subCategoryItemList!=null)
+            hideLoader(false);
         setClickListenerForSubCategoryButton();
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
 
@@ -96,9 +105,10 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     @Override
     public void loadAds(ArrayList<Page> adsImages) {
+        picassoLoaderForFragment = new PicassoLoader();
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
-                    .imageLoader(new PicassoLoader())
+            configurationForFragment = new IndicatorConfiguration.Builder()
+                    .imageLoader(picassoLoaderForFragment)
                     .isStopWhileTouch(true)
                     .onPageChangeListener(this)
                     .scrollDurationFactor(6)
@@ -109,11 +119,11 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     .direction(LEFT)
                     .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
                     .build();
-            mAnimCircleIndicator.init(configuration);
+            mAnimCircleIndicator.init(configurationForFragment);
             mAnimCircleIndicator.notifyDataChange(adsImages);
         } else {
-            IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
-                    .imageLoader(new PicassoLoader())
+             configurationForFragment = new IndicatorConfiguration.Builder()
+                    .imageLoader(picassoLoaderForFragment)
                     .isStopWhileTouch(true)
                     .onPageChangeListener(this)
                     .internal(3000)
@@ -124,7 +134,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     .direction(RIGHT)
                     .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
                     .build();
-            mAnimCircleIndicator.init(configuration);
+            mAnimCircleIndicator.init(configurationForFragment);
             mAnimCircleIndicator.notifyDataChange(adsImages);
         }
 
@@ -165,12 +175,14 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void onPause() {
         super.onPause();
+        if (configurationForFragment!=null)
         mAnimCircleIndicator.stop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (configurationForFragment!=null)
         mAnimCircleIndicator.start();
     }
 
@@ -190,12 +202,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+                if (Util.categoryPageStatus == 1) {
                     subCategoryName = mainCategoryItemList.get(position).getCategoryName();
+                    progressBar.setVisibility(View.VISIBLE);
                     getSubCategoryItemDetails(mainCategoryItemList.get(position).getCategoryId(),
                             subCategoryName);
 
-                } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+                } else if (Util.categoryPageStatus == 2) {
                     loadInformationFragmentWithBundle(subCategoryItemList.get(position).getSubCategoryId(),
                             subCategoryItemList.get(position).getSubCategoryName());
                     ((ContainerActivity) getActivity()).showInfoToolbar( subCategoryItemList.get(position).getSubCategoryName());
@@ -206,7 +219,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     public void initialSetUp() {
         categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(), this, recyclerViewClickListener);
-        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+        if (Util.categoryPageStatus == 1) {
             if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
                 subCategoryBackButton.setVisibility(View.GONE);
             }
@@ -214,7 +227,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             categoryFragmentPresenterImpl.getImagesForAds();
             categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
 
-        } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+        } else if (Util.categoryPageStatus == 2) {
             if (subCategoryBackButton.getVisibility() == View.GONE) {
                 subCategoryBackButton.setVisibility(View.VISIBLE);
             }
@@ -237,9 +250,10 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     public void setSubCategoryBackButtonClickAction() {
         categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
-        CategoryPageCurrentStatus.categoryPageStatus = 1;
+        Util.categoryPageStatus = 1;
         categoryFragmentTittleText.setText(R.string.categories_text);
         subCategoryBackButton.setVisibility(View.GONE);
+        hideLoader(false);
     }
 
 
@@ -280,29 +294,44 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                             if (subCategory.getCode().equals("200")) {
                                 subCategoryItemList = subCategory.getSubCategoryItemList();
                                 categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
-                                CategoryPageCurrentStatus.categoryPageStatus = 2;
+                                Util.categoryPageStatus = 2;
                                 categoryFragmentTittleText.setText(subCategoryName);
                                 subCategoryBackButton.setVisibility(View.VISIBLE);
 
                             } else {
                                 Util.showToast(getResources().getString(R.string.something_went_wrong), getContext());
+                                //emptyTextView.setVisibility(View.VISIBLE);
                             }
                         }
 
                     } else {
                         Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+                        //emptyTextView.setVisibility(View.VISIBLE);
 
                     }
+                    progressBar.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(Call<SubCategory> call, Throwable t) {
                     Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    progressBar.setVisibility(View.GONE);
+                    //emptyTextView.setVisibility(View.VISIBLE);
 
                 }
             });
 
         }
     }
+
+    public void hideLoader(boolean emptyTextStatus){
+        progressBar.setVisibility(View.GONE);
+        if(emptyTextStatus){
+            emptyTextView.setVisibility(View.VISIBLE);
+        }else {
+            emptyTextView.setVisibility(View.GONE);
+        }
+    }
+
 
 }

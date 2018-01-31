@@ -24,16 +24,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".InformationPage.InformationPage"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".categorycontaineractivity.ContainerActivity"
             android:label="@string/title_activity_contain"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".BaseActivity">
+
+        </activity>
     </application>
 
 </manifest>

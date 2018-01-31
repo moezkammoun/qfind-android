@@ -4,23 +4,21 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.MainCategoryItemList;
 
 /**
@@ -34,6 +32,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     private RecyclerViewClickListener mListener;
     ArrayList<SubCategoryItemList> subCategoryItemList;
     byte categoryPageNumber;
+    Picasso picasso;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -73,6 +72,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     public CategoryItemAdapter(Context mContext, ArrayList<MainCategoryItemList> mainCategoryItemList, RecyclerViewClickListener listener) {
         this.mContext = mContext;
+        setUpPicassoBuilderToReduceLoadingTime();
         this.mainCategoryItemList = mainCategoryItemList;
         this.mListener = listener;
     }
@@ -97,13 +97,13 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+        if (Util.categoryPageStatus == 1) {
             holder.subCategoryCardItemLayout.setVisibility(View.GONE);
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.categoryName.setTypeface(mtypeFace);
             if (mainCategoryItemList != null) {
                 holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
-                Picasso.with(mContext).load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).into(holder.categoryThumbnail);
+                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).resize(50,50).centerInside().into(holder.categoryThumbnail);
             }
         } else {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
@@ -113,7 +113,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             if (subCategoryItemList != null) {
                 holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
                 holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
-                Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
+                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.categoryThumbnail);
             }
         }
 
@@ -143,6 +143,10 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     public void addSubCategoryListValues(ArrayList<SubCategoryItemList> subCategoryItemList, byte categoryPageNumber) {
         this.subCategoryItemList = subCategoryItemList;
         this.categoryPageNumber = categoryPageNumber;
+    }
+    public void setUpPicassoBuilderToReduceLoadingTime(){
+        Picasso.Builder builder = new Picasso.Builder(mContext);
+        picasso = builder.build();
     }
 
 

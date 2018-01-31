@@ -12,4 +12,5 @@ public class Util {
     public static void showToast(String message, Context context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
+    public static int categoryPageStatus = 1;
 }
