@@ -41,8 +41,8 @@ public class PicassoLoader implements ImageLoader {
         }
 
         requestCreator
-                .resize(200,200)
-               .centerInside()
+                .resize(200, 200)
+                .centerInside()
 //                .fit()
                 .into(targetView);
 
