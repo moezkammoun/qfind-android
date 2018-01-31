@@ -10,8 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +30,9 @@ import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
 import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
+import qfind.com.qfindappandroid.homeactivty.SearchData;
+import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
+import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
@@ -52,8 +54,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     ImageView hamburgerMenu;
     @BindView(R.id.home_search_icon)
     ImageView searchButton;
-    @BindView(R.id.homeAutoCompleteEditText)
-    AutoCompleteTextView autoCompleteTextView;
     @BindView(R.id.q_find_of_the_day)
     TextView qFindOfTheDayText;
     @BindView(R.id.or)
@@ -73,6 +73,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     Date d;
     SimpleDateFormat sdf;
     SharedPreferences.Editor editor;
+    DelayAutoCompleteTextView autoCompleteTextView;
+    SearchData searchData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +92,18 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         accessToken = qFindPreferences.getString("AccessToken", null);
 
-        String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
-                "الفندق", "الفندق", "الفندق"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, FINDINGS);
-        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.home_autocomplete_edit_text);
+        autoCompleteTextView.setThreshold(2);
+        autoCompleteTextView.setAdapter(new SearchAutoCompleteAdapter(this));
+        autoCompleteTextView.setLoadingIndicator(
+                (android.widget.ProgressBar) findViewById(R.id.home_loading_indicator), searchButton);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                searchData = (SearchData) adapterView.getItemAtPosition(position);
+                autoCompleteTextView.setText(searchData.getSearchName());
+            }
+        });
 
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,9 +254,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-//                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
-//                startActivity(navigationIntent);
                 showFragment(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
                 fullView.closeDrawer(GravityCompat.END);
             }
@@ -263,9 +267,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-//                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SETTINGS.toString());
-//                startActivity(navigationIntent);
                 showFragment(AppConfig.Fragments.SETTINGS.toString());
                 fullView.closeDrawer(GravityCompat.END);
             }

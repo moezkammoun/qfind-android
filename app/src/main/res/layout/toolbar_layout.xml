@@ -129,23 +129,50 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteEditText"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:background="@drawable/edit_text_bg"
-                android:ems="10"
-                android:hint="@string/search_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="textAutoComplete|textAutoCorrect"
-                android:paddingEnd="@dimen/home_hit_padding"
-                android:paddingStart="@dimen/home_hit_padding"
-                android:textColor="@color/black"
-                android:textColorHint="#cac9c9"
-                android:textSize="@dimen/toolbar_find_today_hint">
+                android:layout_margin="0dp">
 
-            </AutoCompleteTextView>
+                <qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView
+                    android:id="@+id/base_autocomplete_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/search_hint"
+                    android:imeOptions="flagNoExtractUi|actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:paddingEnd="@dimen/home_hit_padding"
+                    android:paddingStart="@dimen/home_hit_padding"
+                    android:textSize="@dimen/toolbar_find_today_hint" />
+
+                <ProgressBar
+                    android:id="@+id/base_loading_indicator"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <!--<AutoCompleteTextView-->
+            <!--android:id="@+id/autoCompleteEditText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@drawable/edit_text_bg"-->
+            <!--android:ems="10"-->
+            <!--android:hint="@string/search_hint"-->
+            <!--android:imeOptions="actionSearch"-->
+            <!--android:inputType="textAutoComplete|textAutoCorrect"-->
+            <!--android:paddingEnd="@dimen/home_hit_padding"-->
+            <!--android:paddingStart="@dimen/home_hit_padding"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textColorHint="#cac9c9"-->
+            <!--android:textSize="@dimen/toolbar_find_today_hint">-->
+
+            <!--</AutoCompleteTextView>-->
 
             <ImageView
                 android:layout_width="wrap_content"

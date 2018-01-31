@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
@@ -34,7 +35,10 @@ import android.widget.Toast;
 
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
+import qfind.com.qfindappandroid.homeactivty.SearchData;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
+import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
+import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -45,16 +49,8 @@ public class BaseActivity extends AppCompatActivity {
 
     protected LinearLayout sideMenuAboutUsLayout, sideMenuQFinderLayout, sideMenuTermsAndConditionLayout,
             sideMenuContactUsLayout, sideMenuSettingsLayout;
-
-    TextView sideMenuTittleTxt;
-
-    TextView sideMenuAboutUsTxt;
-    TextView sideMenuQfinderTxt;
-
-    TextView sideMenuTermAndConditionTxt;
-
-    TextView sideMenuContactUsTxt;
-
+    TextView sideMenuTittleTxt, sideMenuAboutUsTxt, sideMenuQfinderTxt, sideMenuTermAndConditionTxt,
+            sideMenuContactUsTxt;
     TextView sideMenuSettingsTxt;
     Toolbar toolbar;
     Fragment fragment;
@@ -62,7 +58,7 @@ public class BaseActivity extends AppCompatActivity {
     ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton;
     ArrayAdapter<String> adapter;
     ImageView searchButton;
-    protected AutoCompleteTextView autoCompleteTextView;
+    protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
     InputMethodManager imm;
     BottomNavigationView bottomNavigationView;
@@ -72,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
     LinearLayout infoToolbar, normalToolbar;
     TextView infoToolBarMainTittleTxtView;
     String infoToolBarTittle;
-
+    SearchData searchData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +99,6 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuContactUsLayout = (LinearLayout) fullView.findViewById(R.id.contact_us_layout);
         sideMenuSettingsLayout = (LinearLayout) fullView.findViewById(R.id.settings_layout);
         sideMenuHamburger = (ImageView) fullView.findViewById(R.id.side_menu_hamburger);
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteEditText);
         searchButton = (ImageView) findViewById(R.id.search_icon);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setItemIconTintList(null);
@@ -148,15 +143,28 @@ public class BaseActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
-                "Restaurant", "الفندق", "الفندق", "الفندق"
-        };
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, FINDINGS);
-        autoCompleteTextView.setAdapter(adapter);
-        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
 
+//        String[] FINDINGS = new String[]{
+//                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
+//                "Restaurant", "الفندق", "الفندق", "الفندق"
+//        };
+//        adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_dropdown_item_1line, FINDINGS);
+//        autoCompleteTextView.setAdapter(adapter);
+//        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
+
+        autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.base_autocomplete_edit_text);
+        autoCompleteTextView.setThreshold(2);
+        autoCompleteTextView.setAdapter(new SearchAutoCompleteAdapter(this));
+        autoCompleteTextView.setLoadingIndicator(
+                (android.widget.ProgressBar) findViewById(R.id.base_loading_indicator), searchButton);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                searchData = (SearchData) adapterView.getItemAtPosition(position);
+                autoCompleteTextView.setText(searchData.getSearchName());
+            }
+        });
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
