@@ -2,30 +2,28 @@ package qfind.com.qfindappandroid;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +32,9 @@ import android.widget.Toast;
 
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
-import qfind.com.qfindappandroid.informationFragment.InformationFragment;
+import qfind.com.qfindappandroid.homeactivty.SearchData;
+import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
+import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
@@ -45,24 +45,15 @@ public class BaseActivity extends AppCompatActivity {
 
     protected LinearLayout sideMenuAboutUsLayout, sideMenuQFinderLayout, sideMenuTermsAndConditionLayout,
             sideMenuContactUsLayout, sideMenuSettingsLayout;
-
-    TextView sideMenuTittleTxt;
-
-    TextView sideMenuAboutUsTxt;
-    TextView sideMenuQfinderTxt;
-
-    TextView sideMenuTermAndConditionTxt;
-
-    TextView sideMenuContactUsTxt;
-
+    TextView sideMenuTittleTxt, sideMenuAboutUsTxt, sideMenuQfinderTxt, sideMenuTermAndConditionTxt,
+            sideMenuContactUsTxt;
     TextView sideMenuSettingsTxt;
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
     ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton;
-    ArrayAdapter<String> adapter;
     ImageView searchButton;
-    protected AutoCompleteTextView autoCompleteTextView;
+    protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
     InputMethodManager imm;
     BottomNavigationView bottomNavigationView;
@@ -72,7 +63,7 @@ public class BaseActivity extends AppCompatActivity {
     LinearLayout infoToolbar, normalToolbar;
     TextView infoToolBarMainTittleTxtView;
     String infoToolBarTittle;
-
+    SearchData searchData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +94,6 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuContactUsLayout = (LinearLayout) fullView.findViewById(R.id.contact_us_layout);
         sideMenuSettingsLayout = (LinearLayout) fullView.findViewById(R.id.settings_layout);
         sideMenuHamburger = (ImageView) fullView.findViewById(R.id.side_menu_hamburger);
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteEditText);
         searchButton = (ImageView) findViewById(R.id.search_icon);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setItemIconTintList(null);
@@ -148,15 +138,31 @@ public class BaseActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
-                "Restaurant", "الفندق", "الفندق", "الفندق"
-        };
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, FINDINGS);
-        autoCompleteTextView.setAdapter(adapter);
-        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
 
+        autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.base_autocomplete_edit_text);
+        autoCompleteTextView.setThreshold(2);
+        autoCompleteTextView.setAdapter(new SearchAutoCompleteAdapter(this));
+        autoCompleteTextView.setLoadingIndicator(
+                (android.widget.ProgressBar) findViewById(R.id.base_loading_indicator), searchButton);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                searchData = (SearchData) adapterView.getItemAtPosition(position);
+                autoCompleteTextView.setText(searchData.getSearchName());
+                searchButton.performClick();
+            }
+        });
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchButton.performClick();
+                    autoCompleteTextView.dismissDropDown();
+                    return true;
+                }
+                return false;
+            }
+        });
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +173,15 @@ public class BaseActivity extends AppCompatActivity {
                         imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
                     }
                     fragment = new SearchResultsFragment();
+                    Bundle bundle = new Bundle();
+                    if (searchData != null) {
+                        bundle.putInt("searchType", searchData.getSearchType());
+                        searchData = null;
+                    } else {
+                        bundle.putInt("searchType", 4);
+                    }
+                    bundle.putString("searchKey", autoCompleteTextView.getText().toString());
+                    fragment.setArguments(bundle);
                     loadFragment(fragment);
                 } else {
                     Toast.makeText(BaseActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
@@ -220,9 +235,6 @@ public class BaseActivity extends AppCompatActivity {
                 autoCompleteTextView.setText(null);
                 autoCompleteTextView.clearFocus();
             }
-//            if (!(getCurrentFragment() instanceof InformationFragment))
-//                showNormalToolbar();
-//            else
             showNormalToolbar();
             super.onBackPressed();
         }
@@ -323,7 +335,8 @@ public class BaseActivity extends AppCompatActivity {
         if (isNetworkAvailable()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
-            transaction.addToBackStack(null);
+            if (!(fragment instanceof SearchResultsFragment))
+                transaction.addToBackStack(null);
             transaction.commit();
             if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
                 autoCompleteTextView.setText(null);

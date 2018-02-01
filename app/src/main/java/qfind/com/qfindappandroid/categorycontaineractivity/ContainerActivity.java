@@ -36,6 +36,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     Intent intent;
     String fragmentToShow, searchText, accessToken;
     SharedPreferences qFindPreferences;
+    private Integer searchType;
 
 
     @Override
@@ -49,8 +50,13 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         intent = getIntent();
         fragmentToShow = intent.getStringExtra("SHOW_FRAGMENT");
         searchText = intent.getStringExtra("SEARCH_TEXT");
+        searchType = intent.getIntExtra("SEARCH_TYPE",0);
         if (fragmentToShow.equals(AppConfig.Fragments.SEARCH_RESULTS.toString())) {
             fragment = new SearchResultsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("searchType", searchType);
+            bundle.putString("searchKey", searchText);
+            fragment.setArguments(bundle);
             loadFragmentWithoutBackStack(fragment);
         } else if (fragmentToShow.equals(AppConfig.Fragments.SETTINGS.toString())) {
             fragment = new SettingsFragment();

@@ -3,12 +3,12 @@ package qfind.com.qfindappandroid.searchResultsFragment;
 public class SearchedItem {
     private String item;
     private String itemDescription;
-    private int thumbnail;
+    private String thumbnail;
 
     public SearchedItem() {
     }
 
-    public SearchedItem(String item, String itemDescription, int thumbnail) {
+    public SearchedItem(String item, String itemDescription, String thumbnail) {
         this.item = item;
         this.itemDescription = itemDescription;
         this.thumbnail = thumbnail;
@@ -22,11 +22,11 @@ public class SearchedItem {
         this.item = item;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 

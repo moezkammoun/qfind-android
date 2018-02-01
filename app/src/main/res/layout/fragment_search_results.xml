@@ -60,12 +60,12 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/textViewEmpty"
+            android:id="@+id/searchEmptyTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="@string/no_data_text"
+            android:text="@string/no_result_text"
             android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>
