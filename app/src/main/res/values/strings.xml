@@ -4,15 +4,9 @@
     <string name="search_hint">What would you like to find today?</string>
     <string name="or">OR</string>
     <string name="find_by_category">FIND BY CATEGORY</string>
-    <string name="action_settings">Settings</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="information_main_title">Four Season Hotel</string>
     <string name="information_sub_title">West Bay</string>
-    <string name="title_activity_container">ContainerActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="about_us">About us</string>
     <string name="how_to_become_qfinder">How to become Qfinder</string>
     <string name="terms_and_conditions">Terms &amp; Conditions</string>
@@ -24,24 +18,22 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
     <string name="select_language">Select Language</string>
     <string name="already_english">you are already in english</string>
     <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
     <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
    </string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="categories_text">Categories</string>
     <string name="history_text">History</string>
     <string name="title_activity_contain">ContainActivity</string>
     <string name="search_results_text">Search Results</string>
     <string name="favorites_text">Favorites</string>
     <string name="no_data_text">No data</string>
+    <string name="no_result_text">No results found</string>
     <string name="something_went_wrong">Oops! something went wrong</string>
     <string name="please_type">Please type something to find!</string>
     <string name="error_in_connecting">Error in connecting the server</string>
     <string name="check_network">Check your internet connections</string>
     <string name="un_authorised">Unauthorized access</string>
 
-    <string name="sub_categoies_text">Hotel</string>
 </resources>

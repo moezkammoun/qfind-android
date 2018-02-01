@@ -5,7 +5,6 @@
     <string name="search_hint">ماذا تريد أن تجد اليوم؟</string>
     <string name="or">أو</string>
     <string name="find_by_category">ابحث بالفئة</string>
-    <string name="action_settings">الإعدادات</string>
     <string name="about_us">معلومات عنا</string>
     <string name="how_to_become_qfinder">كيف تكون كيوفايندر</string>
     <string name="terms_and_conditions">الشروط والأحكام</string>
@@ -15,19 +14,13 @@
     <string name="arabic">عربى</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="information_main_title">Four Season Hotel</string>
     <string name="information_sub_title">West Bay</string>
-    <string name="title_activity_container">ContainerActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="something_went_wrong">Oops! something went wrong</string>
     <string name="please_type">Please type something to find!</string>
     <string name="error_in_connecting">Error in connecting the server</string>
     <string name="check_network">Check your internet connections</string>
     <string name="un_authorised">Unauthorized access</string>
     <string name="today">اليوم</string>
-    <string name="yesterday">الأمس</string>
     <string name="select_language">اختيار اللغة</string>
     <string name="categories_text">الفئات</string>
     <string name="history_text">تاريخ البحث</string>
@@ -44,8 +37,6 @@
     <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
     <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
    </string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sub_categoies_text">Hotel</string>
     <string name="no_data_text">No data</string>
     >>>>>>> master
 </resources>
