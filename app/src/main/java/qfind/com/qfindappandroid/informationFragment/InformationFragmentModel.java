@@ -1,20 +1,17 @@
-package qfind.com.qfindappandroid.InformationPage;
-
-import android.widget.ImageView;
-import android.widget.TextView;
+package qfind.com.qfindappandroid.informationFragment;
 
 /**
  * Created by MoongedePC on 08-Jan-18.
  */
 
-public class InformationPageModel {
+public class InformationFragmentModel {
     int info_icon;
     int info_point;
     String info_content;
     int info_back_button;
 
-    public InformationPageModel(int info_icon, int info_point,
-                                String info_content, int info_back_button) {
+    public InformationFragmentModel(int info_icon, int info_point,
+                                    String info_content, int info_back_button) {
         this.info_icon = info_icon;
         this.info_point = info_point;
         this.info_content = info_content;

@@ -10,16 +10,16 @@ public class FavoriteModel {
     private String item;
     private String itemDescription;
     private int thumbnail;
-//    private String url;
+    private String url;
 
     public FavoriteModel() {
     }
 
-//    public FavoriteModel(String item, String itemDescription, String url) {
-//        this.item = item;
-//        this.itemDescription = itemDescription;
-//        this.url = url;
-//    }
+    public FavoriteModel(String item, String itemDescription, String url) {
+        this.item = item;
+        this.itemDescription = itemDescription;
+        this.url = url;
+    }
 
     public FavoriteModel(String item, String itemDescription, int thumbnail) {
         this.item = item;
@@ -35,13 +35,13 @@ public class FavoriteModel {
         this.id = id;
     }
 
-    //    public String getUrl() {
-//        return url;
-//    }
-//
-//    public void setUrl(String url) {
-//        this.url = url;
-//    }
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getItem() {
         return item;

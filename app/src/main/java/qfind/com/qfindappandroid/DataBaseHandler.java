@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
+import qfind.com.qfindappandroid.historyPage.HistoryDateCount;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
 import qfind.com.qfindappandroid.historyPage.HistoryPageDataModel;
 import qfind.com.qfindappandroid.historyPage.HistoryPageMainModel;
@@ -64,8 +66,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public void addHistory(HistoryItem history) {
         writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        HistoryItem historyMain = new HistoryItem();
-        values.put(KEY_DAY, historyMain.getDay());
+        values.put(KEY_DAY, history.getDay());
         values.put(KEY_TITLE, history.getTitke());
         values.put(KEY_IMG, history.getImage());
         values.put(KEY_DESCRIPTION, history.getDescription());
@@ -75,11 +76,61 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         writeDB.close(); // Closing database connection
     }
 
-    // Getting All Contacts
-    public List<HistoryItem> getAllContacts() {
+    public void addFavorite(FavoriteModel favorite) {
+        writeDB = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        HistoryItem historyMain = new HistoryItem();
+        values.put(KEY_TITLE, favorite.getItem());
+        values.put(KEY_IMG, favorite.getThumbnail());
+        values.put(KEY_DESCRIPTION, favorite.getItemDescription());
+
+        // Inserting Row
+        writeDB.insert(TABLE_FAVORITE, null, values);
+        writeDB.close(); // Closing database connection
+    }
+
+    public List<HistoryDateCount> getDateCount() {
+
+        List<HistoryDateCount> historyDateCounts = new ArrayList<HistoryDateCount>();
+        String selectQuery = "SELECT " + KEY_DAY + ", COUNT(*) FROM " + TABLE_HISTORY + " GROUP BY " + KEY_DAY + " order by " + KEY_DAY + " asc";
+        writeDB = this.getWritableDatabase();
+        Cursor cursor = writeDB.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                HistoryDateCount history = new HistoryDateCount();
+                history.setDay(cursor.getString(0));
+                history.setCount(Integer.parseInt(cursor.getString(1)));
+                historyDateCounts.add(history);
+            } while (cursor.moveToNext());
+        }
+        return historyDateCounts;
+    }
+
+    public List<HistoryItem> getAllHistory(String day) {
         List<HistoryItem> historyList = new ArrayList<HistoryItem>();
+        String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_DAY + "='" + day + "'";
+        Cursor cursor = writeDB.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                HistoryItem history = new HistoryItem();
+                history.setId(Integer.parseInt(cursor.getString(0)));
+                history.setTitke(cursor.getString(1));
+                history.setDay(cursor.getString(2));
+                history.setImage(cursor.getString(3));
+                history.setDescription(cursor.getString(4));
+                historyList.add(history);
+            } while (cursor.moveToNext());
+        }
+        // return list
+        return historyList;
+    }
+
+
+    public List<FavoriteModel> getAllFavorites() {
+        List<FavoriteModel> favoriteList = new ArrayList<FavoriteModel>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY;
+        String selectQuery = "SELECT  * FROM " + TABLE_FAVORITE;
 
         writeDB = this.getWritableDatabase();
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
@@ -87,28 +138,30 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-//                HistoryPageMainModel historyMain = new HistoryPageMainModel();
-                HistoryItem history = new HistoryItem();
-                history.setId(Integer.parseInt(cursor.getString(0)));
-                history.setTitke(cursor.getString(1));
-                history.setDay(cursor.getString(2));
-                history.setImage(cursor.getString(3));
-                history.setDescription(cursor.getString(4));
+                FavoriteModel favModel = new FavoriteModel();
+                favModel.setId(Integer.parseInt(cursor.getString(0)));
+                favModel.setItem(cursor.getString(1));
+                favModel.setUrl(cursor.getString(2));
+                favModel.setItemDescription(cursor.getString(3));
                 // Adding contact to list
-                historyList.add(history);
+                favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }
-
-        // return list
-        return historyList;
+        return favoriteList;
     }
 
-//    // Deleting single contact
-//    public void deleteContact(Contact contact) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-//                new String[] { String.valueOf(contact.getID()) });
-//        db.close();
-//    }
+    public void deleteFavorite(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FAVORITE, KEY_ID + "=" + id, null);
+        db.close();
+    }
+
+    public void deleteHistory(String lastdate, String futureDate) {
+        writeDB = this.getWritableDatabase();
+//        String query = " delete from " + TABLE_HISTORY + " where " + KEY_DAY +" = "+ date;
+        writeDB.delete(TABLE_HISTORY, KEY_DAY + " < " + lastdate, null);
+        writeDB.delete(TABLE_HISTORY, KEY_DAY + ">" + futureDate, null);
+        writeDB.close();
+    }
 
 }

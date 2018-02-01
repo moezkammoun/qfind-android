@@ -1,12 +1,15 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
-import android.content.Context;
+
+
+
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +29,9 @@ import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
-import qfind.com.qfindappandroid.InformationPage.InformationPage;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
@@ -69,18 +72,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
         ButterKnife.bind(this, view);
         setupRecyclerViewClickListener();
         setFontTypeForText();
         initialSetUp();
-        mAnimCircleIndicator = (InfiniteIndicator) view.findViewById(R.id.indicator_default_circle);
+        setClickListenerForSubCategoryButton();
 
-        categoryFragmentPresenterImpl.getImagesForAds();
-        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
-            categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
-        } else {
-            //categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
-        }
     }
 
 
@@ -185,25 +183,46 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     CategoryPageCurrentStatus.categoryPageStatus = 2;
                     categoryFragmentTittleText.setText(R.string.sub_categoies_text);
                     subCategoryBackButton.setVisibility(View.VISIBLE);
-                    setClickListenerForSubCategoryButton();
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
-                    Intent intent = new Intent(getActivity(), InformationPage.class);
-                    intent.putExtra("thumbnail", R.drawable.cloth_stores);
-                    intent.putExtra("title","Four Season Hotel");
-                    intent.putExtra("description","Lorem ipsum dolor");
-                    startActivity(intent);
+
+
+                    Bundle bundle= new Bundle();
+                    bundle.putString("title","Four Season Hotel");
+                    bundle.putString("description","Lorem ipsum dolor");
+
+                    InformationFragment informationFragment = new InformationFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    informationFragment.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.frame_container, informationFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
                 }
             }
         };
     }
 
     public void initialSetUp() {
-        if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
-            subCategoryBackButton.setVisibility(View.GONE);
+        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+            if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
+                subCategoryBackButton.setVisibility(View.GONE);
+            }
+            categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
+            categoryFragmentTittleText.setText(R.string.categories_text);
+            categoryFragmentPresenterImpl.getImagesForAds();
+            categoryFragmentPresenterImpl.getCategoryItemsDetails(getContext());
+
+        } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+            if (subCategoryBackButton.getVisibility() == View.GONE) {
+                subCategoryBackButton.setVisibility(View.VISIBLE);
+            }
+            categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
+            categoryFragmentTittleText.setText(R.string.sub_categoies_text);
+            categoryFragmentPresenterImpl.getImagesForAds();
+            categoryFragmentPresenterImpl.getSubCategoryItemsDetails(getContext());
         }
-        CategoryPageCurrentStatus.categoryPageStatus = 1;
-        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(this, recyclerViewClickListener);
-        categoryFragmentTittleText.setText(R.string.categories_text);
+
 
     }
 

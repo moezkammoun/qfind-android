@@ -2,10 +2,12 @@ package qfind.com.qfindappandroid.settingspagefragment;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -65,6 +67,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setLocale(String lang) {
+        int language = 1;
         Configuration configuration = getResources().getConfiguration();
         configuration.setLayoutDirection(new Locale(lang));
         getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
@@ -74,13 +77,22 @@ public class SettingsFragment extends Fragment {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        //Intent refresh = new Intent(MainActivity.this, MainActivity.class);
-        //this.overridePendingTransition(0,0);
-        //this.finish();
-        //startActivity(refresh);
-        refreshActivityFromFragment();
-        //refreshFragment();
-    }
+        if (lang.equalsIgnoreCase("en")) {
+            language = 1;
+        }else if(lang.equalsIgnoreCase("ar")){
+            language = 2;
+        }
+            SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = qfindPreferences.edit();
+            editor.putInt("AppLanguage", language);
+            editor.commit();
+            //Intent refresh = new Intent(MainActivity.this, MainActivity.class);
+            //this.overridePendingTransition(0,0);
+            //this.finish();
+            //startActivity(refresh);
+            refreshActivityFromFragment();
+            //refreshFragment();
+        }
 
     public void refreshActivityFromFragment() {
         Intent intent = getActivity().getIntent();

@@ -1,30 +1,23 @@
 package qfind.com.qfindappandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +28,13 @@ import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragmentModel;
 import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
-import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
-import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
-import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
+import qfind.com.qfindappandroid.homeactivty.AdsData;
+import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
+import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
+import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
@@ -50,16 +47,27 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private ActionBarDrawerToggle toggle;
     @BindView(R.id.findByCategoryBtn)
     Button findByCategoryBtn;
-    @BindView(R.id.hamburger_menu)
+    @BindView(R.id.hamburger_home)
     ImageView hamburgerMenu;
     @BindView(R.id.home_search_icon)
     ImageView searchButton;
     @BindView(R.id.homeAutoCompleteEditText)
     AutoCompleteTextView autoCompleteTextView;
+    @BindView(R.id.q_find_of_the_day)
+    TextView qFindOfTheDayText;
+    @BindView(R.id.or)
+    TextView orText;
+    @BindView(R.id.ads_place_holder)
+    ImageView adsPlaceHolder;
     private InfiniteIndicator mAnimCircleIndicator;
     Typeface mTypeFace;
     Intent navigationIntent;
-
+    String accessToken;
+    SharedPreferences qFindPreferences;
+    ApiInterface apiService;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
+    ArrayList<Page> ads;
+    QFindOfTheDayDetails qfindOfTheDayDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +79,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         getSupportActionBar().setHomeButtonEnabled(true);
         mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
         setupHamburgerClickListener();
+        qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        accessToken = qFindPreferences.getString("AccessToken", null);
 
         String[] FINDINGS = new String[]{
                 "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
-                "الفندق", "الفندق","الفندق"
+                "الفندق", "الفندق", "الفندق"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, FINDINGS);
@@ -91,10 +101,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             @Override
             public void onClick(View view) {
                 if (!autoCompleteTextView.getText().toString().equals("")) {
-                    Toast.makeText(MainActivity.this, "Finding...", Toast.LENGTH_SHORT).show();
                     navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                     navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
+                    navigationIntent.putExtra("SEARCH_TEXT", autoCompleteTextView.getText().toString());
                     startActivity(navigationIntent);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,9 +118,49 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 startActivity(navigationIntent);
             }
         });
+        getQFind();
+        setFontTypeForHomeText();
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                getQFind();
+            }
+        };
+        qFindPreferences.registerOnSharedPreferenceChangeListener(listener);
+    }
 
-        loadAdsToSlider();
+    public void getQFind() {
+        accessToken = qFindPreferences.getString("AccessToken", null);
+        if (accessToken != null) {
+            apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<QFindOfTheDayDetails> call = apiService.getQFindOfTheDay(accessToken);
+            call.enqueue(new Callback<QFindOfTheDayDetails>() {
+                @Override
+                public void onResponse(Call<QFindOfTheDayDetails> call, Response<QFindOfTheDayDetails> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            qfindOfTheDayDetails = response.body();
+                            if (qfindOfTheDayDetails.getCode().equals("200")) {
+                                ads = new ArrayList<>();
+                                for (int i = 0; i < qfindOfTheDayDetails.getAdsData().getImages().size(); i++) {
+                                    ads.add(new Page("", qfindOfTheDayDetails.getAdsData().getImages().get(i)));
+                                }
+                                loadAdsToSlider(ads);
+                            } else {
+                                Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
+                            }
+                        }
 
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<QFindOfTheDayDetails> call, Throwable t) {
+                    Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                }
+            });
+        }
     }
 
     @Override
@@ -181,11 +233,24 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
     }
 
+    public void setFontTypeForHomeText() {
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/Lato-Bold.ttf");
+            findByCategoryBtn.setTypeface(mTypeFace);
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/Lato-Regular.ttf");
+        } else {
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+            findByCategoryBtn.setTypeface(mTypeFace);
+        }
+        qFindOfTheDayText.setTypeface(mTypeFace);
+        orText.setTypeface(mTypeFace);
+        autoCompleteTextView.setTypeface(mTypeFace);
+    }
 
-    public void loadAdsToSlider() {
-        ArrayList<Page> adsImages;
-        CategoryFragmentModel categoryFragmentModel = new CategoryFragmentModel();
-        adsImages = categoryFragmentModel.getAdsImages();
+    public void loadAdsToSlider(ArrayList<Page> adsImages) {
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
                     .imageLoader(new PicassoLoader())
@@ -217,6 +282,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             mAnimCircleIndicator.init(configuration);
             mAnimCircleIndicator.notifyDataChange(adsImages);
         }
+        adsPlaceHolder.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        autoCompleteTextView.setText(null);
     }
 
     @Override
