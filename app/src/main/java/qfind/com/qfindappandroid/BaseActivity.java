@@ -2,11 +2,13 @@ package qfind.com.qfindappandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -19,10 +21,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,15 +37,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
 import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
+import qfind.com.qfindappandroid.predictiveSearch.SearchResultsResponse;
+import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
+import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
+import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -69,6 +82,12 @@ public class BaseActivity extends AppCompatActivity {
     TextView infoToolBarMainTittleTxtView;
     String infoToolBarTittle;
     SearchData searchData;
+    private ApiInterface apiService;
+    private SharedPreferences qFindPreferences;
+    private String accessToken;
+    private int language;
+    SearchResultsResponse searchResultsResponse;
+    List<ServiceProviderResult> serviceProviderResultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +182,18 @@ public class BaseActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 searchData = (SearchData) adapterView.getItemAtPosition(position);
                 autoCompleteTextView.setText(searchData.getSearchName());
+                searchButton.performClick();
+            }
+        });
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchButton.performClick();
+                    autoCompleteTextView.dismissDropDown();
+                    return true;
+                }
+                return false;
             }
         });
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +206,15 @@ public class BaseActivity extends AppCompatActivity {
                         imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
                     }
                     fragment = new SearchResultsFragment();
+                    Bundle bundle = new Bundle();
+                    if (searchData != null) {
+                        bundle.putInt("searchType", searchData.getSearchType());
+                        searchData = null;
+                    } else {
+                        bundle.putInt("searchType", 4);
+                    }
+                    bundle.putString("searchKey", autoCompleteTextView.getText().toString());
+                    fragment.setArguments(bundle);
                     loadFragment(fragment);
                 } else {
                     Toast.makeText(BaseActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
@@ -331,7 +371,8 @@ public class BaseActivity extends AppCompatActivity {
         if (isNetworkAvailable()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
-            transaction.addToBackStack(null);
+            if (!(fragment instanceof SearchResultsFragment))
+                transaction.addToBackStack(null);
             transaction.commit();
             if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
                 autoCompleteTextView.setText(null);

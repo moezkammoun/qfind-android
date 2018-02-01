@@ -94,7 +94,8 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
     public List<SearchData> getPrediction(String sName) {
         List<SearchData> ListData = new ArrayList<SearchData>();
         try {
-            String searchKey = sName.replace(" ", "");
+            String searchKey = sName.trim();
+            searchKey = searchKey.replace(" ", "%20");
             qFindPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             accessToken = qFindPreferences.getString("AccessToken", null);
             language = qFindPreferences.getInt("AppLanguage", 1);

@@ -9,7 +9,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -102,9 +104,19 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 searchData = (SearchData) adapterView.getItemAtPosition(position);
                 autoCompleteTextView.setText(searchData.getSearchName());
+                searchButton.performClick();
             }
         });
-
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchButton.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +132,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                         navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                         navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
                         navigationIntent.putExtra("SEARCH_TEXT", autoCompleteTextView.getText().toString());
+                        if (searchData != null) {
+                            navigationIntent.putExtra("SEARCH_TYPE", searchData.getSearchType());
+                            searchData = null;
+                        } else
+                            navigationIntent.putExtra("SEARCH_TYPE", 4);
                         startActivity(navigationIntent);
                     }
                 } else {
