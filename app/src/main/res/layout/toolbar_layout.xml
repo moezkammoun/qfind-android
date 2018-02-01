@@ -51,7 +51,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="@string/information_main_title"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/info_title_text_size" />
         </LinearLayout>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -67,6 +70,8 @@ public class BaseActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     Typeface mTypeFace;
     LinearLayout infoToolbar, normalToolbar;
+    TextView infoToolBarMainTittleTxtView;
+    String infoToolBarTittle;
 
 
     @Override
@@ -111,6 +116,7 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuSettingsTxt = (TextView) findViewById(R.id.side_menu_settings_txt);
         infoHamburger = (ImageView) findViewById(R.id.hamburger_info);
         infoToolbar = (LinearLayout) findViewById(R.id.info_toolbar);
+        infoToolBarMainTittleTxtView = (TextView) findViewById(R.id.main_title);
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
 
@@ -181,14 +187,18 @@ public class BaseActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
+                    item.setCheckable(true);
                     fragment = new FavoriteFragment();
                     break;
                 case R.id.qfind_us_menu:
+                    item.setCheckable(true);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     fragment = null;
                     break;
                 case R.id.category_history_menu:
+                    item.setCheckable(true);
                     fragment = new HistoryFragment();
                     break;
             }
@@ -210,12 +220,25 @@ public class BaseActivity extends AppCompatActivity {
                 autoCompleteTextView.setText(null);
                 autoCompleteTextView.clearFocus();
             }
-            if (getCurrentFragment() instanceof InformationFragment)
-                showInfoToolbar();
-            else
-                showNormalToolbar();
+//            if (!(getCurrentFragment() instanceof InformationFragment))
+//                showNormalToolbar();
+//            else
+            showNormalToolbar();
             super.onBackPressed();
         }
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
+            return true;
+        else {
+            Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+            return false;
+        }
+
     }
 
     protected boolean useToolbar() {
@@ -239,14 +262,12 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
-                showNormalToolbar();
             }
         });
         sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
-                showNormalToolbar();
             }
         });
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
@@ -265,13 +286,7 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                if (!(fragment instanceof InformationFragment)) {
-                    BaseActivity.this.fragment = new InformationFragment();
-                    loadFragment(BaseActivity.this.fragment);
-                }
                 fullView.closeDrawer(GravityCompat.END);
-                showInfoToolbar();
             }
         });
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
@@ -289,9 +304,13 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void showInfoToolbar() {
+    public void showInfoToolbar(String tittle) {
+
+        infoToolBarTittle = tittle;
         normalToolbar.setVisibility(View.GONE);
         infoToolbar.setVisibility(View.VISIBLE);
+        infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
+
     }
 
     public void showNormalToolbar() {
@@ -301,13 +320,15 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
-        transaction.addToBackStack(null);
-        transaction.commit();
-        if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
-            autoCompleteTextView.setText(null);
-            autoCompleteTextView.clearFocus();
+        if (isNetworkAvailable()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
+            transaction.addToBackStack(null);
+            transaction.commit();
+            if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
+                autoCompleteTextView.setText(null);
+                autoCompleteTextView.clearFocus();
+            }
         }
     }
 
@@ -341,4 +362,20 @@ public class BaseActivity extends AppCompatActivity {
         sideMenuSettingsTxt.setTypeface(mTypeFace);
     }
 
+    public void setupBottomNavigationBar() {
+        fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        bottomNavigationView.setSelected(false);
+        if ((fragment instanceof HistoryFragment)) {
+            bottomNavigationView.getMenu().getItem(2).setCheckable(true);
+        } else if ((fragment instanceof FavoriteFragment)) {
+            bottomNavigationView.getMenu().getItem(0).setCheckable(true);
+        } else {
+            Menu menu = bottomNavigationView.getMenu();
+            for (int i = 0, size = menu.size(); i < size; i++) {
+                MenuItem item = menu.getItem(i);
+                item.setCheckable(false);
+            }
+        }
+
+    }
 }

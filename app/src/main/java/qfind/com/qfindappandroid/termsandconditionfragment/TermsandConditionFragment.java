@@ -13,6 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 
 /**
  * Created by dilee on 16-01-2018.
@@ -50,6 +51,6 @@ public class TermsandConditionFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
+        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
     }
 }

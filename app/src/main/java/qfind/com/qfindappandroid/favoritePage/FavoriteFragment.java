@@ -2,11 +2,9 @@ package qfind.com.qfindappandroid.favoritePage;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,10 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
-import qfind.com.qfindappandroid.historyPage.HistoryItem;
-import qfind.com.qfindappandroid.historyPage.HistoryPageMainAdapter;
-import qfind.com.qfindappandroid.searchResultsFragment.ResultsAdapter;
-import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 
 public class FavoriteFragment extends Fragment {
 
@@ -39,7 +34,7 @@ public class FavoriteFragment extends Fragment {
     ProgressBar mProgressBarLoading;
     favoriteAdapter resultsAdapter;
     List<FavoriteModel> favoriteModelList;
-//    @BindView(R.id.favorite_star)
+    //    @BindView(R.id.favorite_star)
 //     ImageView favoriteStar;
     FavoriteModel item;
     Typeface mTypeFace;
@@ -137,10 +132,10 @@ public class FavoriteFragment extends Fragment {
         });
 
 
-        favoriteAdapter adapter = new favoriteAdapter(getContext(),favoriteModelList);
+        favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
         favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         favoriteView.setAdapter(adapter);
-
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
     }
 
     @Override
