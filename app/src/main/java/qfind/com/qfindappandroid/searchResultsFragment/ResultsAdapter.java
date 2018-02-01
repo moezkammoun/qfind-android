@@ -72,8 +72,6 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         SearchedItem album = itemList.get(position);
         holder.title.setText(album.getItem());
         holder.description.setText(album.getItemDescription());
-
-//        Picasso.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
         picasso.load(album.getThumbnail()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.thumbnail);
     }
 

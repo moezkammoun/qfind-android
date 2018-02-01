@@ -2,59 +2,42 @@ package qfind.com.qfindappandroid;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
-import android.preference.PreferenceManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
-import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
 import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
-import qfind.com.qfindappandroid.predictiveSearch.SearchResultsResponse;
-import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
-import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
-import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -69,7 +52,6 @@ public class BaseActivity extends AppCompatActivity {
     Fragment fragment;
     protected DrawerLayout fullView;
     ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton;
-    ArrayAdapter<String> adapter;
     ImageView searchButton;
     protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
@@ -82,12 +64,6 @@ public class BaseActivity extends AppCompatActivity {
     TextView infoToolBarMainTittleTxtView;
     String infoToolBarTittle;
     SearchData searchData;
-    private ApiInterface apiService;
-    private SharedPreferences qFindPreferences;
-    private String accessToken;
-    private int language;
-    SearchResultsResponse searchResultsResponse;
-    List<ServiceProviderResult> serviceProviderResultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,15 +138,6 @@ public class BaseActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-//        String[] FINDINGS = new String[]{
-//                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer",
-//                "Restaurant", "الفندق", "الفندق", "الفندق"
-//        };
-//        adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_dropdown_item_1line, FINDINGS);
-//        autoCompleteTextView.setAdapter(adapter);
-//        autoCompleteTextView.setDropDownBackgroundResource(R.color.color_white);
 
         autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.base_autocomplete_edit_text);
         autoCompleteTextView.setThreshold(2);
@@ -268,9 +235,6 @@ public class BaseActivity extends AppCompatActivity {
                 autoCompleteTextView.setText(null);
                 autoCompleteTextView.clearFocus();
             }
-//            if (!(getCurrentFragment() instanceof InformationFragment))
-//                showNormalToolbar();
-//            else
             showNormalToolbar();
             super.onBackPressed();
         }

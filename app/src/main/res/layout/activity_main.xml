@@ -146,20 +146,6 @@
                         android:layout_marginRight="10dp"
                         android:visibility="gone" />
                 </FrameLayout>
-                <!--<AutoCompleteTextView-->
-                <!--android:id="@+id/homeAutoCompleteEditText"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:background="@drawable/edit_text_bg"-->
-                <!--android:ems="10"-->
-                <!--android:hint="@string/search_hint"-->
-                <!--android:imeOptions="actionSearch"-->
-                <!--android:inputType="textAutoComplete|textAutoCorrect"-->
-                <!--android:paddingEnd="@dimen/home_hit_padding"-->
-                <!--android:paddingStart="@dimen/home_hit_padding"-->
-                <!--android:textSize="@dimen/home_page_find_today_text">-->
-                <!--</AutoCompleteTextView>-->
 
                 <ImageView
                     android:layout_width="wrap_content"

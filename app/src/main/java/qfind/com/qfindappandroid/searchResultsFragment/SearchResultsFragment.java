@@ -119,7 +119,6 @@ public class SearchResultsFragment extends Fragment {
                                 }
                                 resultsAdapter.notifyDataSetChanged();
                             } else {
-//                                Util.showToast(getResources().getString(R.string.un_authorised), getContext());
                                 mEmtyTextView.setVisibility(View.VISIBLE);
                             }
                         }
@@ -141,68 +140,6 @@ public class SearchResultsFragment extends Fragment {
         }
 
     }
-
-//    public List<SearchedItem> getSearchDetails() {
-//        int[] thumbnails = new int[]{
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist,
-//                R.drawable.dentist
-//        };
-//        String[] categoryItems = new String[]{
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel",
-//                "Four Season Hotel"
-//
-//        };
-//        String[] categoryItemsDescription = new String[]{
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,",
-//                "Lorem ipsum dolor sit amet,"
-//
-//        };
-//        searchedItemList = new ArrayList<>();
-//        for (int i = 0; i < categoryItems.length; i++) {
-//            item = new SearchedItem(categoryItems[i], categoryItemsDescription[i], thumbnails[i]);
-//            searchedItemList.add(item);
-//        }
-//        return searchedItemList;
-//    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

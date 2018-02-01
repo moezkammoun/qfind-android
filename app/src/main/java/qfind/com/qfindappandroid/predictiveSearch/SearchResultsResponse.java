@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import qfind.com.qfindappandroid.informationFragment.ServiceProviderData;
-
 public class SearchResultsResponse {
     @SerializedName("response")
     private String response;
