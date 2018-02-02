@@ -33,6 +33,7 @@ import android.widget.Toast;
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
 import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
@@ -61,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     Typeface mTypeFace;
     LinearLayout infoToolbar, normalToolbar;
-    TextView infoToolBarMainTittleTxtView;
+    TextView infoToolBarMainTittleTxtView, infoToolBarSubTittleTxtView;
     String infoToolBarTittle;
     SearchData searchData;
 
@@ -107,6 +108,7 @@ public class BaseActivity extends AppCompatActivity {
         infoHamburger = (ImageView) findViewById(R.id.hamburger_info);
         infoToolbar = (LinearLayout) findViewById(R.id.info_toolbar);
         infoToolBarMainTittleTxtView = (TextView) findViewById(R.id.main_title);
+        infoToolBarSubTittleTxtView = (TextView) findViewById(R.id.sub_title);
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
 
@@ -149,6 +151,7 @@ public class BaseActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 searchData = (SearchData) adapterView.getItemAtPosition(position);
                 autoCompleteTextView.setText(searchData.getSearchName());
+                autoCompleteTextView.clearFocus();
                 searchButton.performClick();
             }
         });
@@ -316,12 +319,13 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void showInfoToolbar(String tittle) {
+    public void showInfoToolbar(String tittle, String subTittle) {
 
         infoToolBarTittle = tittle;
         normalToolbar.setVisibility(View.GONE);
         infoToolbar.setVisibility(View.VISIBLE);
         infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
+        infoToolBarSubTittleTxtView.setText(subTittle);
 
     }
 
@@ -330,12 +334,41 @@ public class BaseActivity extends AppCompatActivity {
         infoToolbar.setVisibility(View.GONE);
     }
 
+    public void showServiceProviderDetailPage(String providerName, String providerLocation,
+                                              String providerMobile, String providerAddress,
+                                              String providerWebsite, String providerOpeningTime,
+                                              String providerMail, String providerFacebook,
+                                              String providerLinkedin, String providerInstagram,
+                                              String providerTwitter, String providerSnapchat,
+                                              String providerGooglePlus, String providerLatLong) {
+        Bundle bundle = new Bundle();
+        bundle.putString("providerName", providerName);
+        bundle.putString("providerLocation", providerLocation);
+        bundle.putString("providerMobile", providerMobile);
+        bundle.putString("providerAddress", providerAddress);
+        bundle.putString("providerWebsite", providerWebsite);
+        bundle.putString("providerOpeningTime", providerOpeningTime);
+        bundle.putString("providerMail", providerMail);
+        bundle.putString("providerFacebook", providerFacebook);
+        bundle.putString("providerLinkedIn", providerLinkedin);
+        bundle.putString("providerInstagram", providerInstagram);
+        bundle.putString("providerTwitter", providerTwitter);
+        bundle.putString("providerSnapchat", providerSnapchat);
+        bundle.putString("providerGooglePlus", providerGooglePlus);
+        bundle.putString("providerLatLong", providerLatLong);
+        InformationFragment informationFragment = new InformationFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        informationFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container, informationFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     public void loadFragment(Fragment fragment) {
         if (isNetworkAvailable()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
-            if (!(fragment instanceof SearchResultsFragment))
+            if (!(getCurrentFragment() instanceof SearchResultsFragment))
                 transaction.addToBackStack(null);
             transaction.commit();
             if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
@@ -354,7 +387,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected Fragment getCurrentFragment() {
-        return getFragmentAt(getFragmentCount() - 2);
+        return getFragmentAt(getFragmentCount() - 1);
     }
 
     public void setFontTypeForText() {

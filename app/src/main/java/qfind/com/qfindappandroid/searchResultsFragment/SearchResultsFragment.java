@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,8 +20,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.predictiveSearch.SearchResultsResponse;
 import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
@@ -73,7 +76,29 @@ public class SearchResultsFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         resultsAdapter = new ResultsAdapter(getContext(), searchedItemList);
+
         mRecyclerView.setAdapter(resultsAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new SearchResultsClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                ((BaseActivity) getActivity()).showServiceProviderDetailPage(
+                        searchedItemList.get(position).getProviderName(),
+                        searchedItemList.get(position).getProviderLocation(),
+                        searchedItemList.get(position).getProviderPhone(),
+                        searchedItemList.get(position).getProviderAddress(),
+                        searchedItemList.get(position).getProviderWebsite(),
+                        searchedItemList.get(position).getProviderOpeningTime(),
+                        searchedItemList.get(position).getProviderMail(),
+                        searchedItemList.get(position).getProviderFacebook(),
+                        searchedItemList.get(position).getProviderLinkedIn(),
+                        searchedItemList.get(position).getProviderInstagram(),
+                        searchedItemList.get(position).getProviderTwitter(),
+                        searchedItemList.get(position).getProviderSnapchat(),
+                        searchedItemList.get(position).getProviderGooglePlus(),
+                        searchedItemList.get(position).getProviderLatlong());
+            }
+
+        }));
         Bundle bundle = getArguments();
         searchType = bundle.getInt("searchType", 0);
         searchKey = bundle.getString("searchKey");
@@ -114,7 +139,20 @@ public class SearchResultsFragment extends Fragment {
                                 for (int i = 0; i < serviceProviderResultList.size(); i++) {
                                     item = new SearchedItem(serviceProviderResultList.get(i).getServiceProviderName(),
                                             serviceProviderResultList.get(i).getServiceProviderLocation(),
-                                            serviceProviderResultList.get(i).getServiceProviderLogo());
+                                            serviceProviderResultList.get(i).getServiceProviderLogo(),
+                                            serviceProviderResultList.get(i).getServiceProviderMobile(),
+                                            serviceProviderResultList.get(i).getServiceProviderWebsite(),
+                                            serviceProviderResultList.get(i).getServiceProviderAddress(),
+                                            serviceProviderResultList.get(i).getServiceProviderOpeningTime(),
+                                            serviceProviderResultList.get(i).getServiceProviderMail(),
+                                            serviceProviderResultList.get(i).getServiceProviderFacebook(),
+                                            serviceProviderResultList.get(i).getServiceProviderLinkedin(),
+                                            serviceProviderResultList.get(i).getServiceProviderInstagram(),
+                                            serviceProviderResultList.get(i).getServiceProviderTwitter(),
+                                            serviceProviderResultList.get(i).getServiceProviderSnapchat(),
+                                            serviceProviderResultList.get(i).getServiceProviderGoogleplus(),
+                                            serviceProviderResultList.get(i).getServiceProviderMapLocation());
+                                    searchedItemList.clear();
                                     searchedItemList.add(item);
                                 }
                                 resultsAdapter.notifyDataSetChanged();
