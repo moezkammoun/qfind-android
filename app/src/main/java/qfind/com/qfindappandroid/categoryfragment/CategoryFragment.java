@@ -198,7 +198,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
                     loadInformationFragmentWithBundle(subCategoryItemList.get(position).getSubCategoryId(),
                             subCategoryItemList.get(position).getSubCategoryName());
-                    ((ContainerActivity) getActivity()).showInfoToolbar( subCategoryItemList.get(position).getSubCategoryName());
+                    ((ContainerActivity) getActivity()).showInfoToolbar(subCategoryItemList.get(position).getSubCategoryName(),
+                            "West bay");
                 }
             }
         };
@@ -249,7 +250,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     }
 
-    public void loadInformationFragmentWithBundle(int subCategoryId,String subCategoryNameForInfoPage) {
+    public void loadInformationFragmentWithBundle(int subCategoryId, String subCategoryNameForInfoPage) {
         Bundle bundle = new Bundle();
         bundle.putInt("subCategoryId", subCategoryId);
         bundle.putString("subCategoryName", subCategoryNameForInfoPage);

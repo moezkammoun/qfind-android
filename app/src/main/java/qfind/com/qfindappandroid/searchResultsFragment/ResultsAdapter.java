@@ -70,9 +70,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         SearchedItem album = itemList.get(position);
-        holder.title.setText(album.getItem());
-        holder.description.setText(album.getItemDescription());
-        picasso.load(album.getThumbnail()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.thumbnail);
+        holder.title.setText(album.getProviderName());
+        holder.description.setText(album.getProviderLocation());
+        picasso.load(album.getProviderThumbnail()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.thumbnail);
     }
 
 
