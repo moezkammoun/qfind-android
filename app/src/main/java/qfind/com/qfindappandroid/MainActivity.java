@@ -9,9 +9,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,9 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
+import qfind.com.qfindappandroid.homeactivty.SearchData;
+import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
+import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
@@ -50,8 +54,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     ImageView hamburgerMenu;
     @BindView(R.id.home_search_icon)
     ImageView searchButton;
-    @BindView(R.id.homeAutoCompleteEditText)
-    AutoCompleteTextView autoCompleteTextView;
     @BindView(R.id.q_find_of_the_day)
     TextView qFindOfTheDayText;
     @BindView(R.id.or)
@@ -73,6 +75,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private IndicatorConfiguration configuration;
     private InfiniteIndicator animCircleIndicator;
     private PicassoLoader picassoLoader;
+    DelayAutoCompleteTextView autoCompleteTextView;
+    SearchData searchData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +95,29 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         accessToken = qFindPreferences.getString("AccessToken", null);
 
-        String[] FINDINGS = new String[]{
-                "Hotel", "Hotel", "Hotel", "Hotel", "Bar", "Dentist", "Exterior Designer", "Restaurant",
-                "الفندق", "الفندق", "الفندق"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, FINDINGS);
-        autoCompleteTextView.setAdapter(adapter);
-
+        autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.home_autocomplete_edit_text);
+        autoCompleteTextView.setThreshold(2);
+        autoCompleteTextView.setAdapter(new SearchAutoCompleteAdapter(this));
+        autoCompleteTextView.setLoadingIndicator(
+                (android.widget.ProgressBar) findViewById(R.id.home_loading_indicator), searchButton);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                searchData = (SearchData) adapterView.getItemAtPosition(position);
+                autoCompleteTextView.setText(searchData.getSearchName());
+                searchButton.performClick();
+            }
+        });
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchButton.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +133,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                         navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                         navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
                         navigationIntent.putExtra("SEARCH_TEXT", autoCompleteTextView.getText().toString());
+                        if (searchData != null) {
+                            navigationIntent.putExtra("SEARCH_TYPE", searchData.getSearchType());
+                            searchData = null;
+                        } else
+                            navigationIntent.putExtra("SEARCH_TYPE", 4);
                         startActivity(navigationIntent);
                     }
                 } else {
@@ -250,9 +275,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-//                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
-//                startActivity(navigationIntent);
                 showFragment(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
                 fullView.closeDrawer(GravityCompat.END);
             }
@@ -266,9 +288,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-//                navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SETTINGS.toString());
-//                startActivity(navigationIntent);
                 showFragment(AppConfig.Fragments.SETTINGS.toString());
                 fullView.closeDrawer(GravityCompat.END);
             }

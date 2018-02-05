@@ -21,6 +21,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
     private Context mContext;
     private List<SearchedItem> itemList;
     private Typeface mTypeFace;
+    Picasso picasso;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, description;
@@ -32,6 +33,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
             description = (TextView) view.findViewById(R.id.search_item_description);
             thumbnail = (ImageView) view.findViewById(R.id.search_thumbnail);
             setFontTypeForText(title, description);
+            setUpPicassoBuilderToReduceLoadingTime();
         }
     }
 
@@ -52,6 +54,11 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         this.itemList = searchedItemList;
     }
 
+    public void setUpPicassoBuilderToReduceLoadingTime() {
+        Picasso.Builder builder = new Picasso.Builder(mContext);
+        picasso = builder.build();
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -63,12 +70,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         SearchedItem album = itemList.get(position);
-        holder.title.setText(album.getItem());
-        holder.description.setText(album.getItemDescription());
-
-        // loading album cover using Glide library
-        Picasso.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
-
+        holder.title.setText(album.getProviderName());
+        holder.description.setText(album.getProviderLocation());
+        picasso.load(album.getProviderThumbnail()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.thumbnail);
     }
 
 

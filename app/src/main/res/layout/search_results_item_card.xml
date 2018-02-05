@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+
     android:paddingLeft="@dimen/padding_5"
     android:paddingStart="@dimen/padding_5">
 
@@ -13,6 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/padding_5"
         android:layout_marginStart="@dimen/padding_5"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         card_view:cardBackgroundColor="@color/color_white"
         card_view:cardElevation="@dimen/padding_3"
         card_view:cardMaxElevation="@dimen/card_elevation"

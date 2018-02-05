@@ -211,6 +211,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 if (Util.categoryPageStatus == 1) {
                     isSubCategory = mainCategoryItemList.get(position).getSubCategoryStatus();
                     subCategoryNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
@@ -237,17 +238,16 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                         loadInformationFragmentWithBundle(subCategoryItemList.get(position).getSubCategoryId(),
                                 subCategoryItemList.get(position).getSubCategoryName());
 
-                        ((ContainerActivity) getActivity()).showInfoToolbar(subCategoryItemList.get(position).getSubCategoryName());
+                        ((ContainerActivity) getActivity()).showInfoToolbar(subCategoryItemList.get(position).getSubCategoryName(),"");
                     } else {
                         serviceProviderNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
 
                         loadInformationFragmentWithBundle(serviceProviderListDetails.get(position).getServiceProviderId(),
                                 serviceProviderListDetails.get(position).getServiceProviderName());
 
-                        ((ContainerActivity) getActivity()).showInfoToolbar(mainCategoryItemList.get(position).getCategoryName());
+                        ((ContainerActivity) getActivity()).showInfoToolbar(mainCategoryItemList.get(position).getCategoryName(),"");
 
                     }
-
                 }
             }
         };

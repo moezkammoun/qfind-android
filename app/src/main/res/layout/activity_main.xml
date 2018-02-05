@@ -122,21 +122,32 @@
                 android:orientation="vertical">
 
 
-                <AutoCompleteTextView
-                    android:id="@+id/homeAutoCompleteEditText"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/edit_text_bg"
-                    android:ems="10"
-                    android:hint="@string/search_hint"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textAutoComplete|textAutoCorrect"
-                    android:paddingEnd="@dimen/home_hit_padding"
-                    android:paddingStart="@dimen/home_hit_padding"
-                    android:textSize="@dimen/home_page_find_today_text">
+                    android:layout_margin="0dp">
 
-                </AutoCompleteTextView>
+                    <qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView
+                        android:id="@+id/home_autocomplete_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_bg"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="flagNoExtractUi|actionSearch"
+                        android:inputType="textAutoComplete|textAutoCorrect"
+                        android:paddingEnd="@dimen/home_hit_padding"
+                        android:paddingStart="@dimen/home_hit_padding"
+                        android:textSize="@dimen/home_page_find_today_text" />
+
+                    <ProgressBar
+                        android:id="@+id/home_loading_indicator"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone" />
+                </FrameLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"

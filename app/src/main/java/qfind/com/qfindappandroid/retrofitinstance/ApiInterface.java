@@ -6,6 +6,7 @@ import qfind.com.qfindappandroid.categoryfragment.SubCategory;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
 import qfind.com.qfindappandroid.homeactivty.RegistrationDetails;
 import qfind.com.qfindappandroid.informationFragment.ApiResponse;
+import qfind.com.qfindappandroid.predictiveSearch.SearchResultsResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -23,7 +24,7 @@ public interface ApiInterface {
 
 
     @GET("api/get-category")
-    Call<MainCategory> getMainCategory(@Query("token") String token,@Query("language") int language);
+    Call<MainCategory> getMainCategory(@Query("token") String token, @Query("language") int language);
 
 
     @GET("api/get-sub-category")
@@ -35,9 +36,17 @@ public interface ApiInterface {
     Call<ApiResponse> getServiceProviderData(@Query("token") String token, @Query("language") int language,
                                              @Query("service") Integer serviceId, @Query("device_id") String deviceId);
 
+
     @GET("api/get-service-provider")
     Call<ServiceProviderList> getListOfServiceProvider(@Query("token") String token, @Query("language") int language,
                                                        @Query("category") int category, @Query("limit") int limit,
                                                         @Query("offset") String offset);
+
+    @GET("api/search-result")
+    Call<SearchResultsResponse> getSearchResults(@Query("token") String token,
+                                                 @Query("search_key") String searchKey,
+                                                 @Query("language") Integer language,
+                                                 @Query("search_type") Integer searchType);
+
 }
 

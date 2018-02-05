@@ -10,15 +10,12 @@
 
     <dimen name="category_card_item_text_size">15sp</dimen>
     <dimen name="sub_category_card_item_text_size">13sp</dimen>
-    <dimen name="sub_category_card_description_text_size">11sp</dimen>
 
     <dimen name="text_size_19sp">19sp</dimen>
-    <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_5">5dp</dimen>
     <dimen name="padding_8">8dp</dimen>
-    <dimen name="padding_40">40dp</dimen>
     <dimen name="padding_15">15dp</dimen>
     <dimen name="padding_30">30dp</dimen>
     <dimen name="padding_50">50dp</dimen>
@@ -29,17 +26,12 @@
     <dimen name="toolbar_height">200dp</dimen>
     <dimen name="image_height">30dp</dimen>
     <dimen name="image_width">30dp</dimen>
-    <dimen name="text_size">32sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
     <dimen name="layout_marginTop">80dp</dimen>
     <dimen name="design_bottom_navigation_text_size" tools:override="true">16sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">20sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">176dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
     <dimen name="search_results_padding">10dp</dimen>
     <dimen name="search_results_tittle_text">23sp</dimen>
     <dimen name="search_results_item_text">16sp</dimen>
@@ -53,6 +45,5 @@
     <dimen name="toolbar_find_today_hint">11sp</dimen>
     <dimen name="info_title_text_size">38sp</dimen>
     <dimen name="q_find_of_the_day_text_size">18sp</dimen>
-    <dimen name="what_to_find_today_text_size">16sp</dimen>
 </resources>
 
