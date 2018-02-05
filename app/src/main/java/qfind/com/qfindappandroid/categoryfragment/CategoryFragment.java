@@ -27,6 +27,7 @@ import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.PicassoLoader;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
@@ -234,18 +235,46 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 } else if (Util.categoryPageStatus == 3) {
                     if (isSubCategory) {
                         serviceProviderNameForFragmentTittle = subCategoryItemList.get(position).getSubCategoryName();
+                        ((BaseActivity) getActivity()).showServiceProviderDetailPage(
+                                serviceProviderListDetails.get(position).getServiceProviderName(),
+                                serviceProviderListDetails.get(position).getServiceProviderLocation(),
+                                serviceProviderListDetails.get(position).getServiceProviderMobile(),
+                                serviceProviderListDetails.get(position).getServiceProviderAddress(),
+                                serviceProviderListDetails.get(position).getServiceProviderWebsite(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTime(),
+                                serviceProviderListDetails.get(position).getServiceProviderMail(),
+                                serviceProviderListDetails.get(position).getServiceProviderFacebook(),
+                                serviceProviderListDetails.get(position).getServiceProviderLinkedin(),
+                                serviceProviderListDetails.get(position).getServiceProviderInstagram(),
+                                serviceProviderListDetails.get(position).getServiceProviderTwitter(),
+                                serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
+                                serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
+                                serviceProviderListDetails.get(position).getServiceProviderMapLocation());
 
-                        loadInformationFragmentWithBundle(subCategoryItemList.get(position).getSubCategoryId(),
-                                subCategoryItemList.get(position).getSubCategoryName());
-
-                        ((ContainerActivity) getActivity()).showInfoToolbar(subCategoryItemList.get(position).getSubCategoryName(),"");
+                        ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
+                                        get(position).getServiceProviderLocation(),
+                                serviceProviderListDetails.get(position).getServiceProviderLocation());
                     } else {
                         serviceProviderNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
+                        ((BaseActivity) getActivity()).showServiceProviderDetailPage(
+                                serviceProviderListDetails.get(position).getServiceProviderName(),
+                                serviceProviderListDetails.get(position).getServiceProviderLocation(),
+                                serviceProviderListDetails.get(position).getServiceProviderMobile(),
+                                serviceProviderListDetails.get(position).getServiceProviderAddress(),
+                                serviceProviderListDetails.get(position).getServiceProviderWebsite(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTime(),
+                                serviceProviderListDetails.get(position).getServiceProviderMail(),
+                                serviceProviderListDetails.get(position).getServiceProviderFacebook(),
+                                serviceProviderListDetails.get(position).getServiceProviderLinkedin(),
+                                serviceProviderListDetails.get(position).getServiceProviderInstagram(),
+                                serviceProviderListDetails.get(position).getServiceProviderTwitter(),
+                                serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
+                                serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
+                                serviceProviderListDetails.get(position).getServiceProviderMapLocation());
 
-                        loadInformationFragmentWithBundle(serviceProviderListDetails.get(position).getServiceProviderId(),
-                                serviceProviderListDetails.get(position).getServiceProviderName());
-
-                        ((ContainerActivity) getActivity()).showInfoToolbar(mainCategoryItemList.get(position).getCategoryName(),"");
+                        ((ContainerActivity) getActivity()).showInfoToolbar( serviceProviderListDetails.
+                                get(position).getServiceProviderName(),serviceProviderListDetails.
+                                get(position).getServiceProviderLocation());
 
                     }
                 }
@@ -340,21 +369,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     public void setRecyclerViewDatas(ArrayList<MainCategoryItemList> mainCategoryItemList) {
         this.mainCategoryItemList = mainCategoryItemList;
         categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
-
-    }
-
-    public void loadInformationFragmentWithBundle(int subCategoryId, String subCategoryNameForInfoPage) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("subCategoryId", subCategoryId);
-        bundle.putString("subCategoryName", subCategoryNameForInfoPage);
-
-        InformationFragment informationFragment = new InformationFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        informationFragment.setArguments(bundle);
-        transaction.replace(R.id.frame_container, informationFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
 
     }
 
