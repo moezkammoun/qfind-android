@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
@@ -185,10 +186,14 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
-                    item.setCheckable(true);
-                    fragment = new FavoriteFragment();
+                    if (!(fragment instanceof FavoriteFragment)) {
+                        item.setCheckable(true);
+                        fragment = new FavoriteFragment();
+                    } else
+                        fragment = null;
                     break;
                 case R.id.qfind_us_menu:
                     item.setCheckable(true);
@@ -198,11 +203,15 @@ public class BaseActivity extends AppCompatActivity {
                     fragment = null;
                     break;
                 case R.id.category_history_menu:
-                    item.setCheckable(true);
-                    fragment = new HistoryFragment();
+                    if (!(fragment instanceof HistoryFragment)) {
+                        item.setCheckable(true);
+                        fragment = new HistoryFragment();
+                    } else
+                        fragment = null;
                     break;
             }
             if (fragment != null) {
+
                 loadFragment(fragment);
                 showNormalToolbar();
             }
@@ -210,6 +219,7 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     };
+
 
     @Override
     public void onBackPressed() {
@@ -220,9 +230,6 @@ public class BaseActivity extends AppCompatActivity {
                 autoCompleteTextView.setText(null);
                 autoCompleteTextView.clearFocus();
             }
-//            if (!(getCurrentFragment() instanceof InformationFragment))
-//                showNormalToolbar();
-//            else
             showNormalToolbar();
             super.onBackPressed();
         }
@@ -332,6 +339,18 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void loadFragmentWithoutBackStack(Fragment fragment) {
+        if (isNetworkAvailable()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_container, fragment);
+            transaction.commit();
+            if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
+                autoCompleteTextView.setText(null);
+                autoCompleteTextView.clearFocus();
+            }
+        }
+    }
+
     protected int getFragmentCount() {
         return getSupportFragmentManager().getBackStackEntryCount();
     }
@@ -366,9 +385,11 @@ public class BaseActivity extends AppCompatActivity {
         fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
         bottomNavigationView.setSelected(false);
         if ((fragment instanceof HistoryFragment)) {
-            bottomNavigationView.getMenu().getItem(2).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(false);
         } else if ((fragment instanceof FavoriteFragment)) {
-            bottomNavigationView.getMenu().getItem(0).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(false);
         } else {
             Menu menu = bottomNavigationView.getMenu();
             for (int i = 0, size = menu.size(); i < size; i++) {
@@ -378,4 +399,5 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+
 }

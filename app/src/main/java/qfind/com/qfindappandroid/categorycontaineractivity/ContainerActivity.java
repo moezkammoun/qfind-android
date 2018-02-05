@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 
@@ -17,6 +18,8 @@ import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
+import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
@@ -42,7 +45,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         ButterKnife.bind(this);
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         loadFragmentWithoutBackStack(new CategoryFragment());
-        getMainCategoryItemsList();
+        //getMainCategoryItemsList();
         intent = getIntent();
         fragmentToShow = intent.getStringExtra("SHOW_FRAGMENT");
         searchText = intent.getStringExtra("SEARCH_TEXT");
@@ -66,13 +69,13 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onBackPressed() {
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
-        } else if (Util.categoryPageStatus == 2) {
+        } else if (Util.categoryPageStatus == 2 || Util.categoryPageStatus == 3) {
             fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
             if ((fragment instanceof CategoryFragment)) {
                 CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 fragment.setSubCategoryBackButtonClickAction();
                 fragment.hideLoader(false);
-            } else {
+            }  else {
                 super.onBackPressed();
             }
         } else {
@@ -85,12 +88,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onResume() {
         super.onResume();
         setupBottomNavigationBar();
-    }
-
-    public void loadFragmentWithoutBackStack(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.commit();
     }
 
     public void getMainCategoryItemsList() {
@@ -129,7 +126,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                             fragment.hideLoader(true);
                             Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
                         }
-
 
 
                     }
