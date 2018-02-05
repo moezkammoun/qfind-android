@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,20 +65,34 @@ public class HistoryFragment extends Fragment {
         setFontTypeForText();
         ArrayList<HistoryPageMainModel> arrayListMain = new ArrayList<HistoryPageMainModel>();
         DataBaseHandler db = new DataBaseHandler(getContext());
-//        db.deleteHistory();
+        Calendar cal;
+        cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println("check date from" + sdf.format(cal.getTime()));
+        String filterDate = sdf.format(cal.getTime());
+        String currentDate = sdf.format(new Date());
+        db.deleteHistory(filterDate);
+//        db.deleteFutureHistory(currentDate);
         List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
         countList = db.getDateCount();
+        for (HistoryDateCount count : countList) {
+            String log = "Id: " + count.getDay() + " ,count: " + count.getCount();
+            Log.d("Log: ", log);
+        }
         int today = 0, yesterday = 0, day = 0;
         String strDate = null;
         String todayDate = null;
         String dayVar = null;
+        String yesDay=null;
         for (int i = 0; i < countList.size(); i++) {
             HistoryPageMainModel mainModel = new HistoryPageMainModel();
             ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
             try {
+                Calendar calendar;
+                calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, -1);
+                yesDay=sdf.format(calendar.getTime());
                 todayDate = sdf.format(new Date());
                 strDate = sdf.format(sdf.parse(countList.get(i).getDay()));
             } catch (ParseException e) {
@@ -87,13 +104,16 @@ public class HistoryFragment extends Fragment {
                     dayVar = "Today";
                     today = today + 1;
                 }
-            } else if (todayDate.compareTo(strDate) > 0) {
+            } else if (yesDay.compareTo(strDate) == 0) {
                 if (yesterday < 1) {
                     dayVar = "Yesterday";
                     yesterday = yesterday + 1;
                 }
 
-            } else {
+            }else if(todayDate.compareTo(strDate)<0){
+                continue;
+            }
+            else {
                 Date ds = null;
                 DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
                 try {
@@ -117,7 +137,7 @@ public class HistoryFragment extends Fragment {
             System.out.println(list);
             for (int j = 0; j < list.size(); j++) {
                 singleItem.add(new HistoryPageDataModel(list.get(j).getTitke(),
-                        R.drawable.dentist, list.get(j).getDescription()));
+                        list.get(j).getImage(), list.get(j).getDescription()));
             }
             mainModel.setHistoryPageDataModels(singleItem);
             arrayListMain.add(mainModel);
@@ -130,8 +150,9 @@ public class HistoryFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
     }
+
 
     public void setAdapter(ArrayList<HistoryPageMainModel> arrayListMain) {
 

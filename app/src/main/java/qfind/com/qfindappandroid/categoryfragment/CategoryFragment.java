@@ -198,20 +198,9 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
                 } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("title", "Four Season Hotel");
-                    bundle.putString("description", "Lorem ipsum dolor");
-
-                    InformationFragment informationFragment = new InformationFragment();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    informationFragment.setArguments(bundle);
-                    fragmentTransaction.replace(R.id.frame_container, informationFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-
                     loadInformationFragmentWithBundle(subCategoryItemList.get(position).getSubCategoryId(),
-                            subCategoryItemList.get(position).getSubCategoryName());
+                            subCategoryItemList.get(position).getSubCategoryName(),
+                            subCategoryItemList.get(position).getSubCategoryImage());
                     ((ContainerActivity) getActivity()).showInfoToolbar(subCategoryItemList.get(position).getSubCategoryName());
                 }
             }
@@ -263,19 +252,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     }
 
-    public void loadInformationFragmentWithBundle(int subCategoryId, String subCategoryNameForInfoPage) {
+    public void loadInformationFragmentWithBundle(int subCategoryId, String subCategoryNameForInfoPage, String subCategoryImage) {
         Bundle bundle = new Bundle();
         bundle.putInt("subCategoryId", subCategoryId);
         bundle.putString("subCategoryName", subCategoryNameForInfoPage);
-
+        bundle.putString("subCategoryImage", subCategoryImage);
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         informationFragment.setArguments(bundle);
         transaction.replace(R.id.frame_container, informationFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
-
     }
 
     public void getSubCategoryItemDetails(int categoryId, final String subCategoryName) {

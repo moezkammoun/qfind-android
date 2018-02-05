@@ -8,7 +8,7 @@ public class HistoryPageDataModel {
 
     int id;
     String pageName;
-    //    String url;
+    String url;
     int images;
     String description;
 
@@ -21,11 +21,11 @@ public class HistoryPageDataModel {
         this.description = description;
     }
 
-//    public HistoryPageDataModel(String pageName, String url, int images) {
-//        this.pageName = pageName;
-//        this.url = url;
-//        this.images = images;
-//    }
+    public HistoryPageDataModel(String pageName, String url, String description) {
+        this.pageName = pageName;
+        this.url = url;
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -35,13 +35,13 @@ public class HistoryPageDataModel {
         this.id = id;
     }
 
-    public int getImages() {
-        return images;
-    }
-
-    public void setImages(int images) {
-        this.images = images;
-    }
+//    public int getImages() {
+//        return images;
+//    }
+//
+//    public void setImages(int images) {
+//        this.images = images;
+//    }
 
     public String getPageName() {
         return pageName;
@@ -51,13 +51,13 @@ public class HistoryPageDataModel {
         this.pageName = pageName;
     }
 
-//    public String getUrl() {
-//        return url;
-//    }
-//
-//    public void setUrl(String url) {
-//        this.url = url;
-//    }
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
 
     public String getDescription() {

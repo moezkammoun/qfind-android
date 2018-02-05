@@ -2,21 +2,19 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +32,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     private RecyclerViewClickListener mListener;
     ArrayList<SubCategoryItemList> subCategoryItemList;
     byte categoryPageNumber;
+    Bundle bundle;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -89,6 +88,8 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
+        bundle = new Bundle();
+
         Typeface mtypeFace = null;
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
@@ -114,10 +115,9 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
                 holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
                 holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
                 Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
+                bundle.putString("SubCategoryDescription", subCategoryItemList.get(position).getSubCategoryName());
             }
         }
-
-
     }
 
     @Override

@@ -12,8 +12,6 @@ import java.util.List;
 import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
 import qfind.com.qfindappandroid.historyPage.HistoryDateCount;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
-import qfind.com.qfindappandroid.historyPage.HistoryPageDataModel;
-import qfind.com.qfindappandroid.historyPage.HistoryPageMainModel;
 
 /**
  * Created by MoongedePC on 24-Jan-18.
@@ -79,9 +77,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public void addFavorite(FavoriteModel favorite) {
         writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        HistoryItem historyMain = new HistoryItem();
         values.put(KEY_TITLE, favorite.getItem());
-        values.put(KEY_IMG, favorite.getThumbnail());
+        values.put(KEY_IMG, favorite.getUrl());
         values.put(KEY_DESCRIPTION, favorite.getItemDescription());
 
         // Inserting Row
@@ -92,7 +89,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public List<HistoryDateCount> getDateCount() {
 
         List<HistoryDateCount> historyDateCounts = new ArrayList<HistoryDateCount>();
-        String selectQuery = "SELECT " + KEY_DAY + ", COUNT(*) FROM " + TABLE_HISTORY + " GROUP BY " + KEY_DAY + " order by " + KEY_DAY + " asc";
+        String selectQuery = "SELECT " + KEY_DAY + ", COUNT(*) FROM " + TABLE_HISTORY + " GROUP BY " + KEY_DAY + " order by " + KEY_DAY + " desc";
         writeDB = this.getWritableDatabase();
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -156,12 +153,18 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteHistory(String lastdate, String futureDate) {
+    public void deleteHistory(String lastdate) {
         writeDB = this.getWritableDatabase();
-//        String query = " delete from " + TABLE_HISTORY + " where " + KEY_DAY +" = "+ date;
         writeDB.delete(TABLE_HISTORY, KEY_DAY + " < " + lastdate, null);
-        writeDB.delete(TABLE_HISTORY, KEY_DAY + ">" + futureDate, null);
         writeDB.close();
     }
 
+    public void deleteFutureHistory(String currentDate) {
+        writeDB = this.getWritableDatabase();
+        writeDB.delete(TABLE_HISTORY, KEY_DAY + " > " + currentDate, null);
+        writeDB.close();
+    }
+
+    public void getalldata() {
+    }
 }

@@ -44,9 +44,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         FavoriteModel favoriteModel = itemList.get(position);
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
-
         // loading album cover using Glide library
-        Picasso.with(mContext).load(favoriteModel.getThumbnail()).into(holder.thumbnail);
+        Picasso.with(mContext).load(favoriteModel.getUrl()).into(holder.thumbnail);
     }
 
     @Override
@@ -67,6 +66,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             favoriteStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int i= getAdapterPosition();
                     delete(getAdapterPosition());
                 }
             });

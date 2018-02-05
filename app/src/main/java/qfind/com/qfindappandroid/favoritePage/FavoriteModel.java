@@ -21,11 +21,11 @@ public class FavoriteModel {
         this.url = url;
     }
 
-    public FavoriteModel(String item, String itemDescription, int thumbnail) {
-        this.item = item;
-        this.itemDescription = itemDescription;
-        this.thumbnail = thumbnail;
-    }
+//    public FavoriteModel(String item, String itemDescription, int thumbnail) {
+//        this.item = item;
+//        this.itemDescription = itemDescription;
+//        this.thumbnail = thumbnail;
+//    }
 
     public int getId() {
         return id;

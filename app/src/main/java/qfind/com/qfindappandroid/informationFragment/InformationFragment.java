@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,26 +16,21 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
-
+import qfind.com.qfindappandroid.Util;
+import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
 import qfind.com.qfindappandroid.historyPage.HistoryPageMainModel;
-
-import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 
 public class InformationFragment extends Fragment {
@@ -51,6 +45,7 @@ public class InformationFragment extends Fragment {
     ProgressBar progressBar;
     TextView emptyTextView;
     int subCategoryId;
+    Bundle bundle;
 
     public InformationFragment() {
         // Required empty public constructor
@@ -67,25 +62,17 @@ public class InformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_information, container, false);
-
-        HistoryPageMainModel mainModel = new HistoryPageMainModel();
-        Bundle bundlearg = getArguments();
+        bundle = getArguments();
         DataBaseHandler db = new DataBaseHandler(getContext());
         HistoryItem dataModel = new HistoryItem();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         dataModel.setDay(sdf.format(new Date()));
-        dataModel.setTitke(bundlearg.getString("title"));
-//        dataModel.setImages(getIntent().getIntExtra("thumbnail"));
-        dataModel.setDescription(bundlearg.getString("description"));
+        dataModel.setTitke(bundle.getString("subCategoryName"));
+        dataModel.setImage(bundle.getString("subCategoryImage"));
+        dataModel.setDescription(bundle.getString("subCategoryName"));
         db.addHistory(dataModel);
 
-        FavoriteModel favoriteModel = new FavoriteModel();
-        favoriteModel.setItem(bundlearg.getString("title"));
-        favoriteModel.setItemDescription(bundlearg.getString("description"));
-        db.addFavorite(favoriteModel);
-
-        Bundle bundle = getArguments();
         subCategoryId = bundle.getInt("subCategoryId");
         infoPageTittle = bundle.getString("subCategoryName");
         return view;
@@ -174,8 +161,17 @@ public class InformationFragment extends Fragment {
         super.onDetach();
     }
 
-    public void memoryLeakingCode(){
+    public void memoryLeakingCode() {
 
+    }
+
+    public void getBundle() {
+        DataBaseHandler db = new DataBaseHandler(getContext());
+        FavoriteModel favoriteModel = new FavoriteModel();
+        favoriteModel.setItem(bundle.getString("subCategoryName"));
+        favoriteModel.setItemDescription(bundle.getString("subCategoryName"));
+        favoriteModel.setUrl(bundle.getString("subCategoryImage"));
+        db.addFavorite(favoriteModel);
     }
 
 }

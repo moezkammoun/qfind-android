@@ -55,61 +55,6 @@ public class FavoriteFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        int[] thumbnails = new int[]{
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist
-        };
-        String[] categoryItems = new String[]{
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel"
-
-        };
-        String[] categoryItemsDescription = new String[]{
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,"
-
-        };
-
-
         favoriteModelList = new ArrayList<>();
         DataBaseHandler db = new DataBaseHandler(getContext());
         Log.d("Reading: ", "Reading all item..");
@@ -118,11 +63,9 @@ public class FavoriteFragment extends Fragment {
             String log = "Id: " + cn.getId() + " ,item: " + cn.getItem() + " ,des: " + cn.getItemDescription();
             // Writing Contacts to log
             Log.d("item: ", log);
-            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), R.drawable.dentist);
+            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl());
             favoriteModelList.add(item);
         }
-
-
         setFontTypeForText();
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

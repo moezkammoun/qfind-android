@@ -33,6 +33,7 @@ import android.widget.Toast;
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
+import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
 import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
@@ -51,7 +52,7 @@ public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
-    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton;
+    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton;
     ImageView searchButton;
     protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
@@ -109,6 +110,7 @@ public class BaseActivity extends AppCompatActivity {
         infoToolBarMainTittleTxtView = (TextView) findViewById(R.id.main_title);
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
+        infoStarButton = (ImageView) findViewById(R.id.fav_star_icon);
 
         setupSideMenuItemClickListener();
         setFontTypeForText();
@@ -136,6 +138,13 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        infoStarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InformationFragment infoFragment = (InformationFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                infoFragment.getBundle();
             }
         });
 
