@@ -14,29 +14,32 @@
         android:background="@color/categories_background_color"
         android:gravity="center">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="25dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/sub_category_back_button"
-                android:layout_marginStart="@dimen/padding_10"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/padding_5"
                 android:src="@drawable/back_arrow"
                />
 
             <TextView
                 android:id="@+id/category_fragment_tittle_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:textAlignment="center"
                 android:textAllCaps="true"
+                android:layout_weight="9"
+                android:maxLines="1"
                 android:textColor="@color/category_tittle_color"
                 android:textSize="@dimen/category_tittle_text" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -58,16 +61,40 @@
         android:layout_height="0dp"
         android:layout_weight="57.9"
         android:padding="@dimen/padding_10">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/category_item_recycler_view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:fadeScrollbars="false"
-            android:scrollbarSize="@dimen/padding_10"
-            android:scrollbarStyle="outsideInset"
-            android:scrollbars="vertical" />
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/category_item_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:scrollbarSize="@dimen/padding_10"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="vertical" />
+
+            <ProgressBar
+                android:id="@+id/progressBarLoading"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="40dp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/empty_text_view_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_marginTop"
+                android:layout_centerInParent="true"
+                android:text="@string/no_data_text"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
 
 
     </LinearLayout>

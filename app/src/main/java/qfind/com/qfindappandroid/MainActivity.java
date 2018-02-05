@@ -29,8 +29,6 @@ import cn.lightsky.infiniteindicator.InfiniteIndicator;
 import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
-import qfind.com.qfindappandroid.categoryfragment.PicassoLoader;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
 import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
@@ -62,7 +60,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     TextView orText;
     @BindView(R.id.ads_place_holder)
     ImageView adsPlaceHolder;
-    private InfiniteIndicator mAnimCircleIndicator;
     Typeface mTypeFace;
     Intent navigationIntent;
     String accessToken;
@@ -75,8 +72,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     Date d;
     SimpleDateFormat sdf;
     SharedPreferences.Editor editor;
+    private IndicatorConfiguration configuration;
+    private InfiniteIndicator animCircleIndicator;
+    private PicassoLoader picassoLoader;
     DelayAutoCompleteTextView autoCompleteTextView;
     SearchData searchData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
-        mAnimCircleIndicator = (InfiniteIndicator) findViewById(R.id.indicator_default_circle);
-        CategoryPageCurrentStatus.categoryPageStatus = 1;
+        animCircleIndicator = (InfiniteIndicator) findViewById(R.id.main_indicator_default_circle);
+        Util.categoryPageStatus = 1;
         setupHamburgerClickListener();
 
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -147,11 +148,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         findByCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (isNetworkAvailable()) {
                     navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                     navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
                     startActivity(navigationIntent);
                 }
+
             }
         });
         getQFind();
@@ -163,6 +166,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             }
         };
         qFindPreferences.registerOnSharedPreferenceChangeListener(listener);
+
     }
 
     public void getQFind() {
@@ -335,9 +339,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     public void loadAdsToSlider(ArrayList<Page> adsImages) {
+        picassoLoader = new PicassoLoader();
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
-                    .imageLoader(new PicassoLoader())
+            configuration = new IndicatorConfiguration.Builder()
+                    .imageLoader(picassoLoader)
                     .isStopWhileTouch(true)
                     .onPageChangeListener(this)
                     .scrollDurationFactor(6)
@@ -348,11 +353,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     .direction(LEFT)
                     .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
                     .build();
-            mAnimCircleIndicator.init(configuration);
-            mAnimCircleIndicator.notifyDataChange(adsImages);
+            animCircleIndicator.init(configuration);
+            animCircleIndicator.notifyDataChange(adsImages);
         } else {
-            IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
-                    .imageLoader(new PicassoLoader())
+            configuration = new IndicatorConfiguration.Builder()
+                    .imageLoader(picassoLoader)
                     .isStopWhileTouch(true)
                     .onPageChangeListener(this)
                     .internal(3000)
@@ -363,8 +368,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     .direction(RIGHT)
                     .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
                     .build();
-            mAnimCircleIndicator.init(configuration);
-            mAnimCircleIndicator.notifyDataChange(adsImages);
+            animCircleIndicator.init(configuration);
+            animCircleIndicator.notifyDataChange(adsImages);
         }
         adsPlaceHolder.setVisibility(View.GONE);
     }
@@ -373,7 +378,22 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onResume() {
         super.onResume();
         autoCompleteTextView.setText(null);
+        if (configuration != null)
+            animCircleIndicator.start();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (configuration != null)
+            animCircleIndicator.stop();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
