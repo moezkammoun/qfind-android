@@ -181,14 +181,4 @@ public class InformationFragment extends Fragment {
     public void memoryLeakingCode() {
 
     }
-
-//    public void getBundle() {
-//        DataBaseHandler db = new DataBaseHandler(getContext());
-//        FavoriteModel favoriteModel = new FavoriteModel();
-//        favoriteModel.setItem(bundle.getString("subCategoryName"));
-//        favoriteModel.setItemDescription(bundle.getString("subCategoryName"));
-//        favoriteModel.setUrl(bundle.getString("subCategoryImage"));
-//        db.addFavorite(favoriteModel);
-//    }
-
 }
