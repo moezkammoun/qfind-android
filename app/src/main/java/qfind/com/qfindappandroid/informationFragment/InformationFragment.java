@@ -69,7 +69,13 @@ public class InformationFragment extends Fragment {
         dataModel.setTitke(bundle.getString("providerName"));
         dataModel.setImage(bundle.getString("providerLogo"));
         dataModel.setDescription(bundle.getString("providerLocation"));
-        db.addHistory(dataModel);
+        dataModel.setPageId(bundle.getInt("providerId"));
+        if(db.checkHistoryById(bundle.getInt("providerId"))){
+            db.updateHistory(dataModel,bundle.getInt("providerId"));
+        }else{
+            db.addHistory(dataModel);
+
+        }
 
         providerName = bundle.getString("providerName");
         providerLocation = bundle.getString("providerLocation");

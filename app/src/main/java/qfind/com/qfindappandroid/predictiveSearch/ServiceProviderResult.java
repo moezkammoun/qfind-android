@@ -13,7 +13,7 @@ public class ServiceProviderResult {
     @SerializedName("service_provider_category")
     private String serviceProviderCategory;
     @SerializedName("id")
-    private String serviceProviderId;
+    private int serviceProviderId;
     @SerializedName("service_provider_mail_account")
     private String serviceProviderMail;
     @SerializedName("service_provider_website")
@@ -73,11 +73,11 @@ public class ServiceProviderResult {
         this.serviceProviderCategory = serviceProviderCategory;
     }
 
-    public String getServiceProviderId() {
+    public int getServiceProviderId() {
         return serviceProviderId;
     }
 
-    public void setServiceProviderId(String serviceProviderId) {
+    public void setServiceProviderId(int serviceProviderId) {
         this.serviceProviderId = serviceProviderId;
     }
 

@@ -58,10 +58,11 @@ public class FavoriteFragment extends Fragment {
         Log.d("Reading: ", "Reading all item..");
         List<FavoriteModel> fav = db.getAllFavorites();
         for (FavoriteModel cn : fav) {
-            String log = "Id: " + cn.getId() + " ,item: " + cn.getItem() + " ,des: " + cn.getItemDescription();
+            String log = "Id: " + cn.getId() + " ,item: " + cn.getItem() + " ,des: " + cn.getItemDescription()
+                    + " ,pid: " + cn.getPageId();
             // Writing Contacts to log
             Log.d("item: ", log);
-            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl());
+            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl(),cn.getPageId());
             favoriteModelList.add(item);
         }
         setFontTypeForText();

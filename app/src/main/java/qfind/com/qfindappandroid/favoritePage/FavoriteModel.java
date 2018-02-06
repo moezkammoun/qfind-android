@@ -10,14 +10,16 @@ public class FavoriteModel {
     private String item;
     private String itemDescription;
     private String url;
+    private int pageId;
 
     public FavoriteModel() {
     }
 
-    public FavoriteModel(String item, String itemDescription, String url) {
+    public FavoriteModel(String item, String itemDescription, String url,int pageId) {
         this.item = item;
         this.itemDescription = itemDescription;
         this.url = url;
+        this.pageId=pageId;
     }
 
 
@@ -53,4 +55,11 @@ public class FavoriteModel {
         this.itemDescription = itemDescription;
     }
 
+    public int getPageId() {
+        return pageId;
+    }
+
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
+    }
 }

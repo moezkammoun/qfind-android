@@ -35,6 +35,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String KEY_IMG = "thumbnail";
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_DAY = "day";
+    private static final String KEY_PAGE_ID = "page_id";
 
     SQLiteDatabase writeDB, readDB;
 
@@ -47,12 +48,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         String CREATE_TABLE_HISTORY = "CREATE TABLE " + TABLE_HISTORY + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_DAY + " TEXT,"
-                + KEY_IMG + " INTEGER," + KEY_DESCRIPTION + " TEXT" + ")";
+                + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER" + ")";
         db.execSQL(CREATE_TABLE_HISTORY);
 
         String CREATE_TABLE_FAVORITE = "CREATE TABLE " + TABLE_FAVORITE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_IMG + " TEXT,"
-                + KEY_DESCRIPTION + " TEXT" + ")";
+                + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER" + ")";
         db.execSQL(CREATE_TABLE_FAVORITE);
     }
 
@@ -68,6 +69,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE, history.getTitke());
         values.put(KEY_IMG, history.getImage());
         values.put(KEY_DESCRIPTION, history.getDescription());
+        values.put(KEY_PAGE_ID, history.getPageId());
 
         // Inserting Row
         writeDB.insert(TABLE_HISTORY, null, values);
@@ -80,6 +82,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE, favorite.getItem());
         values.put(KEY_IMG, favorite.getUrl());
         values.put(KEY_DESCRIPTION, favorite.getItemDescription());
+        values.put(KEY_PAGE_ID, favorite.getPageId());
 
         // Inserting Row
         writeDB.insert(TABLE_FAVORITE, null, values);
@@ -116,6 +119,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setDay(cursor.getString(2));
                 history.setImage(cursor.getString(3));
                 history.setDescription(cursor.getString(4));
+                history.setPageId(cursor.getInt(5));
                 historyList.add(history);
             } while (cursor.moveToNext());
         }
@@ -140,31 +144,75 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 favModel.setItem(cursor.getString(1));
                 favModel.setUrl(cursor.getString(2));
                 favModel.setItemDescription(cursor.getString(3));
-                // Adding contact to list
+                favModel.setPageId(cursor.getInt(4));
                 favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }
         return favoriteList;
     }
 
+    public boolean checkFavoriteById(int id) {
+
+        String selectQuery = "SELECT  * FROM " + TABLE_FAVORITE + " WHERE " + KEY_PAGE_ID + " = " + id;
+
+        writeDB = this.getWritableDatabase();
+        Cursor cursor = writeDB.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean checkHistoryById(int id) {
+        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id;
+
+        writeDB = this.getWritableDatabase();
+        Cursor cursor = writeDB.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void updateFavorite(FavoriteModel favorite, int id) {
+        writeDB = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, favorite.getItem());
+        values.put(KEY_IMG, favorite.getUrl());
+        values.put(KEY_DESCRIPTION, favorite.getItemDescription());
+        values.put(KEY_PAGE_ID, favorite.getPageId());
+        writeDB.update(TABLE_FAVORITE, values, KEY_PAGE_ID + " = " + id, null);
+        writeDB.close();
+    }
+
+    public void updateHistory(HistoryItem history, int id) {
+        writeDB = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_DAY, history.getDay());
+        values.put(KEY_TITLE, history.getTitke());
+        values.put(KEY_IMG, history.getImage());
+        values.put(KEY_DESCRIPTION, history.getDescription());
+        values.put(KEY_PAGE_ID, history.getPageId());
+        writeDB.update(TABLE_HISTORY, values, KEY_PAGE_ID + " = " + id, null);
+        writeDB.close();
+    }
+
     public void deleteFavorite(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_FAVORITE, KEY_ID + "=" + id, null);
-        db.close();
+         writeDB = this.getWritableDatabase();
+        writeDB.delete(TABLE_FAVORITE, KEY_PAGE_ID + " = " + id, null);
+        writeDB.close();
     }
 
     public void deleteHistory(String lastdate) {
         writeDB = this.getWritableDatabase();
         writeDB.delete(TABLE_HISTORY, KEY_DAY + " < " + lastdate, null);
         writeDB.close();
-    }
-
-    public void deleteFutureHistory(String currentDate) {
-        writeDB = this.getWritableDatabase();
-        writeDB.delete(TABLE_HISTORY, KEY_DAY + " > " + currentDate, null);
-        writeDB.close();
-    }
-
-    public void getalldata() {
     }
 }
