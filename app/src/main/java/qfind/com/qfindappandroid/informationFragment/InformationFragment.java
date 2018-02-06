@@ -26,10 +26,6 @@ import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 
-//<<<<<<< HEAD
-//import java.text.SimpleDateFormat;
-//=======
-
 
 public class InformationFragment extends Fragment {
     ArrayList<InformationFragmentModel> informationData = new ArrayList<>();
@@ -42,10 +38,7 @@ public class InformationFragment extends Fragment {
     InformationFragmentAdapter adapter;
     ProgressBar progressBar;
     TextView emptyTextView;
-    //<<<<<<< HEAD
-//    int subCategoryId;
-//    Bundle bundle;
-//=======
+
     String providerName, providerLocation, providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
             providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo;

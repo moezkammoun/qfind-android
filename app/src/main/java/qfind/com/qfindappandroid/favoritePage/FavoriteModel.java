@@ -9,7 +9,6 @@ public class FavoriteModel {
     int id;
     private String item;
     private String itemDescription;
-    private int thumbnail;
     private String url;
 
     public FavoriteModel() {
@@ -21,11 +20,6 @@ public class FavoriteModel {
         this.url = url;
     }
 
-//    public FavoriteModel(String item, String itemDescription, int thumbnail) {
-//        this.item = item;
-//        this.itemDescription = itemDescription;
-//        this.thumbnail = thumbnail;
-//    }
 
     public int getId() {
         return id;
@@ -59,11 +53,4 @@ public class FavoriteModel {
         this.itemDescription = itemDescription;
     }
 
-    public int getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
-    }
 }

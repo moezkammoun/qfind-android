@@ -34,8 +34,6 @@ public class FavoriteFragment extends Fragment {
     ProgressBar mProgressBarLoading;
     favoriteAdapter resultsAdapter;
     List<FavoriteModel> favoriteModelList;
-    //    @BindView(R.id.favorite_star)
-//     ImageView favoriteStar;
     FavoriteModel item;
     Typeface mTypeFace;
     @BindView(R.id.back_button)

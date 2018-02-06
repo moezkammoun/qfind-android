@@ -9,17 +9,11 @@ public class HistoryPageDataModel {
     int id;
     String pageName;
     String url;
-    int images;
     String description;
 
     public HistoryPageDataModel() {
     }
-
-    public HistoryPageDataModel(String pageName, int images, String description) {
-        this.pageName = pageName;
-        this.images = images;
-        this.description = description;
-    }
+    
 
     public HistoryPageDataModel(String pageName, String url, String description) {
         this.pageName = pageName;
@@ -34,14 +28,6 @@ public class HistoryPageDataModel {
     public void setId(int id) {
         this.id = id;
     }
-
-//    public int getImages() {
-//        return images;
-//    }
-//
-//    public void setImages(int images) {
-//        this.images = images;
-//    }
 
     public String getPageName() {
         return pageName;

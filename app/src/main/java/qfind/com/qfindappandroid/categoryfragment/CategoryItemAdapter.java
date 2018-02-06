@@ -34,9 +34,6 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     ArrayList<SubCategoryItemList> subCategoryItemList;
     ArrayList<ServiceProviderListDetails> serviceProviderListDetails;
     byte categoryPageNumber;
-//<<<<<<< HEAD
-//    Bundle bundle;
-//=======
     Picasso picasso;
 
 
@@ -94,8 +91,6 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-//        bundle = new Bundle();
-
         Typeface mtypeFace = null;
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
@@ -126,13 +121,6 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.subCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.subCategoryName.setTypeface(mtypeFace);
             holder.subCategoryDescription.setTypeface(mtypeFace);
-//<<<<<<< HEAD
-//            if (subCategoryItemList != null) {
-//                holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
-//                holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
-//                Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
-//                bundle.putString("SubCategoryDescription", subCategoryItemList.get(position).getSubCategoryName());
-//=======
             if (serviceProviderListDetails != null) {
                 holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
                 holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
