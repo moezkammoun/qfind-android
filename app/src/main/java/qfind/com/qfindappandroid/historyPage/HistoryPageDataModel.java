@@ -6,32 +6,27 @@ package qfind.com.qfindappandroid.historyPage;
 
 public class HistoryPageDataModel {
 
+    int id;
     String pageName;
-    //    String url;
-    int images;
+    String url;
     String description;
 
     public HistoryPageDataModel() {
     }
+    
 
-    public HistoryPageDataModel(String pageName, int images, String description) {
+    public HistoryPageDataModel(String pageName, String url, String description) {
         this.pageName = pageName;
-        this.images = images;
+        this.url = url;
         this.description = description;
     }
 
-//    public HistoryPageDataModel(String pageName, String url, int images) {
-//        this.pageName = pageName;
-//        this.url = url;
-//        this.images = images;
-//    }
-
-    public int getImages() {
-        return images;
+    public int getId() {
+        return id;
     }
 
-    public void setImages(int images) {
-        this.images = images;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPageName() {
@@ -42,13 +37,13 @@ public class HistoryPageDataModel {
         this.pageName = pageName;
     }
 
-//    public String getUrl() {
-//        return url;
-//    }
-//
-//    public void setUrl(String url) {
-//        this.url = url;
-//    }
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
 
     public String getDescription() {

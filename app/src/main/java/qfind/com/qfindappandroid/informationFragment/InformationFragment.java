@@ -3,7 +3,6 @@ package qfind.com.qfindappandroid.informationFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,17 +15,16 @@ import android.widget.TextView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.Util;
-import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
+import qfind.com.qfindappandroid.historyPage.HistoryItem;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class InformationFragment extends Fragment {
@@ -40,9 +38,10 @@ public class InformationFragment extends Fragment {
     InformationFragmentAdapter adapter;
     ProgressBar progressBar;
     TextView emptyTextView;
+
     String providerName, providerLocation, providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
-            providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong;
+            providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo;
     URI uri = null;
     String path;
 
@@ -62,6 +61,16 @@ public class InformationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_information, container, false);
         Bundle bundle = getArguments();
+
+        DataBaseHandler db = new DataBaseHandler(getContext());
+        HistoryItem dataModel = new HistoryItem();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        dataModel.setDay(sdf.format(new Date()));
+        dataModel.setTitke(bundle.getString("providerName"));
+        dataModel.setImage(bundle.getString("providerLogo"));
+        dataModel.setDescription(bundle.getString("providerLocation"));
+        db.addHistory(dataModel);
+
         providerName = bundle.getString("providerName");
         providerLocation = bundle.getString("providerLocation");
         providerMobile = bundle.getString("providerMobile");
@@ -86,6 +95,8 @@ public class InformationFragment extends Fragment {
         providerSnapchat = bundle.getString("providerSnapchat");
         providerGooglePlus = bundle.getString("providerGooglePlus");
         providerLatLong = bundle.getString("providerLatLong");
+        providerLogo = bundle.getString("providerLogo");
+
         return view;
     }
 
@@ -163,5 +174,4 @@ public class InformationFragment extends Fragment {
     public void memoryLeakingCode() {
 
     }
-
 }

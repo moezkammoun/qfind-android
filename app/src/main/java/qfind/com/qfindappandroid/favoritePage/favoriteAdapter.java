@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.searchResultsFragment.ResultsAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
@@ -43,9 +44,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         FavoriteModel favoriteModel = itemList.get(position);
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
-
         // loading album cover using Glide library
-        Picasso.with(mContext).load(favoriteModel.getThumbnail()).into(holder.thumbnail);
+        Picasso.with(mContext).load(favoriteModel.getUrl()).into(holder.thumbnail);
     }
 
     @Override
@@ -66,6 +66,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             favoriteStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int i= getAdapterPosition();
                     delete(getAdapterPosition());
                 }
             });
@@ -89,7 +90,9 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         this.mContext = mContext;
         this.itemList = itemList;
     }
-    public void delete(int position) { //removes the row
+    public void delete(int position) {  //removes the row
+        DataBaseHandler db=new DataBaseHandler(mContext);
+        db.deleteFavorite(position);
         itemList.remove(position);
         notifyItemRemoved(position);
     }

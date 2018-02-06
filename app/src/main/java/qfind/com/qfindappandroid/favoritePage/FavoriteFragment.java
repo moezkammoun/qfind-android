@@ -2,13 +2,12 @@ package qfind.com.qfindappandroid.favoritePage;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +20,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.historyPage.HistoryPageMainAdapter;
-import qfind.com.qfindappandroid.searchResultsFragment.ResultsAdapter;
-import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
 
 public class FavoriteFragment extends Fragment {
 
@@ -37,8 +34,6 @@ public class FavoriteFragment extends Fragment {
     ProgressBar mProgressBarLoading;
     favoriteAdapter resultsAdapter;
     List<FavoriteModel> favoriteModelList;
-//    @BindView(R.id.favorite_star)
-//     ImageView favoriteStar;
     FavoriteModel item;
     Typeface mTypeFace;
     @BindView(R.id.back_button)
@@ -58,66 +53,17 @@ public class FavoriteFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        int[] thumbnails = new int[]{
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist
-        };
-        String[] categoryItems = new String[]{
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel"
-
-        };
-        String[] categoryItemsDescription = new String[]{
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,"
-
-        };
-
         favoriteModelList = new ArrayList<>();
-        for (int i = 0; i < categoryItems.length; i++) {
-            item = new FavoriteModel(categoryItems[i], categoryItemsDescription[i], thumbnails[i]);
+        DataBaseHandler db = new DataBaseHandler(getContext());
+        Log.d("Reading: ", "Reading all item..");
+        List<FavoriteModel> fav = db.getAllFavorites();
+        for (FavoriteModel cn : fav) {
+            String log = "Id: " + cn.getId() + " ,item: " + cn.getItem() + " ,des: " + cn.getItemDescription();
+            // Writing Contacts to log
+            Log.d("item: ", log);
+            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl());
             favoriteModelList.add(item);
         }
-
         setFontTypeForText();
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,10 +73,10 @@ public class FavoriteFragment extends Fragment {
         });
 
 
-        favoriteAdapter adapter = new favoriteAdapter(getContext(),favoriteModelList);
+        favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
         favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         favoriteView.setAdapter(adapter);
-        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
     }
 
     @Override

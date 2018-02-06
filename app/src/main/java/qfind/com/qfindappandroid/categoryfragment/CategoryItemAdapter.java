@@ -2,6 +2,7 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -126,8 +127,6 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
                 picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.categoryThumbnail);
             }
         }
-
-
     }
 
     @Override
