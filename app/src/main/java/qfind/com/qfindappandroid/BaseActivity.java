@@ -23,15 +23,14 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
+import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
@@ -53,7 +52,7 @@ public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
-    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton;
+    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton;
     ImageView searchButton;
     protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
@@ -66,6 +65,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView infoToolBarMainTittleTxtView, infoToolBarSubTittleTxtView;
     String infoToolBarTittle;
     SearchData searchData;
+    Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +112,7 @@ public class BaseActivity extends AppCompatActivity {
         infoToolBarSubTittleTxtView = (TextView) findViewById(R.id.sub_title);
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
+        infoStarButton = (ImageView) findViewById(R.id.fav_star_icon);
 
         setupSideMenuItemClickListener();
         setFontTypeForText();
@@ -139,6 +140,17 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        infoStarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DataBaseHandler db = new DataBaseHandler(getApplicationContext());
+                FavoriteModel favoriteModel = new FavoriteModel();
+                favoriteModel.setItem(bundle.getString("providerName"));
+                favoriteModel.setItemDescription(bundle.getString("providerLocation"));
+                favoriteModel.setUrl(bundle.getString("providerLogo"));
+                db.addFavorite(favoriteModel);
             }
         });
 
@@ -343,15 +355,14 @@ public class BaseActivity extends AppCompatActivity {
         normalToolbar.setVisibility(View.VISIBLE);
         infoToolbar.setVisibility(View.GONE);
     }
-
+    
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
                                               String providerMobile, String providerAddress,
                                               String providerWebsite, String providerOpeningTime,
                                               String providerMail, String providerFacebook,
                                               String providerLinkedin, String providerInstagram,
                                               String providerTwitter, String providerSnapchat,
-                                              String providerGooglePlus, String providerLatLong) {
-        Bundle bundle = new Bundle();
+                                              String providerGooglePlus, String providerLatLong,String providerLogo) {
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
         bundle.putString("providerMobile", providerMobile);
@@ -366,6 +377,7 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerSnapchat", providerSnapchat);
         bundle.putString("providerGooglePlus", providerGooglePlus);
         bundle.putString("providerLatLong", providerLatLong);
+        bundle.putString("providerLogo",providerLogo);
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         informationFragment.setArguments(bundle);

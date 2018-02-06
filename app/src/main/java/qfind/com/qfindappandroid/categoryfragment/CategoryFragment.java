@@ -2,6 +2,7 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.SharedPreferences;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -212,7 +213,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-
                 if (Util.categoryPageStatus == 1) {
                     isSubCategory = mainCategoryItemList.get(position).getSubCategoryStatus();
                     subCategoryNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
@@ -249,7 +249,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderTwitter(),
                                 serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
-                                serviceProviderListDetails.get(position).getServiceProviderMapLocation());
+                                serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
+                                serviceProviderListDetails.get(position).getServiceProviderLogo());
 
                         ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                         get(position).getServiceProviderLocation(),
@@ -270,10 +271,12 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderTwitter(),
                                 serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
-                                serviceProviderListDetails.get(position).getServiceProviderMapLocation());
+                                serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
+                                serviceProviderListDetails.get(position).getServiceProviderLogo());
 
-                        ((ContainerActivity) getActivity()).showInfoToolbar( serviceProviderListDetails.get(position).
-                                getServiceProviderName(), serviceProviderListDetails.
+
+                        ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
+                                get(position).getServiceProviderName(), serviceProviderListDetails.
                                 get(position).getServiceProviderLocation());
 
                     }
@@ -364,7 +367,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         hideLoader(false);
 
     }
-
 
     public void setRecyclerViewDatas(ArrayList<MainCategoryItemList> mainCategoryItemList) {
         this.mainCategoryItemList = mainCategoryItemList;

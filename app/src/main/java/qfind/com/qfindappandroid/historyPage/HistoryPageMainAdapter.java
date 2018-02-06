@@ -68,8 +68,6 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
             mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-
-
     }
 
     @Override

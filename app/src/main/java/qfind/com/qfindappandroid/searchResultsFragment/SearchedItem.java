@@ -16,6 +16,7 @@ public class SearchedItem {
     private String providerSnapchat;
     private String providerGooglePlus;
     private String providerLatlong;
+    private String providerLogo;
 
     public SearchedItem() {
     }
@@ -23,7 +24,7 @@ public class SearchedItem {
 
     public SearchedItem(String item, String itemDescription, String thumbnail, String phone, String website,
                         String address, String openingTime, String mail, String facebook, String linkedIn,
-                        String instagram, String twitter, String snapchat, String googlePlus, String latLong) {
+                        String instagram, String twitter, String snapchat, String googlePlus, String latLong,String logo) {
         this.providerName = item;
         this.providerLocation = itemDescription;
         this.providerThumbnail = thumbnail;
@@ -39,6 +40,7 @@ public class SearchedItem {
         this.providerSnapchat = snapchat;
         this.providerGooglePlus = googlePlus;
         this.providerLatlong = latLong;
+        this.providerLogo=logo;
     }
 
     public String getProviderName() {
@@ -101,5 +103,7 @@ public class SearchedItem {
         return providerLatlong;
     }
 
-
+    public String getProviderLogo() {
+        return providerLogo;
+    }
 }

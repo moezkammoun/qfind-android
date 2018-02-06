@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -62,10 +64,8 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
 
         HistoryPageDataModel historyPageDataModel = itemsList.get(position);
         holder.title.setText(historyPageDataModel.getPageName());
-        holder.url.setImageResource(historyPageDataModel.getImages());
+        Picasso.with(mContext).load(historyPageDataModel.getUrl()).into(holder.url);
         holder.description.setText(historyPageDataModel.getDescription());
-
-
     }
 
     @Override

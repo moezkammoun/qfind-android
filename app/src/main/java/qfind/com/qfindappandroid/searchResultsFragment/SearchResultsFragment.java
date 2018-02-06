@@ -95,7 +95,9 @@ public class SearchResultsFragment extends Fragment {
                         searchedItemList.get(position).getProviderTwitter(),
                         searchedItemList.get(position).getProviderSnapchat(),
                         searchedItemList.get(position).getProviderGooglePlus(),
-                        searchedItemList.get(position).getProviderLatlong());
+                        searchedItemList.get(position).getProviderLatlong(),
+                        searchedItemList.get(position).getProviderLogo()
+                        );
             }
 
         }));
@@ -151,7 +153,8 @@ public class SearchResultsFragment extends Fragment {
                                             serviceProviderResultList.get(i).getServiceProviderTwitter(),
                                             serviceProviderResultList.get(i).getServiceProviderSnapchat(),
                                             serviceProviderResultList.get(i).getServiceProviderGoogleplus(),
-                                            serviceProviderResultList.get(i).getServiceProviderMapLocation());
+                                            serviceProviderResultList.get(i).getServiceProviderMapLocation(),
+                                            serviceProviderResultList.get(i).getServiceProviderLogo());
                                     searchedItemList.clear();
                                     searchedItemList.add(item);
                                 }

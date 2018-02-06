@@ -2,26 +2,32 @@ package qfind.com.qfindappandroid.historyPage;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
 
 
 public class HistoryFragment extends Fragment {
@@ -57,79 +63,86 @@ public class HistoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setFontTypeForText();
-        ArrayList<HistoryPageMainModel> arrayListMain= new ArrayList<HistoryPageMainModel>();
-        ArrayList<String> days = new ArrayList<String>();
-        days.add("Today");
-        days.add("Yesterday");
-        int[] thumbnails = new int[]{
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist,
-                R.drawable.dentist
-        };
-        String[] categoryItems = new String[]{
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel",
-                "Four Season Hotel"
-
-        };
-        String[] categoryItemsDescription = new String[]{
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,",
-                "Lorem ipsum dolor sit amet,"
-
-        };
-
-        for (int i = 0; i < 2; i++) {
+        ArrayList<HistoryPageMainModel> arrayListMain = new ArrayList<HistoryPageMainModel>();
+        DataBaseHandler db = new DataBaseHandler(getContext());
+        Calendar cal;
+        cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println("check date from" + sdf.format(cal.getTime()));
+        String filterDate = sdf.format(cal.getTime());
+        String currentDate = sdf.format(new Date());
+        db.deleteHistory(filterDate);
+//        db.deleteFutureHistory(currentDate);
+        List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
+        countList = db.getDateCount();
+        for (HistoryDateCount count : countList) {
+            String log = "Id: " + count.getDay() + " ,count: " + count.getCount();
+            Log.d("Log: ", log);
+        }
+        int today = 0, yesterday = 0, day = 0;
+        String strDate = null;
+        String todayDate = null;
+        String dayVar = null;
+        String yesDay=null;
+        for (int i = 0; i < countList.size(); i++) {
             HistoryPageMainModel mainModel = new HistoryPageMainModel();
-            mainModel.setDay(days.get(i));
             ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
-            for (int j = 0; j <categoryItems.length; j++) {
-                singleItem.add(new HistoryPageDataModel(categoryItems[j],thumbnails[j],categoryItemsDescription[j]));
+            try {
+                Calendar calendar;
+                calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, -1);
+                yesDay=sdf.format(calendar.getTime());
+                todayDate = sdf.format(new Date());
+                strDate = sdf.format(sdf.parse(countList.get(i).getDay()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (todayDate.compareTo(strDate) == 0) {
+                if (today < 1) {
+                    dayVar = "Today";
+                    today = today + 1;
+                }
+            } else if (yesDay.compareTo(strDate) == 0) {
+                if (yesterday < 1) {
+                    dayVar = "Yesterday";
+                    yesterday = yesterday + 1;
+                }
+
+            }else if(todayDate.compareTo(strDate)<0){
+                continue;
+            }
+            else {
+                Date ds = null;
+                DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+                try {
+                    ds = sdf.parse(countList.get(i).getDay());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String desDate = dateFormat.format(ds);
+                if (day < 1) {
+                    dayVar = desDate;
+                    day = day + 1;
+                } else if (!(dayVar.equals(countList.get(i).getDay()))) {
+                    dayVar = desDate;
+                    day = day + 1;
+                }
+            }
+
+            mainModel.setDay(dayVar);
+            List<HistoryItem> list = new ArrayList<HistoryItem>();
+            list = db.getAllHistory(countList.get(i).getDay());
+            System.out.println(list);
+            for (int j = 0; j < list.size(); j++) {
+                singleItem.add(new HistoryPageDataModel(list.get(j).getTitke(),
+                        list.get(j).getImage(), list.get(j).getDescription()));
             }
             mainModel.setHistoryPageDataModels(singleItem);
             arrayListMain.add(mainModel);
         }
-
-        recyclerView.setHasFixedSize(true);
-        HistoryPageMainAdapter adapter = new HistoryPageMainAdapter(arrayListMain,getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+        setAdapter(arrayListMain);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,14 +150,23 @@ public class HistoryFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
+    }
+
+
+    public void setAdapter(ArrayList<HistoryPageMainModel> arrayListMain) {
+
+        recyclerView.setHasFixedSize(true);
+        HistoryPageMainAdapter adapter = new HistoryPageMainAdapter(arrayListMain, getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
     }
 
     public void setFontTypeForText() {
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Bold.ttf");
-        }else {
+        } else {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
