@@ -1,7 +1,10 @@
 package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,6 +26,7 @@ import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.Util;
+import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
@@ -45,6 +50,7 @@ public class InformationFragment extends Fragment {
             providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong;
     URI uri = null;
     String path;
+    RecyclerViewClickListener recyclerViewClickListener;
 
     public InformationFragment() {
         // Required empty public constructor
@@ -98,7 +104,8 @@ public class InformationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
-        adapter = new InformationFragmentAdapter(getContext(), getInformationData());
+        setupRecyclerViewClickListener();
+        adapter = new InformationFragmentAdapter(getContext(), getInformationData(), recyclerViewClickListener);
         recyclerView.setAdapter(adapter);
         if (informationData == null)
             emptyTextView.setVisibility(View.VISIBLE);
@@ -106,7 +113,8 @@ public class InformationFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
         ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
-        memoryLeakingCode();
+
+
     }
 
     public ArrayList<InformationFragmentModel> getInformationData() {
@@ -160,8 +168,65 @@ public class InformationFragment extends Fragment {
         super.onDetach();
     }
 
-    public void memoryLeakingCode() {
+    public void setupRecyclerViewClickListener() {
+        recyclerViewClickListener = new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                if (informationData.get(position).getInfo_icon() == R.drawable.facebook_icon) {
+                    Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                    String facebookUrl = getFacebookPageURL(getContext());
+                    facebookIntent.setData(Uri.parse(facebookUrl));
+                    startActivity(facebookIntent);
+                }
+                if (informationData.get(position).getInfo_icon() == R.drawable.phone_icon && providerMobile != null) {
 
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + providerMobile));
+                    startActivity(intent);
+
+                }
+                if (informationData.get(position).getInfo_icon() == R.drawable.web_icon && providerWebsite != null) {
+
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(providerWebsite));
+                    startActivity(browserIntent);
+
+                }
+                if (informationData.get(position).getInfo_icon() == R.drawable.location_icon &&
+                        providerLatLong != null && providerLocation!=null) {
+                    String geoUri = "http://maps.google.com/maps?q=loc:" + providerLatLong + " (" + providerLocation + ")";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
+                    startActivity(intent);
+                }
+                if (informationData.get(position).getInfo_icon() == R.drawable.mail_icon &&
+                        providerMail != null) {
+                    setUpEmail();
+                }
+            }
+        };
     }
 
+    public String getFacebookPageURL(Context context) {
+        String FACEBOOK_URL = "https://www.facebook.com/publictheband/";
+        String FACEBOOK_PAGE_ID = "publictheband";
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
+    }
+
+    public void setUpEmail(){
+        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("plain/text");
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{providerMail});
+//        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
+//        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
+        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    }
 }

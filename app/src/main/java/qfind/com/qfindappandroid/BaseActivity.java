@@ -435,10 +435,8 @@ public class BaseActivity extends AppCompatActivity {
         bottomNavigationView.setSelected(false);
         if ((fragment instanceof HistoryFragment)) {
             bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(true);
-            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(false);
         } else if ((fragment instanceof FavoriteFragment)) {
             bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(true);
-            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(false);
         } else {
             Menu menu = bottomNavigationView.getMenu();
             for (int i = 0, size = menu.size(); i < size; i++) {

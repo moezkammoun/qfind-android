@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 
 /**
  * Created by MoongedePC on 08-Jan-18.
@@ -24,13 +25,16 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
 
     private Context mcontext;
     private ArrayList<InformationFragmentModel> informationPages;
+    private RecyclerViewClickListener mListener;
 
-    public InformationFragmentAdapter(Context mcontext, ArrayList<InformationFragmentModel> informationPages) {
+    public InformationFragmentAdapter(Context mcontext, ArrayList<InformationFragmentModel> informationPages,
+                                      RecyclerViewClickListener mListener) {
         this.mcontext = mcontext;
         this.informationPages = informationPages;
+        this.mListener = mListener;
     }
 
-    class InformationPageViewHolder extends RecyclerView.ViewHolder {
+    class InformationPageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Nullable
         @BindView(R.id.info_icon)
@@ -45,9 +49,16 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
         @BindView(R.id.info_back_button)
         ImageView info_back_button;
 
-        public InformationPageViewHolder(View itemView) {
+        public InformationPageViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
         }
     }
 
@@ -57,7 +68,7 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
         View viewHolder = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.info_row, null, false);
         viewHolder.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-        return new InformationPageViewHolder(viewHolder);
+        return new InformationPageViewHolder(viewHolder, mListener);
     }
 
     @Override

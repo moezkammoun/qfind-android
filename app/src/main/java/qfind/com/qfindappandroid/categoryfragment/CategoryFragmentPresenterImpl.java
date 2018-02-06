@@ -18,7 +18,6 @@ public class CategoryFragmentPresenterImpl {
 
     CategoryItemAdapter categoryItemAdapter;
     CategoryFragmentView categoryFragmentView;
-    CategoryFragmentModel categoryFragmentModel;
     ArrayList<Page> adsImagesList;
     RecyclerViewClickListener recyclerViewClickListener;
     ArrayList<MainCategoryItemList> mainCategoryItemList;

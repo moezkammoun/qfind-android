@@ -272,8 +272,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation());
 
-                        ((ContainerActivity) getActivity()).showInfoToolbar( serviceProviderListDetails.
-                                get(position).getServiceProviderName(),serviceProviderListDetails.
+                        ((ContainerActivity) getActivity()).showInfoToolbar( serviceProviderListDetails.get(position).
+                                getServiceProviderName(), serviceProviderListDetails.
                                 get(position).getServiceProviderLocation());
 
                     }
