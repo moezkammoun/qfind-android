@@ -18,8 +18,8 @@ import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
-import qfind.com.qfindappandroid.categoryfragment.CategoryPageCurrentStatus;
-import qfind.com.qfindappandroid.informationFragment.InformationFragment;
+import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
+import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
@@ -45,8 +45,8 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         setContentView(R.layout.activity_container);
         ButterKnife.bind(this);
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        getMainCategoryItemsList();
         loadFragmentWithoutBackStack(new CategoryFragment());
+        //getMainCategoryItemsList();
         intent = getIntent();
         fragmentToShow = intent.getStringExtra("SHOW_FRAGMENT");
         searchText = intent.getStringExtra("SEARCH_TEXT");
@@ -75,12 +75,13 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onBackPressed() {
         if (fullView.isDrawerOpen(Gravity.END)) {
             fullView.closeDrawer(Gravity.END);
-        } else if (CategoryPageCurrentStatus.categoryPageStatus == 2) {
+        } else if (Util.categoryPageStatus == 2 || Util.categoryPageStatus == 3) {
             fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
             if ((fragment instanceof CategoryFragment)) {
                 CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 fragment.setSubCategoryBackButtonClickAction();
-            } else {
+                fragment.hideLoader(false);
+            }  else {
                 super.onBackPressed();
             }
         } else {
@@ -95,12 +96,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         setupBottomNavigationBar();
     }
 
-    public void loadFragmentWithoutBackStack(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.commit();
-    }
-
     public void getMainCategoryItemsList() {
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
@@ -110,33 +105,50 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
             call.enqueue(new Callback<MainCategory>() {
                 @Override
                 public void onResponse(Call<MainCategory> call, Response<MainCategory> response) {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             MainCategory mainCategory = response.body();
                             if (mainCategory.getCode().equals("200")) {
                                 ArrayList<MainCategoryItemList> mainCategoryItemList = mainCategory.getMainCategoryItemList();
-                                Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                                 if ((f instanceof CategoryFragment)) {
                                     CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                                     fragment.setRecyclerViewDatas(mainCategoryItemList);
+                                    fragment.hideLoader(false);
 
                                 }
                             } else {
-                                Util.showToast(getResources().getString(R.string.something_went_wrong), getApplicationContext());
+                                if ((f instanceof CategoryFragment)) {
+                                    CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                                    fragment.hideLoader(true);
+                                    Util.showToast(getResources().getString(R.string.something_went_wrong), getApplicationContext());
+                                }
                             }
                         }
 
                     } else {
-                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                        if ((f instanceof CategoryFragment)) {
+                            CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                            fragment.hideLoader(true);
+                            Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                        }
+
 
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MainCategory> call, Throwable t) {
-                    Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                    if ((f instanceof CategoryFragment)) {
+                        CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                        fragment.hideLoader(true);
+                        Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    }
+
                 }
             });
         }
     }
+
 }

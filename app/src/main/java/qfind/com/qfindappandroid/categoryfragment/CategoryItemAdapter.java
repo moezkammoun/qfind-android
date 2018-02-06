@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.MainCategoryItemList;
 
 /**
@@ -31,8 +32,12 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     ArrayList<MainCategoryItemList> mainCategoryItemList;
     private RecyclerViewClickListener mListener;
     ArrayList<SubCategoryItemList> subCategoryItemList;
+    ArrayList<ServiceProviderListDetails> serviceProviderListDetails;
     byte categoryPageNumber;
-    Bundle bundle;
+//<<<<<<< HEAD
+//    Bundle bundle;
+//=======
+    Picasso picasso;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,6 +77,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     public CategoryItemAdapter(Context mContext, ArrayList<MainCategoryItemList> mainCategoryItemList, RecyclerViewClickListener listener) {
         this.mContext = mContext;
+        setUpPicassoBuilderToReduceLoadingTime();
         this.mainCategoryItemList = mainCategoryItemList;
         this.mListener = listener;
     }
@@ -88,7 +94,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        bundle = new Bundle();
+//        bundle = new Bundle();
 
         Typeface mtypeFace = null;
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
@@ -98,24 +104,39 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-        if (CategoryPageCurrentStatus.categoryPageStatus == 1) {
+        if (Util.categoryPageStatus == 1) {
             holder.subCategoryCardItemLayout.setVisibility(View.GONE);
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.categoryName.setTypeface(mtypeFace);
             if (mainCategoryItemList != null) {
                 holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
-                Picasso.with(mContext).load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).into(holder.categoryThumbnail);
+                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).resize(50,50).centerInside().into(holder.categoryThumbnail);
             }
-        } else {
+        } else if (Util.categoryPageStatus == 2) {
+            holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
+            holder.subCategoryCardItemLayout.setVisibility(View.GONE);
+            holder.subCategoryName.setTypeface(mtypeFace);
+            holder.subCategoryDescription.setTypeface(mtypeFace);
+            if (subCategoryItemList != null) {
+                holder.categoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
+                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.categoryThumbnail);
+            }
+        } else if (Util.categoryPageStatus == 3) {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
             holder.subCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.subCategoryName.setTypeface(mtypeFace);
             holder.subCategoryDescription.setTypeface(mtypeFace);
-            if (subCategoryItemList != null) {
-                holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
-                holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
-                Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
-                bundle.putString("SubCategoryDescription", subCategoryItemList.get(position).getSubCategoryName());
+//<<<<<<< HEAD
+//            if (subCategoryItemList != null) {
+//                holder.subCategoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
+//                holder.subCategoryDescription.setText(subCategoryItemList.get(position).getSubCategoryName());
+//                Picasso.with(mContext).load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).into(holder.categoryThumbnail);
+//                bundle.putString("SubCategoryDescription", subCategoryItemList.get(position).getSubCategoryName());
+//=======
+            if (serviceProviderListDetails != null) {
+                holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
+                holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
+                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.categoryThumbnail);
             }
         }
     }
@@ -130,6 +151,10 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             if (subCategoryItemList != null)
                 return subCategoryItemList.size();
             else return 0;
+        }else if (categoryPageNumber == 3) {
+            if (serviceProviderListDetails != null)
+                return serviceProviderListDetails.size();
+            else return 0;
         } else {
             return 0;
         }
@@ -142,6 +167,15 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     public void addSubCategoryListValues(ArrayList<SubCategoryItemList> subCategoryItemList, byte categoryPageNumber) {
         this.subCategoryItemList = subCategoryItemList;
+        this.categoryPageNumber = categoryPageNumber;
+    }
+    public void setUpPicassoBuilderToReduceLoadingTime(){
+        Picasso.Builder builder = new Picasso.Builder(mContext);
+        picasso = builder.build();
+    }
+
+    public void addServiceProviderList(ArrayList<ServiceProviderListDetails> serviceProviderListDetails, byte categoryPageNumber) {
+        this.serviceProviderListDetails = serviceProviderListDetails;
         this.categoryPageNumber = categoryPageNumber;
     }
 

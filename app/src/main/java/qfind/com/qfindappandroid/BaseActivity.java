@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
+import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
@@ -62,9 +62,10 @@ public class BaseActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     Typeface mTypeFace;
     LinearLayout infoToolbar, normalToolbar;
-    TextView infoToolBarMainTittleTxtView;
+    TextView infoToolBarMainTittleTxtView, infoToolBarSubTittleTxtView;
     String infoToolBarTittle;
     SearchData searchData;
+    Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class BaseActivity extends AppCompatActivity {
         infoHamburger = (ImageView) findViewById(R.id.hamburger_info);
         infoToolbar = (LinearLayout) findViewById(R.id.info_toolbar);
         infoToolBarMainTittleTxtView = (TextView) findViewById(R.id.main_title);
+        infoToolBarSubTittleTxtView = (TextView) findViewById(R.id.sub_title);
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
         infoStarButton = (ImageView) findViewById(R.id.fav_star_icon);
@@ -143,8 +145,12 @@ public class BaseActivity extends AppCompatActivity {
         infoStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InformationFragment infoFragment = (InformationFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                infoFragment.getBundle();
+                DataBaseHandler db = new DataBaseHandler(getApplicationContext());
+                FavoriteModel favoriteModel = new FavoriteModel();
+                favoriteModel.setItem(bundle.getString("providerName"));
+                favoriteModel.setItemDescription(bundle.getString("providerLocation"));
+                favoriteModel.setUrl(bundle.getString("providerLogo"));
+                db.addFavorite(favoriteModel);
             }
         });
 
@@ -158,6 +164,7 @@ public class BaseActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 searchData = (SearchData) adapterView.getItemAtPosition(position);
                 autoCompleteTextView.setText(searchData.getSearchName());
+                autoCompleteTextView.clearFocus();
                 searchButton.performClick();
             }
         });
@@ -209,10 +216,14 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
             switch (item.getItemId()) {
                 case R.id.favorite_categories_bottom_menu:
-                    item.setCheckable(true);
-                    fragment = new FavoriteFragment();
+                    if (!(fragment instanceof FavoriteFragment)) {
+                        item.setCheckable(true);
+                        fragment = new FavoriteFragment();
+                    } else
+                        fragment = null;
                     break;
                 case R.id.qfind_us_menu:
                     item.setCheckable(true);
@@ -222,11 +233,15 @@ public class BaseActivity extends AppCompatActivity {
                     fragment = null;
                     break;
                 case R.id.category_history_menu:
-                    item.setCheckable(true);
-                    fragment = new HistoryFragment();
+                    if (!(fragment instanceof HistoryFragment)) {
+                        item.setCheckable(true);
+                        fragment = new HistoryFragment();
+                    } else
+                        fragment = null;
                     break;
             }
             if (fragment != null) {
+
                 loadFragment(fragment);
                 showNormalToolbar();
             }
@@ -234,6 +249,7 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     };
+
 
     @Override
     public void onBackPressed() {
@@ -325,12 +341,13 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void showInfoToolbar(String tittle) {
+    public void showInfoToolbar(String tittle, String subTittle) {
 
         infoToolBarTittle = tittle;
         normalToolbar.setVisibility(View.GONE);
         infoToolbar.setVisibility(View.VISIBLE);
         infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
+        infoToolBarSubTittleTxtView.setText(subTittle);
 
     }
 
@@ -338,14 +355,55 @@ public class BaseActivity extends AppCompatActivity {
         normalToolbar.setVisibility(View.VISIBLE);
         infoToolbar.setVisibility(View.GONE);
     }
-
+    
+    public void showServiceProviderDetailPage(String providerName, String providerLocation,
+                                              String providerMobile, String providerAddress,
+                                              String providerWebsite, String providerOpeningTime,
+                                              String providerMail, String providerFacebook,
+                                              String providerLinkedin, String providerInstagram,
+                                              String providerTwitter, String providerSnapchat,
+                                              String providerGooglePlus, String providerLatLong,String providerLogo) {
+        bundle.putString("providerName", providerName);
+        bundle.putString("providerLocation", providerLocation);
+        bundle.putString("providerMobile", providerMobile);
+        bundle.putString("providerAddress", providerAddress);
+        bundle.putString("providerWebsite", providerWebsite);
+        bundle.putString("providerOpeningTime", providerOpeningTime);
+        bundle.putString("providerMail", providerMail);
+        bundle.putString("providerFacebook", providerFacebook);
+        bundle.putString("providerLinkedIn", providerLinkedin);
+        bundle.putString("providerInstagram", providerInstagram);
+        bundle.putString("providerTwitter", providerTwitter);
+        bundle.putString("providerSnapchat", providerSnapchat);
+        bundle.putString("providerGooglePlus", providerGooglePlus);
+        bundle.putString("providerLatLong", providerLatLong);
+        bundle.putString("providerLogo",providerLogo);
+        InformationFragment informationFragment = new InformationFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        informationFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container, informationFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     public void loadFragment(Fragment fragment) {
         if (isNetworkAvailable()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_container, fragment, Integer.toString(getFragmentCount()));
-            if (!(fragment instanceof SearchResultsFragment))
+            if (!(getCurrentFragment() instanceof SearchResultsFragment))
                 transaction.addToBackStack(null);
+            transaction.commit();
+            if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
+                autoCompleteTextView.setText(null);
+                autoCompleteTextView.clearFocus();
+            }
+        }
+    }
+
+    public void loadFragmentWithoutBackStack(Fragment fragment) {
+        if (isNetworkAvailable()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_container, fragment);
             transaction.commit();
             if (!(fragment instanceof SearchResultsFragment) && autoCompleteTextView.getText() != null) {
                 autoCompleteTextView.setText(null);
@@ -363,7 +421,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected Fragment getCurrentFragment() {
-        return getFragmentAt(getFragmentCount() - 2);
+        return getFragmentAt(getFragmentCount() - 1);
     }
 
     public void setFontTypeForText() {
@@ -388,9 +446,11 @@ public class BaseActivity extends AppCompatActivity {
         fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
         bottomNavigationView.setSelected(false);
         if ((fragment instanceof HistoryFragment)) {
-            bottomNavigationView.getMenu().getItem(2).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(false);
         } else if ((fragment instanceof FavoriteFragment)) {
-            bottomNavigationView.getMenu().getItem(0).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(true);
+            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(false);
         } else {
             Menu menu = bottomNavigationView.getMenu();
             for (int i = 0, size = menu.size(); i < size; i++) {
@@ -400,4 +460,5 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+
 }

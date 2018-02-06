@@ -1,6 +1,7 @@
 package qfind.com.qfindappandroid.retrofitinstance;
 
 import qfind.com.qfindappandroid.categorycontaineractivity.MainCategory;
+import qfind.com.qfindappandroid.categoryfragment.ServiceProviderList;
 import qfind.com.qfindappandroid.categoryfragment.SubCategory;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
 import qfind.com.qfindappandroid.homeactivty.RegistrationDetails;
@@ -32,8 +33,14 @@ public interface ApiInterface {
 
 
     @GET("api/get-service-provider-inner")
-    Call<ApiResponse> getServiceProviderData(@Query("token") String token, @Query("language") Integer language,
+    Call<ApiResponse> getServiceProviderData(@Query("token") String token, @Query("language") int language,
                                              @Query("service") Integer serviceId, @Query("device_id") String deviceId);
+
+
+    @GET("api/get-service-provider")
+    Call<ServiceProviderList> getListOfServiceProvider(@Query("token") String token, @Query("language") int language,
+                                                       @Query("category") int category, @Query("limit") int limit,
+                                                        @Query("offset") String offset);
 
     @GET("api/search-result")
     Call<SearchResultsResponse> getSearchResults(@Query("token") String token,

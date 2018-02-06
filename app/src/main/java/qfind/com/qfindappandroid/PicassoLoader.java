@@ -1,4 +1,4 @@
-package qfind.com.qfindappandroid.categoryfragment;
+package qfind.com.qfindappandroid;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -10,13 +10,14 @@ import com.squareup.picasso.RequestCreator;
 import java.io.File;
 
 import cn.lightsky.infiniteindicator.ImageLoader;
-import qfind.com.qfindappandroid.R;
 
 /**
  * Created by dilee on 17-01-2018.
  */
 
 public class PicassoLoader implements ImageLoader {
+
+    Picasso picasso;
 
     public PicassoLoader getImageLoader(Context context) {
         return new PicassoLoader();
@@ -28,20 +29,20 @@ public class PicassoLoader implements ImageLoader {
             return;
         }
 
-        Picasso picasso = Picasso.with(context);
+        picasso = Picasso.with(context);
         RequestCreator requestCreator = null;
 
         if (res instanceof String) {
-            requestCreator = picasso.load((String) res).placeholder(R.drawable.banner);
+            requestCreator = picasso.load((String) res);
         } else if (res instanceof File) {
-            requestCreator = picasso.load((File) res).placeholder(R.drawable.banner);
+            requestCreator = picasso.load((File) res);
         } else if (res instanceof Integer) {
-            requestCreator = picasso.load((Integer) res).placeholder(R.drawable.banner);
+            requestCreator = picasso.load((Integer) res);
         }
 
         requestCreator
-                .resize(600,600)
-               .centerInside()
+                .resize(200, 200)
+                .centerInside()
 //                .fit()
                 .into(targetView);
 

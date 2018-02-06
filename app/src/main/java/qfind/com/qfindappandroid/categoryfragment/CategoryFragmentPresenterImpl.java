@@ -23,6 +23,7 @@ public class CategoryFragmentPresenterImpl {
     RecyclerViewClickListener recyclerViewClickListener;
     ArrayList<MainCategoryItemList> mainCategoryItemList;
     ArrayList<SubCategoryItemList> subCategoryItemList;
+    ArrayList<ServiceProviderListDetails> serviceProviderListDetails;
     Context context;
     SharedPreferences qFindPreferences;
     ArrayList<Page> ads;
@@ -56,6 +57,13 @@ public class CategoryFragmentPresenterImpl {
         this.subCategoryItemList = subCategoryItemList;
         byte a = 2;
         categoryItemAdapter.addSubCategoryListValues(subCategoryItemList, a);
+        categoryItemAdapter.notifyDataSetChanged();
+    }
+
+    public void getServieProvidersList(ArrayList<ServiceProviderListDetails> serviceProviderListDetails) {
+        this.serviceProviderListDetails = serviceProviderListDetails;
+        byte a = 3;
+        categoryItemAdapter.addServiceProviderList(serviceProviderListDetails, a);
         categoryItemAdapter.notifyDataSetChanged();
     }
 
