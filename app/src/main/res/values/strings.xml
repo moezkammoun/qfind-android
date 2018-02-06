@@ -36,4 +36,8 @@
     <string name="check_network">Check your internet connections</string>
     <string name="un_authorised">Unauthorized access</string>
 
+    <string name="title_activity_webview">Webview</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

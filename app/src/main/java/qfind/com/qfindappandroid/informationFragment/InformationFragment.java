@@ -212,12 +212,12 @@ public class InformationFragment extends Fragment {
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
             if (versionCode >= 3002850) { //newer versions of fb app
-                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+                return "fb://facewebmodal/f?href=https://www.facebook.com/" + providerFacebook+"/";
             } else { //older versions of fb app
-                return "fb://page/" + FACEBOOK_PAGE_ID;
+                return "fb://page/" + providerFacebook;
             }
         } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL; //normal web url
+            return "https://www.facebook.com/"+providerFacebook+"/"; //normal web url
         }
     }
 
