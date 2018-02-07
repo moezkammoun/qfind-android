@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import qfind.com.qfindappandroid.DataBaseHandler;
@@ -28,6 +29,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
     private List<FavoriteModel> itemList;
     private Typeface mTypeFace;
     FavoriteModel favoriteModel;
+    ArrayList<Integer> positions = new ArrayList<Integer>();
 
     public favoriteAdapter() {
     }
@@ -42,7 +44,9 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         favoriteModel = itemList.get(position);
+        positions.add(position, favoriteModel.getPageId());
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
         // loading album cover using Glide library
@@ -67,12 +71,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             favoriteStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int i = getAdapterPosition();
-
-                    String fav=favoriteModel.getItem();
-                    int in= favoriteModel.getPageId();
-                    System.out.println("fav "+ in);
-                    delete(getAdapterPosition(),in);
+                    System.out.println("position " + getAdapterPosition());
+                    delete(getAdapterPosition(), positions.get(getAdapterPosition()));
                 }
             });
             setFontTypeForText(title, description);
@@ -96,7 +96,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         this.itemList = itemList;
     }
 
-    public void delete(int position,int id) {  //removes the row
+    public void delete(int position, int id) {  //removes the row
         DataBaseHandler db = new DataBaseHandler(mContext);
         db.deleteFavorite(id);
         itemList.remove(position);

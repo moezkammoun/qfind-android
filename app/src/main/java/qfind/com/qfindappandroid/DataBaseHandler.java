@@ -205,7 +205,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
     public void deleteFavorite(int id) {
-         writeDB = this.getWritableDatabase();
+        writeDB = this.getWritableDatabase();
         writeDB.delete(TABLE_FAVORITE, KEY_PAGE_ID + " = " + id, null);
         writeDB.close();
     }
