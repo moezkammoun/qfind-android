@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import qfind.com.qfindappandroid.DataBaseHandler;
@@ -22,11 +23,13 @@ import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
  * Created by MoongedePC on 23-Jan-18.
  */
 
-public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyViewHolder>{
+public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<FavoriteModel> itemList;
     private Typeface mTypeFace;
+    FavoriteModel favoriteModel;
+    ArrayList<Integer> positions = new ArrayList<Integer>();
 
     public favoriteAdapter() {
     }
@@ -41,7 +44,9 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        FavoriteModel favoriteModel = itemList.get(position);
+
+        favoriteModel = itemList.get(position);
+        positions.add(position, favoriteModel.getPageId());
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
         // loading album cover using Glide library
@@ -55,19 +60,19 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, description;
-        public ImageView thumbnail,favoriteStar;
+        public ImageView thumbnail, favoriteStar;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.favorite_item_title);
             description = (TextView) view.findViewById(R.id.favorite_item_description);
             thumbnail = (ImageView) view.findViewById(R.id.favorite_thumbnail);
-            favoriteStar=(ImageView)view.findViewById(R.id.favorite_star);
+            favoriteStar = (ImageView) view.findViewById(R.id.favorite_star);
             favoriteStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int i= getAdapterPosition();
-                    delete(getAdapterPosition());
+                    System.out.println("position " + getAdapterPosition());
+                    delete(getAdapterPosition(), positions.get(getAdapterPosition()));
                 }
             });
             setFontTypeForText(title, description);
@@ -90,9 +95,10 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         this.mContext = mContext;
         this.itemList = itemList;
     }
-    public void delete(int position) {  //removes the row
-        DataBaseHandler db=new DataBaseHandler(mContext);
-        db.deleteFavorite(position);
+
+    public void delete(int position, int id) {  //removes the row
+        DataBaseHandler db = new DataBaseHandler(mContext);
+        db.deleteFavorite(id);
         itemList.remove(position);
         notifyItemRemoved(position);
     }

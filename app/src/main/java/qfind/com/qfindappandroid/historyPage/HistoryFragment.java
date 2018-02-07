@@ -138,6 +138,10 @@ public class HistoryFragment extends Fragment {
             for (int j = 0; j < list.size(); j++) {
                 singleItem.add(new HistoryPageDataModel(list.get(j).getTitke(),
                         list.get(j).getImage(), list.get(j).getDescription()));
+                String log = "Id: "+list.get(j).getId()+" ,title: " + list.get(j).getTitke()
+                        + " ,des: " + list.get(j).getDescription()+",pageid: " + list.get(j).getPageId();
+                // Writing Contacts to log
+                Log.d("History: ", log);
             }
             mainModel.setHistoryPageDataModels(singleItem);
             arrayListMain.add(mainModel);

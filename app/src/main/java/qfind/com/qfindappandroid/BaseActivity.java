@@ -150,7 +150,12 @@ public class BaseActivity extends AppCompatActivity {
                 favoriteModel.setItem(bundle.getString("providerName"));
                 favoriteModel.setItemDescription(bundle.getString("providerLocation"));
                 favoriteModel.setUrl(bundle.getString("providerLogo"));
-                db.addFavorite(favoriteModel);
+                favoriteModel.setPageId(bundle.getInt("providerId"));
+                if (db.checkFavoriteById(bundle.getInt("providerId"))) {
+                    db.updateFavorite(favoriteModel, bundle.getInt("providerId"));
+                } else {
+                    db.addFavorite(favoriteModel);
+                }
             }
         });
 
@@ -355,14 +360,15 @@ public class BaseActivity extends AppCompatActivity {
         normalToolbar.setVisibility(View.VISIBLE);
         infoToolbar.setVisibility(View.GONE);
     }
-    
+
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
                                               String providerMobile, String providerAddress,
                                               String providerWebsite, String providerOpeningTime,
                                               String providerMail, String providerFacebook,
                                               String providerLinkedin, String providerInstagram,
                                               String providerTwitter, String providerSnapchat,
-                                              String providerGooglePlus, String providerLatLong,String providerLogo) {
+                                              String providerGooglePlus, String providerLatLong, String providerLogo,
+                                              int providerId) {
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
         bundle.putString("providerMobile", providerMobile);
@@ -377,7 +383,8 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerSnapchat", providerSnapchat);
         bundle.putString("providerGooglePlus", providerGooglePlus);
         bundle.putString("providerLatLong", providerLatLong);
-        bundle.putString("providerLogo",providerLogo);
+        bundle.putString("providerLogo", providerLogo);
+        bundle.putInt("providerId", providerId);
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         informationFragment.setArguments(bundle);

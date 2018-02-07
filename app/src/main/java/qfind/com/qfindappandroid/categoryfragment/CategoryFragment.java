@@ -250,7 +250,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
-                                serviceProviderListDetails.get(position).getServiceProviderLogo());
+                                serviceProviderListDetails.get(position).getServiceProviderLogo(),
+                                serviceProviderListDetails.get(position).getServiceProviderId());
 
                         ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                         get(position).getServiceProviderLocation(),
@@ -272,7 +273,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
-                                serviceProviderListDetails.get(position).getServiceProviderLogo());
+                                serviceProviderListDetails.get(position).getServiceProviderLogo(),
+                                serviceProviderListDetails.get(position).getServiceProviderId());
 
                         ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                 get(position).getServiceProviderName(), serviceProviderListDetails.

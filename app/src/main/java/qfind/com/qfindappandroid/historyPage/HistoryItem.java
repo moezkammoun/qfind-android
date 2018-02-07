@@ -10,6 +10,7 @@ public class HistoryItem {
     String titke;
     String image;
     String description;
+    int pageId;
 
     public HistoryItem() {
     }
@@ -18,11 +19,12 @@ public class HistoryItem {
         this.id = id;
     }
 
-    public HistoryItem(String day, String titke, String image, String description) {
+    public HistoryItem(String day, String titke, String image, String description,int pageId) {
         this.day = day;
         this.titke = titke;
         this.image = image;
         this.description = description;
+        this.pageId=pageId;
     }
 
     public int getId() {
@@ -63,5 +65,13 @@ public class HistoryItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPageId() {
+        return pageId;
+    }
+
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
     }
 }
