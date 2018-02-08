@@ -151,11 +151,28 @@ public class BaseActivity extends AppCompatActivity {
                 favoriteModel.setItemDescription(bundle.getString("providerLocation"));
                 favoriteModel.setUrl(bundle.getString("providerLogo"));
                 favoriteModel.setPageId(bundle.getInt("providerId"));
+                favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
+                favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
+                favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
+                favoriteModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
+                favoriteModel.setProviderMail(bundle.getString("providerMail"));
+                favoriteModel.setProviderFacebook(bundle.getString("providerFacebook"));
+                favoriteModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
+                favoriteModel.setProviderInstagram(bundle.getString("providerInstagram"));
+                favoriteModel.setProviderTwitter(bundle.getString("providerTwitter"));
+                favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
+                favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
+                favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
+
                 if (db.checkFavoriteById(bundle.getInt("providerId"))) {
-                    db.updateFavorite(favoriteModel, bundle.getInt("providerId"));
+//                    db.updateFavorite(favoriteModel, bundle.getInt("providerId"));
+                    db.deleteFavorite(bundle.getInt("providerId"));
+                    Util.showToast("Removed from Favorites",getApplicationContext());
                 } else {
                     db.addFavorite(favoriteModel);
+                    Util.showToast("Add to Favorites",getApplicationContext());
                 }
+
             }
         });
 

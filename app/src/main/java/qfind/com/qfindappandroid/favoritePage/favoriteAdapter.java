@@ -16,6 +16,7 @@ import java.util.List;
 
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.searchResultsFragment.ResultsAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
 
@@ -50,7 +51,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
         // loading album cover using Glide library
-        Picasso.with(mContext).load(favoriteModel.getUrl()).into(holder.thumbnail);
+        Picasso.with(mContext).load(favoriteModel.getUrl()).resize(50,50).centerInside().into(holder.thumbnail);
+
     }
 
     @Override
@@ -73,6 +75,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
                 public void onClick(View view) {
                     System.out.println("position " + getAdapterPosition());
                     delete(getAdapterPosition(), positions.get(getAdapterPosition()));
+
                 }
             });
             setFontTypeForText(title, description);

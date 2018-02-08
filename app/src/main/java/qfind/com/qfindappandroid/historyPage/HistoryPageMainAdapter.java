@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 
 /**
@@ -24,11 +25,10 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
 
     private String day;
     private ArrayList<HistoryPageMainModel> dataList;
+    private ArrayList<HistoryPageDataModel> singleItem;
     private Context mContext;
     Typeface mtypeFace;
 
-//    public HistoryPageMainAdapter() {
-//    }
 
     public HistoryPageMainAdapter(ArrayList<HistoryPageMainModel> dataList, Context mContext) {
 
@@ -73,8 +73,8 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
     @Override
     public void onBindViewHolder(HistoryPageMainAdapter.ItemRowHolder holder, int position) {
 
-        ArrayList singleSectionItems = dataList.get(position).getHistoryPageDataModels();
-        HistoryPageDataAdapter historyPageDataAdapter = new HistoryPageDataAdapter(singleSectionItems, mContext);
+        singleItem = dataList.get(position).getHistoryPageDataModels();
+        HistoryPageDataAdapter historyPageDataAdapter = new HistoryPageDataAdapter(singleItem, mContext);
         holder.history_row_text.setTypeface(mtypeFace);
         holder.history_row_text.setText(dataList.get(position).getDay());
         holder.recycler_view_list.setHasFixedSize(true);
@@ -82,7 +82,28 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
                 (new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         holder.recycler_view_list.setAdapter(historyPageDataAdapter);
 
-
+        holder.recycler_view_list.addOnItemTouchListener(new RecyclerViewTouchListener(mContext, holder.recycler_view_list, new HistoryClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                ((BaseActivity) mContext).showServiceProviderDetailPage(
+                        singleItem.get(position).getPageName(),
+                        singleItem.get(position).getDescription(),
+                        singleItem.get(position).getProviderPhone(),
+                        singleItem.get(position).getProviderAddress(),
+                        singleItem.get(position).getProviderWebsite(),
+                        singleItem.get(position).getProviderOpeningTime(),
+                        singleItem.get(position).getProviderMail(),
+                        singleItem.get(position).getProviderFacebook(),
+                        singleItem.get(position).getProviderLinkedIn(),
+                        singleItem.get(position).getProviderInstagram(),
+                        singleItem.get(position).getProviderTwitter(),
+                        singleItem.get(position).getProviderSnapchat(),
+                        singleItem.get(position).getProviderGooglePlus(),
+                        singleItem.get(position).getProviderLatlong(),
+                        singleItem.get(position).getUrl(),
+                        singleItem.get(position).getId());
+            }
+        }));
     }
 
     @Override

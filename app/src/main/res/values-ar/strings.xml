@@ -38,5 +38,5 @@
     <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
    </string>
     <string name="no_data_text">No data</string>
-    >>>>>>> master
+    <string name="no_result_text">No results found</string>
 </resources>
