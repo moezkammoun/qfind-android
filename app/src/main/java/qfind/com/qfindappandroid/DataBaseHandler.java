@@ -31,24 +31,24 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_IMG = "thumbnail";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_DAY = "day";
-    private static final String KEY_PAGE_ID = "page_id";
-    private static final String KEY_LOCATION = "provider_location";
-    private static final String KEY_MOBILE = "provider_mobile";
-    private static final String KEY_WEBSITE = "provider_website";
-    private static final String KEY_ADDRESS = "provider_address";
-    private static final String KEY_OPENING_TIME = "provider_opening_time";
-    private static final String KEY_MAIL = "provider_mail";
-    private static final String KEY_FACEBOOK = "provider_facebook";
-    private static final String KEY_LINKEDIN = "provider_linkedin";
-    private static final String KEY_INSTAGRAM = "provider_instagram";
-    private static final String KEY_TWITTER = "provider_twitter";
-    private static final String KEY_SNAPCHAT = "provider_snapchat";
-    private static final String KEY_GOOGLE_PLUS = "provider_google_plus";
-    private static final String KEY_MAP = "provider_map_location";
+    private String KEY_TITLE = "title";
+    private String KEY_IMG = "thumbnail";
+    private String KEY_DESCRIPTION = "description";
+    private String KEY_DAY = "day";
+    private String KEY_PAGE_ID = "page_id";
+    private String KEY_LOCATION = "provider_location";
+    private String KEY_MOBILE = "provider_mobile";
+    private String KEY_WEBSITE = "provider_website";
+    private String KEY_ADDRESS = "provider_address";
+    private String KEY_OPENING_TIME = "provider_opening_time";
+    private String KEY_MAIL = "provider_mail";
+    private String KEY_FACEBOOK = "provider_facebook";
+    private String KEY_LINKEDIN = "provider_linkedin";
+    private String KEY_INSTAGRAM = "provider_instagram";
+    private String KEY_TWITTER = "provider_twitter";
+    private String KEY_SNAPCHAT = "provider_snapchat";
+    private String KEY_GOOGLE_PLUS = "provider_google_plus";
+    private String KEY_MAP = "provider_map_location";
 
 
     SQLiteDatabase writeDB, readDB;
