@@ -81,31 +81,6 @@ public class FavoriteFragment extends Fragment {
         favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
         favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         favoriteView.setAdapter(adapter);
-
-        favoriteView.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), favoriteView, new FavoriteClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                ((BaseActivity) getActivity()).showServiceProviderDetailPage(
-                        favoriteModelList.get(position).getItem(),
-                        favoriteModelList.get(position).getItemDescription(),
-                        favoriteModelList.get(position).getProviderPhone(),
-                        favoriteModelList.get(position).getProviderAddress(),
-                        favoriteModelList.get(position).getProviderWebsite(),
-                        favoriteModelList.get(position).getProviderOpeningTime(),
-                        favoriteModelList.get(position).getProviderMail(),
-                        favoriteModelList.get(position).getProviderFacebook(),
-                        favoriteModelList.get(position).getProviderLinkedIn(),
-                        favoriteModelList.get(position).getProviderInstagram(),
-                        favoriteModelList.get(position).getProviderTwitter(),
-                        favoriteModelList.get(position).getProviderSnapchat(),
-                        favoriteModelList.get(position).getProviderGooglePlus(),
-                        favoriteModelList.get(position).getProviderLatlong(),
-                        favoriteModelList.get(position).getUrl(),
-                        favoriteModelList.get(position).getPageId());
-            }
-        }));
-
-
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
     }
 
