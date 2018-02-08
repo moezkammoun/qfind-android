@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
@@ -39,6 +40,9 @@ public class HistoryFragment extends Fragment {
     TextView history;
     @BindView(R.id.back_button)
     ImageView backButton;
+    List<HistoryItem> list = new ArrayList<HistoryItem>();
+    ArrayList<Integer> positions = new ArrayList<Integer>();
+    ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
 
 
     public HistoryFragment() {
@@ -68,12 +72,11 @@ public class HistoryFragment extends Fragment {
         Calendar cal;
         cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -1);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         System.out.println("check date from" + sdf.format(cal.getTime()));
         String filterDate = sdf.format(cal.getTime());
         String currentDate = sdf.format(new Date());
         db.deleteHistory(filterDate);
-//        db.deleteFutureHistory(currentDate);
         List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
         countList = db.getDateCount();
         for (HistoryDateCount count : countList) {
@@ -84,15 +87,15 @@ public class HistoryFragment extends Fragment {
         String strDate = null;
         String todayDate = null;
         String dayVar = null;
-        String yesDay=null;
+        String yesDay = null;
         for (int i = 0; i < countList.size(); i++) {
             HistoryPageMainModel mainModel = new HistoryPageMainModel();
-            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
+//            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
             try {
                 Calendar calendar;
                 calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, -1);
-                yesDay=sdf.format(calendar.getTime());
+                yesDay = sdf.format(calendar.getTime());
                 todayDate = sdf.format(new Date());
                 strDate = sdf.format(sdf.parse(countList.get(i).getDay()));
             } catch (ParseException e) {
@@ -110,10 +113,9 @@ public class HistoryFragment extends Fragment {
                     yesterday = yesterday + 1;
                 }
 
-            }else if(todayDate.compareTo(strDate)<0){
+            } else if (todayDate.compareTo(strDate) < 0) {
                 continue;
-            }
-            else {
+            } else {
                 Date ds = null;
                 DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
                 try {
@@ -132,21 +134,36 @@ public class HistoryFragment extends Fragment {
             }
 
             mainModel.setDay(dayVar);
-            List<HistoryItem> list = new ArrayList<HistoryItem>();
+
             list = db.getAllHistory(countList.get(i).getDay());
             System.out.println(list);
             for (int j = 0; j < list.size(); j++) {
-                singleItem.add(new HistoryPageDataModel(list.get(j).getTitke(),
-                        list.get(j).getImage(), list.get(j).getDescription()));
-                String log = "Id: "+list.get(j).getId()+" ,title: " + list.get(j).getTitke()
-                        + " ,des: " + list.get(j).getDescription()+",pageid: " + list.get(j).getPageId();
-                // Writing Contacts to log
-                Log.d("History: ", log);
+                singleItem.add(new HistoryPageDataModel(
+                                list.get(j).getTitke(),
+                                list.get(j).getImage(),
+                                list.get(j).getDescription(),
+                                list.get(j).getProviderPhone(),
+                                list.get(j).getProviderAddress(),
+                                list.get(j).getProviderWebsite(),
+                                list.get(j).getProviderOpeningTime(),
+                                list.get(j).getProviderMail(),
+                                list.get(j).getProviderFacebook(),
+                                list.get(j).getProviderLinkedIn(),
+                                list.get(j).getProviderInstagram(),
+                                list.get(j).getProviderTwitter(),
+                                list.get(j).getProviderSnapchat(),
+                                list.get(j).getProviderGooglePlus(),
+                                list.get(j).getProviderLatlong(),
+                                list.get(j).getId()
+                        )
+                );
             }
             mainModel.setHistoryPageDataModels(singleItem);
             arrayListMain.add(mainModel);
         }
         setAdapter(arrayListMain);
+
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +205,6 @@ public class HistoryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 
 
 }

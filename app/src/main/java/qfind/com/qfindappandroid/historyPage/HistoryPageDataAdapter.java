@@ -64,7 +64,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
 
         HistoryPageDataModel historyPageDataModel = itemsList.get(position);
         holder.title.setText(historyPageDataModel.getPageName());
-        Picasso.with(mContext).load(historyPageDataModel.getUrl()).into(holder.url);
+        Picasso.with(mContext).load(historyPageDataModel.getUrl()).resize(50,50).centerInside().into(holder.url);
         holder.description.setText(historyPageDataModel.getDescription());
     }
 

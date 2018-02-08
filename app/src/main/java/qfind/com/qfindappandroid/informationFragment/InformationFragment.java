@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
@@ -64,12 +65,26 @@ public class InformationFragment extends Fragment {
 
         DataBaseHandler db = new DataBaseHandler(getContext());
         HistoryItem dataModel = new HistoryItem();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         dataModel.setDay(sdf.format(new Date()));
         dataModel.setTitke(bundle.getString("providerName"));
         dataModel.setImage(bundle.getString("providerLogo"));
         dataModel.setDescription(bundle.getString("providerLocation"));
         dataModel.setPageId(bundle.getInt("providerId"));
+        dataModel.setProviderPhone(bundle.getString("providerMobile"));
+        dataModel.setProviderAddress(bundle.getString("providerAddress"));
+        dataModel.setProviderWebsite(bundle.getString("providerWebsite"));
+        dataModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
+        dataModel.setProviderMail(bundle.getString("providerMail"));
+        dataModel.setProviderFacebook(bundle.getString("providerFacebook"));
+        dataModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
+        dataModel.setProviderInstagram(bundle.getString("providerInstagram"));
+        dataModel.setProviderTwitter(bundle.getString("providerTwitter"));
+        dataModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
+        dataModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
+        dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
+
+
         if(db.checkHistoryById(bundle.getInt("providerId"))){
             db.updateHistory(dataModel,bundle.getInt("providerId"));
         }else{
