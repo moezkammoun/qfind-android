@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -25,6 +26,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
 
     private ArrayList<HistoryPageDataModel> itemsList;
     private Context mContext;
+    HistoryPageDataModel historyPageDataModel;
 
     public HistoryPageDataAdapter(ArrayList<HistoryPageDataModel> itemsList, Context mContext) {
         this.itemsList = itemsList;
@@ -44,6 +46,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         TextView description;
 
 
+
         public SingleItemRowHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -60,12 +63,19 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
     }
 
     @Override
-    public void onBindViewHolder(HistoryPageDataAdapter.SingleItemRowHolder holder, int position) {
+    public void onBindViewHolder(HistoryPageDataAdapter.SingleItemRowHolder holder, final int position) {
 
-        HistoryPageDataModel historyPageDataModel = itemsList.get(position);
+        historyPageDataModel = itemsList.get(position);
         holder.title.setText(historyPageDataModel.getPageName());
         Picasso.with(mContext).load(historyPageDataModel.getUrl()).resize(50,50).centerInside().into(holder.url);
         holder.description.setText(historyPageDataModel.getDescription());
+//        holder.historyLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
     }
 
     @Override
