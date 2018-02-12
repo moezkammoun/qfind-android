@@ -76,7 +76,6 @@ public class SearchResultsFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         resultsAdapter = new ResultsAdapter(getContext(), searchedItemList);
-
         mRecyclerView.setAdapter(resultsAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new SearchResultsClickListener() {
             @Override
