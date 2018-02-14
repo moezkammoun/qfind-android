@@ -26,7 +26,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
     private Context mContext;
     private List<FavoriteModel> itemList;
-    private Typeface mTypeFace;
+    private Typeface mTypeFaceLight;
 
     public favoriteAdapter() {
     }
@@ -76,14 +76,14 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
     public void setFontTypeForText(TextView title, TextView description) {
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            mTypeFace = Typeface.createFromAsset(mContext.getAssets(),
+            mTypeFaceLight= Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/Lato-Light.ttf");
         } else {
-            mTypeFace = Typeface.createFromAsset(mContext.getAssets(),
+            mTypeFaceLight=Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-        title.setTypeface(mTypeFace);
-        description.setTypeface(mTypeFace);
+        title.setTypeface(mTypeFaceLight);
+        description.setTypeface(mTypeFaceLight);
     }
 
     public favoriteAdapter(Context mContext, List<FavoriteModel> itemList) {

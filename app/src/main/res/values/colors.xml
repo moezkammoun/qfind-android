@@ -12,6 +12,7 @@
     <color name="color_dark_gray">#7F8C8D</color>
     <color name="categories_background_color">#f0f0f0</color>
     <color name="searchResultsDescriptionColor">#666667</color>
+    <color name="translucent_black">#80000000</color>
 
     <color name="black_overlay">#66000000</color>
 

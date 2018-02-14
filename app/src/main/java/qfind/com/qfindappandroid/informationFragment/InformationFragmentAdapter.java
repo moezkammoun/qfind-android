@@ -1,6 +1,7 @@
 package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
     private Context mcontext;
     private ArrayList<InformationFragmentModel> informationPages;
     private RecyclerViewClickListener mListener;
+    Typeface mtypeFaceBold;
 
     public InformationFragmentAdapter(Context mcontext, ArrayList<InformationFragmentModel> informationPages,
                                       RecyclerViewClickListener mListener) {
@@ -73,16 +75,18 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
 
     @Override
     public void onBindViewHolder(InformationPageViewHolder holder, int position) {
-
+        setFontTypeForText();
         InformationFragmentModel informationPage = informationPages.get(position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.info_icon.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_icon(), mcontext.getTheme()));
             holder.info_point.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_point(), mcontext.getTheme()));
+            holder.info_content.setTypeface(mtypeFaceBold);
             holder.info_content.setText(informationPages.get(position).getInfo_content());
             holder.info_back_button.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_back_button(), mcontext.getTheme()));
         } else {
             holder.info_icon.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_icon()));
             holder.info_point.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_point()));
+            holder.info_content.setTypeface(mtypeFaceBold);
             holder.info_content.setText(informationPages.get(position).getInfo_content());
             holder.info_back_button.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_back_button()));
         }
@@ -93,6 +97,16 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
         return informationPages.size();
     }
 
+    public void setFontTypeForText() {
+        if (mcontext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mtypeFaceBold = Typeface.createFromAsset(mcontext.getAssets(),
+                    "fonts/Lato-Bold.ttf");
 
+        } else {
+            mtypeFaceBold = Typeface.createFromAsset(mcontext.getAssets(),
+                    "fonts/GE_SS_Unique_Bold.otf");
+
+        }
+    }
 }
 

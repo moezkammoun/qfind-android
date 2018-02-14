@@ -31,12 +31,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".BaseActivity" />
         <activity
-            android:name=".webviewactivity.Webview"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name=".webviewactivity.WebviewActivity"
             android:label="@string/title_activity_webview"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

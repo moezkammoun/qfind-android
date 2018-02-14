@@ -264,25 +264,59 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1",
+                            "ABOUT US");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2",
+                            "معلومات عنا");
+                }
+
             }
         });
         sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1",
+                            "HOW TO BECOME QFINDER ");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2",
+                            "كيف تكون كيوفايندر");
+                }
             }
         });
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFragment(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
+                //showFragment(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString());
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/1",
+                            "TERMS & CONDITIONS ");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/2",
+                            "الشروط والأحكام");
+                }
+
             }
         });
         sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1",
+                            "CONTACT US ");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2",
+                            "لتجدنا");
+                }
             }
         });
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
@@ -330,8 +364,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     "fonts/Lato-Regular.ttf");
         } else {
             mTypeFace = Typeface.createFromAsset(getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
+                    "fonts/GE_SS_Unique_Bold.otf");
             findByCategoryBtn.setTypeface(mTypeFace);
+            mTypeFace = Typeface.createFromAsset(getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
         }
         qFindOfTheDayText.setTypeface(mTypeFace);
         orText.setTypeface(mTypeFace);
@@ -339,39 +375,57 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     public void loadAdsToSlider(ArrayList<Page> adsImages) {
-        picassoLoader = new PicassoLoader();
-        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            configuration = new IndicatorConfiguration.Builder()
-                    .imageLoader(picassoLoader)
-                    .isStopWhileTouch(true)
-                    .onPageChangeListener(this)
-                    .scrollDurationFactor(6)
-                    .internal(3000)
-                    .isLoop(true)
-                    .isAutoScroll(true)
-                    .onPageClickListener(this)
-                    .direction(LEFT)
-                    .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
-                    .build();
-            animCircleIndicator.init(configuration);
-            animCircleIndicator.notifyDataChange(adsImages);
+        if (adsImages.size() > 1) {
+            picassoLoader = new PicassoLoader();
+            if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                configuration = new IndicatorConfiguration.Builder()
+                        .imageLoader(picassoLoader)
+                        .isStopWhileTouch(true)
+                        .onPageChangeListener(this)
+                        .scrollDurationFactor(6)
+                        .internal(3000)
+                        .isLoop(true)
+                        .isAutoScroll(true)
+                        .onPageClickListener(this)
+                        .direction(RIGHT)
+                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                        .build();
+                animCircleIndicator.init(configuration);
+                animCircleIndicator.notifyDataChange(adsImages);
+            } else {
+                configuration = new IndicatorConfiguration.Builder()
+                        .imageLoader(picassoLoader)
+                        .isStopWhileTouch(true)
+                        .onPageChangeListener(this)
+                        .internal(3000)
+                        .scrollDurationFactor(6)
+                        .isLoop(true)
+                        .isAutoScroll(true)
+                        .onPageClickListener(this)
+                        .direction(LEFT)
+                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                        .build();
+                animCircleIndicator.init(configuration);
+                animCircleIndicator.notifyDataChange(adsImages);
+            }
+            adsPlaceHolder.setVisibility(View.GONE);
         } else {
+            picassoLoader = new PicassoLoader();
             configuration = new IndicatorConfiguration.Builder()
                     .imageLoader(picassoLoader)
                     .isStopWhileTouch(true)
-                    .onPageChangeListener(this)
-                    .internal(3000)
+                    .onPageChangeListener(null)
                     .scrollDurationFactor(6)
-                    .isLoop(true)
-                    .isAutoScroll(true)
-                    .onPageClickListener(this)
+                    .internal(3000)
+                    .isLoop(false)
+                    .isAutoScroll(false)
+                    .onPageClickListener(null)
                     .direction(RIGHT)
                     .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
                     .build();
             animCircleIndicator.init(configuration);
             animCircleIndicator.notifyDataChange(adsImages);
         }
-        adsPlaceHolder.setVisibility(View.GONE);
     }
 
     @Override
@@ -397,6 +451,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (ads.size() < 1) {
+
+        }
 
     }
 

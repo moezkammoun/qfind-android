@@ -3,6 +3,7 @@ package qfind.com.qfindappandroid.informationFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
+import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
 
 public class InformationFragment extends Fragment {
@@ -186,10 +188,16 @@ public class InformationFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 if (informationData.get(position).getInfo_icon() == R.drawable.facebook_icon) {
-                    Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
                     String facebookUrl = getFacebookPageURL(getContext());
-                    facebookIntent.setData(Uri.parse(facebookUrl));
-                    startActivity(facebookIntent);
+                    if (facebookUrl.substring(0, 2).equalsIgnoreCase("fb")) {
+                        Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                        facebookIntent.setData(Uri.parse(facebookUrl));
+                        startActivity(facebookIntent);
+                    }else {
+                        callWebviewWithUrl("https://www.facebook.com/publictheband/",providerFacebook);
+                        //callWebviewWithUrl(facebookUrl);
+                    }
+
                 }
                 if (informationData.get(position).getInfo_icon() == R.drawable.phone_icon && providerMobile != null) {
 
@@ -200,12 +208,11 @@ public class InformationFragment extends Fragment {
                 }
                 if (informationData.get(position).getInfo_icon() == R.drawable.web_icon && providerWebsite != null) {
 
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(providerWebsite));
-                    startActivity(browserIntent);
+                  callWebviewWithUrl(providerWebsite,providerName);
 
                 }
                 if (informationData.get(position).getInfo_icon() == R.drawable.location_icon &&
-                        providerLatLong != null && providerLocation!=null) {
+                        providerLatLong != null && providerLocation != null) {
                     String geoUri = "http://maps.google.com/maps?q=loc:" + providerLatLong + " (" + providerLocation + ")";
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
                     startActivity(intent);
@@ -213,6 +220,19 @@ public class InformationFragment extends Fragment {
                 if (informationData.get(position).getInfo_icon() == R.drawable.mail_icon &&
                         providerMail != null) {
                     setUpEmail();
+                }
+
+                if (informationData.get(position).getInfo_icon() == R.drawable.twitter &&
+                        providerTwitter != null) {
+                    openTwitter(getContext());
+                }
+                if (informationData.get(position).getInfo_icon() == R.drawable.instagram &&
+                        providerInstagram != null) {
+                    openInstagram(getContext());
+                }
+                if (informationData.get(position).getInfo_icon() == R.drawable.google_plus &&
+                        providerGooglePlus != null) {
+                    openGooglePlus(getContext());
                 }
             }
         };
@@ -225,23 +245,114 @@ public class InformationFragment extends Fragment {
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
             if (versionCode >= 3002850) { //newer versions of fb app
-                return "fb://facewebmodal/f?href=https://www.facebook.com/" + providerFacebook+"/";
+                return "fb://facewebmodal/f?href=https://www.facebook.com/" + providerFacebook + "/";
             } else { //older versions of fb app
                 return "fb://page/" + providerFacebook;
             }
         } catch (PackageManager.NameNotFoundException e) {
-            return "https://www.facebook.com/"+providerFacebook+"/"; //normal web url
+            return "https://www.facebook.com/" + providerFacebook + "/"; //normal web url
         }
     }
 
 
-    public void setUpEmail(){
+    public void setUpEmail() {
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         emailIntent.setType("plain/text");
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{providerMail});
 //        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
 //        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
         startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    }
+
+    public void callWebviewWithUrl(String url,String tittle) {
+        Intent intent = new Intent(getContext(), WebviewActivity.class);
+        intent.putExtra("url", url);
+        intent.putExtra("Title", tittle);
+        startActivity(intent);
+    }
+
+    public void openTwitter(Context context){
+        PackageManager pkManager = context.getPackageManager();
+        try {
+            PackageInfo pkgInfo = pkManager.getPackageInfo("com.twitter.android", 0);
+            String getPkgInfo = pkgInfo.toString();
+
+            if (getPkgInfo.contains("com.twitter.android"))   {
+                // APP NOT INSTALLED
+//                Intent intent = new Intent(Intent.ACTION_VIEW,
+//                        Uri.parse("twitter://user?user_id= 24705126"));
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("twitter://user?screen_name="+"ShashiTharoor"));
+//
+                startActivity(intent);
+            }else {
+                callWebviewWithUrl("https://twitter.com/"+"ShashiTharoor",providerTwitter);
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+
+            // APP NOT INSTALLED
+            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+            callWebviewWithUrl("https://twitter.com/"+"ShashiTharoor",providerTwitter);
+
+
+        }
+    }
+
+    public void openInstagram(Context context){
+        PackageManager pkManager = context.getPackageManager();
+        try {
+            PackageInfo pkgInfo = pkManager.getPackageInfo("com.instagram.android", 0);
+            String getPkgInfo = pkgInfo.toString();
+
+            if (getPkgInfo.contains("com.instagram.android"))   {
+                // APP NOT INSTALLED
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://instagram.com/_u/"+"mikeescamilla"));
+//
+                startActivity(intent);
+            }else {
+                callWebviewWithUrl("http://instagram.com/"+"mikeescamilla",providerTwitter);
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+
+            // APP NOT INSTALLED
+            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+            callWebviewWithUrl("http://instagram.com/"+"mikeescamilla",providerTwitter);
+
+
+        }
+
+    }
+
+    public void openGooglePlus(Context context){
+        PackageManager pkManager = context.getPackageManager();
+        try {
+            PackageInfo pkgInfo = pkManager.getPackageInfo("com.google.android.apps.plus", 0);
+            String getPkgInfo = pkgInfo.toString();
+
+            if (getPkgInfo.contains("com.google.android.apps.plus"))   {
+                // APP NOT INSTALLED
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://developers.google.com/+/communities/116320632775523824083"));
+//
+                startActivity(intent);
+            }else {
+                callWebviewWithUrl("https://plus.google.com/communities/116320632775523824083",providerTwitter);
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+
+            // APP NOT INSTALLED
+            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+            callWebviewWithUrl("https://plus.google.com/communities/116320632775523824083",providerTwitter);
+
+
+        }
     }
 
 }

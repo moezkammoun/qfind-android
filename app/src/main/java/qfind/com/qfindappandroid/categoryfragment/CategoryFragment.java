@@ -2,13 +2,11 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.SharedPreferences;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,7 +33,6 @@ import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categorycontaineractivity.MainCategoryItemList;
-import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
@@ -52,6 +50,12 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     ImageView subCategoryBackButton;
     @BindView(R.id.category_fragment_tittle_text)
     TextView categoryFragmentTittleText;
+    @BindView(R.id.progressBarForPaging)
+    ProgressBar progressBarForPaging;
+    GridLayoutManager mLayoutManager;
+    boolean isScrolling = false;
+    int currentItem, totalItem, scrolledOutItem;
+
     private CategoryItemAdapter categoryItemAdapter;
     CategoryFragmentPresenterImpl categoryFragmentPresenterImpl;
     public Typeface mtypeFace;
@@ -72,6 +76,11 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     private PicassoLoader picassoLoaderForFragment;
     boolean isSubCategory = false;
     boolean isSecondPage = false;
+    boolean firstLoading;
+    int serviceProviderListId;
+    int offset = 1;
+    int firstVisibleInListview;
+    boolean noMoreData = false;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -104,10 +113,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         setupRecyclerViewClickListener();
         setFontTypeForText();
-        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(), this, recyclerViewClickListener);
+        categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(), this,
+                recyclerViewClickListener);
+        firstLoading = true;
+
         initialSetUp();
         if (subCategoryItemList != null || mainCategoryItemList != null || serviceProviderListDetails != null)
-            hideLoader(false);
+            hideLoader();
         setClickListenerForSubCategoryButton();
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
 
@@ -116,32 +128,50 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     @Override
     public void loadAds(ArrayList<Page> adsImages) {
-        picassoLoaderForFragment = new PicassoLoader();
-        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            configurationForFragment = new IndicatorConfiguration.Builder()
-                    .imageLoader(picassoLoaderForFragment)
-                    .isStopWhileTouch(true)
-                    .onPageChangeListener(this)
-                    .scrollDurationFactor(6)
-                    .internal(3000)
-                    .isLoop(true)
-                    .isAutoScroll(true)
-                    .onPageClickListener(this)
-                    .direction(LEFT)
-                    .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
-                    .build();
-            mAnimCircleIndicator.init(configurationForFragment);
-            mAnimCircleIndicator.notifyDataChange(adsImages);
+        if (adsImages.size() > 1) {
+            picassoLoaderForFragment = new PicassoLoader();
+            if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                configurationForFragment = new IndicatorConfiguration.Builder()
+                        .imageLoader(picassoLoaderForFragment)
+                        .isStopWhileTouch(true)
+                        .onPageChangeListener(this)
+                        .scrollDurationFactor(6)
+                        .internal(3000)
+                        .isLoop(true)
+                        .isAutoScroll(true)
+                        .onPageClickListener(this)
+                        .direction(RIGHT)
+                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                        .build();
+                mAnimCircleIndicator.init(configurationForFragment);
+                mAnimCircleIndicator.notifyDataChange(adsImages);
+            } else {
+                configurationForFragment = new IndicatorConfiguration.Builder()
+                        .imageLoader(picassoLoaderForFragment)
+                        .isStopWhileTouch(true)
+                        .onPageChangeListener(this)
+                        .internal(3000)
+                        .scrollDurationFactor(6)
+                        .isLoop(true)
+                        .isAutoScroll(true)
+                        .onPageClickListener(this)
+                        .direction(LEFT)
+                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                        .build();
+                mAnimCircleIndicator.init(configurationForFragment);
+                mAnimCircleIndicator.notifyDataChange(adsImages);
+            }
         } else {
+            picassoLoaderForFragment = new PicassoLoader();
             configurationForFragment = new IndicatorConfiguration.Builder()
                     .imageLoader(picassoLoaderForFragment)
                     .isStopWhileTouch(true)
-                    .onPageChangeListener(this)
-                    .internal(3000)
+                    .onPageChangeListener(null)
                     .scrollDurationFactor(6)
-                    .isLoop(true)
-                    .isAutoScroll(true)
-                    .onPageClickListener(this)
+                    .internal(3000)
+                    .isLoop(false)
+                    .isAutoScroll(false)
+                    .onPageClickListener(null)
                     .direction(RIGHT)
                     .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
                     .build();
@@ -155,7 +185,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void setCategoryItemRecyclerView(CategoryItemAdapter categoryItemAdapter) {
         this.categoryItemAdapter = categoryItemAdapter;
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(categoryItemAdapter);
@@ -203,7 +233,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     "fonts/Lato-Bold.ttf");
         } else {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
+                    "fonts/GE_SS_Unique_Bold.otf");
         }
 
         categoryFragmentTittleText.setTypeface(mtypeFace);
@@ -213,7 +243,11 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 if (Util.categoryPageStatus == 1) {
+                    noMoreData = false;
+                    offset = 1;
+                    serviceProviderListDetails = null;
                     isSubCategory = mainCategoryItemList.get(position).getSubCategoryStatus();
                     subCategoryNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
                     if (isSubCategory) {
@@ -221,16 +255,23 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 subCategoryNameForFragmentTittle);
                     } else {
                         isSubCategory = false;
-                        getServiceProviderList(mainCategoryItemList.get(position).getCategoryId(), subCategoryNameForFragmentTittle);
+                        serviceProviderListId = mainCategoryItemList.get(position).getCategoryId();
+                        serviceProviderListDetails = null;
+                        getServiceProviderList(mainCategoryItemList.get(position).getCategoryId(),
+                                subCategoryNameForFragmentTittle, offset);
                     }
 
                 } else if (Util.categoryPageStatus == 2) {
+                    offset = 1;
+                    noMoreData = false;
+                    serviceProviderListDetails = null;
                     if (isSubCategory)
                         serviceProviderNameForFragmentTittle = subCategoryItemList.get(position).getSubCategoryName();
                     else
                         serviceProviderNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
-
-                    getServiceProviderList(subCategoryItemList.get(position).getSubCategoryId(), serviceProviderNameForFragmentTittle);
+                    serviceProviderListId = subCategoryItemList.get(position).getSubCategoryId();
+                    getServiceProviderList(subCategoryItemList.get(position).getSubCategoryId(),
+                            serviceProviderNameForFragmentTittle, offset);
 
                 } else if (Util.categoryPageStatus == 3) {
                     if (isSubCategory) {
@@ -292,7 +333,10 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             }
             categoryFragmentTittleText.setText(R.string.categories_text);
             categoryFragmentPresenterImpl.getImagesForAds();
-            categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
+            if (mainCategoryItemList == null) {
+                ((ContainerActivity) getActivity()).getMainCategoryItemsList();
+            } else
+                categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
 
         } else if (Util.categoryPageStatus == 2) {
             if (subCategoryBackButton.getVisibility() == View.GONE) {
@@ -301,11 +345,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             if (isSubCategory) {
                 categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
                 categoryFragmentPresenterImpl.getImagesForAds();
-                categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
+                if (subCategoryItemList == null) {
+                    showNoDataText();
+                } else
+                    categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
             } else {
                 categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
                 categoryFragmentPresenterImpl.getImagesForAds();
-                categoryFragmentPresenterImpl.getServieProvidersList(serviceProviderListDetails);
+                if (serviceProviderListDetails == null) {
+                    showNoDataText();
+                } else
+                    categoryFragmentPresenterImpl.getServieProvidersList(serviceProviderListDetails);
 
             }
         } else if (Util.categoryPageStatus == 3) {
@@ -320,7 +370,10 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             }
 
             categoryFragmentPresenterImpl.getImagesForAds();
-            categoryFragmentPresenterImpl.getServieProvidersList(serviceProviderListDetails);
+            if (serviceProviderListDetails == null) {
+                showNoDataText();
+            } else
+                categoryFragmentPresenterImpl.getServieProvidersList(serviceProviderListDetails);
         }
 
 
@@ -336,25 +389,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     }
 
     public void setSubCategoryBackButtonClickAction() {
-        if (Util.categoryPageStatus == 3) {
-            Util.categoryPageStatus = 2;
+        if (emptyTextView.getVisibility() == View.VISIBLE) {
+            emptyTextView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
-        if (Util.categoryPageStatus == 2) {
+        if (Util.categoryPageStatus == 3) {
             if (isSubCategory) {
-                if (isSecondPage) {
-                    categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
-                    categoryFragmentTittleText.setText(R.string.categories_text);
-                    subCategoryBackButton.setVisibility(View.GONE);
-                    Util.categoryPageStatus = 1;
-                    isSecondPage = false;
-                } else {
-                    categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
-                    categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
-                    subCategoryBackButton.setVisibility(View.VISIBLE);
-                    Util.categoryPageStatus = 2;
-                    isSubCategory = false;
-                }
-
+                categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
+                categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
+                subCategoryBackButton.setVisibility(View.VISIBLE);
+                Util.categoryPageStatus = 2;
+                //isSubCategory = false;
             } else {
                 categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
                 categoryFragmentTittleText.setText(R.string.categories_text);
@@ -362,9 +407,15 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 Util.categoryPageStatus = 1;
                 isSecondPage = false;
             }
+        } else if (Util.categoryPageStatus == 2) {
+            categoryFragmentPresenterImpl.getCategoryItemsDetails(mainCategoryItemList);
+            categoryFragmentTittleText.setText(R.string.categories_text);
+            subCategoryBackButton.setVisibility(View.GONE);
+            Util.categoryPageStatus = 1;
+            isSecondPage = false;
 
         }
-        hideLoader(false);
+        hideLoader();
 
     }
 
@@ -396,8 +447,19 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 categoryFragmentTittleText.setText(subCategoryName);
                                 subCategoryBackButton.setVisibility(View.VISIBLE);
 
+                            } else if (subCategory.getCode().equals("404")) {
+                                Util.categoryPageStatus = 2;
+                                isSecondPage = true;
+                                isSubCategory = false;
+                                subCategoryItemList = null;
+                                //setCategoryStatus();
+                                progressBar.setVisibility(View.GONE);
+                                showNoDataText();
+
                             } else {
                                 isSubCategory = false;
+                                isSecondPage = false;
+                                subCategoryItemList = null;
                                 Util.showToast(getResources().getString(R.string.something_went_wrong), getContext());
                                 //emptyTextView.setVisibility(View.VISIBLE);
                             }
@@ -405,6 +467,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
                     } else {
                         isSubCategory = false;
+                        isSecondPage = false;
+                        subCategoryItemList = null;
                         Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
                         //emptyTextView.setVisibility(View.VISIBLE);
 
@@ -416,6 +480,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 public void onFailure(Call<SubCategory> call, Throwable t) {
                     Util.showToast(getResources().getString(R.string.check_network), getContext());
                     isSubCategory = false;
+                    isSecondPage = false;
+                    subCategoryItemList = null;
                     progressBar.setVisibility(View.GONE);
                     //emptyTextView.setVisibility(View.VISIBLE);
 
@@ -425,17 +491,15 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         }
     }
 
-    public void hideLoader(boolean emptyTextStatus) {
+    public void hideLoader() {
         progressBar.setVisibility(View.GONE);
-        if (emptyTextStatus) {
-            emptyTextView.setVisibility(View.VISIBLE);
-        } else {
-            emptyTextView.setVisibility(View.GONE);
-        }
+
     }
 
-    public void getServiceProviderList(int categoryId, final String subCategoryName) {
-        progressBar.setVisibility(View.VISIBLE);
+    public void getServiceProviderList(int categoryId, final String subCategoryName, int pageNumber) {
+        offset = pageNumber;
+        if (offset == 1)
+            progressBar.setVisibility(View.VISIBLE);
         int mainCategoryId = categoryId;
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
@@ -443,7 +507,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     ApiClient.getClient().create(ApiInterface.class);
             Call<ServiceProviderList> call = apiService.
                     getListOfServiceProvider(accessToken, qFindPreferences.getInt("AppLanguage", 1),
-                            mainCategoryId, 10, "dsdf");
+                            mainCategoryId, 10, offset);
             call.enqueue(new Callback<ServiceProviderList>() {
                 @Override
                 public void onResponse(Call<ServiceProviderList> call, Response<ServiceProviderList> response) {
@@ -451,46 +515,114 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                         if (response.body() != null) {
                             ServiceProviderList serviceProviderList = response.body();
                             if (serviceProviderList.getCode().equals("200")) {
-                                serviceProviderListDetails = serviceProviderList.getServiceProviderListDetails();
+                                if (serviceProviderListDetails == null) {
+                                    serviceProviderListDetails = serviceProviderList.getServiceProviderListDetails();
+                                } else
+                                    serviceProviderListDetails.addAll(serviceProviderListDetails.size(),
+                                            serviceProviderList.getServiceProviderListDetails());
+
                                 categoryFragmentPresenterImpl.getServieProvidersList(serviceProviderListDetails);
+                                if (firstLoading) {
+                                    setupRecyclerViewScrollListener();
+                                    firstLoading = false;
+                                }
                                 Util.categoryPageStatus = 3;
+                                offset++;
                                 isSecondPage = false;
                                 categoryFragmentTittleText.setText(subCategoryName);
                                 subCategoryBackButton.setVisibility(View.VISIBLE);
+                                progressBarForPaging.setVisibility(View.GONE);
+
+                            } else if (serviceProviderList.getCode().equals("404")) {
+                                Util.categoryPageStatus = 3;
+                                if (offset == 1) {
+                                    serviceProviderListDetails = null;
+                                    showNoDataText();
+                                } else {
+                                    noMoreData = true;
+                                }
+                                progressBar.setVisibility(View.GONE);
+                                progressBarForPaging.setVisibility(View.GONE);
+
 
                             } else {
                                 Util.showToast(getResources().getString(R.string.something_went_wrong), getContext());
-                                //emptyTextView.setVisibility(View.VISIBLE);
-                                if (isSubCategory)
-                                    Util.categoryPageStatus = 2;
-                                else
-                                    Util.categoryPageStatus = 1;
+                                progressBar.setVisibility(View.GONE);
+                                progressBarForPaging.setVisibility(View.GONE);
+                                setCategoryStatus();
                             }
 
                         }
                     } else {
                         Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
                         //emptyTextView.setVisibility(View.VISIBLE);
-                        if (isSubCategory)
-                            Util.categoryPageStatus = 2;
-                        else
-                            Util.categoryPageStatus = 1;
+                        setCategoryStatus();
                     }
                     progressBar.setVisibility(View.GONE);
+                    progressBarForPaging.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(Call<ServiceProviderList> call, Throwable t) {
                     Util.showToast(getResources().getString(R.string.check_network), getContext());
                     progressBar.setVisibility(View.GONE);
-                    if (isSubCategory)
-                        Util.categoryPageStatus = 2;
-                    else
-                        Util.categoryPageStatus = 1;
+                    progressBarForPaging.setVisibility(View.GONE);
+                    setCategoryStatus();
                 }
             });
         }
     }
 
+    public void setCategoryStatus() {
+        if (isSubCategory)
+            Util.categoryPageStatus = 2;
+        else
+            Util.categoryPageStatus = 1;
+    }
 
+    public void showNoDataText() {
+        recyclerView.setVisibility(View.GONE);
+        emptyTextView.setVisibility(View.VISIBLE);
+    }
+
+    public void showRecyclerView() {
+        recyclerView.setVisibility(View.VISIBLE);
+        emptyTextView.setVisibility(View.GONE);
+    }
+
+    public void setupRecyclerViewScrollListener() {
+        firstVisibleInListview = mLayoutManager.findFirstVisibleItemPosition();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (Util.categoryPageStatus == 3) {
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                        isScrolling = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (recyclerView.canScrollVertically(0)) {
+                    if (Util.categoryPageStatus == 3) {
+                        currentItem = mLayoutManager.getChildCount();
+                        totalItem = mLayoutManager.getItemCount();
+                        scrolledOutItem = mLayoutManager.findFirstVisibleItemPosition();
+                        if (isScrolling && (currentItem + scrolledOutItem) == totalItem) {
+                            if (!noMoreData) {
+                                isScrolling = false;
+                                progressBarForPaging.setVisibility(View.VISIBLE);
+                                getServiceProviderList(serviceProviderListId, subCategoryNameForFragmentTittle, offset);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+    }
 }

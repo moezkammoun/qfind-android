@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <name android:drawable="@color/bottom_bar_after_click" android:state_checked="true"/>
-    <name android:drawable="@color/categoryPageBgColor"/>
+    <item android:state_checked="true" android:drawable="@color/bottom_bar_after_click" />
+    <item android:drawable="@color/color_white"/>
 </selector>
