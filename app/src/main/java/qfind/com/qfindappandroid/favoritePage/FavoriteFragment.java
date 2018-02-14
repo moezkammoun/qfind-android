@@ -20,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
@@ -58,10 +59,16 @@ public class FavoriteFragment extends Fragment {
         Log.d("Reading: ", "Reading all item..");
         List<FavoriteModel> fav = db.getAllFavorites();
         for (FavoriteModel cn : fav) {
-            String log = "Id: " + cn.getId() + " ,item: " + cn.getItem() + " ,des: " + cn.getItemDescription();
+            String log = "Id: " + cn.getId() + " ,item: " + cn.getItem() + " ,des: " + cn.getItemDescription()
+                    + " ,pid: " + cn.getPageId();
             // Writing Contacts to log
             Log.d("item: ", log);
-            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl());
+            item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl(), cn.getPageId(),
+                    cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
+                    cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
+                    cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
+                    cn.getProviderLatlong()
+            );
             favoriteModelList.add(item);
         }
         setFontTypeForText();
@@ -71,8 +78,6 @@ public class FavoriteFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
-
         favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
         favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         favoriteView.setAdapter(adapter);

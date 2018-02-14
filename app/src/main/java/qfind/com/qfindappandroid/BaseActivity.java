@@ -155,7 +155,29 @@ public class BaseActivity extends AppCompatActivity {
                 favoriteModel.setItem(bundle.getString("providerName"));
                 favoriteModel.setItemDescription(bundle.getString("providerLocation"));
                 favoriteModel.setUrl(bundle.getString("providerLogo"));
-                db.addFavorite(favoriteModel);
+                favoriteModel.setPageId(bundle.getInt("providerId"));
+                favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
+                favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
+                favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
+                favoriteModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
+                favoriteModel.setProviderMail(bundle.getString("providerMail"));
+                favoriteModel.setProviderFacebook(bundle.getString("providerFacebook"));
+                favoriteModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
+                favoriteModel.setProviderInstagram(bundle.getString("providerInstagram"));
+                favoriteModel.setProviderTwitter(bundle.getString("providerTwitter"));
+                favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
+                favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
+                favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
+
+                if (db.checkFavoriteById(bundle.getInt("providerId"))) {
+//                    db.updateFavorite(favoriteModel, bundle.getInt("providerId"));
+                    db.deleteFavorite(bundle.getInt("providerId"));
+                    Util.showToast("Removed from Favorites",getApplicationContext());
+                } else {
+                    db.addFavorite(favoriteModel);
+                    Util.showToast("Add to Favorites",getApplicationContext());
+                }
+
             }
         });
 
@@ -400,7 +422,9 @@ public class BaseActivity extends AppCompatActivity {
                                               String providerMail, String providerFacebook,
                                               String providerLinkedin, String providerInstagram,
                                               String providerTwitter, String providerSnapchat,
-                                              String providerGooglePlus, String providerLatLong, String providerLogo) {
+                                              String providerGooglePlus, String providerLatLong, String providerLogo,
+                                              int providerId) {
+
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
         bundle.putString("providerMobile", providerMobile);
@@ -416,6 +440,8 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerGooglePlus", providerGooglePlus);
         bundle.putString("providerLatLong", providerLatLong);
         bundle.putString("providerLogo", providerLogo);
+        bundle.putInt("providerId", providerId);
+
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         informationFragment.setArguments(bundle);
