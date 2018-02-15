@@ -256,6 +256,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     } else {
                         isSubCategory = false;
                         serviceProviderListId = mainCategoryItemList.get(position).getCategoryId();
+                        serviceProviderNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
                         serviceProviderListDetails = null;
                         getServiceProviderList(mainCategoryItemList.get(position).getCategoryId(),
                                 subCategoryNameForFragmentTittle, offset);
@@ -267,15 +268,12 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     serviceProviderListDetails = null;
                     if (isSubCategory)
                         serviceProviderNameForFragmentTittle = subCategoryItemList.get(position).getSubCategoryName();
-                    else
-                        serviceProviderNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
                     serviceProviderListId = subCategoryItemList.get(position).getSubCategoryId();
                     getServiceProviderList(subCategoryItemList.get(position).getSubCategoryId(),
                             serviceProviderNameForFragmentTittle, offset);
 
                 } else if (Util.categoryPageStatus == 3) {
                     if (isSubCategory) {
-                        serviceProviderNameForFragmentTittle = subCategoryItemList.get(position).getSubCategoryName();
                         ((BaseActivity) getActivity()).showServiceProviderDetailPage(
                                 serviceProviderListDetails.get(position).getServiceProviderName(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocation(),
@@ -298,7 +296,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                         get(position).getServiceProviderLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocation());
                     } else {
-                        serviceProviderNameForFragmentTittle = mainCategoryItemList.get(position).getCategoryName();
                         ((BaseActivity) getActivity()).showServiceProviderDetailPage(
                                 serviceProviderListDetails.get(position).getServiceProviderName(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocation(),
