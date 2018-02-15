@@ -18,6 +18,7 @@ import java.util.List;
 import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.Util;
 
 /**
  * Created by MoongedePC on 23-Jan-18.
@@ -74,8 +75,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             favoriteStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println("position " + getAdapterPosition());
                     delete(getAdapterPosition(), positions.get(getAdapterPosition()));
+                    Util.showToast("Selected item removed",mContext);
                 }
             });
 

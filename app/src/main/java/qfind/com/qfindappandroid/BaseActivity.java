@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
-    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton;
+    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton,infoStarRedButton;
     ImageView searchButton;
     protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
@@ -113,7 +113,6 @@ public class BaseActivity extends AppCompatActivity {
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
         infoStarButton = (ImageView) findViewById(R.id.fav_star_icon);
-
         setupSideMenuItemClickListener();
         setFontTypeForText();
 
@@ -165,11 +164,12 @@ public class BaseActivity extends AppCompatActivity {
                 favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
                 if (db.checkFavoriteById(bundle.getInt("providerId"))) {
-//                    db.updateFavorite(favoriteModel, bundle.getInt("providerId"));
                     db.deleteFavorite(bundle.getInt("providerId"));
+                    infoStarButton.setImageResource(R.drawable.star_icon);
                     Util.showToast("Removed from Favorites",getApplicationContext());
                 } else {
                     db.addFavorite(favoriteModel);
+                    infoStarButton.setImageResource(R.drawable.favorite_red);
                     Util.showToast("Add to Favorites",getApplicationContext());
                 }
 
