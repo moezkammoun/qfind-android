@@ -240,8 +240,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public boolean checkHistoryById(int id) {
-        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id;
+    public boolean checkHistoryById(int id, String today) {
+        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id +
+                " and "+ KEY_DAY + " = " + today;
 
         writeDB = this.getWritableDatabase();
         Cursor cursor = writeDB.rawQuery(selectQuery, null);

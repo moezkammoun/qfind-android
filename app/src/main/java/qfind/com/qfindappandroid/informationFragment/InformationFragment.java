@@ -95,7 +95,7 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
 
-        if(db.checkHistoryById(bundle.getInt("providerId"))){
+        if(db.checkHistoryById(bundle.getInt("providerId"),sdf.format(new Date()))){
             db.updateHistory(dataModel,bundle.getInt("providerId"));
         }else{
             db.addHistory(dataModel);

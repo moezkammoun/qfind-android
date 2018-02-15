@@ -42,7 +42,7 @@ public class HistoryFragment extends Fragment {
     ImageView backButton;
     List<HistoryItem> list = new ArrayList<HistoryItem>();
     ArrayList<Integer> positions = new ArrayList<Integer>();
-    ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
+    ArrayList<HistoryPageDataModel> singleItem ;
 
 
     public HistoryFragment() {
@@ -91,6 +91,7 @@ public class HistoryFragment extends Fragment {
         for (int i = 0; i < countList.size(); i++) {
             HistoryPageMainModel mainModel = new HistoryPageMainModel();
 //            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
+            singleItem= new ArrayList<HistoryPageDataModel>();
             try {
                 Calendar calendar;
                 calendar = Calendar.getInstance();
