@@ -45,5 +45,6 @@
     <dimen name="toolbar_find_today_hint">11sp</dimen>
     <dimen name="info_title_text_size">38sp</dimen>
     <dimen name="q_find_of_the_day_text_size">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
 

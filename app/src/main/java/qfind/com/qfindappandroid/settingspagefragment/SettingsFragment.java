@@ -65,7 +65,7 @@ public class SettingsFragment extends Fragment {
         ButterKnife.bind(this, view);
         setButtonClickListener();
         setFontTypeForText();
-        ((ContainerActivity)getActivity()).setupBottomNavigationBar();
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
     }
 
     public void setLocale(String lang) {
@@ -81,20 +81,16 @@ public class SettingsFragment extends Fragment {
         res.updateConfiguration(conf, dm);
         if (lang.equalsIgnoreCase("en")) {
             language = 1;
-        }else if(lang.equalsIgnoreCase("ar")){
+        } else if (lang.equalsIgnoreCase("ar")) {
             language = 2;
         }
-            SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor editor = qfindPreferences.edit();
-            editor.putInt("AppLanguage", language);
-            editor.commit();
-            //Intent refresh = new Intent(MainActivity.this, MainActivity.class);
-            //this.overridePendingTransition(0,0);
-            //this.finish();
-            //startActivity(refresh);
-            refreshActivityFromFragment();
-            //refreshFragment();
-        }
+        SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = qfindPreferences.edit();
+        editor.putInt("AppLanguage", language);
+        editor.commit();
+        refreshActivityFromFragment();
+
+    }
 
     public void refreshActivityFromFragment() {
         Intent intent = getActivity().getIntent();
@@ -174,22 +170,25 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setFontTypeForText() {
-        mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/GE_SS_Unique_Light.otf");
-        arabicButton.setTypeface(mtypeFace);
+
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Bold.ttf");
             settingsText.setTypeface(mtypeFace);
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Light.ttf");
+            englishButton.setTypeface(mtypeFace);
         } else {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
+            arabicButton.setTypeface(mtypeFace);
+            mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/GE_SS_Unique_Bold.otf");
+            settingsText.setTypeface(mtypeFace);
         }
 
         selectLanguageText.setTypeface(mtypeFace);
-        englishButton.setTypeface(mtypeFace);
+
 
     }
 

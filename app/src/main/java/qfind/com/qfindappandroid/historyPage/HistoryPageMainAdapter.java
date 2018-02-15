@@ -66,7 +66,7 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
                     "fonts/Lato-Bold.ttf");
         }else {
             mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
+                    "fonts/GE_SS_Unique_Bold.otf");
         }
     }
 

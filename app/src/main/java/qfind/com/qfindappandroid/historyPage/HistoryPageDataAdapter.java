@@ -1,6 +1,7 @@
 package qfind.com.qfindappandroid.historyPage;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,7 +27,9 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
 
     private ArrayList<HistoryPageDataModel> itemsList;
     private Context mContext;
+    Typeface mtypeFaceLight;
     HistoryPageDataModel historyPageDataModel;
+
 
     public HistoryPageDataAdapter(ArrayList<HistoryPageDataModel> itemsList, Context mContext) {
         this.itemsList = itemsList;
@@ -69,17 +72,21 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         holder.title.setText(historyPageDataModel.getPageName());
         Picasso.with(mContext).load(historyPageDataModel.getUrl()).resize(50,50).centerInside().into(holder.url);
         holder.description.setText(historyPageDataModel.getDescription());
-//        holder.historyLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
 
     }
 
     @Override
     public int getItemCount() {
         return itemsList.size();
+    }
+
+    public void setFontTypeForText() {
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            mtypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/Lato-Light.ttf");
+        } else {
+            mtypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
     }
 }
