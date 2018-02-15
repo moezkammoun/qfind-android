@@ -31,11 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/color_white"
             app:itemBackground="@color/bottom_nav_style_bg"
             app:menu="@menu/navigation">
 
         </android.support.design.widget.BottomNavigationView>
+
+
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

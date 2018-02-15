@@ -139,32 +139,29 @@ public class HistoryFragment extends Fragment {
             list = db.getAllHistory(countList.get(i).getDay());
             System.out.println(list);
             for (int j = 0; j < list.size(); j++) {
-                singleItem.add(new HistoryPageDataModel(
-                                list.get(j).getTitke(),
-                                list.get(j).getImage(),
-                                list.get(j).getDescription(),
-                                list.get(j).getProviderPhone(),
-                                list.get(j).getProviderAddress(),
-                                list.get(j).getProviderWebsite(),
-                                list.get(j).getProviderOpeningTime(),
-                                list.get(j).getProviderMail(),
-                                list.get(j).getProviderFacebook(),
-                                list.get(j).getProviderLinkedIn(),
-                                list.get(j).getProviderInstagram(),
-                                list.get(j).getProviderTwitter(),
-                                list.get(j).getProviderSnapchat(),
-                                list.get(j).getProviderGooglePlus(),
-                                list.get(j).getProviderLatlong(),
-                                list.get(j).getId()
-                        )
-                );
+                HistoryPageDataModel model = new HistoryPageDataModel();
+                model.setPageName(list.get(j).getTitke());
+                model.setUrl(list.get(j).getImage());
+                model.setDescription(list.get(j).getDescription());
+                model.setProviderPhone(list.get(j).getProviderPhone());
+                model.setProviderAddress(list.get(j).getProviderAddress());
+                model.setProviderWebsite(list.get(j).getProviderWebsite());
+                model.setProviderOpeningTime(list.get(j).getProviderOpeningTime());
+                model.setProviderMail(list.get(j).getProviderMail());
+                model.setProviderFacebook(list.get(j).getProviderFacebook());
+                model.setProviderLinkedIn(list.get(j).getProviderLinkedIn());
+                model.setProviderInstagram(list.get(j).getProviderInstagram());
+                model.setProviderTwitter(list.get(j).getProviderTwitter());
+                model.setProviderSnapchat(list.get(j).getProviderSnapchat());
+                model.setProviderGooglePlus(list.get(j).getProviderGooglePlus());
+                model.setProviderLatlong(list.get(j).getProviderLatlong());
+                model.setPageId(list.get(j).getPageId());
+                singleItem.add(model);
             }
             mainModel.setHistoryPageDataModels(singleItem);
             arrayListMain.add(mainModel);
         }
         setAdapter(arrayListMain);
-
-
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,12 +173,36 @@ public class HistoryFragment extends Fragment {
     }
 
 
-    public void setAdapter(ArrayList<HistoryPageMainModel> arrayListMain) {
+    public void setAdapter(final ArrayList<HistoryPageMainModel> arrayListMain) {
 
         recyclerView.setHasFixedSize(true);
         HistoryPageMainAdapter adapter = new HistoryPageMainAdapter(arrayListMain, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), recyclerView, new HistoryClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                arrayListMain.get(position).getHistoryPageDataModels().get(position).getPageId();
+
+                ((BaseActivity) getActivity()).showServiceProviderDetailPage(
+                        singleItem.get(position).getPageName(),
+                        singleItem.get(position).getDescription(),
+                        singleItem.get(position).getProviderPhone(),
+                        singleItem.get(position).getProviderAddress(),
+                        singleItem.get(position).getProviderWebsite(),
+                        singleItem.get(position).getProviderOpeningTime(),
+                        singleItem.get(position).getProviderMail(),
+                        singleItem.get(position).getProviderFacebook(),
+                        singleItem.get(position).getProviderLinkedIn(),
+                        singleItem.get(position).getProviderInstagram(),
+                        singleItem.get(position).getProviderTwitter(),
+                        singleItem.get(position).getProviderSnapchat(),
+                        singleItem.get(position).getProviderGooglePlus(),
+                        singleItem.get(position).getProviderLatlong(),
+                        singleItem.get(position).getUrl(),
+                        singleItem.get(position).getPageId());
+            }
+        }));
     }
 
     public void setFontTypeForText() {
@@ -190,7 +211,7 @@ public class HistoryFragment extends Fragment {
                     "fonts/Lato-Bold.ttf");
         } else {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
+                    "fonts/GE_SS_Unique_Bold.otf");
         }
 
         history.setTypeface(mtypeFace);

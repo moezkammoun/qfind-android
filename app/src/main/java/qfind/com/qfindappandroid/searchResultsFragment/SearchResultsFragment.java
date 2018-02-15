@@ -76,7 +76,6 @@ public class SearchResultsFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         resultsAdapter = new ResultsAdapter(getContext(), searchedItemList);
-
         mRecyclerView.setAdapter(resultsAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new SearchResultsClickListener() {
             @Override
@@ -118,7 +117,7 @@ public class SearchResultsFragment extends Fragment {
                     "fonts/Lato-Bold.ttf");
         } else {
             mTypeFace = Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
+                    "fonts/GE_SS_Unique_Bold.otf");
         }
 
         pageTitle.setTypeface(mTypeFace);

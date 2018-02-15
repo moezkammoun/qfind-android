@@ -46,7 +46,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30.52">
+        android:layout_weight="30.52"
+        android:background="@color/color_white">
 
         <cn.lightsky.infiniteindicator.InfiniteIndicator
             android:id="@+id/indicator_default_circle"
@@ -60,10 +61,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="57.9"
-        android:padding="@dimen/padding_10">
+        android:padding="@dimen/padding_10"
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/category_layout">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/category_item_recycler_view"
                 android:layout_width="match_parent"
@@ -72,7 +75,17 @@
                 android:fadeScrollbars="false"
                 android:scrollbarSize="@dimen/padding_10"
                 android:scrollbarStyle="outsideInset"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:visibility="visible"/>
+            <ProgressBar
+                android:id="@+id/progressBarForPaging"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="40dp"
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressBarLoading"
@@ -89,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/layout_marginTop"
                 android:layout_centerInParent="true"
-                android:text="@string/no_data_text"
+                android:text="@string/no_result_text"
                 android:visibility="gone" />
 
         </RelativeLayout>

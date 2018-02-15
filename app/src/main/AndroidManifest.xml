@@ -5,11 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".MyApp"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -29,12 +30,12 @@
             android:label="@string/title_activity_contain"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-        <activity android:name=".BaseActivity">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".BaseActivity" />
+        <activity
+            android:name=".webviewactivity.WebviewActivity"
+            android:label="@string/title_activity_webview"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

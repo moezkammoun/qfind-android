@@ -41,12 +41,18 @@ public class ServiceProviderListDetails {
     private String serviceProviderGoogleplus;
     @SerializedName("service_provider_logo")
     private String serviceProviderLogo;
+    @SerializedName("message")
+    private String message;
 
 
     public String getServiceProviderName() {
         return serviceProviderName;
     }
-public String getServiceProviderLogo(){return serviceProviderLogo;}
+
+    public String getServiceProviderLogo() {
+        return serviceProviderLogo;
+    }
+
     public String getServiceProviderAddress() {
         return serviceProviderAddress;
     }
@@ -54,6 +60,8 @@ public String getServiceProviderLogo(){return serviceProviderLogo;}
     public String getServiceProviderLocation() {
         return serviceProviderLocation;
     }
+
+    public String getMessage(){return message;}
 
     public String getServiceProviderCategory() {
         return serviceProviderCategory;
@@ -114,7 +122,9 @@ public String getServiceProviderLogo(){return serviceProviderLogo;}
                                       String serviceProviderMapLocation, String serviceProviderOpeningTime,
                                       String serviceProviderFacebook, String serviceProviderLinkedin,
                                       String serviceProviderInstagram, String serviceProviderTwitter,
-                                      String serviceProviderSnapchat, String serviceProviderGoogleplus, String serviceProviderLogo) {
+                                      String serviceProviderSnapchat, String serviceProviderGoogleplus,
+                                      String serviceProviderLogo,String message) {
+        this.message =message;
         this.serviceProviderName = serviceProviderName;
         this.serviceProviderAddress = serviceProviderAddress;
         this.serviceProviderLocation = serviceProviderLocation;

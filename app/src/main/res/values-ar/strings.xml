@@ -33,10 +33,13 @@
     <string name="english">English</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="already_english">you are already in english</string>
+    <string name="already_english">you have already selected Arabic</string>
     <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
     <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
    </string>
     <string name="no_data_text">No data</string>
     <string name="no_result_text">No results found</string>
+    <string name="title_activity_webview">Webview</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

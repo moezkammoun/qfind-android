@@ -18,7 +18,6 @@ public class CategoryFragmentPresenterImpl {
 
     CategoryItemAdapter categoryItemAdapter;
     CategoryFragmentView categoryFragmentView;
-    CategoryFragmentModel categoryFragmentModel;
     ArrayList<Page> adsImagesList;
     RecyclerViewClickListener recyclerViewClickListener;
     ArrayList<MainCategoryItemList> mainCategoryItemList;
@@ -28,7 +27,8 @@ public class CategoryFragmentPresenterImpl {
     SharedPreferences qFindPreferences;
     ArrayList<Page> ads;
 
-    public CategoryFragmentPresenterImpl(Context context, CategoryFragmentView categoryFragmentView, RecyclerViewClickListener recyclerViewClickListener) {
+    public CategoryFragmentPresenterImpl(Context context, CategoryFragmentView categoryFragmentView,
+                                         RecyclerViewClickListener recyclerViewClickListener) {
         this.categoryFragmentView = categoryFragmentView;
         this.recyclerViewClickListener = recyclerViewClickListener;
         this.context = context;
