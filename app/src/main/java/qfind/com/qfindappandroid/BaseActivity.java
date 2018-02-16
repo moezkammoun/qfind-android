@@ -55,7 +55,7 @@ public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
-    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton,infoStarRedButton;
+    ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton;
     ImageView searchButton;
     protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
@@ -170,12 +170,12 @@ public class BaseActivity extends AppCompatActivity {
 
                 if (db.checkFavoriteById(bundle.getInt("providerId"))) {
                     db.deleteFavorite(bundle.getInt("providerId"));
-                    infoStarButton.setImageResource(R.drawable.star_icon);
+                    infoStarButton.setImageResource(R.drawable.favorite_blank_star);
                     Util.showToast("Removed from Favorites",getApplicationContext());
                 } else {
                     db.addFavorite(favoriteModel);
-                    infoStarButton.setImageResource(R.drawable.favorite_red);
-                    Util.showToast("Add to Favorites",getApplicationContext());
+                    infoStarButton.setImageResource(R.drawable.star_icon);
+                    Util.showToast("Added to Favorites",getApplicationContext());
                 }
 
             }
