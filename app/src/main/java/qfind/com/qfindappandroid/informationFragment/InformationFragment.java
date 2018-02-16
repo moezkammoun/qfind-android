@@ -2,13 +2,11 @@ package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,23 +25,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
-import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
-import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
-import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
-import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
-import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
-import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
 

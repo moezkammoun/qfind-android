@@ -19,12 +19,9 @@ import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
-import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
-import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.informationFragment.ServiceProviderDataResponse;
 import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
-
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
