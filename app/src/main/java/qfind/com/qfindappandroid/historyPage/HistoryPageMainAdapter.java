@@ -81,6 +81,36 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
         holder.recycler_view_list.setLayoutManager
                 (new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         holder.recycler_view_list.setAdapter(historyPageDataAdapter);
+        holder.recycler_view_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                dataList.get(get).getPageId();
+            }
+        });
+        holder.recycler_view_list.addOnItemTouchListener(new RecyclerViewTouchListener(mContext, holder.recycler_view_list, new HistoryClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                singleItem.get(position).getPageId();
+
+                ((BaseActivity) mContext).showServiceProviderDetailPage(
+                        singleItem.get(position).getPageName(),
+                        singleItem.get(position).getDescription(),
+                        singleItem.get(position).getProviderPhone(),
+                        singleItem.get(position).getProviderAddress(),
+                        singleItem.get(position).getProviderWebsite(),
+                        singleItem.get(position).getProviderOpeningTime(),
+                        singleItem.get(position).getProviderMail(),
+                        singleItem.get(position).getProviderFacebook(),
+                        singleItem.get(position).getProviderLinkedIn(),
+                        singleItem.get(position).getProviderInstagram(),
+                        singleItem.get(position).getProviderTwitter(),
+                        singleItem.get(position).getProviderSnapchat(),
+                        singleItem.get(position).getProviderGooglePlus(),
+                        singleItem.get(position).getProviderLatlong(),
+                        singleItem.get(position).getUrl(),
+                        singleItem.get(position).getPageId());
+            }
+        }));
     }
 
     @Override

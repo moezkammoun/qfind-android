@@ -43,6 +43,8 @@ public class HistoryFragment extends Fragment {
     List<HistoryItem> list = new ArrayList<HistoryItem>();
     ArrayList<Integer> positions = new ArrayList<Integer>();
     ArrayList<HistoryPageDataModel> singleItem ;
+    @BindView(R.id.empty_text_view_info)
+    TextView emptyTextView;
 
 
     public HistoryFragment() {
@@ -79,89 +81,95 @@ public class HistoryFragment extends Fragment {
         db.deleteHistory(filterDate);
         List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
         countList = db.getDateCount();
-        for (HistoryDateCount count : countList) {
-            String log = "Id: " + count.getDay() + " ,count: " + count.getCount();
-            Log.d("Log: ", log);
-        }
-        int today = 0, yesterday = 0, day = 0;
-        String strDate = null;
-        String todayDate = null;
-        String dayVar = null;
-        String yesDay = null;
-        for (int i = 0; i < countList.size(); i++) {
-            HistoryPageMainModel mainModel = new HistoryPageMainModel();
-//            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
-            singleItem= new ArrayList<HistoryPageDataModel>();
-            try {
-                Calendar calendar;
-                calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, -1);
-                yesDay = sdf.format(calendar.getTime());
-                todayDate = sdf.format(new Date());
-                strDate = sdf.format(sdf.parse(countList.get(i).getDay()));
-            } catch (ParseException e) {
-                e.printStackTrace();
+        if(countList.size()!=0){
+            emptyTextView.setVisibility(View.GONE);
+            for (HistoryDateCount count : countList) {
+                String log = "Id: " + count.getDay() + " ,count: " + count.getCount();
+                Log.d("Log: ", log);
             }
-
-            if (todayDate.compareTo(strDate) == 0) {
-                if (today < 1) {
-                    dayVar = "Today";
-                    today = today + 1;
-                }
-            } else if (yesDay.compareTo(strDate) == 0) {
-                if (yesterday < 1) {
-                    dayVar = "Yesterday";
-                    yesterday = yesterday + 1;
-                }
-
-            } else if (todayDate.compareTo(strDate) < 0) {
-                continue;
-            } else {
-                Date ds = null;
-                DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+            int today = 0, yesterday = 0, day = 0;
+            String strDate = null;
+            String todayDate = null;
+            String dayVar = null;
+            String yesDay = null;
+            for (int i = 0; i < countList.size(); i++) {
+                HistoryPageMainModel mainModel = new HistoryPageMainModel();
+//            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
+                singleItem= new ArrayList<HistoryPageDataModel>();
                 try {
-                    ds = sdf.parse(countList.get(i).getDay());
+                    Calendar calendar;
+                    calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DATE, -1);
+                    yesDay = sdf.format(calendar.getTime());
+                    todayDate = sdf.format(new Date());
+                    strDate = sdf.format(sdf.parse(countList.get(i).getDay()));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                String desDate = dateFormat.format(ds);
-                if (day < 1) {
-                    dayVar = desDate;
-                    day = day + 1;
-                } else if (!(dayVar.equals(countList.get(i).getDay()))) {
-                    dayVar = desDate;
-                    day = day + 1;
+
+                if (todayDate.compareTo(strDate) == 0) {
+                    if (today < 1) {
+                        dayVar = "Today";
+                        today = today + 1;
+                    }
+                } else if (yesDay.compareTo(strDate) == 0) {
+                    if (yesterday < 1) {
+                        dayVar = "Yesterday";
+                        yesterday = yesterday + 1;
+                    }
+
+                } else if (todayDate.compareTo(strDate) < 0) {
+                    continue;
+                } else {
+                    Date ds = null;
+                    DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+                    try {
+                        ds = sdf.parse(countList.get(i).getDay());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    String desDate = dateFormat.format(ds);
+                    if (day < 1) {
+                        dayVar = desDate;
+                        day = day + 1;
+                    } else if (!(dayVar.equals(countList.get(i).getDay()))) {
+                        dayVar = desDate;
+                        day = day + 1;
+                    }
                 }
-            }
 
-            mainModel.setDay(dayVar);
+                mainModel.setDay(dayVar);
 
-            list = db.getAllHistory(countList.get(i).getDay());
-            System.out.println(list);
-            for (int j = 0; j < list.size(); j++) {
-                HistoryPageDataModel model = new HistoryPageDataModel();
-                model.setPageName(list.get(j).getTitke());
-                model.setUrl(list.get(j).getImage());
-                model.setDescription(list.get(j).getDescription());
-                model.setProviderPhone(list.get(j).getProviderPhone());
-                model.setProviderAddress(list.get(j).getProviderAddress());
-                model.setProviderWebsite(list.get(j).getProviderWebsite());
-                model.setProviderOpeningTime(list.get(j).getProviderOpeningTime());
-                model.setProviderMail(list.get(j).getProviderMail());
-                model.setProviderFacebook(list.get(j).getProviderFacebook());
-                model.setProviderLinkedIn(list.get(j).getProviderLinkedIn());
-                model.setProviderInstagram(list.get(j).getProviderInstagram());
-                model.setProviderTwitter(list.get(j).getProviderTwitter());
-                model.setProviderSnapchat(list.get(j).getProviderSnapchat());
-                model.setProviderGooglePlus(list.get(j).getProviderGooglePlus());
-                model.setProviderLatlong(list.get(j).getProviderLatlong());
-                model.setPageId(list.get(j).getPageId());
-                singleItem.add(model);
+                list = db.getAllHistory(countList.get(i).getDay());
+                System.out.println(list);
+                for (int j = 0; j < list.size(); j++) {
+                    HistoryPageDataModel model = new HistoryPageDataModel();
+                    model.setPageName(list.get(j).getTitke());
+                    model.setUrl(list.get(j).getImage());
+                    model.setDescription(list.get(j).getDescription());
+                    model.setProviderPhone(list.get(j).getProviderPhone());
+                    model.setProviderAddress(list.get(j).getProviderAddress());
+                    model.setProviderWebsite(list.get(j).getProviderWebsite());
+                    model.setProviderOpeningTime(list.get(j).getProviderOpeningTime());
+                    model.setProviderMail(list.get(j).getProviderMail());
+                    model.setProviderFacebook(list.get(j).getProviderFacebook());
+                    model.setProviderLinkedIn(list.get(j).getProviderLinkedIn());
+                    model.setProviderInstagram(list.get(j).getProviderInstagram());
+                    model.setProviderTwitter(list.get(j).getProviderTwitter());
+                    model.setProviderSnapchat(list.get(j).getProviderSnapchat());
+                    model.setProviderGooglePlus(list.get(j).getProviderGooglePlus());
+                    model.setProviderLatlong(list.get(j).getProviderLatlong());
+                    model.setPageId(list.get(j).getPageId());
+                    singleItem.add(model);
+                }
+                mainModel.setHistoryPageDataModels(singleItem);
+                arrayListMain.add(mainModel);
             }
-            mainModel.setHistoryPageDataModels(singleItem);
-            arrayListMain.add(mainModel);
+            setAdapter(arrayListMain);
         }
-        setAdapter(arrayListMain);
+        else{
+            emptyTextView.setVisibility(View.VISIBLE);
+        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,30 +187,7 @@ public class HistoryFragment extends Fragment {
         HistoryPageMainAdapter adapter = new HistoryPageMainAdapter(arrayListMain, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), recyclerView, new HistoryClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                arrayListMain.get(position).getHistoryPageDataModels().get(position).getPageId();
-
-                ((BaseActivity) getActivity()).showServiceProviderDetailPage(
-                        singleItem.get(position).getPageName(),
-                        singleItem.get(position).getDescription(),
-                        singleItem.get(position).getProviderPhone(),
-                        singleItem.get(position).getProviderAddress(),
-                        singleItem.get(position).getProviderWebsite(),
-                        singleItem.get(position).getProviderOpeningTime(),
-                        singleItem.get(position).getProviderMail(),
-                        singleItem.get(position).getProviderFacebook(),
-                        singleItem.get(position).getProviderLinkedIn(),
-                        singleItem.get(position).getProviderInstagram(),
-                        singleItem.get(position).getProviderTwitter(),
-                        singleItem.get(position).getProviderSnapchat(),
-                        singleItem.get(position).getProviderGooglePlus(),
-                        singleItem.get(position).getProviderLatlong(),
-                        singleItem.get(position).getUrl(),
-                        singleItem.get(position).getPageId());
-            }
-        }));
+       //up here
     }
 
     public void setFontTypeForText() {
