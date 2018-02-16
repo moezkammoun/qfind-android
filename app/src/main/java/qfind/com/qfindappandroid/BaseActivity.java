@@ -2,11 +2,13 @@ package qfind.com.qfindappandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -41,7 +43,7 @@ import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
 import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
-import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
+import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
 import static qfind.com.qfindappandroid.retrofitinstance.ApiClient.BASE_URL;
 
@@ -54,6 +56,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView sideMenuTittleTxt, sideMenuAboutUsTxt, sideMenuQfinderTxt, sideMenuTermAndConditionTxt,
             sideMenuContactUsTxt;
     TextView sideMenuSettingsTxt;
+    int language;
     Toolbar toolbar;
     Fragment fragment;
     protected DrawerLayout fullView;
@@ -66,16 +69,18 @@ public class BaseActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     FrameLayout activityContainer;
     ActionBarDrawerToggle toggle;
-    Typeface mTypeFace;
     LinearLayout infoToolbar, normalToolbar;
     TextView infoToolBarMainTittleTxtView, infoToolBarSubTittleTxtView;
     String infoToolBarTittle;
     SearchData searchData;
     Bundle bundle = new Bundle();
+    SharedPreferences qFindPreferences;
+    Typeface mtypeFaceBold, mtypeFaceLight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
     @Override
@@ -181,7 +186,6 @@ public class BaseActivity extends AppCompatActivity {
                     }
                 } else
                     Util.showToast(getResources().getString(R.string.no_data_to_favorite), getApplicationContext());
-
             }
         });
         infoShareButton.setOnClickListener(new View.OnClickListener() {
@@ -348,31 +352,60 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1",
+                            "ABOUT US");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2",
+                            "معلومات عنا");
+                }
+
             }
         });
         sideMenuQFinderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1",
+                            "HOW TO BECOME QFINDER ");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2",
+                            "كيف تكون كيوفايندر");
+                }
+
             }
         });
         sideMenuTermsAndConditionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                if (!(fragment instanceof TermsandConditionFragment)) {
-                    BaseActivity.this.fragment = new TermsandConditionFragment();
-                    loadFragment(BaseActivity.this.fragment);
-                }
                 fullView.closeDrawer(GravityCompat.END);
-                showNormalToolbar();
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/1",
+                            "TERMS & CONDITIONS ");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/2",
+                            "الشروط والأحكام");
+                }
+
             }
         });
         sideMenuContactUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fullView.closeDrawer(GravityCompat.END);
+                language = qFindPreferences.getInt("AppLanguage", 1);
+                if (language == 1) {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1",
+                            "CONTACT US ");
+                } else {
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2",
+                            "لتجدنا");
+                }
+
             }
         });
         sideMenuSettingsLayout.setOnClickListener(new View.OnClickListener() {
@@ -395,7 +428,11 @@ public class BaseActivity extends AppCompatActivity {
         infoToolBarTittle = tittle;
         normalToolbar.setVisibility(View.GONE);
         infoToolbar.setVisibility(View.VISIBLE);
+        infoToolBarMainTittleTxtView.setTypeface(mtypeFaceBold);
         infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
+        Typeface italic = Typeface.createFromAsset(getAssets(),
+                "fonts/Lato-Italic.ttf");
+        infoToolBarSubTittleTxtView.setTypeface(italic);
         infoToolBarSubTittleTxtView.setText(subTittle);
 
     }
@@ -413,6 +450,7 @@ public class BaseActivity extends AppCompatActivity {
                                               String providerTwitter, String providerSnapchat,
                                               String providerGooglePlus, String providerLatLong, String providerLogo,
                                               int providerId) {
+
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
         bundle.putString("providerMobile", providerMobile);
@@ -429,6 +467,7 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerLatLong", providerLatLong);
         bundle.putString("providerLogo", providerLogo);
         bundle.putInt("providerId", providerId);
+
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         informationFragment.setArguments(bundle);
@@ -477,31 +516,38 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setFontTypeForText() {
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            mTypeFace = Typeface.createFromAsset(getAssets(),
+            mtypeFaceBold = Typeface.createFromAsset(getAssets(),
                     "fonts/Lato-Bold.ttf");
-            sideMenuTittleTxt.setTypeface(mTypeFace);
-            mTypeFace = Typeface.createFromAsset(getAssets(),
+            mtypeFaceLight = Typeface.createFromAsset(getApplicationContext().getAssets(),
                     "fonts/Lato-Light.ttf");
+
         } else {
-            mTypeFace = Typeface.createFromAsset(getAssets(),
+            mtypeFaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                    "fonts/GE_SS_Unique_Bold.otf");
+            mtypeFaceLight = Typeface.createFromAsset(getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
-        sideMenuAboutUsTxt.setTypeface(mTypeFace);
-        sideMenuQfinderTxt.setTypeface(mTypeFace);
-        sideMenuTermAndConditionTxt.setTypeface(mTypeFace);
-        sideMenuContactUsTxt.setTypeface(mTypeFace);
-        sideMenuSettingsTxt.setTypeface(mTypeFace);
+        sideMenuTittleTxt.setTypeface(mtypeFaceBold);
+        sideMenuAboutUsTxt.setTypeface(mtypeFaceLight);
+        sideMenuQfinderTxt.setTypeface(mtypeFaceLight);
+        sideMenuTermAndConditionTxt.setTypeface(mtypeFaceLight);
+        sideMenuContactUsTxt.setTypeface(mtypeFaceLight);
+        sideMenuSettingsTxt.setTypeface(mtypeFaceLight);
     }
 
     public void setupBottomNavigationBar() {
         fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-        bottomNavigationView.setSelected(false);
+        bottomNavigationView.setSelected(true);
         if ((fragment instanceof HistoryFragment)) {
-            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(true);
-            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(false);
+            MenuItem homeItem = bottomNavigationView.getMenu().getItem(2);
+            bottomNavigationView.setSelectedItemId(homeItem.getItemId());
+            homeItem.setCheckable(true);
+            //bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(true);
         } else if ((fragment instanceof FavoriteFragment)) {
-            bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(true);
-            bottomNavigationView.getMenu().findItem(R.id.category_history_menu).setCheckable(false);
+            // bottomNavigationView.getMenu().findItem(R.id.favorite_categories_bottom_menu).setCheckable(true);
+            MenuItem homeItem = bottomNavigationView.getMenu().getItem(0);
+            homeItem.setCheckable(true);
+            bottomNavigationView.setSelectedItemId(homeItem.getItemId());
         } else {
             Menu menu = bottomNavigationView.getMenu();
             for (int i = 0, size = menu.size(); i < size; i++) {
@@ -511,5 +557,13 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+
+    public void callWebviewWithUrl(String url, String tittle) {
+        Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
+        intent.putExtra("url", url);
+        intent.putExtra("Title", tittle);
+        startActivity(intent);
+    }
+
 
 }

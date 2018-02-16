@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".MyApp"
@@ -24,8 +25,8 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity
@@ -43,8 +44,8 @@
 
                 <data
                     android:host="ec2-18-219-90-185.us-east-2.compute.amazonaws.com"
-                    android:scheme="http"
-                    android:pathPrefix="/static-pages/" />
+                    android:pathPrefix="/static-pages/"
+                    android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -55,7 +56,12 @@
                 <data android:scheme="qfind" />
             </intent-filter>
         </activity>
-        <activity android:name=".BaseActivity">
+        <activity android:name=".BaseActivity" />
+        
+        <activity
+            android:name=".webviewactivity.WebviewActivity"
+            android:label="@string/title_activity_webview"
+            android:theme="@style/AppTheme">
 
         </activity>
     </application>

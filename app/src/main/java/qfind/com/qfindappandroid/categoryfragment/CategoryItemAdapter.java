@@ -35,6 +35,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     ArrayList<ServiceProviderListDetails> serviceProviderListDetails;
     byte categoryPageNumber;
     Picasso picasso;
+    Typeface mtypeFaceLight;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,7 +73,8 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     }
 
 
-    public CategoryItemAdapter(Context mContext, ArrayList<MainCategoryItemList> mainCategoryItemList, RecyclerViewClickListener listener) {
+    public CategoryItemAdapter(Context mContext, ArrayList<MainCategoryItemList> mainCategoryItemList,
+                               RecyclerViewClickListener listener) {
         this.mContext = mContext;
         setUpPicassoBuilderToReduceLoadingTime();
         this.mainCategoryItemList = mainCategoryItemList;
@@ -91,40 +93,33 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        Typeface mtypeFace = null;
-        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
-                    "fonts/Lato-Light.ttf");
-        } else {
-            mtypeFace = Typeface.createFromAsset(mContext.getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
-        }
+        setFontTypeForText();
         if (Util.categoryPageStatus == 1) {
             holder.subCategoryCardItemLayout.setVisibility(View.GONE);
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
-            holder.categoryName.setTypeface(mtypeFace);
+            holder.categoryName.setTypeface(mtypeFaceLight);
             if (mainCategoryItemList != null) {
                 holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
-                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).resize(50,50).centerInside().into(holder.categoryThumbnail);
+                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).resize(50, 50).centerInside().into(holder.categoryThumbnail);
             }
         } else if (Util.categoryPageStatus == 2) {
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
             holder.subCategoryCardItemLayout.setVisibility(View.GONE);
-            holder.subCategoryName.setTypeface(mtypeFace);
-            holder.subCategoryDescription.setTypeface(mtypeFace);
+            holder.subCategoryName.setTypeface(mtypeFaceLight);
+            holder.subCategoryDescription.setTypeface(mtypeFaceLight);
             if (subCategoryItemList != null) {
                 holder.categoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
-                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.categoryThumbnail);
+                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).resize(50, 50).centerInside().into(holder.categoryThumbnail);
             }
         } else if (Util.categoryPageStatus == 3) {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
             holder.subCategoryCardItemLayout.setVisibility(View.VISIBLE);
-            holder.subCategoryName.setTypeface(mtypeFace);
-            holder.subCategoryDescription.setTypeface(mtypeFace);
+            holder.subCategoryName.setTypeface(mtypeFaceLight);
+            holder.subCategoryDescription.setTypeface(mtypeFaceLight);
             if (serviceProviderListDetails != null) {
                 holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
                 holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
-                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.car_service).resize(50,50).centerInside().into(holder.categoryThumbnail);
+                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.car_service).resize(50, 50).centerInside().into(holder.categoryThumbnail);
             }
         }
     }
@@ -139,7 +134,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             if (subCategoryItemList != null)
                 return subCategoryItemList.size();
             else return 0;
-        }else if (categoryPageNumber == 3) {
+        } else if (categoryPageNumber == 3) {
             if (serviceProviderListDetails != null)
                 return serviceProviderListDetails.size();
             else return 0;
@@ -157,7 +152,8 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         this.subCategoryItemList = subCategoryItemList;
         this.categoryPageNumber = categoryPageNumber;
     }
-    public void setUpPicassoBuilderToReduceLoadingTime(){
+
+    public void setUpPicassoBuilderToReduceLoadingTime() {
         Picasso.Builder builder = new Picasso.Builder(mContext);
         picasso = builder.build();
     }
@@ -167,5 +163,16 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         this.categoryPageNumber = categoryPageNumber;
     }
 
+    public void setFontTypeForText() {
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+
+            mtypeFaceLight= Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/Lato-Light.ttf");
+        } else {
+
+            mtypeFaceLight=Typeface.createFromAsset(mContext.getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+        }
+    }
 
 }

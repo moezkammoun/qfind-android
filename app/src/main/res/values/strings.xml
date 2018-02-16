@@ -19,8 +19,8 @@
     <string name="no">No</string>
     <string name="today">Today</string>
     <string name="select_language">Select Language</string>
-    <string name="already_english">you are already in english</string>
-    <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
+    <string name="already_english">you have already selected English</string>
+    <string name="activity_reload_string">you will be redirected to home page, after changing the language.do you want to continue?</string>
     <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
    </string>
     <string name="categories_text">Categories</string>
@@ -38,5 +38,9 @@
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://ec2-18-219-90-185.us-east-2.compute.amazonaws.com\",\n  }\n}]</string>
     <string name="no_data_to_share">No data to share</string>
     <string name="no_data_to_favorite">No data to add favorite</string>
+
+    <string name="title_activity_webview">Webview</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

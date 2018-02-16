@@ -117,7 +117,7 @@ public class SearchResultsFragment extends Fragment {
                     "fonts/Lato-Bold.ttf");
         } else {
             mTypeFace = Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/GE_SS_Unique_Light.otf");
+                    "fonts/GE_SS_Unique_Bold.otf");
         }
 
         pageTitle.setTypeface(mTypeFace);

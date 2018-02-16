@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -25,11 +24,11 @@ import qfind.com.qfindappandroid.historyPage.HistoryFragment;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.informationFragment.ServiceProviderDataResponse;
 import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
+
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
-import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,9 +69,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                 loadFragmentWithoutBackStack(fragment);
             } else if (fragmentToShow.equals(AppConfig.Fragments.SETTINGS.toString())) {
                 fragment = new SettingsFragment();
-                loadFragmentWithoutBackStack(fragment);
-            } else if (fragmentToShow.equals(AppConfig.Fragments.TERMS_AND_CONDITIONS.toString())) {
-                fragment = new TermsandConditionFragment();
                 loadFragmentWithoutBackStack(fragment);
             }
         }
@@ -209,7 +205,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
             if ((fragment instanceof CategoryFragment)) {
                 CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 fragment.setSubCategoryBackButtonClickAction();
-                fragment.hideLoader(false);
+                fragment.hideLoader();
             } else {
                 super.onBackPressed();
             }
@@ -243,14 +239,22 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                 if ((f instanceof CategoryFragment)) {
                                     CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                                     fragment.setRecyclerViewDatas(mainCategoryItemList);
-                                    fragment.hideLoader(false);
+                                    fragment.hideLoader();
 
                                 }
+                            } else if (mainCategory.getCode().equals("404")) {
+                                if ((f instanceof CategoryFragment)) {
+                                    CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                                    fragment.hideLoader();
+                                    fragment.showNoDataText();
+                                }
+
                             } else {
                                 if ((f instanceof CategoryFragment)) {
                                     CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                                    fragment.hideLoader(true);
-                                    Util.showToast(getResources().getString(R.string.something_went_wrong), getApplicationContext());
+                                    fragment.hideLoader();
+                                    fragment.showNoDataText();
+                                    //Util.showToast(getResources().getString(R.string.something_went_wrong), getApplicationContext());
                                 }
                             }
                         }
@@ -258,7 +262,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                     } else {
                         if ((f instanceof CategoryFragment)) {
                             CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                            fragment.hideLoader(true);
+                            fragment.hideLoader();
                             Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
                         }
 
@@ -271,7 +275,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                     Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                     if ((f instanceof CategoryFragment)) {
                         CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                        fragment.hideLoader(true);
+                        fragment.hideLoader();
                         Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
                     }
 
