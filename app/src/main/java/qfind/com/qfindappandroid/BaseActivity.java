@@ -69,7 +69,7 @@ public class BaseActivity extends AppCompatActivity {
     SearchData searchData;
     Bundle bundle = new Bundle();
     SharedPreferences qFindPreferences;
-    Typeface mtypeFaceBold,mtypeFaceLight;
+    Typeface mtypeFaceBold,mtypeFaceLight,mtypeFaceItalic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -404,9 +404,7 @@ public class BaseActivity extends AppCompatActivity {
         infoToolbar.setVisibility(View.VISIBLE);
         infoToolBarMainTittleTxtView.setTypeface(mtypeFaceBold);
         infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
-        Typeface italic = Typeface.createFromAsset(getAssets(),
-                "fonts/Lato-Italic.ttf");
-        infoToolBarSubTittleTxtView.setTypeface(italic);
+        infoToolBarSubTittleTxtView.setTypeface(mtypeFaceItalic);
         infoToolBarSubTittleTxtView.setText(subTittle);
 
     }
@@ -494,6 +492,8 @@ public class BaseActivity extends AppCompatActivity {
                     "fonts/Lato-Bold.ttf");
             mtypeFaceLight= Typeface.createFromAsset(getApplicationContext().getAssets(),
                     "fonts/Lato-Light.ttf");
+            mtypeFaceItalic = Typeface.createFromAsset(getAssets(),
+                    "fonts/Lato-Italic.ttf");
 
         } else {
             mtypeFaceBold = Typeface.createFromAsset(getApplicationContext().getAssets(),
