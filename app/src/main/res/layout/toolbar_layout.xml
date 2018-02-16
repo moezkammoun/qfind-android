@@ -90,10 +90,10 @@
 
             <ImageView
                 android:id="@+id/fav_star_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="start"
-                app:srcCompat="@drawable/star_icon" />
+                app:srcCompat="@drawable/favorite_blank_star" />
         </RelativeLayout>
     </LinearLayout>
 
