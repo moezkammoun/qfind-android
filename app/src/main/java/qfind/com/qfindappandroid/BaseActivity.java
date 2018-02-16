@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -29,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.nio.file.Paths;
+
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
@@ -39,6 +42,8 @@ import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.termsandconditionfragment.TermsandConditionFragment;
+
+import static qfind.com.qfindappandroid.retrofitinstance.ApiClient.BASE_URL;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -53,6 +58,7 @@ public class BaseActivity extends AppCompatActivity {
     Fragment fragment;
     protected DrawerLayout fullView;
     ImageView sideMenuHamburger, hamburger, infoHamburger, infoBackButton, infoStarButton;
+    protected ImageView infoShareButton;
     ImageView searchButton;
     protected DelayAutoCompleteTextView autoCompleteTextView;
     View keyboard;
@@ -113,7 +119,7 @@ public class BaseActivity extends AppCompatActivity {
         normalToolbar = (LinearLayout) findViewById(R.id.normal_toolbar);
         infoBackButton = (ImageView) findViewById(R.id.back_button_info);
         infoStarButton = (ImageView) findViewById(R.id.fav_star_icon);
-
+        infoShareButton = (ImageView) findViewById(R.id.info_share);
         setupSideMenuItemClickListener();
         setFontTypeForText();
 
@@ -145,37 +151,58 @@ public class BaseActivity extends AppCompatActivity {
         infoStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBaseHandler db = new DataBaseHandler(getApplicationContext());
-                FavoriteModel favoriteModel = new FavoriteModel();
-                favoriteModel.setItem(bundle.getString("providerName"));
-                favoriteModel.setItemDescription(bundle.getString("providerLocation"));
-                favoriteModel.setUrl(bundle.getString("providerLogo"));
-                favoriteModel.setPageId(bundle.getInt("providerId"));
-                favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
-                favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
-                favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
-                favoriteModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
-                favoriteModel.setProviderMail(bundle.getString("providerMail"));
-                favoriteModel.setProviderFacebook(bundle.getString("providerFacebook"));
-                favoriteModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
-                favoriteModel.setProviderInstagram(bundle.getString("providerInstagram"));
-                favoriteModel.setProviderTwitter(bundle.getString("providerTwitter"));
-                favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
-                favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
-                favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
+                if (!infoToolBarMainTittleTxtView.getText().equals("")) {
+                    DataBaseHandler db = new DataBaseHandler(getApplicationContext());
+                    FavoriteModel favoriteModel = new FavoriteModel();
+                    favoriteModel.setItem(bundle.getString("providerName"));
+                    favoriteModel.setItemDescription(bundle.getString("providerLocation"));
+                    favoriteModel.setUrl(bundle.getString("providerLogo"));
+                    favoriteModel.setPageId(bundle.getInt("providerId"));
+                    favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
+                    favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
+                    favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
+                    favoriteModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
+                    favoriteModel.setProviderMail(bundle.getString("providerMail"));
+                    favoriteModel.setProviderFacebook(bundle.getString("providerFacebook"));
+                    favoriteModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
+                    favoriteModel.setProviderInstagram(bundle.getString("providerInstagram"));
+                    favoriteModel.setProviderTwitter(bundle.getString("providerTwitter"));
+                    favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
+                    favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
+                    favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
-                if (db.checkFavoriteById(bundle.getInt("providerId"))) {
+                    if (db.checkFavoriteById(bundle.getInt("providerId"))) {
 //                    db.updateFavorite(favoriteModel, bundle.getInt("providerId"));
-                    db.deleteFavorite(bundle.getInt("providerId"));
-                    Util.showToast("Removed from Favorites",getApplicationContext());
-                } else {
-                    db.addFavorite(favoriteModel);
-                    Util.showToast("Add to Favorites",getApplicationContext());
-                }
+                        db.deleteFavorite(bundle.getInt("providerId"));
+                        Util.showToast("Removed from Favorites", getApplicationContext());
+                    } else {
+                        db.addFavorite(favoriteModel);
+                        Util.showToast("Add to Favorites", getApplicationContext());
+                    }
+                } else
+                    Util.showToast(getResources().getString(R.string.no_data_to_favorite), getApplicationContext());
 
             }
         });
-
+        infoShareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!infoToolBarMainTittleTxtView.getText().equals("")) {
+                    try {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("text/plain");
+                        i.putExtra(Intent.EXTRA_SUBJECT, "Q-Find");
+                        String sAux = BASE_URL +
+                                "static-pages/store-link?provider_id=" + bundle.getInt("providerId");
+                        i.putExtra(Intent.EXTRA_TEXT, sAux);
+                        startActivity(Intent.createChooser(i, "choose one"));
+                    } catch (Exception e) {
+                        //e.toString();
+                    }
+                } else
+                    Util.showToast(getResources().getString(R.string.no_data_to_share), getApplicationContext());
+            }
+        });
         autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.base_autocomplete_edit_text);
         autoCompleteTextView.setThreshold(2);
         autoCompleteTextView.setAdapter(new SearchAutoCompleteAdapter(this));

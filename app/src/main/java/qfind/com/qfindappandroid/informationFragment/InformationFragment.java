@@ -3,6 +3,8 @@ package qfind.com.qfindappandroid.informationFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,22 +22,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
+import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
+import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
+import qfind.com.qfindappandroid.searchResultsFragment.SearchedItem;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class InformationFragment extends Fragment {
     ArrayList<InformationFragmentModel> informationData = new ArrayList<>();
     RecyclerView recyclerView;
-    private ApiResponse apiResponse;
-    SharedPreferences qFindPreferences;
-    String accessToken, infoPageTittle;
-    ApiInterface apiService;
-    ServiceProviderData serviceProviderData;
     InformationFragmentAdapter adapter;
     ProgressBar progressBar;
     TextView emptyTextView;
@@ -45,6 +50,8 @@ public class InformationFragment extends Fragment {
             providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo;
     URI uri = null;
     String path;
+    private int language;
+    private int providerId;
 
     public InformationFragment() {
         // Required empty public constructor
@@ -85,9 +92,9 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
 
-        if(db.checkHistoryById(bundle.getInt("providerId"))){
-            db.updateHistory(dataModel,bundle.getInt("providerId"));
-        }else{
+        if (db.checkHistoryById(bundle.getInt("providerId"))) {
+            db.updateHistory(dataModel, bundle.getInt("providerId"));
+        } else {
             db.addHistory(dataModel);
 
         }
@@ -117,7 +124,7 @@ public class InformationFragment extends Fragment {
         providerGooglePlus = bundle.getString("providerGooglePlus");
         providerLatLong = bundle.getString("providerLatLong");
         providerLogo = bundle.getString("providerLogo");
-
+        providerId = bundle.getInt("providerId");
         return view;
     }
 
@@ -130,8 +137,11 @@ public class InformationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
+        if (adapter != null)
+            adapter.clear();
         adapter = new InformationFragmentAdapter(getContext(), getInformationData());
         recyclerView.setAdapter(adapter);
+
         if (informationData == null)
             emptyTextView.setVisibility(View.VISIBLE);
         else
@@ -139,6 +149,17 @@ public class InformationFragment extends Fragment {
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
         ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
         memoryLeakingCode();
+        if (providerName.equals("")) {
+            progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                    emptyTextView.setVisibility(View.VISIBLE);
+                }
+            }, 1500);
+
+        }
     }
 
     public ArrayList<InformationFragmentModel> getInformationData() {

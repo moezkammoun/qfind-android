@@ -35,5 +35,8 @@
     <string name="error_in_connecting">Error in connecting the server</string>
     <string name="check_network">Check your internet connections</string>
     <string name="un_authorised">Unauthorized access</string>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://ec2-18-219-90-185.us-east-2.compute.amazonaws.com\",\n  }\n}]</string>
+    <string name="no_data_to_share">No data to share</string>
+    <string name="no_data_to_favorite">No data to add favorite</string>
 
 </resources>
