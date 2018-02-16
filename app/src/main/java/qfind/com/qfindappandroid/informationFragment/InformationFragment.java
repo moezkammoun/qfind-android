@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,10 +49,12 @@ public class InformationFragment extends Fragment {
     InformationFragmentAdapter adapter;
     ProgressBar progressBar;
     TextView emptyTextView;
+    ImageView infoStarIcon;
 
     String providerName, providerLocation, providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
             providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo;
+    int providerPageId;
     URI uri = null;
     String path;
     RecyclerViewClickListener recyclerViewClickListener;
@@ -102,6 +105,7 @@ public class InformationFragment extends Fragment {
 
         }
 
+        providerPageId=bundle.getInt("providerId");
         providerName = bundle.getString("providerName");
         providerLocation = bundle.getString("providerLocation");
         providerMobile = bundle.getString("providerMobile");
@@ -137,6 +141,7 @@ public class InformationFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBarLoading);
         emptyTextView = (TextView) view.findViewById(R.id.empty_text_view_info);
+        infoStarIcon=(ImageView)view.findViewById(R.id.fav_star_icon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
@@ -150,7 +155,11 @@ public class InformationFragment extends Fragment {
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
         ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
 
-
+//       DataBaseHandler db=new DataBaseHandler(getContext());
+//       Boolean isFavorite=db.checkFavoriteById(providerPageId);
+//       if(isFavorite){
+//           infoStarIcon.setImageResource(R.drawable.favorite_red);
+//       }
     }
 
     public ArrayList<InformationFragmentModel> getInformationData() {

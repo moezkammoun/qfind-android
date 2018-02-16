@@ -1,6 +1,8 @@
 package qfind.com.qfindappandroid.favoritePage;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -51,7 +54,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
         // loading album cover using Glide library
-        Picasso.with(mContext).load(favoriteModel.getUrl()).resize(50, 50).centerInside().into(holder.thumbnail);
+        Picasso.with(mContext).load(favoriteModel.getUrl()).placeholder(R.drawable.toy_store).resize(50, 50).centerInside().into(holder.thumbnail);
 
     }
 
@@ -75,8 +78,31 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             favoriteStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    delete(getAdapterPosition(), positions.get(getAdapterPosition()));
-                    Util.showToast("Selected item removed",mContext);
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+                    // Setting Dialog Title
+                    alertDialog.setTitle("Confirm Delete...");
+
+                    // Setting Dialog Message
+                    alertDialog.setMessage("Item will be deleted from favorites.Do you want to continue?");
+
+                    // Setting Positive "Yes" Button
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+                            delete(getAdapterPosition(), positions.get(getAdapterPosition()));
+                        }
+                    });
+
+                    // Setting Negative "NO" Button
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    // Showing Alert Message
+                    alertDialog.show();
                 }
             });
 
