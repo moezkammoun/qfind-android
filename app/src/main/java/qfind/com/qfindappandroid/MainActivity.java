@@ -140,9 +140,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                             navigationIntent.putExtra("SEARCH_TYPE", 4);
                         startActivity(navigationIntent);
                     }
-                } else {
-                    Toast.makeText(MainActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
-                }
+                } 
             }
         });
         findByCategoryBtn.setOnClickListener(new View.OnClickListener() {

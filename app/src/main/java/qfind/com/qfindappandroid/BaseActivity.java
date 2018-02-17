@@ -249,8 +249,6 @@ public class BaseActivity extends AppCompatActivity {
                     bundle.putString("searchKey", autoCompleteTextView.getText().toString());
                     fragment.setArguments(bundle);
                     loadFragment(fragment);
-                } else {
-                    Toast.makeText(BaseActivity.this, R.string.please_type, Toast.LENGTH_SHORT).show();
                 }
             }
         });
