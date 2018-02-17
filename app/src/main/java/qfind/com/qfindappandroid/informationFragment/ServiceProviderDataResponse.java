@@ -2,13 +2,15 @@ package qfind.com.qfindappandroid.informationFragment;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ApiResponse {
+import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
+
+public class ServiceProviderDataResponse {
     @SerializedName("response")
     private String response;
     @SerializedName("code")
     private String code;
     @SerializedName("result")
-    private ServiceProviderData result;
+    private ServiceProviderResult result;
 
     public String getResponse() {
         return response;
@@ -18,7 +20,7 @@ public class ApiResponse {
         return code;
     }
 
-    public ServiceProviderData getResult() {
+    public ServiceProviderResult getResult() {
         return result;
     }
 }

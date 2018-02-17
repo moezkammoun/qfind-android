@@ -63,7 +63,16 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
             mListener.onClick(view, getAdapterPosition());
         }
     }
+    public void clear() {
+        final int size = getItemCount();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                informationPages.remove(0);
+            }
 
+            notifyItemRangeRemoved(0, size);
+        }
+    }
     @Override
     public InformationPageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

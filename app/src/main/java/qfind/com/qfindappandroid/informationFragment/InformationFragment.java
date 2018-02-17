@@ -2,11 +2,11 @@ package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,11 +29,8 @@ import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
-import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
-import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
-import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
 
@@ -52,6 +48,8 @@ public class InformationFragment extends Fragment {
     int providerPageId;
     URI uri = null;
     String path;
+    private int language;
+    private int providerId;
     RecyclerViewClickListener recyclerViewClickListener;
 
     public InformationFragment() {
@@ -126,7 +124,7 @@ public class InformationFragment extends Fragment {
         providerGooglePlus = bundle.getString("providerGooglePlus");
         providerLatLong = bundle.getString("providerLatLong");
         providerLogo = bundle.getString("providerLogo");
-
+        providerId = bundle.getInt("providerId");
         return view;
     }
 
@@ -140,16 +138,29 @@ public class InformationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
+        if (adapter != null)
+            adapter.clear();
         setupRecyclerViewClickListener();
         adapter = new InformationFragmentAdapter(getContext(), getInformationData(), recyclerViewClickListener);
         recyclerView.setAdapter(adapter);
+
         if (informationData == null)
             emptyTextView.setVisibility(View.VISIBLE);
         else
             progressBar.setVisibility(View.GONE);
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
         ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
+        if (providerName.equals("")) {
+            progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                    emptyTextView.setVisibility(View.VISIBLE);
+                }
+            }, 1500);
 
+        }
 //       DataBaseHandler db=new DataBaseHandler(getContext());
 //       Boolean isFavorite=db.checkFavoriteById(providerPageId);
 //       if(isFavorite){
@@ -219,7 +230,9 @@ public class InformationFragment extends Fragment {
                         facebookIntent.setData(Uri.parse(facebookUrl));
                         startActivity(facebookIntent);
                     } else {
+
                         callWebviewWithUrl("https://www.facebook.com/" + providerFacebook, providerFacebook);
+
                     }
 
                 }
@@ -304,10 +317,12 @@ public class InformationFragment extends Fragment {
             if (getPkgInfo.contains("com.twitter.android")) {
                 // APP NOT INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
+
                         Uri.parse("twitter://user?screen_name=" + providerTwitter));
                 startActivity(intent);
             } else {
                 callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
+
 
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -315,7 +330,9 @@ public class InformationFragment extends Fragment {
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+
             callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
+
 
 
         }
@@ -328,12 +345,14 @@ public class InformationFragment extends Fragment {
             String getPkgInfo = pkgInfo.toString();
 
             if (getPkgInfo.contains("com.instagram.android")) {
+
                 // APP  INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://instagram.com/_u/" + providerInstagram));
                 startActivity(intent);
             } else {
                 callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
+
 
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -343,23 +362,29 @@ public class InformationFragment extends Fragment {
             callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
 
 
+
         }
 
     }
 
+
     public void openSnapchat(Context context) {
+
         PackageManager pkManager = context.getPackageManager();
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
             String getPkgInfo = pkgInfo.toString();
 
             if (getPkgInfo.contains("com.snapchat.android")) {
+
                 // APP NOT INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("https://snapchat.com/add/" + providerSnapchat));
                 startActivity(intent);
             } else {
+
                 callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+
 
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -367,7 +392,9 @@ public class InformationFragment extends Fragment {
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+
             callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+
 
 
         }
