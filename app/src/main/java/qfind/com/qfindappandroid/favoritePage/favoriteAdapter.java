@@ -54,7 +54,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         holder.title.setText(favoriteModel.getItem());
         holder.description.setText(favoriteModel.getItemDescription());
         // loading album cover using Glide library
-        Picasso.with(mContext).load(favoriteModel.getUrl()).placeholder(R.drawable.toy_store).resize(50, 50).centerInside().into(holder.thumbnail);
+        Picasso.with(mContext).load(favoriteModel.getUrl()).placeholder(R.drawable.placeholder).into(holder.thumbnail);
 
     }
 

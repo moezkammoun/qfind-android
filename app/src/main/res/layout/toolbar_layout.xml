@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/back_button_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/info_toolbr_back_button_height"
+                android:layout_height="@dimen/info_toolbr_back_button_height"
                 android:layout_alignParentStart="true"
                 app:srcCompat="@drawable/white_back_icon" />
 
@@ -64,8 +64,8 @@
 
             <ImageView
                 android:id="@+id/info_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/info_toolbr_share_icon_width"
+                android:layout_height="@dimen/info_toolbr_share_icon_height"
                 android:layout_gravity="start"
                 app:srcCompat="@drawable/share_icon" />
 
@@ -90,8 +90,8 @@
 
             <ImageView
                 android:id="@+id/fav_star_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/info_toolbr_star_icon_width"
+                android:layout_height="@dimen/info_toolbr_star_icon_height"
                 android:layout_gravity="start"
                 app:srcCompat="@drawable/favorite_blank_star" />
         </RelativeLayout>
@@ -172,8 +172,6 @@
             android:layout_height="match_parent"
             android:layout_weight="22.5"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingBottom="@dimen/padding_8"
-            android:paddingTop="@dimen/padding_8"
             android:src="@drawable/hamburger_menu_white" />
     </LinearLayout>
 
