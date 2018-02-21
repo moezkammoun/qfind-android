@@ -24,9 +24,9 @@
 
             <ImageView
                 android:id="@+id/history_thumbnail"
-                android:layout_width="@dimen/search_results_image_size"
-                android:layout_height="@dimen/search_results_image_size"
-                android:scaleType="fitXY" />
+                android:layout_width="@dimen/category_thumbnail_width"
+                android:layout_height="@dimen/category_thumbnail_height"
+                 />
 
 
             <LinearLayout

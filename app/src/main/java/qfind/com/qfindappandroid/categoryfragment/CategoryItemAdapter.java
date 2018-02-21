@@ -100,7 +100,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.categoryName.setTypeface(mtypeFaceLight);
             if (mainCategoryItemList != null) {
                 holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
-                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.toy_store).resize(50, 50).centerInside().into(holder.categoryThumbnail);
+                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.placeholder).into(holder.categoryThumbnail);
             }
         } else if (Util.categoryPageStatus == 2) {
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
@@ -109,7 +109,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.subCategoryDescription.setTypeface(mtypeFaceLight);
             if (subCategoryItemList != null) {
                 holder.categoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
-                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.car_service).resize(50, 50).centerInside().into(holder.categoryThumbnail);
+                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.placeholder).into(holder.categoryThumbnail);
             }
         } else if (Util.categoryPageStatus == 3) {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
@@ -119,7 +119,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             if (serviceProviderListDetails != null) {
                 holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
                 holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
-                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.car_service).resize(50, 50).centerInside().into(holder.categoryThumbnail);
+                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).into(holder.categoryThumbnail);
             }
         }
     }

@@ -117,7 +117,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 recyclerViewClickListener);
         firstLoading = true;
 
-        initialSetUp();
+        //initialSet();
         if (subCategoryItemList != null || mainCategoryItemList != null || serviceProviderListDetails != null)
             hideLoader();
         setClickListenerForSubCategoryButton();
@@ -216,13 +216,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void onPause() {
         super.onPause();
-        if (configurationForFragment != null)
+        if (configurationForFragment != null){
             mAnimCircleIndicator.stop();
+            configurationForFragment=null;
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        initialSetUp();
         if (configurationForFragment != null)
             mAnimCircleIndicator.start();
     }

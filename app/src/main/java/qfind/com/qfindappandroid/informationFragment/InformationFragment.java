@@ -2,12 +2,12 @@ package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,30 +32,26 @@ import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
-import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
 
 public class InformationFragment extends Fragment {
     ArrayList<InformationFragmentModel> informationData = new ArrayList<>();
     RecyclerView recyclerView;
-    private ApiResponse apiResponse;
-    SharedPreferences qFindPreferences;
-    String accessToken, infoPageTittle;
-    ApiInterface apiService;
-    ServiceProviderData serviceProviderData;
     InformationFragmentAdapter adapter;
     ProgressBar progressBar;
     TextView emptyTextView;
     ImageView infoStarIcon;
 
-    String providerName, providerLocation, providerNameArabic,providerLocationArabic,
+    String providerName, providerLocation, providerNameArabic, providerLocationArabic,
             providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
             providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo;
     int providerPageId;
     URI uri = null;
     String path;
+    private int language;
+    private int providerId;
     RecyclerViewClickListener recyclerViewClickListener;
 
     public InformationFragment() {
@@ -102,6 +98,7 @@ public class InformationFragment extends Fragment {
 
         Cursor cursor = db.checkHistoryById(bundle.getInt("providerId"), sdf.format(new Date()));
 
+
         if (cursor.getCount() == 0) {
             db.addHistory(dataModel);
         } else {
@@ -111,8 +108,8 @@ public class InformationFragment extends Fragment {
         providerPageId = bundle.getInt("providerId");
         providerName = bundle.getString("providerName");
         providerLocation = bundle.getString("providerLocation");
-        providerNameArabic=bundle.getString("providerNameArabic");
-        providerLocationArabic=bundle.getString("providerLocationArabic");
+        providerNameArabic = bundle.getString("providerNameArabic");
+        providerLocationArabic = bundle.getString("providerLocationArabic");
         providerMobile = bundle.getString("providerMobile");
         providerWebsite = bundle.getString("providerWebsite");
         if (providerWebsite.contains("http")) {
@@ -136,7 +133,7 @@ public class InformationFragment extends Fragment {
         providerGooglePlus = bundle.getString("providerGooglePlus");
         providerLatLong = bundle.getString("providerLatLong");
         providerLogo = bundle.getString("providerLogo");
-
+        providerId = bundle.getInt("providerId");
         return view;
     }
 
@@ -150,9 +147,12 @@ public class InformationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
+        if (adapter != null)
+            adapter.clear();
         setupRecyclerViewClickListener();
         adapter = new InformationFragmentAdapter(getContext(), getInformationData(), recyclerViewClickListener);
         recyclerView.setAdapter(adapter);
+
         if (informationData == null)
             emptyTextView.setVisibility(View.VISIBLE);
         else
@@ -161,6 +161,17 @@ public class InformationFragment extends Fragment {
         ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
         ((ContainerActivity) getActivity()).isFavoriteSelected(providerPageId);
 
+        if (providerName.equals("")) {
+            progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                    emptyTextView.setVisibility(View.VISIBLE);
+                }
+            }, 1500);
+
+        }
     }
 
     public ArrayList<InformationFragmentModel> getInformationData() {
@@ -218,15 +229,14 @@ public class InformationFragment extends Fragment {
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (informationData.get(position).getInfo_icon() == R.drawable.facebook_icon) {
+                if (informationData.get(position).getInfo_icon() == R.drawable.facebook_icon && providerFacebook != null) {
                     String facebookUrl = getFacebookPageURL(getContext());
                     if (facebookUrl.substring(0, 2).equalsIgnoreCase("fb")) {
                         Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
                         facebookIntent.setData(Uri.parse(facebookUrl));
                         startActivity(facebookIntent);
                     } else {
-                        callWebviewWithUrl("https://www.facebook.com/publictheband/", providerFacebook);
-                        //callWebviewWithUrl(facebookUrl);
+                        callWebviewWithUrl("https://www.facebook.com/" + providerFacebook, providerFacebook);
                     }
 
                 }
@@ -261,9 +271,9 @@ public class InformationFragment extends Fragment {
                         providerInstagram != null) {
                     openInstagram(getContext());
                 }
-                if (informationData.get(position).getInfo_icon() == R.drawable.google_plus &&
-                        providerGooglePlus != null) {
-                    openGooglePlus(getContext());
+                if (informationData.get(position).getInfo_icon() == R.drawable.snapchat &&
+                        providerSnapchat != null) {
+                    openSnapchat(getContext());
                 }
             }
         };
@@ -310,24 +320,19 @@ public class InformationFragment extends Fragment {
 
             if (getPkgInfo.contains("com.twitter.android")) {
                 // APP NOT INSTALLED
-//                Intent intent = new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("twitter://user?user_id= 24705126"));
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("twitter://user?screen_name=" + "ShashiTharoor"));
-//
+
+                        Uri.parse("twitter://user?screen_name=" + providerTwitter));
                 startActivity(intent);
             } else {
-                callWebviewWithUrl("https://twitter.com/" + "ShashiTharoor", providerTwitter);
-
+                callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("https://twitter.com/" + "ShashiTharoor", providerTwitter);
-
-
+            callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
         }
     }
 
@@ -338,52 +343,44 @@ public class InformationFragment extends Fragment {
             String getPkgInfo = pkgInfo.toString();
 
             if (getPkgInfo.contains("com.instagram.android")) {
-                // APP NOT INSTALLED
+                // APP  INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://instagram.com/_u/" + "mikeescamilla"));
-//
+                        Uri.parse("http://instagram.com/_u/" + providerInstagram));
                 startActivity(intent);
-            } else {
-                callWebviewWithUrl("http://instagram.com/" + "mikeescamilla", providerTwitter);
-
+            } else{
+                callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
 
             // APP NOT INSTALLED
-            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("http://instagram.com/" + "mikeescamilla", providerTwitter);
-
-
+            callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
         }
 
     }
 
-    public void openGooglePlus(Context context) {
-        PackageManager pkManager = context.getPackageManager();
-        try {
-            PackageInfo pkgInfo = pkManager.getPackageInfo("com.google.android.apps.plus", 0);
-            String getPkgInfo = pkgInfo.toString();
+        public void openSnapchat (Context context){
+            PackageManager pkManager = context.getPackageManager();
+            try {
+                PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
+                String getPkgInfo = pkgInfo.toString();
+                    if (getPkgInfo.contains("com.snapchat.android")) {
+                        // APP NOT INSTALLED
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://snapchat.com/add/" + providerSnapchat));
+                        startActivity(intent);
+                    } else {
+                        callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
 
-            if (getPkgInfo.contains("com.google.android.apps.plus")) {
-                // APP NOT INSTALLED
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://developers.google.com/+/communities/116320632775523824083"));
-//
-                startActivity(intent);
-            } else {
-                callWebviewWithUrl("https://plus.google.com/communities/116320632775523824083", providerTwitter);
+                    }
+                } catch(PackageManager.NameNotFoundException e){
+                    e.printStackTrace();
+
+                    // APP NOT INSTALLED
+                    //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+                    callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+                }
+
 
             }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-
-            // APP NOT INSTALLED
-            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("https://plus.google.com/communities/116320632775523824083", providerTwitter);
-
-
         }
-    }
-
-}

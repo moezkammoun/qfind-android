@@ -140,6 +140,7 @@ public class SearchResultsFragment extends Fragment {
                             searchResultsResponse = response.body();
                             if (searchResultsResponse.getCode().equals("200")) {
                                 serviceProviderResultList = searchResultsResponse.getResult();
+                                searchedItemList.clear();
                                 for (int i = 0; i < serviceProviderResultList.size(); i++) {
                                     item = new SearchedItem(serviceProviderResultList.get(i).getServiceProviderName(),
                                             serviceProviderResultList.get(i).getServiceProviderLocation(),
@@ -160,7 +161,6 @@ public class SearchResultsFragment extends Fragment {
                                             serviceProviderResultList.get(i).getServiceProviderMapLocation(),
                                             serviceProviderResultList.get(i).getServiceProviderLogo(),
                                             serviceProviderResultList.get(i).getServiceProviderId());
-                                    searchedItemList.clear();
                                     searchedItemList.add(item);
                                 }
                                 resultsAdapter.notifyDataSetChanged();
