@@ -17,9 +17,9 @@
 
             <ImageView
                 android:id="@+id/info_icon"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/info_page_icon_width"
                 android:layout_centerVertical="true"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/info_page_icon_height"
                 card_view:srcCompat="@drawable/phone_icon" />
         </RelativeLayout>
 
@@ -30,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/info_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/info_page_dot_width"
+                android:layout_height="@dimen/info_page_dot_height"
                 android:layout_centerVertical="true"
                 card_view:srcCompat="@drawable/dot_icon" />
         </RelativeLayout>
@@ -57,8 +57,8 @@
 
             <ImageView
                 android:id="@+id/info_back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/info_page_icon_width"
+                android:layout_height="@dimen/info_page_icon_height"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 card_view:srcCompat="@drawable/right_arrow" />

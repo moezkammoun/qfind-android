@@ -223,15 +223,16 @@ public class InformationFragment extends Fragment {
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (informationData.get(position).getInfo_icon() == R.drawable.facebook_icon) {
+                if (informationData.get(position).getInfo_icon() == R.drawable.facebook_icon && providerFacebook != null) {
                     String facebookUrl = getFacebookPageURL(getContext());
                     if (facebookUrl.substring(0, 2).equalsIgnoreCase("fb")) {
                         Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
                         facebookIntent.setData(Uri.parse(facebookUrl));
                         startActivity(facebookIntent);
                     } else {
-                        callWebviewWithUrl("https://www.facebook.com/publictheband/", providerFacebook);
-                        //callWebviewWithUrl(facebookUrl);
+
+                        callWebviewWithUrl("https://www.facebook.com/" + providerFacebook, providerFacebook);
+
                     }
 
                 }
@@ -266,9 +267,9 @@ public class InformationFragment extends Fragment {
                         providerInstagram != null) {
                     openInstagram(getContext());
                 }
-                if (informationData.get(position).getInfo_icon() == R.drawable.google_plus &&
-                        providerGooglePlus != null) {
-                    openGooglePlus(getContext());
+                if (informationData.get(position).getInfo_icon() == R.drawable.snapchat &&
+                        providerSnapchat != null) {
+                    openSnapchat(getContext());
                 }
             }
         };
@@ -315,14 +316,13 @@ public class InformationFragment extends Fragment {
 
             if (getPkgInfo.contains("com.twitter.android")) {
                 // APP NOT INSTALLED
-//                Intent intent = new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("twitter://user?user_id= 24705126"));
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("twitter://user?screen_name=" + "ShashiTharoor"));
-//
+
+                        Uri.parse("twitter://user?screen_name=" + providerTwitter));
                 startActivity(intent);
             } else {
-                callWebviewWithUrl("https://twitter.com/" + "ShashiTharoor", providerTwitter);
+                callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
+
 
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -330,7 +330,9 @@ public class InformationFragment extends Fragment {
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("https://twitter.com/" + "ShashiTharoor", providerTwitter);
+
+            callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
+
 
 
         }
@@ -343,41 +345,46 @@ public class InformationFragment extends Fragment {
             String getPkgInfo = pkgInfo.toString();
 
             if (getPkgInfo.contains("com.instagram.android")) {
-                // APP NOT INSTALLED
+
+                // APP  INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://instagram.com/_u/" + "mikeescamilla"));
-//
+                        Uri.parse("http://instagram.com/_u/" + providerInstagram));
                 startActivity(intent);
             } else {
-                callWebviewWithUrl("http://instagram.com/" + "mikeescamilla", providerTwitter);
+                callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
+
 
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
 
             // APP NOT INSTALLED
-            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("http://instagram.com/" + "mikeescamilla", providerTwitter);
+            callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
+
 
 
         }
 
     }
 
-    public void openGooglePlus(Context context) {
+
+    public void openSnapchat(Context context) {
+
         PackageManager pkManager = context.getPackageManager();
         try {
-            PackageInfo pkgInfo = pkManager.getPackageInfo("com.google.android.apps.plus", 0);
+            PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
             String getPkgInfo = pkgInfo.toString();
 
-            if (getPkgInfo.contains("com.google.android.apps.plus")) {
+            if (getPkgInfo.contains("com.snapchat.android")) {
+
                 // APP NOT INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://developers.google.com/+/communities/116320632775523824083"));
-//
+                        Uri.parse("https://snapchat.com/add/" + providerSnapchat));
                 startActivity(intent);
             } else {
-                callWebviewWithUrl("https://plus.google.com/communities/116320632775523824083", providerTwitter);
+
+                callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+
 
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -385,10 +392,13 @@ public class InformationFragment extends Fragment {
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("https://plus.google.com/communities/116320632775523824083", providerTwitter);
+
+            callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+
 
 
         }
-    }
 
+
+    }
 }

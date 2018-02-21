@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QFindAppandroid</string>
     <string name="qfind_of_the_day">كيوفايند اليوم</string>
     <string name="search_hint">ماذا تريد أن تجد اليوم؟</string>
     <string name="or">أو</string>
@@ -12,34 +11,27 @@
     <string name="contact_us">لتجدنا</string>
     <string name="settings">الإعدادات</string>
     <string name="arabic">عربى</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="information_sub_title">West Bay</string>
-    <string name="something_went_wrong">Oops! something went wrong</string>
-    <string name="please_type">Please type something to find!</string>
-    <string name="error_in_connecting">Error in connecting the server</string>
-    <string name="check_network">Check your internet connections</string>
+    <string name="check_network">تأكد من اتصالك بالانترنت</string>
     <string name="un_authorised">Unauthorized access</string>
     <string name="today">اليوم</string>
     <string name="select_language">اختيار اللغة</string>
     <string name="categories_text">الفئات</string>
     <string name="history_text">تاريخ البحث</string>
-    <string name="title_activity_contain">ContainActivity</string>
     <string name="search_results_text">نتائج البحث</string>
     <string name="favorites_text">المفضلة</string>
-
-
-    <!--<string name="app_name">QFindAppandroid</string>-->
-    <string name="english">English</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="already_english">you have already selected Arabic</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="already_english">لقد قمت باختيار اللغة العربية بالفعل</string>
     <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
-    <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
-   </string>
     <string name="no_data_text">No data</string>
     <string name="no_result_text">No results found</string>
     <string name="title_activity_webview">Webview</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="app_name">QFindAppandroid</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="something_went_wrong">Oops! something went wrong</string>
+    <string name="error_in_connecting">Error in connecting the server</string>
+    <string name="no_data_to_share">No data to share</string>
+    <string name="no_data_to_favorite">No data to add favorite</string>
+    <string name="english">English</string>
 </resources>

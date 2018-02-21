@@ -21,17 +21,13 @@
     <string name="select_language">Select Language</string>
     <string name="already_english">you have already selected English</string>
     <string name="activity_reload_string">you will be redirected to home page, after changing the language.do you want to continue?</string>
-    <string name="terms_and_conditions_text"> We are working behind the scenes to develop and support learning through hands-on creative experiences, which we take into community venues and schools throughout Qatar.
-   </string>
     <string name="categories_text">Categories</string>
     <string name="history_text">History</string>
-    <string name="title_activity_contain">ContainActivity</string>
     <string name="search_results_text">Search Results</string>
     <string name="favorites_text">Favorites</string>
     <string name="no_data_text">No data</string>
     <string name="no_result_text">No results found</string>
     <string name="something_went_wrong">Oops! something went wrong</string>
-    <string name="please_type">Please type something to find!</string>
     <string name="error_in_connecting">Error in connecting the server</string>
     <string name="check_network">Check your internet connections</string>
     <string name="un_authorised">Unauthorized access</string>
