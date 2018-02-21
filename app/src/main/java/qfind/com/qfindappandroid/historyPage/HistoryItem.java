@@ -7,9 +7,12 @@ package qfind.com.qfindappandroid.historyPage;
 public class HistoryItem {
     private int id;
     private String day;
+    private String time;
     private String titke;
     private String image;
     private String description;
+    private String titleArabic;
+    private String descriptionArabic;
     private int pageId;
     private String providerThumbnail;
     private String providerPhone;
@@ -32,13 +35,14 @@ public class HistoryItem {
         this.id = id;
     }
 
-    public HistoryItem(String day, String titke, String image, String description, int pageId,
+    public HistoryItem(String day, String time,String titke, String image, String description, int pageId,
                        String providerThumbnail, String providerPhone, String providerWebsite,
                        String providerAddress, String providerOpeningTime, String providerMail,
                        String providerFacebook, String providerLinkedIn, String providerInstagram,
                        String providerTwitter, String providerSnapchat, String providerGooglePlus,
                        String providerLatlong) {
         this.day = day;
+        this.time=time;
         this.titke = titke;
         this.image = image;
         this.description = description;
@@ -74,6 +78,14 @@ public class HistoryItem {
         this.day = day;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public String getTitke() {
         return titke;
     }
@@ -96,6 +108,22 @@ public class HistoryItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTitleArabic() {
+        return titleArabic;
+    }
+
+    public void setTitleArabic(String titleArabic) {
+        this.titleArabic = titleArabic;
+    }
+
+    public String getDescriptionArabic() {
+        return descriptionArabic;
+    }
+
+    public void setDescriptionArabic(String descriptionArabic) {
+        this.descriptionArabic = descriptionArabic;
     }
 
     public int getPageId() {

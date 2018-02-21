@@ -10,6 +10,8 @@ public class HistoryPageDataModel {
     String pageName;
     String url;
     String description;
+    String pageNameArabic;
+    String descriptionArabic;
     private String providerPhone;
     private String providerWebsite;
     private String providerAddress;
@@ -85,7 +87,21 @@ public class HistoryPageDataModel {
         this.description = description;
     }
 
+    public String getPageNameArabic() {
+        return pageNameArabic;
+    }
 
+    public void setPageNameArabic(String pageNameArabic) {
+        this.pageNameArabic = pageNameArabic;
+    }
+
+    public String getDescriptionArabic() {
+        return descriptionArabic;
+    }
+
+    public void setDescriptionArabic(String descriptionArabic) {
+        this.descriptionArabic = descriptionArabic;
+    }
 
     public String getProviderPhone() {
         return providerPhone;

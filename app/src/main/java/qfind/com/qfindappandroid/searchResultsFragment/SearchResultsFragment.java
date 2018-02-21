@@ -83,6 +83,8 @@ public class SearchResultsFragment extends Fragment {
                 ((BaseActivity) getActivity()).showServiceProviderDetailPage(
                         searchedItemList.get(position).getProviderName(),
                         searchedItemList.get(position).getProviderLocation(),
+                        searchedItemList.get(position).getProviderNameArabic(),
+                        searchedItemList.get(position).getProviderLocationArabic(),
                         searchedItemList.get(position).getProviderPhone(),
                         searchedItemList.get(position).getProviderAddress(),
                         searchedItemList.get(position).getProviderWebsite(),
@@ -141,6 +143,8 @@ public class SearchResultsFragment extends Fragment {
                                 for (int i = 0; i < serviceProviderResultList.size(); i++) {
                                     item = new SearchedItem(serviceProviderResultList.get(i).getServiceProviderName(),
                                             serviceProviderResultList.get(i).getServiceProviderLocation(),
+                                            serviceProviderResultList.get(i).getServiceProviderNameArabic(),
+                                            serviceProviderResultList.get(i).getServiceProviderLocationArabic(),
                                             serviceProviderResultList.get(i).getServiceProviderLogo(),
                                             serviceProviderResultList.get(i).getServiceProviderMobile(),
                                             serviceProviderResultList.get(i).getServiceProviderWebsite(),

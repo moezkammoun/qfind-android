@@ -12,6 +12,14 @@ public class ServiceProviderResult {
     private String serviceProviderLocation;
     @SerializedName("service_provider_category")
     private String serviceProviderCategory;
+    @SerializedName("service_provider_name_arabic")
+    private String serviceProviderNameArabic;
+    @SerializedName("service_provider_address_arabic")
+    private String serviceProviderAddressArabic;
+    @SerializedName("service_provider_location_arabic")
+    private String serviceProviderLocationArabic;
+    @SerializedName("service_provider_category_arabic")
+    private String serviceProviderCategoryArabic;
     @SerializedName("id")
     private int serviceProviderId;
     @SerializedName("service_provider_mail_account")
@@ -63,6 +71,38 @@ public class ServiceProviderResult {
 
     public void setServiceProviderLocation(String serviceProviderLocation) {
         this.serviceProviderLocation = serviceProviderLocation;
+    }
+
+    public String getServiceProviderNameArabic() {
+        return serviceProviderNameArabic;
+    }
+
+    public void setServiceProviderNameArabic(String serviceProviderNameArabic) {
+        this.serviceProviderNameArabic = serviceProviderNameArabic;
+    }
+
+    public String getServiceProviderAddressArabic() {
+        return serviceProviderAddressArabic;
+    }
+
+    public void setServiceProviderAddressArabic(String serviceProviderAddressArabic) {
+        this.serviceProviderAddressArabic = serviceProviderAddressArabic;
+    }
+
+    public String getServiceProviderLocationArabic() {
+        return serviceProviderLocationArabic;
+    }
+
+    public void setServiceProviderLocationArabic(String serviceProviderLocationArabic) {
+        this.serviceProviderLocationArabic = serviceProviderLocationArabic;
+    }
+
+    public String getServiceProviderCategoryArabic() {
+        return serviceProviderCategoryArabic;
+    }
+
+    public void setServiceProviderCategoryArabic(String serviceProviderCategoryArabic) {
+        this.serviceProviderCategoryArabic = serviceProviderCategoryArabic;
     }
 
     public String getServiceProviderCategory() {

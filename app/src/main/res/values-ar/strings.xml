@@ -21,12 +21,15 @@
     <string name="check_network">Check your internet connections</string>
     <string name="un_authorised">Unauthorized access</string>
     <string name="today">اليوم</string>
+    <string name="yesterday">الأمس</string>
     <string name="select_language">اختيار اللغة</string>
     <string name="categories_text">الفئات</string>
     <string name="history_text">تاريخ البحث</string>
     <string name="title_activity_contain">ContainActivity</string>
     <string name="search_results_text">نتائج البحث</string>
     <string name="favorites_text">المفضلة</string>
+    <string name="added_to_favorites">تم الإضافة إلى المفضلة</string>
+    <string name="removed_to_favorites">تم الحذف من المفضلة</string>
 
 
     <!--<string name="app_name">QFindAppandroid</string>-->

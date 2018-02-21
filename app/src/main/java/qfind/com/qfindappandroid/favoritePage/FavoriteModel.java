@@ -11,6 +11,8 @@ public class FavoriteModel {
     private String itemDescription;
     private String url;
     private int pageId;
+    private String itemArabic;
+    private String itemDescriptionArabic;
     private String providerThumbnail;
     private String providerPhone;
     private String providerWebsite;
@@ -28,14 +30,16 @@ public class FavoriteModel {
     public FavoriteModel() {
     }
 
-    public FavoriteModel(String item, String itemDescription, String url,int pageId,
-                         String providerPhone, String providerWebsite,
+    public FavoriteModel(String item, String itemDescription, String itemArabic,String itemDescriptionArabic,
+                         String url,int pageId, String providerPhone, String providerWebsite,
                          String providerAddress, String providerOpeningTime, String providerMail,
                          String providerFacebook, String providerLinkedIn, String providerInstagram,
                          String providerTwitter, String providerSnapchat, String providerGooglePlus,
                          String providerLatlong) {
         this.item = item;
         this.itemDescription = itemDescription;
+        this.itemArabic=itemArabic;
+        this.itemDescriptionArabic=itemDescriptionArabic;
         this.url = url;
         this.pageId=pageId;
         this.providerPhone=providerPhone;
@@ -83,6 +87,22 @@ public class FavoriteModel {
 
     public void setItemDescription(String itemDescription) {
         this.itemDescription = itemDescription;
+    }
+
+    public String getItemArabic() {
+        return itemArabic;
+    }
+
+    public void setItemArabic(String itemArabic) {
+        this.itemArabic = itemArabic;
+    }
+
+    public String getItemDescriptionArabic() {
+        return itemDescriptionArabic;
+    }
+
+    public void setItemDescriptionArabic(String itemDescriptionArabic) {
+        this.itemDescriptionArabic = itemDescriptionArabic;
     }
 
     public int getPageId() {

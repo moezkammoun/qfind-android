@@ -153,6 +153,8 @@ public class BaseActivity extends AppCompatActivity {
                 FavoriteModel favoriteModel = new FavoriteModel();
                 favoriteModel.setItem(bundle.getString("providerName"));
                 favoriteModel.setItemDescription(bundle.getString("providerLocation"));
+                favoriteModel.setItemArabic(bundle.getString("providerNameArabic"));
+                favoriteModel.setItemDescriptionArabic(bundle.getString("providerLocationArabic"));
                 favoriteModel.setUrl(bundle.getString("providerLogo"));
                 favoriteModel.setPageId(bundle.getInt("providerId"));
                 favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
@@ -171,11 +173,11 @@ public class BaseActivity extends AppCompatActivity {
                 if (db.checkFavoriteById(bundle.getInt("providerId"))) {
                     db.deleteFavorite(bundle.getInt("providerId"));
                     infoStarButton.setImageResource(R.drawable.favorite_blank_star);
-                    Util.showToast("Removed from Favorites",getApplicationContext());
+                    Util.showToast(getResources().getString(R.string.removed_to_favorites),getApplicationContext());
                 } else {
                     db.addFavorite(favoriteModel);
                     infoStarButton.setImageResource(R.drawable.star_icon);
-                    Util.showToast("Added to Favorites",getApplicationContext());
+                    Util.showToast(getResources().getString(R.string.added_to_favorites),getApplicationContext());
                 }
 
             }
@@ -411,12 +413,24 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void isFavoriteSelected(int providerId){
+        DataBaseHandler db=new DataBaseHandler(this);
+        Boolean isFavorite=db.checkFavoriteById(providerId);
+        if(isFavorite){
+        infoStarButton.setImageResource(R.drawable.star_icon);
+        }
+        else {
+            infoStarButton.setImageResource(R.drawable.favorite_blank_star);
+        }
+    }
+
     public void showNormalToolbar() {
         normalToolbar.setVisibility(View.VISIBLE);
         infoToolbar.setVisibility(View.GONE);
     }
 
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
+                                              String providerNameArabic,String providerLocationArabic,
                                               String providerMobile, String providerAddress,
                                               String providerWebsite, String providerOpeningTime,
                                               String providerMail, String providerFacebook,
@@ -427,6 +441,8 @@ public class BaseActivity extends AppCompatActivity {
 
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
+        bundle.putString("providerNameArabic", providerNameArabic);
+        bundle.putString("providerLocationArabic", providerLocationArabic);
         bundle.putString("providerMobile", providerMobile);
         bundle.putString("providerAddress", providerAddress);
         bundle.putString("providerWebsite", providerWebsite);

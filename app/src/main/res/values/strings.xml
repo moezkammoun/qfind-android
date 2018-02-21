@@ -18,6 +18,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="today">Today</string>
+    <string name="yesterday">yesterday</string>
     <string name="select_language">Select Language</string>
     <string name="already_english">you have already selected English</string>
     <string name="activity_reload_string">you will be redirected to home page, after changing the language.do you want to continue?</string>
@@ -28,6 +29,8 @@
     <string name="title_activity_contain">ContainActivity</string>
     <string name="search_results_text">Search Results</string>
     <string name="favorites_text">Favorites</string>
+    <string name="added_to_favorites">Added to Favorites</string>
+    <string name="removed_to_favorites">Removed from Favorites</string>
     <string name="no_data_text">No data</string>
     <string name="no_result_text">No results found</string>
     <string name="something_went_wrong">Oops! something went wrong</string>

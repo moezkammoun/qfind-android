@@ -34,7 +34,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private String KEY_TITLE = "title";
     private String KEY_IMG = "thumbnail";
     private String KEY_DESCRIPTION = "description";
+    private String KEY_TITLE_ARABIC = "title_arabic";
+    private String KEY_DESCRIPTION_ARABIC = "description_arabic";
     private String KEY_DAY = "day";
+    private String KEY_TIME = "time";
     private String KEY_PAGE_ID = "page_id";
     private String KEY_LOCATION = "provider_location";
     private String KEY_MOBILE = "provider_mobile";
@@ -61,13 +64,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_TABLE_HISTORY = "CREATE TABLE " + TABLE_HISTORY + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_DAY + " TEXT,"
-                + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER"
-                + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT," + KEY_WEBSITE + " TEXT,"
-                + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT," + KEY_MAIL + " TEXT,"
-                + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT," + KEY_INSTAGRAM + " TEXT,"
-                + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT," + KEY_GOOGLE_PLUS + " TEXT,"
-                + KEY_MAP + " TEXT " + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_DAY + " DATE,"
+                + KEY_TIME + " TIME," + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT,"
+                + KEY_PAGE_ID + " INTEGER" + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT,"
+                + KEY_WEBSITE + " TEXT," + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT,"
+                + KEY_MAIL + " TEXT," + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT,"
+                + KEY_INSTAGRAM + " TEXT," + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT,"
+                + KEY_GOOGLE_PLUS + " TEXT," + KEY_MAP + " TEXT,"
+                + KEY_TITLE_ARABIC + " TEXT," + KEY_DESCRIPTION_ARABIC + " TEXT " + ")";
+
         db.execSQL(CREATE_TABLE_HISTORY);
 
         String CREATE_TABLE_FAVORITE = "CREATE TABLE " + TABLE_FAVORITE + "("
@@ -77,7 +82,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT," + KEY_MAIL + " TEXT,"
                 + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT," + KEY_INSTAGRAM + " TEXT,"
                 + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT," + KEY_GOOGLE_PLUS + " TEXT,"
-                + KEY_MAP + " TEXT " + ")";
+                + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT,"
+                + KEY_DESCRIPTION_ARABIC + " TEXT " + ")";
         db.execSQL(CREATE_TABLE_FAVORITE);
     }
 
@@ -90,6 +96,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DAY, history.getDay());
+        values.put(KEY_TIME, history.getTime());
         values.put(KEY_TITLE, history.getTitke());
         values.put(KEY_IMG, history.getImage());
         values.put(KEY_DESCRIPTION, history.getDescription());
@@ -107,6 +114,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_GOOGLE_PLUS, history.getProviderGooglePlus());
         values.put(KEY_MAP, history.getProviderLatlong());
         values.put(KEY_IMG, history.getProviderThumbnail());
+        values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
+        values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
 
         // Inserting Row
         writeDB.insert(TABLE_HISTORY, null, values);
@@ -132,6 +141,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SNAPCHAT, favorite.getProviderSnapchat());
         values.put(KEY_GOOGLE_PLUS, favorite.getProviderGooglePlus());
         values.put(KEY_MAP, favorite.getProviderLatlong());
+        values.put(KEY_TITLE_ARABIC, favorite.getItemArabic());
+        values.put(KEY_DESCRIPTION_ARABIC, favorite.getItemDescriptionArabic());
 
         // Inserting Row
         writeDB.insert(TABLE_FAVORITE, null, values);
@@ -157,7 +168,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public List<HistoryItem> getAllHistory(String day) {
         List<HistoryItem> historyList = new ArrayList<HistoryItem>();
-        String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_DAY + "='" + day + "'";
+        String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_DAY + "='" + day + "'"
+                + " order by " + KEY_DAY;
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -166,21 +178,24 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setId(Integer.parseInt(cursor.getString(0)));
                 history.setTitke(cursor.getString(1));
                 history.setDay(cursor.getString(2));
-                history.setImage(cursor.getString(3));
-                history.setDescription(cursor.getString(4));
-                history.setPageId(cursor.getInt(5));
-                history.setProviderPhone(cursor.getString(6));
-                history.setProviderWebsite(cursor.getString(7));
-                history.setProviderAddress(cursor.getString(8));
-                history.setProviderOpeningTime(cursor.getString(9));
-                history.setProviderMail(cursor.getString(10));
-                history.setProviderFacebook(cursor.getString(11));
-                history.setProviderLinkedIn(cursor.getString(12));
-                history.setProviderInstagram(cursor.getString(13));
-                history.setProviderTwitter(cursor.getString(14));
-                history.setProviderSnapchat(cursor.getString(15));
-                history.setProviderGooglePlus(cursor.getString(16));
-                history.setProviderLatlong(cursor.getString(17));
+                history.setTime(cursor.getString(3));
+                history.setImage(cursor.getString(4));
+                history.setDescription(cursor.getString(5));
+                history.setPageId(cursor.getInt(6));
+                history.setProviderPhone(cursor.getString(7));
+                history.setProviderWebsite(cursor.getString(8));
+                history.setProviderAddress(cursor.getString(9));
+                history.setProviderOpeningTime(cursor.getString(10));
+                history.setProviderMail(cursor.getString(11));
+                history.setProviderFacebook(cursor.getString(12));
+                history.setProviderLinkedIn(cursor.getString(13));
+                history.setProviderInstagram(cursor.getString(14));
+                history.setProviderTwitter(cursor.getString(15));
+                history.setProviderSnapchat(cursor.getString(16));
+                history.setProviderGooglePlus(cursor.getString(17));
+                history.setProviderLatlong(cursor.getString(18));
+                history.setTitleArabic(cursor.getString(19));
+                history.setDescriptionArabic(cursor.getString(20));
                 historyList.add(history);
             } while (cursor.moveToNext());
         }
@@ -218,6 +233,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 favModel.setProviderSnapchat(cursor.getString(14));
                 favModel.setProviderGooglePlus(cursor.getString(15));
                 favModel.setProviderLatlong(cursor.getString(16));
+                favModel.setItemArabic(cursor.getString(17));
+                favModel.setItemDescriptionArabic(cursor.getString(18));
                 favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }
@@ -240,36 +257,24 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public boolean checkHistoryById(int id, String today) {
-        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id +
-                " and "+ KEY_DAY + " = " + today;
 
+    public Cursor checkHistoryById(int id, String today) {
+        ArrayList<String> days = new ArrayList<String>();
         writeDB = this.getWritableDatabase();
+        String selectQuery = "SELECT " + KEY_DAY + " , " + KEY_PAGE_ID + " FROM "
+                + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id;
+//        + " AND " + KEY_DAY + "= '" + today + " '";
+
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void updateFavorite(FavoriteModel favorite, int id) {
-        writeDB = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, favorite.getItem());
-        values.put(KEY_IMG, favorite.getUrl());
-        values.put(KEY_DESCRIPTION, favorite.getItemDescription());
-        values.put(KEY_PAGE_ID, favorite.getPageId());
-        writeDB.update(TABLE_FAVORITE, values, KEY_PAGE_ID + " = " + id, null);
-        writeDB.close();
+        boolean value = cursor.moveToFirst();
+        return cursor;
     }
 
     public void updateHistory(HistoryItem history, int id) {
         writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DAY, history.getDay());
+        values.put(KEY_TIME, history.getTime());
         values.put(KEY_TITLE, history.getTitke());
         values.put(KEY_IMG, history.getImage());
         values.put(KEY_DESCRIPTION, history.getDescription());
@@ -287,6 +292,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_GOOGLE_PLUS, history.getProviderGooglePlus());
         values.put(KEY_MAP, history.getProviderLatlong());
         values.put(KEY_IMG, history.getProviderThumbnail());
+        values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
+        values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
 
         writeDB.update(TABLE_HISTORY, values, KEY_PAGE_ID + " = " + id, null);
         writeDB.close();
@@ -300,7 +307,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void deleteHistory(String lastdate) {
         writeDB = this.getWritableDatabase();
-        writeDB.delete(TABLE_HISTORY, KEY_DAY + " < " + lastdate, null);
+        writeDB.delete(TABLE_HISTORY, KEY_DAY + " < " + "' " + lastdate + " '", null);
         writeDB.close();
     }
 

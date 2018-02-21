@@ -3,6 +3,8 @@ package qfind.com.qfindappandroid.searchResultsFragment;
 public class SearchedItem {
     private String providerName;
     private String providerLocation;
+    private String providerNameArabic;
+    private String providerLocationArabic;
     private String providerThumbnail;
     private String providerPhone;
     private String providerWebsite;
@@ -23,12 +25,15 @@ public class SearchedItem {
     }
 
 
-    public SearchedItem(String item, String itemDescription, String thumbnail, String phone, String website,
+    public SearchedItem(String item, String itemDescription,String itemArabic,String itemDescriptionArabic,
+                        String thumbnail, String phone, String website,
                         String address, String openingTime, String mail, String facebook, String linkedIn,
                         String instagram, String twitter, String snapchat, String googlePlus, String latLong, String logo,
                         int id) {
         this.providerName = item;
         this.providerLocation = itemDescription;
+        this.providerNameArabic=itemArabic;
+        this.providerLocationArabic=itemDescriptionArabic;
         this.providerThumbnail = thumbnail;
         this.providerPhone = phone;
         this.providerWebsite = website;
@@ -53,6 +58,14 @@ public class SearchedItem {
 
     public String getProviderLocation() {
         return providerLocation;
+    }
+
+    public String getProviderNameArabic() {
+        return providerNameArabic;
+    }
+
+    public String getProviderLocationArabic() {
+        return providerLocationArabic;
     }
 
     public String getProviderThumbnail() {
