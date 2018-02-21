@@ -154,39 +154,7 @@ public class BaseActivity extends AppCompatActivity {
         infoStarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//<<<<<<< HEAD
-//                DataBaseHandler db = new DataBaseHandler(getApplicationContext());
-//                FavoriteModel favoriteModel = new FavoriteModel();
-//                favoriteModel.setItem(bundle.getString("providerName"));
-//                favoriteModel.setItemDescription(bundle.getString("providerLocation"));
-//                favoriteModel.setItemArabic(bundle.getString("providerNameArabic"));
-//                favoriteModel.setItemDescriptionArabic(bundle.getString("providerLocationArabic"));
-//                favoriteModel.setUrl(bundle.getString("providerLogo"));
-//                favoriteModel.setPageId(bundle.getInt("providerId"));
-//                favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
-//                favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
-//                favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
-//                favoriteModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
-//                favoriteModel.setProviderMail(bundle.getString("providerMail"));
-//                favoriteModel.setProviderFacebook(bundle.getString("providerFacebook"));
-//                favoriteModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
-//                favoriteModel.setProviderInstagram(bundle.getString("providerInstagram"));
-//                favoriteModel.setProviderTwitter(bundle.getString("providerTwitter"));
-//                favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
-//                favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
-//                favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
-//
-//                if (db.checkFavoriteById(bundle.getInt("providerId"))) {
-//                    db.deleteFavorite(bundle.getInt("providerId"));
-//                    infoStarButton.setImageResource(R.drawable.favorite_blank_star);
-//                    Util.showToast(getResources().getString(R.string.removed_to_favorites),getApplicationContext());
-//                } else {
-//                    db.addFavorite(favoriteModel);
-//                    infoStarButton.setImageResource(R.drawable.star_icon);
-//                    Util.showToast(getResources().getString(R.string.added_to_favorites),getApplicationContext());
-//                }
-//
-//=======
+
                 if (!infoToolBarMainTittleTxtView.getText().equals("")) {
                     DataBaseHandler db = new DataBaseHandler(getApplicationContext());
                     FavoriteModel favoriteModel = new FavoriteModel();
