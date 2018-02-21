@@ -435,6 +435,18 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void hideInfotoolbarBackButton(){
+        infoBackButton.setVisibility(View.INVISIBLE);
+    }
+    public void hideStarandShareButton(){
+        infoStarButton.setVisibility(View.INVISIBLE);
+        infoShareButton.setVisibility(View.INVISIBLE);
+    }
+    public void showStarandShareButton(){
+        infoStarButton.setVisibility(View.VISIBLE);
+        infoShareButton.setVisibility(View.VISIBLE);
+    }
+
     public void isFavoriteSelected(int providerId){
         DataBaseHandler db=new DataBaseHandler(this);
         Boolean isFavorite=db.checkFavoriteById(providerId);
