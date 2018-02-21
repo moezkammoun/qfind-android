@@ -81,6 +81,8 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
         holder.recycler_view_list.setLayoutManager
                 (new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         holder.recycler_view_list.setAdapter(historyPageDataAdapter);
+        historyPageDataAdapter.notifyItemInserted(0);
+        holder.recycler_view_list.smoothScrollToPosition(0);
         holder.recycler_view_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +97,8 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
                 ((BaseActivity) mContext).showServiceProviderDetailPage(
                         singleItem.get(position).getPageName(),
                         singleItem.get(position).getDescription(),
+                        singleItem.get(position).getPageNameArabic(),
+                        singleItem.get(position).getDescriptionArabic(),
                         singleItem.get(position).getProviderPhone(),
                         singleItem.get(position).getProviderAddress(),
                         singleItem.get(position).getProviderWebsite(),

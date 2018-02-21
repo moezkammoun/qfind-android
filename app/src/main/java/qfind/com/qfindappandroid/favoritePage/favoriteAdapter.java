@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +20,6 @@ import java.util.List;
 import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
-import qfind.com.qfindappandroid.Util;
 
 /**
  * Created by MoongedePC on 23-Jan-18.
@@ -50,9 +48,15 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         favoriteModel = itemList.get(position);
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            holder.title.setText(favoriteModel.getItem());
+            holder.description.setText(favoriteModel.getItemDescription());
+        } else{
+            holder.title.setText(favoriteModel.getItemArabic());
+            holder.description.setText(favoriteModel.getItemDescriptionArabic());
+        }
+
         positions.add(position, favoriteModel.getPageId());
-        holder.title.setText(favoriteModel.getItem());
-        holder.description.setText(favoriteModel.getItemDescription());
         // loading album cover using Glide library
         Picasso.with(mContext).load(favoriteModel.getUrl()).placeholder(R.drawable.placeholder).into(holder.thumbnail);
 
@@ -89,7 +93,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
                     // Setting Positive "Yes" Button
                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int which) {
+                        public void onClick(DialogInterface dialog, int which) {
                             delete(getAdapterPosition(), positions.get(getAdapterPosition()));
                         }
                     });
@@ -113,6 +117,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
                     ((BaseActivity) mContext).showServiceProviderDetailPage(
                             itemList.get(getAdapterPosition()).getItem(),
                             itemList.get(getAdapterPosition()).getItemDescription(),
+                            itemList.get(getAdapterPosition()).getItemArabic(),
+                            itemList.get(getAdapterPosition()).getItemDescriptionArabic(),
                             itemList.get(getAdapterPosition()).getProviderPhone(),
                             itemList.get(getAdapterPosition()).getProviderAddress(),
                             itemList.get(getAdapterPosition()).getProviderWebsite(),
@@ -136,10 +142,10 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
     public void setFontTypeForText(TextView title, TextView description) {
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
-            mTypeFaceLight= Typeface.createFromAsset(mContext.getAssets(),
+            mTypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/Lato-Light.ttf");
         } else {
-            mTypeFaceLight=Typeface.createFromAsset(mContext.getAssets(),
+            mTypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
         title.setTypeface(mTypeFaceLight);

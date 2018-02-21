@@ -69,9 +69,15 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
     public void onBindViewHolder(HistoryPageDataAdapter.SingleItemRowHolder holder, final int position) {
 
         historyPageDataModel = itemsList.get(position);
-        holder.title.setText(historyPageDataModel.getPageName());
+        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            holder.title.setText(historyPageDataModel.getPageName());
+            holder.description.setText(historyPageDataModel.getDescription());
+        }else{
+            holder.title.setText(historyPageDataModel.getPageNameArabic());
+            holder.description.setText(historyPageDataModel.getDescriptionArabic());
+        }
+
         Picasso.with(mContext).load(historyPageDataModel.getUrl()).placeholder(R.drawable.placeholder).into(holder.url);
-        holder.description.setText(historyPageDataModel.getDescription());
 
     }
 

@@ -67,17 +67,21 @@ public class FavoriteFragment extends Fragment {
                         + " ,pid: " + cn.getPageId();
                 // Writing Contacts to log
                 Log.d("item: ", log);
-                item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getUrl(), cn.getPageId(),
+                item = new FavoriteModel(cn.getItem(), cn.getItemDescription(),cn.getItemArabic(),cn.getItemDescriptionArabic(),
+                        cn.getUrl(), cn.getPageId(),
                         cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
                         cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
                         cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
                         cn.getProviderLatlong()
                 );
-                favoriteModelList.add(item);
+                favoriteModelList.add(0,item);
+
             }
             favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
             favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             favoriteView.setAdapter(adapter);
+            adapter.notifyItemInserted(0);
+            favoriteView.smoothScrollToPosition(0);
         }
         else{
             emptyTextView.setVisibility(View.VISIBLE);

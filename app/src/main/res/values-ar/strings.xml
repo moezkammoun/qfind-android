@@ -14,11 +14,14 @@
     <string name="check_network">تأكد من اتصالك بالانترنت</string>
     <string name="un_authorised">Unauthorized access</string>
     <string name="today">اليوم</string>
+    <string name="yesterday">الأمس</string>
     <string name="select_language">اختيار اللغة</string>
     <string name="categories_text">الفئات</string>
     <string name="history_text">تاريخ البحث</string>
     <string name="search_results_text">نتائج البحث</string>
     <string name="favorites_text">المفضلة</string>
+    <string name="added_to_favorites">تم الإضافة إلى المفضلة</string>
+    <string name="removed_to_favorites">تم الحذف من المفضلة</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="already_english">لقد قمت باختيار اللغة العربية بالفعل</string>

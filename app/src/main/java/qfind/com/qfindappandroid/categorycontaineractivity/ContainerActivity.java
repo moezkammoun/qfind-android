@@ -182,7 +182,8 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
 
     public void showServiceProvider(Uri uri) {
         showServiceProviderDetailPage(
-                "ProviderName", "ProviderLocation", "ProviderPhone",
+                "ProviderName", "ProviderLocation", "ProviderNameArabic",
+                "ProviderLocationArabic","ProviderPhone",
                 "ProviderAddress", "ProviderWebsite", "ProviderOpeningTime",
                 "ProviderMail", "ProviderFacebook", "ProviderLinkedIn",
                 "ProviderInstagram", "ProviderTwitter", "ProviderSnapchat",

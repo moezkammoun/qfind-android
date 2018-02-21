@@ -109,12 +109,12 @@ public class HistoryFragment extends Fragment {
 
                 if (todayDate.compareTo(strDate) == 0) {
                     if (today < 1) {
-                        dayVar = "Today";
+                        dayVar=getResources().getString(R.string.today);
                         today = today + 1;
                     }
                 } else if (yesDay.compareTo(strDate) == 0) {
                     if (yesterday < 1) {
-                        dayVar = "Yesterday";
+                        dayVar=getResources().getString(R.string.yesterday);
                         yesterday = yesterday + 1;
                     }
 
@@ -147,6 +147,8 @@ public class HistoryFragment extends Fragment {
                     model.setPageName(list.get(j).getTitke());
                     model.setUrl(list.get(j).getImage());
                     model.setDescription(list.get(j).getDescription());
+                    model.setPageNameArabic(list.get(j).getTitleArabic());
+                    model.setDescriptionArabic(list.get(j).getDescriptionArabic());
                     model.setProviderPhone(list.get(j).getProviderPhone());
                     model.setProviderAddress(list.get(j).getProviderAddress());
                     model.setProviderWebsite(list.get(j).getProviderWebsite());
@@ -160,7 +162,7 @@ public class HistoryFragment extends Fragment {
                     model.setProviderGooglePlus(list.get(j).getProviderGooglePlus());
                     model.setProviderLatlong(list.get(j).getProviderLatlong());
                     model.setPageId(list.get(j).getPageId());
-                    singleItem.add(model);
+                    singleItem.add(0,model);
                 }
                 mainModel.setHistoryPageDataModels(singleItem);
                 arrayListMain.add(mainModel);

@@ -13,6 +13,14 @@ public class ServiceProviderListDetails {
     private String serviceProviderAddress;
     @SerializedName("service_provider_location")
     private String serviceProviderLocation;
+    @SerializedName("service_provider_name_arabic")
+    private String serviceProviderNameArabic;
+    @SerializedName("service_provider_address_arabic")
+    private String serviceProviderAddressArabic;
+    @SerializedName("service_provider_location_arabic")
+    private String serviceProviderLocationArabic;
+    @SerializedName("service_provider_category_arabic")
+    private String serviceProviderCategoryArabic;
     @SerializedName("service_provider_category")
     private String serviceProviderCategory;
     @SerializedName("id")
@@ -51,6 +59,22 @@ public class ServiceProviderListDetails {
 
     public String getServiceProviderLogo() {
         return serviceProviderLogo;
+    }
+
+    public String getServiceProviderNameArabic() {
+        return serviceProviderNameArabic;
+    }
+
+    public String getServiceProviderAddressArabic() {
+        return serviceProviderAddressArabic;
+    }
+
+    public String getServiceProviderLocationArabic() {
+        return serviceProviderLocationArabic;
+    }
+
+    public String getServiceProviderCategoryArabic() {
+        return serviceProviderCategoryArabic;
     }
 
     public String getServiceProviderAddress() {
