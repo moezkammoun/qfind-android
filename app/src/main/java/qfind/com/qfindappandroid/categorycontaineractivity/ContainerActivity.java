@@ -97,6 +97,8 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                     "", "", "",
                     "", "", "", "",
                     "", Integer.parseInt(providerId));
+            hideInfotoolbarBackButton();
+            hideStarandShareButton();
             getServiceProviderData(Integer.valueOf(providerId));
         }
     }
@@ -130,6 +132,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         informationFragment.setArguments(bundle);
         transaction.replace(R.id.frame_container, informationFragment);
         transaction.commit();
+
     }
 
     public void getServiceProviderData(Integer providerId) {
@@ -142,11 +145,13 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
             call.enqueue(new Callback<ServiceProviderDataResponse>() {
                 @Override
                 public void onResponse(Call<ServiceProviderDataResponse> call, Response<ServiceProviderDataResponse> response) {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             serviceProviderDataResponse = response.body();
                             if (serviceProviderDataResponse.getCode().equals("200")) {
                                 serviceProviderResult = serviceProviderDataResponse.getResult();
+                                showStarandShareButton();
                                 showServiceProviderDetailPageWithoutBackStack(serviceProviderResult.getServiceProviderName(),
                                         serviceProviderResult.getServiceProviderLocation(),
                                         serviceProviderResult.getServiceProviderMobile(),
@@ -163,6 +168,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                         serviceProviderResult.getServiceProviderMapLocation(),
                                         serviceProviderResult.getServiceProviderLogo(),
                                         serviceProviderResult.getServiceProviderId());
+
                             }
                         }
 
