@@ -97,14 +97,24 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
-        Cursor cursor = db.checkHistoryById(bundle.getInt("providerId"), sdf.format(new Date()));
 
-
-        if (cursor.getCount() == 0) {
-            db.addHistory(dataModel);
-        } else {
-            db.updateHistory(dataModel, bundle.getInt("providerId"));
+        Cursor cursor=db.checkHistoryByDay(bundle.getInt("providerId"));
+        ArrayList<String> isid=new ArrayList<String>();
+        if(cursor.moveToFirst()){
+            do{
+                isid.add(cursor.getString(0));
+            }while (cursor.moveToNext());
+        }else{
+            isid.add("0");
         }
+
+        if(isid.get(0).equals(sdf.format(new Date()))){
+            db.updateHistory(dataModel, bundle.getInt("providerId"),isid.get(0));
+        }
+        else {
+            db.addHistory(dataModel);
+        }
+
 
         providerPageId = bundle.getInt("providerId");
         providerName = bundle.getString("providerName");
@@ -159,7 +169,15 @@ public class InformationFragment extends Fragment {
         else
             progressBar.setVisibility(View.GONE);
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
-        ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
+
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
+        }else {
+            ((ContainerActivity) getActivity()).showInfoToolbar(providerNameArabic, providerLocationArabic);
+        }
+
+
+
         ((ContainerActivity) getActivity()).isFavoriteSelected(providerPageId);
 
         if (providerName.equals("")) {

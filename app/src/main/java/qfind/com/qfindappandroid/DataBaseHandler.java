@@ -258,19 +258,45 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public Cursor checkHistoryById(int id, String today) {
-        ArrayList<String> days = new ArrayList<String>();
+    public String checkHistoryById(int id) {
+        String days = "";
         writeDB = this.getWritableDatabase();
-        String selectQuery = "SELECT " + KEY_DAY + " , " + KEY_PAGE_ID + " FROM "
-                + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id;
-//        + " AND " + KEY_DAY + "= '" + today + " '";
+        String selectQuery = "SELECT " + KEY_DAY
+                + " FROM " + TABLE_HISTORY
+                + " WHERE " + KEY_PAGE_ID + " = " + id;
+//                + " AND " + KEY_DAY + " = '" + today + " '";
+        Cursor cursor = writeDB.rawQuery(selectQuery, null);
+        boolean value = cursor.moveToFirst();
+        if (value) {
+//            days.add(0,cursor.getString(0));
+            days = cursor.getString(0);
+        }
+        return days;
+    }
+
+    public Cursor checkHistoryByDay(int id) {
+//        int id=0;
+        ArrayList<String> dayslist = new ArrayList<String>();
+        writeDB = this.getWritableDatabase();
+        String selectQuery = "SELECT " + KEY_DAY
+                + " FROM " + TABLE_HISTORY
+                + " WHERE " + KEY_PAGE_ID + " = " + id
+                + " ORDER BY " + KEY_DAY + " DESC";
+//        + KEY_DAY + " = '" + today + " '"
 
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         boolean value = cursor.moveToFirst();
+        if (value) {
+            do {
+                dayslist.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+
+        }
         return cursor;
     }
 
-    public void updateHistory(HistoryItem history, int id) {
+
+    public void updateHistory(HistoryItem history, int id, String today) {
         writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DAY, history.getDay());
@@ -294,8 +320,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_IMG, history.getProviderThumbnail());
         values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
+        String whereClause = KEY_PAGE_ID + " = " + id + " and " + KEY_DAY + " = '" + today + " '";
 
-        writeDB.update(TABLE_HISTORY, values, KEY_PAGE_ID + " = " + id, null);
+        writeDB.update(TABLE_HISTORY, values, whereClause, null);
         writeDB.close();
     }
 
