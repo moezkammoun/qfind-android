@@ -298,9 +298,17 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderLogo(),
                                 serviceProviderListDetails.get(position).getServiceProviderId());
 
-                        ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
-                                        get(position).getServiceProviderLocation(),
-                                serviceProviderListDetails.get(position).getServiceProviderLocation());
+                        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                            ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
+                                            get(position).getServiceProviderName(),
+                                    serviceProviderListDetails.get(position).getServiceProviderLocation());
+                        }else{
+                            ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
+                                            get(position).getServiceProviderNameArabic(),
+                                    serviceProviderListDetails.get(position).getServiceProviderLocationArabic());
+                        }
+
+
                     } else {
                         ((BaseActivity) getActivity()).showServiceProviderDetailPage(
                                 serviceProviderListDetails.get(position).getServiceProviderName(),
@@ -322,10 +330,16 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderLogo(),
                                 serviceProviderListDetails.get(position).getServiceProviderId());
 
+                        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                            ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
+                                    get(position).getServiceProviderName(), serviceProviderListDetails.
+                                    get(position).getServiceProviderLocation());
+                        }else {
+                            ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
+                                    get(position).getServiceProviderNameArabic(), serviceProviderListDetails.
+                                    get(position).getServiceProviderLocationArabic());
+                        }
 
-                        ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
-                                get(position).getServiceProviderName(), serviceProviderListDetails.
-                                get(position).getServiceProviderLocation());
 
                     }
                 }

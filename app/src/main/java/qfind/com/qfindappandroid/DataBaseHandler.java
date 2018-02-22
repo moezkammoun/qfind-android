@@ -2,6 +2,7 @@ package qfind.com.qfindappandroid;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.AbstractCursor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -258,17 +259,43 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public Cursor checkHistoryById(int id, String today) {
-        ArrayList<String> days = new ArrayList<String>();
+    public String checkHistoryById(int id) {
+        String days = "";
         writeDB = this.getWritableDatabase();
-        String selectQuery = "SELECT " + KEY_DAY + " , " + KEY_PAGE_ID + " FROM "
-                + TABLE_HISTORY + " WHERE " + KEY_PAGE_ID + " = " + id;
-//        + " AND " + KEY_DAY + "= '" + today + " '";
+        String selectQuery = "SELECT " + KEY_DAY
+                + " FROM " + TABLE_HISTORY
+                + " WHERE " + KEY_PAGE_ID + " = " + id;
+//                + " AND " + KEY_DAY + " = '" + today + " '";
+        Cursor cursor = writeDB.rawQuery(selectQuery, null);
+        boolean value = cursor.moveToFirst();
+        if (value) {
+//            days.add(0,cursor.getString(0));
+            days = cursor.getString(0);
+        }
+        return days;
+    }
+
+    public Cursor checkHistoryByDay(int id) {
+//        int id=0;
+        ArrayList<String> dayslist = new ArrayList<String>();
+        writeDB = this.getWritableDatabase();
+        String selectQuery = "SELECT " + KEY_DAY
+                + " FROM " + TABLE_HISTORY
+                + " WHERE " + KEY_PAGE_ID + " = " + id
+                + " ORDER BY " + KEY_DAY + " DESC";
+//        + KEY_DAY + " = '" + today + " '"
 
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         boolean value = cursor.moveToFirst();
+        if (value) {
+            do {
+                dayslist.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+
+        }
         return cursor;
     }
+
 
     public void updateHistory(HistoryItem history, int id) {
         writeDB = this.getWritableDatabase();

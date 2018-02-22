@@ -96,14 +96,9 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
-        Cursor cursor = db.checkHistoryById(bundle.getInt("providerId"), sdf.format(new Date()));
 
 
-        if (cursor.getCount() == 0) {
-            db.addHistory(dataModel);
-        } else {
-            db.updateHistory(dataModel, bundle.getInt("providerId"));
-        }
+
 
         providerPageId = bundle.getInt("providerId");
         providerName = bundle.getString("providerName");
@@ -158,7 +153,15 @@ public class InformationFragment extends Fragment {
         else
             progressBar.setVisibility(View.GONE);
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
-        ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
+
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
+        }else {
+            ((ContainerActivity) getActivity()).showInfoToolbar(providerNameArabic, providerLocationArabic);
+        }
+
+
+
         ((ContainerActivity) getActivity()).isFavoriteSelected(providerPageId);
 
         if (providerName.equals("")) {
