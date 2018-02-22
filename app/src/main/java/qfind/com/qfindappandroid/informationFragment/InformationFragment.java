@@ -29,6 +29,7 @@ import java.util.Locale;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
@@ -172,7 +173,7 @@ public class InformationFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                     emptyTextView.setVisibility(View.VISIBLE);
                 }
-            }, 1500);
+            }, 3000);
 
         }
     }
