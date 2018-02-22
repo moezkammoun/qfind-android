@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 
 /**
@@ -47,12 +48,42 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         @Nullable
         @BindView(R.id.history_item_description)
         TextView description;
+        @Nullable
+        @BindView(R.id.history_layout)
+        RelativeLayout historyLayout;
 
 
 
         public SingleItemRowHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            historyLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemsList.get(getAdapterPosition()).getPageId();
+
+                    ((BaseActivity) mContext).showServiceProviderDetailPage(
+                            itemsList.get(getAdapterPosition()).getPageName(),
+                            itemsList.get(getAdapterPosition()).getDescription(),
+                            itemsList.get(getAdapterPosition()).getPageNameArabic(),
+                            itemsList.get(getAdapterPosition()).getDescriptionArabic(),
+                            itemsList.get(getAdapterPosition()).getProviderPhone(),
+                            itemsList.get(getAdapterPosition()).getProviderAddress(),
+                            itemsList.get(getAdapterPosition()).getProviderWebsite(),
+                            itemsList.get(getAdapterPosition()).getProviderOpeningTime(),
+                            itemsList.get(getAdapterPosition()).getProviderMail(),
+                            itemsList.get(getAdapterPosition()).getProviderFacebook(),
+                            itemsList.get(getAdapterPosition()).getProviderLinkedIn(),
+                            itemsList.get(getAdapterPosition()).getProviderInstagram(),
+                            itemsList.get(getAdapterPosition()).getProviderTwitter(),
+                            itemsList.get(getAdapterPosition()).getProviderSnapchat(),
+                            itemsList.get(getAdapterPosition()).getProviderGooglePlus(),
+                            itemsList.get(getAdapterPosition()).getProviderLatlong(),
+                            itemsList.get(getAdapterPosition()).getUrl(),
+                            itemsList.get(getAdapterPosition()).getPageId());
+
+                }
+            });
         }
     }
 
@@ -78,7 +109,6 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         }
 
         Picasso.with(mContext).load(historyPageDataModel.getUrl()).placeholder(R.drawable.placeholder).into(holder.url);
-
     }
 
     @Override

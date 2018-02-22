@@ -2,7 +2,6 @@ package qfind.com.qfindappandroid;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.AbstractCursor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -297,7 +296,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public void updateHistory(HistoryItem history, int id) {
+    public void updateHistory(HistoryItem history, int id, String today) {
         writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DAY, history.getDay());
@@ -321,8 +320,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_IMG, history.getProviderThumbnail());
         values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
+        String whereClause = KEY_PAGE_ID + " = " + id + " and " + KEY_DAY + " = '" + today + " '";
 
-        writeDB.update(TABLE_HISTORY, values, KEY_PAGE_ID + " = " + id, null);
+        writeDB.update(TABLE_HISTORY, values, whereClause, null);
         writeDB.close();
     }
 

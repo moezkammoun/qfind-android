@@ -98,7 +98,22 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
 
 
+        Cursor cursor=db.checkHistoryByDay(bundle.getInt("providerId"));
+        ArrayList<String> isid=new ArrayList<String>();
+        if(cursor.moveToFirst()){
+            do{
+                isid.add(cursor.getString(0));
+            }while (cursor.moveToNext());
+        }else{
+            isid.add("0");
+        }
 
+        if(isid.get(0).equals(sdf.format(new Date()))){
+            db.updateHistory(dataModel, bundle.getInt("providerId"),isid.get(0));
+        }
+        else {
+            db.addHistory(dataModel);
+        }
 
 
         providerPageId = bundle.getInt("providerId");
