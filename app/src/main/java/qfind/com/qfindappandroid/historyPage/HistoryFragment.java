@@ -168,6 +168,7 @@ public class HistoryFragment extends Fragment {
                 arrayListMain.add(mainModel);
             }
             setAdapter(arrayListMain);
+
         }
         else{
             emptyTextView.setVisibility(View.VISIBLE);
@@ -189,6 +190,8 @@ public class HistoryFragment extends Fragment {
         HistoryPageMainAdapter adapter = new HistoryPageMainAdapter(arrayListMain, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        adapter.notifyItemInserted(0);
+        recyclerView.smoothScrollToPosition(0);
        //up here
     }
 
