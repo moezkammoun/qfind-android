@@ -19,9 +19,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +84,7 @@ public class HistoryFragment extends Fragment {
         db.deleteHistory(filterDate);
         List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
         countList = db.getDateCount();
+
         if(countList.size()!=0){
             emptyTextView.setVisibility(View.GONE);
             for (HistoryDateCount count : countList) {
@@ -162,7 +166,7 @@ public class HistoryFragment extends Fragment {
                     model.setProviderGooglePlus(list.get(j).getProviderGooglePlus());
                     model.setProviderLatlong(list.get(j).getProviderLatlong());
                     model.setPageId(list.get(j).getPageId());
-                    singleItem.add(0,model);
+                    singleItem.add(model);
                 }
                 mainModel.setHistoryPageDataModels(singleItem);
                 arrayListMain.add(mainModel);
@@ -172,6 +176,7 @@ public class HistoryFragment extends Fragment {
         }
         else{
             emptyTextView.setVisibility(View.VISIBLE);
+            emptyTextView.setText(R.string.no_history_yet);
         }
 
         backButton.setOnClickListener(new View.OnClickListener() {

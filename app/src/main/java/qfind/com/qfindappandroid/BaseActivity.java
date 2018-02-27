@@ -31,6 +31,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import qfind.com.qfindappandroid.favoritePage.FavoriteFragment;
 import qfind.com.qfindappandroid.favoritePage.FavoriteModel;
 import qfind.com.qfindappandroid.historyPage.HistoryFragment;
@@ -156,6 +160,7 @@ public class BaseActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!infoToolBarMainTittleTxtView.getText().equals("")) {
+                    SimpleDateFormat sdfdatetime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
                     DataBaseHandler db = new DataBaseHandler(getApplicationContext());
                     FavoriteModel favoriteModel = new FavoriteModel();
                     favoriteModel.setItem(bundle.getString("providerName"));
@@ -164,6 +169,7 @@ public class BaseActivity extends AppCompatActivity {
                     favoriteModel.setItemDescriptionArabic(bundle.getString("providerLocationArabic"));
                     favoriteModel.setUrl(bundle.getString("providerLogo"));
                     favoriteModel.setPageId(bundle.getInt("providerId"));
+                    favoriteModel.setDatetime(sdfdatetime.format(new Date()));
                     favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
                     favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
                     favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
@@ -450,8 +456,10 @@ public class BaseActivity extends AppCompatActivity {
     public void isFavoriteSelected(int providerId){
         DataBaseHandler db=new DataBaseHandler(this);
         Boolean isFavorite=db.checkFavoriteById(providerId);
+        SimpleDateFormat sdfdatetime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
         if(isFavorite){
         infoStarButton.setImageResource(R.drawable.star_icon);
+        db.updateFavorite(providerId,sdfdatetime.format(new Date()));
         }
         else {
             infoStarButton.setImageResource(R.drawable.favorite_blank_star);
