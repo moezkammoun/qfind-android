@@ -3,8 +3,10 @@ package qfind.com.qfindappandroid;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private String KEY_SNAPCHAT = "provider_snapchat";
     private String KEY_GOOGLE_PLUS = "provider_google_plus";
     private String KEY_MAP = "provider_map_location";
+    private String KEY_DAYTIME = "provider_date_time";
 
 
     SQLiteDatabase writeDB, readDB;
@@ -65,7 +68,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         String CREATE_TABLE_HISTORY = "CREATE TABLE " + TABLE_HISTORY + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_DAY + " DATE,"
-                + KEY_TIME + " TIME," + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT,"
+                + KEY_DAYTIME + " DATETIME," + KEY_TIME + " TIME," + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT,"
                 + KEY_PAGE_ID + " INTEGER" + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT,"
                 + KEY_WEBSITE + " TEXT," + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT,"
                 + KEY_MAIL + " TEXT," + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT,"
@@ -77,7 +80,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         String CREATE_TABLE_FAVORITE = "CREATE TABLE " + TABLE_FAVORITE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_IMG + " TEXT,"
-                + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER"
+                + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER," + KEY_DAYTIME + " DATETIME,"
                 + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT," + KEY_WEBSITE + " TEXT,"
                 + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT," + KEY_MAIL + " TEXT,"
                 + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT," + KEY_INSTAGRAM + " TEXT,"
@@ -116,6 +119,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_IMG, history.getProviderThumbnail());
         values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
+        values.put(KEY_DAYTIME, history.getDayTime());
 
         // Inserting Row
         writeDB.insert(TABLE_HISTORY, null, values);
@@ -129,6 +133,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_IMG, favorite.getUrl());
         values.put(KEY_DESCRIPTION, favorite.getItemDescription());
         values.put(KEY_PAGE_ID, favorite.getPageId());
+        values.put(KEY_DAYTIME, favorite.getDatetime());
         values.put(KEY_MOBILE, favorite.getProviderPhone());
         values.put(KEY_WEBSITE, favorite.getProviderWebsite());
         values.put(KEY_ADDRESS, favorite.getProviderAddress());
@@ -152,7 +157,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public List<HistoryDateCount> getDateCount() {
 
         List<HistoryDateCount> historyDateCounts = new ArrayList<HistoryDateCount>();
-        String selectQuery = "SELECT " + KEY_DAY + ", COUNT(*) FROM " + TABLE_HISTORY + " GROUP BY " + KEY_DAY + " order by " + KEY_DAY + " desc";
+        String selectQuery = "SELECT " + KEY_DAY + ", COUNT(*) FROM "
+                + TABLE_HISTORY + " GROUP BY " + KEY_DAY + " order by " + KEY_DAYTIME + " desc";
         writeDB = this.getWritableDatabase();
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -169,8 +175,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public List<HistoryItem> getAllHistory(String day) {
         List<HistoryItem> historyList = new ArrayList<HistoryItem>();
         String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_DAY + "='" + day + "'"
-                + " order by " + KEY_DAY;
+                + " order by " + KEY_DAYTIME + " DESC ";
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
+        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -178,24 +185,26 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setId(Integer.parseInt(cursor.getString(0)));
                 history.setTitke(cursor.getString(1));
                 history.setDay(cursor.getString(2));
-                history.setTime(cursor.getString(3));
-                history.setImage(cursor.getString(4));
-                history.setDescription(cursor.getString(5));
-                history.setPageId(cursor.getInt(6));
-                history.setProviderPhone(cursor.getString(7));
-                history.setProviderWebsite(cursor.getString(8));
-                history.setProviderAddress(cursor.getString(9));
-                history.setProviderOpeningTime(cursor.getString(10));
-                history.setProviderMail(cursor.getString(11));
-                history.setProviderFacebook(cursor.getString(12));
-                history.setProviderLinkedIn(cursor.getString(13));
-                history.setProviderInstagram(cursor.getString(14));
-                history.setProviderTwitter(cursor.getString(15));
-                history.setProviderSnapchat(cursor.getString(16));
-                history.setProviderGooglePlus(cursor.getString(17));
-                history.setProviderLatlong(cursor.getString(18));
-                history.setTitleArabic(cursor.getString(19));
-                history.setDescriptionArabic(cursor.getString(20));
+                history.setDayTime(cursor.getString(3));
+                history.setTime(cursor.getString(4));
+                history.setImage(cursor.getString(5));
+                history.setDescription(cursor.getString(6));
+                history.setPageId(cursor.getInt(7));
+                history.setProviderPhone(cursor.getString(8));
+                history.setProviderWebsite(cursor.getString(9));
+                history.setProviderAddress(cursor.getString(10));
+                history.setProviderOpeningTime(cursor.getString(11));
+                history.setProviderMail(cursor.getString(12));
+                history.setProviderFacebook(cursor.getString(13));
+                history.setProviderLinkedIn(cursor.getString(14));
+                history.setProviderInstagram(cursor.getString(15));
+                history.setProviderTwitter(cursor.getString(16));
+                history.setProviderSnapchat(cursor.getString(17));
+                history.setProviderGooglePlus(cursor.getString(18));
+                history.setProviderLatlong(cursor.getString(19));
+                history.setTitleArabic(cursor.getString(20));
+                history.setDescriptionArabic(cursor.getString(21));
+
                 historyList.add(history);
             } while (cursor.moveToNext());
         }
@@ -207,7 +216,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public List<FavoriteModel> getAllFavorites() {
         List<FavoriteModel> favoriteList = new ArrayList<FavoriteModel>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_FAVORITE;
+        String selectQuery = "SELECT  * FROM " + TABLE_FAVORITE + " order by " + KEY_DAYTIME + " DESC ";
+        ;
 
         writeDB = this.getWritableDatabase();
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
@@ -221,20 +231,21 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 favModel.setUrl(cursor.getString(2));
                 favModel.setItemDescription(cursor.getString(3));
                 favModel.setPageId(cursor.getInt(4));
-                favModel.setProviderPhone(cursor.getString(5));
-                favModel.setProviderWebsite(cursor.getString(6));
-                favModel.setProviderAddress(cursor.getString(7));
-                favModel.setProviderOpeningTime(cursor.getString(8));
-                favModel.setProviderMail(cursor.getString(9));
-                favModel.setProviderFacebook(cursor.getString(10));
-                favModel.setProviderLinkedIn(cursor.getString(11));
-                favModel.setProviderInstagram(cursor.getString(12));
-                favModel.setProviderTwitter(cursor.getString(13));
-                favModel.setProviderSnapchat(cursor.getString(14));
-                favModel.setProviderGooglePlus(cursor.getString(15));
-                favModel.setProviderLatlong(cursor.getString(16));
-                favModel.setItemArabic(cursor.getString(17));
-                favModel.setItemDescriptionArabic(cursor.getString(18));
+                favModel.setDatetime(cursor.getString(5));
+                favModel.setProviderPhone(cursor.getString(7));
+                favModel.setProviderWebsite(cursor.getString(8));
+                favModel.setProviderAddress(cursor.getString(9));
+                favModel.setProviderOpeningTime(cursor.getString(10));
+                favModel.setProviderMail(cursor.getString(11));
+                favModel.setProviderFacebook(cursor.getString(12));
+                favModel.setProviderLinkedIn(cursor.getString(13));
+                favModel.setProviderInstagram(cursor.getString(14));
+                favModel.setProviderTwitter(cursor.getString(15));
+                favModel.setProviderSnapchat(cursor.getString(16));
+                favModel.setProviderGooglePlus(cursor.getString(17));
+                favModel.setProviderLatlong(cursor.getString(18));
+                favModel.setItemArabic(cursor.getString(19));
+                favModel.setItemDescriptionArabic(cursor.getString(20));
                 favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }
@@ -275,14 +286,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
     public Cursor checkHistoryByDay(int id) {
-//        int id=0;
         ArrayList<String> dayslist = new ArrayList<String>();
         writeDB = this.getWritableDatabase();
-        String selectQuery = "SELECT " + KEY_DAY
+        String selectQuery = "SELECT " + KEY_DAYTIME
                 + " FROM " + TABLE_HISTORY
                 + " WHERE " + KEY_PAGE_ID + " = " + id
-                + " ORDER BY " + KEY_DAY + " DESC";
-//        + KEY_DAY + " = '" + today + " '"
+                + " ORDER BY " + KEY_DAYTIME + " DESC";
 
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         boolean value = cursor.moveToFirst();
@@ -296,33 +305,34 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public void updateHistory(HistoryItem history, int id, String today) {
+    public void updateHistory(HistoryItem history, int id, String day) {
         writeDB = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_DAY, history.getDay());
-        values.put(KEY_TIME, history.getTime());
-        values.put(KEY_TITLE, history.getTitke());
-        values.put(KEY_IMG, history.getImage());
-        values.put(KEY_DESCRIPTION, history.getDescription());
-        values.put(KEY_PAGE_ID, history.getPageId());
-        values.put(KEY_MOBILE, history.getProviderPhone());
-        values.put(KEY_WEBSITE, history.getProviderWebsite());
-        values.put(KEY_ADDRESS, history.getProviderAddress());
-        values.put(KEY_OPENING_TIME, history.getProviderOpeningTime());
-        values.put(KEY_MAIL, history.getProviderMail());
-        values.put(KEY_FACEBOOK, history.getProviderFacebook());
-        values.put(KEY_LINKEDIN, history.getProviderLinkedIn());
-        values.put(KEY_INSTAGRAM, history.getProviderInstagram());
-        values.put(KEY_TWITTER, history.getProviderTwitter());
-        values.put(KEY_SNAPCHAT, history.getProviderSnapchat());
-        values.put(KEY_GOOGLE_PLUS, history.getProviderGooglePlus());
-        values.put(KEY_MAP, history.getProviderLatlong());
-        values.put(KEY_IMG, history.getProviderThumbnail());
-        values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
-        values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
-        String whereClause = KEY_PAGE_ID + " = " + id + " and " + KEY_DAY + " = '" + today + " '";
+        String updateQuery = "UPDATE " + TABLE_HISTORY + " SET "
+                + KEY_DAY + " = '" + history.getDay() + "' , "
+                + KEY_DAYTIME + " = '" + history.getDayTime() + "' , "
+                + KEY_TIME + " = '" + history.getTime() + "' "
+                + " WHERE " + KEY_PAGE_ID + " = " + id + " AND " + KEY_DAY + " = '" + day + "'";
 
-        writeDB.update(TABLE_HISTORY, values, whereClause, null);
+        Cursor cursor = writeDB.rawQuery(updateQuery, null);
+        if (cursor.moveToFirst()) {
+            System.out.println(" updated.........");
+        }
+        cursor.close();
+        writeDB.close();
+    }
+
+
+    public void updateFavorite(int id, String day) {
+        writeDB = this.getWritableDatabase();
+        String updateQuery = "UPDATE " + TABLE_FAVORITE + " SET "
+                + KEY_DAYTIME + " = '" + day + "' "
+                + " WHERE " + KEY_PAGE_ID + " = " + id;
+
+        Cursor cursor = writeDB.rawQuery(updateQuery, null);
+        if (cursor.moveToFirst()) {
+            System.out.println(" updated.........");
+        }
+        cursor.close();
         writeDB.close();
     }
 

@@ -72,9 +72,9 @@ public class FavoriteFragment extends Fragment {
                         cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
                         cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
                         cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
-                        cn.getProviderLatlong()
+                        cn.getProviderLatlong(),cn.getDatetime()
                 );
-                favoriteModelList.add(0,item);
+                favoriteModelList.add(item);
 
             }
             favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
@@ -85,6 +85,7 @@ public class FavoriteFragment extends Fragment {
         }
         else{
             emptyTextView.setVisibility(View.VISIBLE);
+            emptyTextView.setText(R.string.no_favorites_yet);
 
         }
         backButton.setOnClickListener(new View.OnClickListener() {
