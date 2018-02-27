@@ -37,4 +37,6 @@
     <string name="no_data_to_share">No data to share</string>
     <string name="no_data_to_favorite">No data to add favorite</string>
     <string name="english">English</string>
+    <string name="no_favorites_yet">لم تضف أي مفضلة بعد</string>
+    <string name="no_history_yet">لا يوجد نتائج بخث سابقة</string>
 </resources>

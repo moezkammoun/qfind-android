@@ -11,6 +11,7 @@ public class FavoriteModel {
     private String itemDescription;
     private String url;
     private int pageId;
+    private String datetime;
     private String itemArabic;
     private String itemDescriptionArabic;
     private String providerThumbnail;
@@ -30,30 +31,31 @@ public class FavoriteModel {
     public FavoriteModel() {
     }
 
-    public FavoriteModel(String item, String itemDescription, String itemArabic,String itemDescriptionArabic,
-                         String url,int pageId, String providerPhone, String providerWebsite,
+    public FavoriteModel(String item, String itemDescription, String itemArabic, String itemDescriptionArabic,
+                         String url, int pageId, String providerPhone, String providerWebsite,
                          String providerAddress, String providerOpeningTime, String providerMail,
                          String providerFacebook, String providerLinkedIn, String providerInstagram,
                          String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                         String providerLatlong) {
+                         String providerLatlong, String datetime) {
         this.item = item;
         this.itemDescription = itemDescription;
-        this.itemArabic=itemArabic;
-        this.itemDescriptionArabic=itemDescriptionArabic;
+        this.itemArabic = itemArabic;
+        this.itemDescriptionArabic = itemDescriptionArabic;
         this.url = url;
-        this.pageId=pageId;
-        this.providerPhone=providerPhone;
-        this.providerWebsite=providerWebsite;
-        this.providerAddress=providerAddress;
-        this.providerOpeningTime=providerOpeningTime;
-        this.providerMail=providerMail;
-        this.providerFacebook=providerFacebook;
-        this.providerLinkedIn=providerLinkedIn;
-        this.providerInstagram=providerInstagram;
-        this.providerTwitter=providerTwitter;
-        this.providerSnapchat=providerSnapchat;
-        this.providerGooglePlus=providerGooglePlus;
-        this.providerLatlong=providerLatlong;
+        this.pageId = pageId;
+        this.providerPhone = providerPhone;
+        this.providerWebsite = providerWebsite;
+        this.providerAddress = providerAddress;
+        this.providerOpeningTime = providerOpeningTime;
+        this.providerMail = providerMail;
+        this.providerFacebook = providerFacebook;
+        this.providerLinkedIn = providerLinkedIn;
+        this.providerInstagram = providerInstagram;
+        this.providerTwitter = providerTwitter;
+        this.providerSnapchat = providerSnapchat;
+        this.providerGooglePlus = providerGooglePlus;
+        this.providerLatlong = providerLatlong;
+        this.datetime = datetime;
     }
 
 
@@ -111,6 +113,14 @@ public class FavoriteModel {
 
     public void setPageId(int pageId) {
         this.pageId = pageId;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public String getProviderThumbnail() {
@@ -216,4 +226,6 @@ public class FavoriteModel {
     public void setProviderLatlong(String providerLatlong) {
         this.providerLatlong = providerLatlong;
     }
+
+
 }

@@ -21,8 +21,11 @@ import android.widget.TextView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -76,6 +79,7 @@ public class InformationFragment extends Fragment {
         HistoryItem dataModel = new HistoryItem();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         SimpleDateFormat sdftime = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+        SimpleDateFormat sdfdatetime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
         dataModel.setDay(sdf.format(new Date()));
         dataModel.setTime(sdftime.format(new Date()));
         dataModel.setTitke(bundle.getString("providerName"));
@@ -96,20 +100,30 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
         dataModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
+        dataModel.setDayTime(sdfdatetime.format(new Date()));
 
 
         Cursor cursor=db.checkHistoryByDay(bundle.getInt("providerId"));
-        ArrayList<String> isid=new ArrayList<String>();
+        ArrayList<String> dayList=new ArrayList<String>();
         if(cursor.moveToFirst()){
             do{
-                isid.add(cursor.getString(0));
+                dayList.add(cursor.getString(0));
             }while (cursor.moveToNext());
         }else{
-            isid.add("0");
+            dayList.add("0");
+        }
+        String formattedDate="";
+        Date d = null;
+        try {
+            d = sdfdatetime.parse(dayList.get(0));
+            long milliseconds = d.getTime();
+            formattedDate=getDate(milliseconds);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        if(isid.get(0).equals(sdf.format(new Date()))){
-            db.updateHistory(dataModel, bundle.getInt("providerId"),isid.get(0));
+        if(formattedDate.equals(sdf.format(new Date()))){
+            db.updateHistory(dataModel, bundle.getInt("providerId"),formattedDate);
         }
         else {
             db.addHistory(dataModel);
@@ -402,4 +416,16 @@ public class InformationFragment extends Fragment {
 
 
             }
+
+    private String getDate(long milliSeconds) {
+//        // Create a DateFormatter object for displaying date in specified
+//        // format.
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//        // Create a calendar object that will convert the date and time value in
+//        // milliseconds to date
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
+
         }

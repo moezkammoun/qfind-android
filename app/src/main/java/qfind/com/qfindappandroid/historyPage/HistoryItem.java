@@ -8,6 +8,7 @@ public class HistoryItem {
     private int id;
     private String day;
     private String time;
+    private String dayTime;
     private String titke;
     private String image;
     private String description;
@@ -35,7 +36,7 @@ public class HistoryItem {
         this.id = id;
     }
 
-    public HistoryItem(String day, String time,String titke, String image, String description, int pageId,
+    public HistoryItem(String day, String time,String dayTime,String titke, String image, String description, int pageId,
                        String providerThumbnail, String providerPhone, String providerWebsite,
                        String providerAddress, String providerOpeningTime, String providerMail,
                        String providerFacebook, String providerLinkedIn, String providerInstagram,
@@ -44,6 +45,7 @@ public class HistoryItem {
         this.day = day;
         this.time=time;
         this.titke = titke;
+        this.dayTime=dayTime;
         this.image = image;
         this.description = description;
         this.pageId = pageId;
@@ -84,6 +86,14 @@ public class HistoryItem {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDayTime() {
+        return dayTime;
+    }
+
+    public void setDayTime(String dayTime) {
+        this.dayTime = dayTime;
     }
 
     public String getTitke() {
