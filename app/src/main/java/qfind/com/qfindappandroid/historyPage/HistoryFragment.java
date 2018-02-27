@@ -97,7 +97,6 @@ public class HistoryFragment extends Fragment {
             String yesDay = null;
             for (int i = 0; i < countList.size(); i++) {
                 HistoryPageMainModel mainModel = new HistoryPageMainModel();
-//            ArrayList<HistoryPageDataModel> singleItem = new ArrayList<HistoryPageDataModel>();
                 singleItem= new ArrayList<HistoryPageDataModel>();
                 try {
                     Calendar calendar;
