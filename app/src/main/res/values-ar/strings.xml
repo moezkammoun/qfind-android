@@ -39,4 +39,7 @@
     <string name="english">English</string>
     <string name="no_favorites_yet">لم تضف أي مفضلة بعد</string>
     <string name="no_history_yet">لا يوجد نتائج بخث سابقة</string>
+    <string name="favorite_alert_message">سيتم حذف البند من المفضلة. هل تريد المتابعة</string>
+    <string name="favorite_alert_title">مسح</string>
+    <string name="cancel">إلغاء</string>
 </resources>

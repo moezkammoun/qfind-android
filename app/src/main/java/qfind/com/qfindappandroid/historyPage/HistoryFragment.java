@@ -78,7 +78,6 @@ public class HistoryFragment extends Fragment {
         cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -1);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        System.out.println("check date from" + sdf.format(cal.getTime()));
         String filterDate = sdf.format(cal.getTime());
         String currentDate = sdf.format(new Date());
         db.deleteHistory(filterDate);
