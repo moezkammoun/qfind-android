@@ -117,9 +117,15 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.subCategoryName.setTypeface(mtypeFaceLight);
             holder.subCategoryDescription.setTypeface(mtypeFaceLight);
             if (serviceProviderListDetails != null) {
-                holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
-                holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
-                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).into(holder.categoryThumbnail);
+                if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                    holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
+                    holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
+
+                }else {
+                    holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderNameArabic());
+                    holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocationArabic());
+                }
+                  picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).into(holder.categoryThumbnail);
             }
         }
     }

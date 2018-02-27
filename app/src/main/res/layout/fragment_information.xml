@@ -5,8 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="qfind.com.qfindappandroid.InformationPage.InformationPage">
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:id="@+id/info_container"
@@ -21,14 +20,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_white"
-            android:layout_marginTop="@dimen/layout_marginTop">
+            android:layout_marginTop="@dimen/layout_marginTop"
+            android:background="@color/categories_background_color"
+           >
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
+                android:background="@color/color_white"
                 android:elevation="2dp"
                 android:outlineProvider="bounds"
                 android:padding="@dimen/padding_10" />

@@ -175,19 +175,30 @@ public class SettingsFragment extends Fragment {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Bold.ttf");
             settingsText.setTypeface(mtypeFace);
+
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Lato-Light.ttf");
             englishButton.setTypeface(mtypeFace);
+            selectLanguageText.setTypeface(mtypeFace);
+
+            mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/GE_SS_Unique_Light.otf");
+            arabicButton.setTypeface(mtypeFace);
         } else {
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
             arabicButton.setTypeface(mtypeFace);
+            selectLanguageText.setTypeface(mtypeFace);
+
             mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/GE_SS_Unique_Bold.otf");
             settingsText.setTypeface(mtypeFace);
+
+            mtypeFace = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Lato-Light.ttf");
+            englishButton.setTypeface(mtypeFace);
         }
 
-        selectLanguageText.setTypeface(mtypeFace);
 
 
     }

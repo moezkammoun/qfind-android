@@ -25,7 +25,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="already_english">لقد قمت باختيار اللغة العربية بالفعل</string>
-    <string name="activity_reload_string">app reloaded when you change language. Do you want to continue?</string>
+    <string name="activity_reload_string">سيتم تحويلك إلى الصفحة الرئيسية بعد تغيير اللغة، هل تريد المتابعة؟</string>
     <string name="no_data_text">No data</string>
     <string name="no_result_text">No results found</string>
     <string name="title_activity_webview">Webview</string>
