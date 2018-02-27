@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    public static final String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
+    public static String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
     private static Retrofit retrofit = null;
     public static OkHttpClient.Builder client = new OkHttpClient.Builder();
     public static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

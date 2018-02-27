@@ -144,8 +144,8 @@
                         style="?android:attr/progressBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="10dp"
                         android:visibility="gone" />
                 </FrameLayout>
 
@@ -203,7 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@drawable/toolbar_bg"
+                android:background="@drawable/button_bg"
                 android:text="@string/find_by_category"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/text_size_20" />
