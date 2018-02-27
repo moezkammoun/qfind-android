@@ -205,7 +205,7 @@ public class BaseActivity extends AppCompatActivity {
                         i.setType("text/plain");
                         i.putExtra(Intent.EXTRA_SUBJECT, "Q-Find");
                         String sAux = BASE_URL +
-                                "static-pages/store-link?provider_id=" + bundle.getInt("providerId");
+                                "site/play-store?provider_id=" + bundle.getInt("providerId");
                         i.putExtra(Intent.EXTRA_TEXT, sAux);
                         startActivity(Intent.createChooser(i, "choose one"));
                     } catch (Exception e) {

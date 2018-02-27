@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QFindAppandroid</string>
+    <string name="app_name">QFind</string>
     <string name="qfind_of_the_day">QFIND OF THE DAY</string>
     <string name="search_hint">What would you like to find today?</string>
     <string name="or">OR</string>
