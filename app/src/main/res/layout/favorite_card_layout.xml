@@ -30,7 +30,7 @@
                 android:layout_width="@dimen/category_thumbnail_width"
                 android:layout_height="@dimen/category_thumbnail_height"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/placeholder" />
+               />
 
 
             <LinearLayout

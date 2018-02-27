@@ -24,7 +24,7 @@ import java.util.List;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
 
-import static qfind.com.qfindappandroid.retrofitinstance.ApiClient.BASE_URL;
+
 
 
 public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable {
@@ -33,7 +33,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
     private SharedPreferences qFindPreferences;
     private String accessToken;
     private int language;
-
+    String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
     public SearchAutoCompleteAdapter(Context context) {
         mContext = context;
     }

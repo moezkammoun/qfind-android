@@ -44,7 +44,8 @@ public class PicassoLoader implements ImageLoader {
 //                .resize(200, 200)
 //                .centerInside()
 //                .fit()
-                .placeholder((R.drawable.placeholder)).error((R.drawable.placeholder)).into(targetView);
+                .placeholder((R.drawable.placeholder_for_ad_banner)).error((R.drawable.placeholder_for_ad_banner))
+                .fit().centerCrop().into(targetView);
 
 
     }

@@ -46,12 +46,11 @@ import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
-import static qfind.com.qfindappandroid.retrofitinstance.ApiClient.BASE_URL;
 
 
 public class BaseActivity extends AppCompatActivity {
 
-
+    String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
     protected LinearLayout sideMenuAboutUsLayout, sideMenuQFinderLayout, sideMenuTermsAndConditionLayout,
             sideMenuContactUsLayout, sideMenuSettingsLayout;
     TextView sideMenuTittleTxt, sideMenuAboutUsTxt, sideMenuQfinderTxt, sideMenuTermAndConditionTxt,
