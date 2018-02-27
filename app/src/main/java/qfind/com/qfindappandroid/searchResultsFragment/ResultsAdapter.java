@@ -72,7 +72,8 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         SearchedItem album = itemList.get(position);
         holder.title.setText(album.getProviderName());
         holder.description.setText(album.getProviderLocation());
-        picasso.load(album.getProviderThumbnail()).placeholder(R.drawable.placeholder).into(holder.thumbnail);
+        picasso.load(album.getProviderThumbnail()).placeholder(R.drawable.placeholder)
+                .fit().centerCrop().into(holder.thumbnail);
     }
 
 

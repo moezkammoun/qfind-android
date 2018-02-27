@@ -33,7 +33,7 @@
                 android:id="@+id/search_thumbnail"
                 android:layout_width="@dimen/search_results_image_size"
                 android:layout_height="@dimen/search_results_image_size"
-                android:scaleType="fitXY" />
+               />
 
 
             <LinearLayout

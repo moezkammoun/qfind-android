@@ -27,8 +27,7 @@
                 <ImageView
                     android:id="@+id/category_thumbnail"
                     android:layout_width="@dimen/category_thumbnail_width"
-                    android:layout_height="@dimen/category_thumbnail_height"
-                    android:scaleType="fitXY" />
+                    android:layout_height="@dimen/category_thumbnail_height" />
             </LinearLayout>
 
             <LinearLayout

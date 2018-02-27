@@ -108,7 +108,8 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
             holder.description.setText(historyPageDataModel.getDescriptionArabic());
         }
 
-        Picasso.with(mContext).load(historyPageDataModel.getUrl()).placeholder(R.drawable.placeholder).into(holder.url);
+        Picasso.with(mContext).load(historyPageDataModel.getUrl()).placeholder(R.drawable.placeholder)
+                .fit().centerCrop().into(holder.url);
     }
 
     @Override
