@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import java.util.Locale;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
-import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
@@ -103,29 +101,28 @@ public class InformationFragment extends Fragment {
         dataModel.setDayTime(sdfdatetime.format(new Date()));
 
 
-        Cursor cursor=db.checkHistoryByDay(bundle.getInt("providerId"));
-        ArrayList<String> dayList=new ArrayList<String>();
-        if(cursor.moveToFirst()){
-            do{
+        Cursor cursor = db.checkHistoryByDay(bundle.getInt("providerId"));
+        ArrayList<String> dayList = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
                 dayList.add(cursor.getString(0));
-            }while (cursor.moveToNext());
-        }else{
+            } while (cursor.moveToNext());
+        } else {
             dayList.add("0");
         }
-        String formattedDate="";
+        String formattedDate = "";
         Date d = null;
         try {
             d = sdfdatetime.parse(dayList.get(0));
             long milliseconds = d.getTime();
-            formattedDate=getDate(milliseconds);
+            formattedDate = getDate(milliseconds);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if(formattedDate.equals(sdf.format(new Date()))){
-            db.updateHistory(dataModel, bundle.getInt("providerId"),formattedDate);
-        }
-        else {
+        if (formattedDate.equals(sdf.format(new Date()))) {
+            db.updateHistory(dataModel, bundle.getInt("providerId"), formattedDate);
+        } else {
             db.addHistory(dataModel);
         }
 
@@ -186,10 +183,9 @@ public class InformationFragment extends Fragment {
 
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
-        }else {
+        } else {
             ((ContainerActivity) getActivity()).showInfoToolbar(providerNameArabic, providerLocationArabic);
         }
-
 
 
         ((ContainerActivity) getActivity()).isFavoriteSelected(providerPageId);
@@ -380,7 +376,7 @@ public class InformationFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://instagram.com/_u/" + providerInstagram));
                 startActivity(intent);
-            } else{
+            } else {
                 callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -392,30 +388,30 @@ public class InformationFragment extends Fragment {
 
     }
 
-        public void openSnapchat (Context context){
-            PackageManager pkManager = context.getPackageManager();
-            try {
-                PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
-                String getPkgInfo = pkgInfo.toString();
-                    if (getPkgInfo.contains("com.snapchat.android")) {
-                        // APP NOT INSTALLED
-                        Intent intent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("https://snapchat.com/add/" + providerSnapchat));
-                        startActivity(intent);
-                    } else {
-                        callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
-
-                    }
-                } catch(PackageManager.NameNotFoundException e){
-                    e.printStackTrace();
-
-                    // APP NOT INSTALLED
-                    //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-                    callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
-                }
-
+    public void openSnapchat(Context context) {
+        PackageManager pkManager = context.getPackageManager();
+        try {
+            PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
+            String getPkgInfo = pkgInfo.toString();
+            if (getPkgInfo.contains("com.snapchat.android")) {
+                // APP NOT INSTALLED
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://snapchat.com/add/" + providerSnapchat));
+                startActivity(intent);
+            } else {
+                callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
 
             }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+
+            // APP NOT INSTALLED
+            //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
+            callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+        }
+
+
+    }
 
     private String getDate(long milliSeconds) {
 //        // Create a DateFormatter object for displaying date in specified
@@ -428,4 +424,4 @@ public class InformationFragment extends Fragment {
         return formatter.format(calendar.getTime());
     }
 
-        }
+}
