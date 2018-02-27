@@ -344,7 +344,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void deleteHistory(String lastdate) {
         writeDB = this.getWritableDatabase();
-        writeDB.delete(TABLE_HISTORY, KEY_DAY + " < " + "' " + lastdate + " '", null);
+        writeDB.delete(TABLE_HISTORY, KEY_DAY +"< '" + lastdate + "' ", null);
         writeDB.close();
     }
 

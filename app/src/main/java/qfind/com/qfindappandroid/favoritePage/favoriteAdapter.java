@@ -86,20 +86,20 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
                     // Setting Dialog Title
-                    alertDialog.setTitle("Confirm Delete...");
+                    alertDialog.setTitle(R.string.favorite_alert_title);
 
                     // Setting Dialog Message
-                    alertDialog.setMessage("Item will be deleted from favorites.Do you want to continue?");
+                    alertDialog.setMessage(R.string.favorite_alert_message);
 
                     // Setting Positive "Yes" Button
-                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    alertDialog.setPositiveButton(R.string.favorite_alert_title, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             delete(getAdapterPosition(), positions.get(getAdapterPosition()));
                         }
                     });
 
                     // Setting Negative "NO" Button
-                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                         }

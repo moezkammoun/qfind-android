@@ -39,5 +39,8 @@
     <string name="title_activity_webview">Webview</string>
     <string name="no_favorites_yet">No favorites yet</string>
     <string name="no_history_yet">No history yet</string>
+    <string name="favorite_alert_message">Item will be deleted from favorites.Do you want to continue?</string>
+    <string name="favorite_alert_title">Delete</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
