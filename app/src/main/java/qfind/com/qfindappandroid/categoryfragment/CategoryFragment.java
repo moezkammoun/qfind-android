@@ -527,7 +527,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
             Call<ServiceProviderList> call = apiService.
-                    getListOfServiceProvider(accessToken, qFindPreferences.getInt("AppLanguage", 1),
+                    getListOfServiceProvider(accessToken,
                             mainCategoryId, 10, offset);
             call.enqueue(new Callback<ServiceProviderList>() {
                 @Override

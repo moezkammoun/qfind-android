@@ -44,8 +44,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/padding_5"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textAlignment="textStart"
-                    android:textSize="@dimen/category_card_item_text_size" />
+                    android:textSize="@dimen/category_card_item_text_size"
+                    android:textColor="@color/category_tittle_color"/>
             </LinearLayout>
 
             <LinearLayout
@@ -62,7 +65,10 @@
                     android:layout_height="wrap_content"
                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/padding_3"
-                    android:textSize="@dimen/sub_category_card_item_text_size" />
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/sub_category_card_item_text_size"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/sub_category_item_description"
@@ -70,7 +76,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_1"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/sub_category_card_item_text_size" />
+                    android:textSize="@dimen/sub_category_card_item_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/searchResultsDescriptionColor"/>
 
             </LinearLayout>
 

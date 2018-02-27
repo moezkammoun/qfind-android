@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +65,7 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
             mListener.onClick(view, getAdapterPosition());
         }
     }
+
     public void clear() {
         final int size = getItemCount();
         if (size > 0) {
@@ -73,6 +76,7 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
             notifyItemRangeRemoved(0, size);
         }
     }
+
     @Override
     public InformationPageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -99,7 +103,18 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
             holder.info_content.setText(informationPages.get(position).getInfo_content());
             holder.info_back_button.setImageDrawable(mcontext.getResources().getDrawable(informationPages.get(position).getInfo_back_button()));
         }
+        boolean hasDigit = holder.info_content.getText().toString().matches(".*\\d+.*");
+        if (hasDigit && mcontext.getResources().getConfiguration().locale.getLanguage().equals("ar")) {
+            Locale loc = new Locale("en");
+            holder.info_content.setTextLocale(loc);
+            Typeface temp = Typeface.createFromAsset(mcontext.getAssets(),
+                    "fonts/Lato-Bold.ttf");
+            holder.info_content.setTypeface(temp);
+
+        }
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -109,7 +124,7 @@ public class InformationFragmentAdapter extends RecyclerView.Adapter<Information
     public void setFontTypeForText() {
         if (mcontext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFaceBold = Typeface.createFromAsset(mcontext.getAssets(),
-                    "fonts/Lato-Bold.ttf");
+                    "fonts/Lato-Light.ttf");
 
         } else {
             mtypeFaceBold = Typeface.createFromAsset(mcontext.getAssets(),

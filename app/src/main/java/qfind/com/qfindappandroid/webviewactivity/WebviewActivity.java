@@ -2,6 +2,7 @@ package qfind.com.qfindappandroid.webviewactivity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

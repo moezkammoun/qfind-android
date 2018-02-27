@@ -33,12 +33,12 @@ public interface ApiInterface {
 
 
     @GET("api/get-service-provider-inner")
-    Call<ServiceProviderDataResponse> getServiceProviderData(@Query("token") String token, @Query("language") int language,
+    Call<ServiceProviderDataResponse> getServiceProviderData(@Query("token") String token,
                                                              @Query("service") Integer serviceId, @Query("device_id") String deviceId);
 
 
     @GET("api/get-service-provider")
-    Call<ServiceProviderList> getListOfServiceProvider(@Query("token") String token, @Query("language") int language,
+    Call<ServiceProviderList> getListOfServiceProvider(@Query("token") String token,
                                                        @Query("category") int category, @Query("limit") int limit,
                                                         @Query("offset") int offset);
 

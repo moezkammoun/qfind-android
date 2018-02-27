@@ -138,10 +138,9 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void getServiceProviderData(Integer providerId) {
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         accessToken = qFindPreferences.getString("AccessToken", null);
-        language = qFindPreferences.getInt("AppLanguage", 1);
         if (accessToken != null) {
             apiService = ApiClient.getClient().create(ApiInterface.class);
-            Call<ServiceProviderDataResponse> call = apiService.getServiceProviderData(accessToken, language, providerId, "");
+            Call<ServiceProviderDataResponse> call = apiService.getServiceProviderData(accessToken, providerId, "");
             call.enqueue(new Callback<ServiceProviderDataResponse>() {
                 @Override
                 public void onResponse(Call<ServiceProviderDataResponse> call, Response<ServiceProviderDataResponse> response) {
