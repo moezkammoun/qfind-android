@@ -15,6 +15,7 @@
 
     <dimen name="text_size_19sp">19sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_12sp">12sp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_5">5dp</dimen>
     <dimen name="padding_15">15dp</dimen>

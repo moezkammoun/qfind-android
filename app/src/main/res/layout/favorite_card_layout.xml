@@ -29,6 +29,7 @@
                 android:id="@+id/favorite_thumbnail"
                 android:layout_width="@dimen/category_thumbnail_width"
                 android:layout_height="@dimen/category_thumbnail_height"
+                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                />
 
@@ -38,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/alignment_padding"
                 android:layout_marginStart="@dimen/alignment_padding"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -47,7 +47,6 @@
                     android:id="@+id/fav_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -56,27 +55,25 @@
                         android:id="@+id/favorite_item_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_5"
                         android:text="Four Season Hotel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/search_results_item_text" />
+                        android:textSize="@dimen/text_size_15" />
 
                     <TextView
                         android:id="@+id/favorite_item_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/padding_10"
                         android:text="Lorem ipsum dolor sit amet,"
                         android:textColor="@color/searchResultsDescriptionColor"
-                        android:textSize="@dimen/search_results_item_text_description" />
+                        android:textSize="@dimen/text_size_12sp" />
 
                 </LinearLayout>
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/favorite_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/category_thumbnail_width"
+                android:layout_height="@dimen/category_thumbnail_height"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/favorite_red" />
 
