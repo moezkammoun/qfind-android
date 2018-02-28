@@ -19,16 +19,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
@@ -45,7 +41,7 @@ public class HistoryFragment extends Fragment {
     ImageView backButton;
     List<HistoryItem> list = new ArrayList<HistoryItem>();
     ArrayList<Integer> positions = new ArrayList<Integer>();
-    ArrayList<HistoryPageDataModel> singleItem ;
+    ArrayList<HistoryPageDataModel> singleItem;
     @BindView(R.id.empty_text_view_info)
     TextView emptyTextView;
 
@@ -84,7 +80,7 @@ public class HistoryFragment extends Fragment {
         List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
         countList = db.getDateCount();
 
-        if(countList.size()!=0){
+        if (countList.size() != 0) {
             emptyTextView.setVisibility(View.GONE);
             for (HistoryDateCount count : countList) {
                 String log = "Id: " + count.getDay() + " ,count: " + count.getCount();
@@ -97,7 +93,7 @@ public class HistoryFragment extends Fragment {
             String yesDay = null;
             for (int i = 0; i < countList.size(); i++) {
                 HistoryPageMainModel mainModel = new HistoryPageMainModel();
-                singleItem= new ArrayList<HistoryPageDataModel>();
+                singleItem = new ArrayList<HistoryPageDataModel>();
                 try {
                     Calendar calendar;
                     calendar = Calendar.getInstance();
@@ -111,12 +107,12 @@ public class HistoryFragment extends Fragment {
 
                 if (todayDate.compareTo(strDate) == 0) {
                     if (today < 1) {
-                        dayVar=getResources().getString(R.string.today);
+                        dayVar = getResources().getString(R.string.today);
                         today = today + 1;
                     }
                 } else if (yesDay.compareTo(strDate) == 0) {
                     if (yesterday < 1) {
-                        dayVar=getResources().getString(R.string.yesterday);
+                        dayVar = getResources().getString(R.string.yesterday);
                         yesterday = yesterday + 1;
                     }
 
@@ -171,8 +167,7 @@ public class HistoryFragment extends Fragment {
             }
             setAdapter(arrayListMain);
 
-        }
-        else{
+        } else {
             emptyTextView.setVisibility(View.VISIBLE);
             emptyTextView.setText(R.string.no_history_yet);
         }
@@ -195,7 +190,7 @@ public class HistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.notifyItemInserted(0);
         recyclerView.smoothScrollToPosition(0);
-       //up here
+        //up here
     }
 
     public void setFontTypeForText() {

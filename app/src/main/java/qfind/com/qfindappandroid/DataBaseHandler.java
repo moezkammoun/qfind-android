@@ -32,7 +32,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_FAVORITE = "favorite";
 
     // Contacts Table Columns names
-    private static final String KEY_ID = "id";
+    private final String KEY_ID = "id";
     private String KEY_TITLE = "title";
     private String KEY_IMG = "thumbnail";
     private String KEY_DESCRIPTION = "description";
@@ -66,7 +66,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_TABLE_HISTORY = "CREATE TABLE " + TABLE_HISTORY + "("
+        String CREATE_TABLE_HISTORY = "CREATE TABLE IF NOT EXISTS " + TABLE_HISTORY + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_DAY + " DATE,"
                 + KEY_DAYTIME + " DATETIME," + KEY_TIME + " TIME," + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT,"
                 + KEY_PAGE_ID + " INTEGER" + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT,"
@@ -78,7 +78,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_HISTORY);
 
-        String CREATE_TABLE_FAVORITE = "CREATE TABLE " + TABLE_FAVORITE + "("
+        String CREATE_TABLE_FAVORITE = "CREATE TABLE IF NOT EXISTS " + TABLE_FAVORITE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_IMG + " TEXT,"
                 + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER," + KEY_DAYTIME + " DATETIME,"
                 + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT," + KEY_WEBSITE + " TEXT,"
@@ -116,7 +116,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SNAPCHAT, history.getProviderSnapchat());
         values.put(KEY_GOOGLE_PLUS, history.getProviderGooglePlus());
         values.put(KEY_MAP, history.getProviderLatlong());
-        values.put(KEY_IMG, history.getProviderThumbnail());
         values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
         values.put(KEY_DAYTIME, history.getDayTime());
@@ -174,7 +173,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public List<HistoryItem> getAllHistory(String day) {
         List<HistoryItem> historyList = new ArrayList<HistoryItem>();
-        String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_DAY + "='" + day + "'"
+        String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_DAY + "= '" + day + "' "
                 + " order by " + KEY_DAYTIME + " DESC ";
         Cursor cursor = writeDB.rawQuery(selectQuery, null);
         Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
@@ -268,23 +267,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     }
 
-
-    public String checkHistoryById(int id) {
-        String days = "";
-        writeDB = this.getWritableDatabase();
-        String selectQuery = "SELECT " + KEY_DAY
-                + " FROM " + TABLE_HISTORY
-                + " WHERE " + KEY_PAGE_ID + " = " + id;
-//                + " AND " + KEY_DAY + " = '" + today + " '";
-        Cursor cursor = writeDB.rawQuery(selectQuery, null);
-        boolean value = cursor.moveToFirst();
-        if (value) {
-//            days.add(0,cursor.getString(0));
-            days = cursor.getString(0);
-        }
-        return days;
-    }
-
     public Cursor checkHistoryByDay(int id) {
         ArrayList<String> dayslist = new ArrayList<String>();
         writeDB = this.getWritableDatabase();
@@ -344,41 +326,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void deleteHistory(String lastdate) {
         writeDB = this.getWritableDatabase();
-        writeDB.delete(TABLE_HISTORY, KEY_DAY +"< '" + lastdate + "' ", null);
+        writeDB.delete(TABLE_HISTORY, KEY_DAY + "< '" + lastdate + "' ", null);
         writeDB.close();
     }
 
-    public List<HistoryItem> getHistoryById(int id) {
-
-        List<HistoryItem> historyItems = new ArrayList<HistoryItem>();
-        String selectQuery = "select * from " + TABLE_HISTORY + " where " + KEY_PAGE_ID + "='" + id + "'";
-        Cursor cursor = writeDB.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                HistoryItem history = new HistoryItem();
-                history.setId(Integer.parseInt(cursor.getString(0)));
-                history.setTitke(cursor.getString(1));
-                history.setDay(cursor.getString(2));
-                history.setImage(cursor.getString(3));
-                history.setDescription(cursor.getString(4));
-                history.setPageId(cursor.getInt(5));
-                history.setProviderPhone(cursor.getString(6));
-                history.setProviderWebsite(cursor.getString(7));
-                history.setProviderAddress(cursor.getString(8));
-                history.setProviderOpeningTime(cursor.getString(9));
-                history.setProviderMail(cursor.getString(10));
-                history.setProviderFacebook(cursor.getString(11));
-                history.setProviderLinkedIn(cursor.getString(12));
-                history.setProviderInstagram(cursor.getString(13));
-                history.setProviderTwitter(cursor.getString(14));
-                history.setProviderSnapchat(cursor.getString(15));
-                history.setProviderGooglePlus(cursor.getString(16));
-                history.setProviderLatlong(cursor.getString(17));
-                historyItems.add(history);
-            } while (cursor.moveToNext());
-        }
-        // return list
-        return historyItems;
-    }
 }
