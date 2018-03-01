@@ -15,7 +15,6 @@ public class HistoryItem {
     private String titleArabic;
     private String descriptionArabic;
     private int pageId;
-    private String providerThumbnail;
     private String providerPhone;
     private String providerWebsite;
     private String providerAddress;
@@ -36,33 +35,6 @@ public class HistoryItem {
         this.id = id;
     }
 
-    public HistoryItem(String day, String time,String dayTime,String titke, String image, String description, int pageId,
-                       String providerThumbnail, String providerPhone, String providerWebsite,
-                       String providerAddress, String providerOpeningTime, String providerMail,
-                       String providerFacebook, String providerLinkedIn, String providerInstagram,
-                       String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                       String providerLatlong) {
-        this.day = day;
-        this.time=time;
-        this.titke = titke;
-        this.dayTime=dayTime;
-        this.image = image;
-        this.description = description;
-        this.pageId = pageId;
-        this.providerThumbnail=providerThumbnail;
-        this.providerPhone=providerPhone;
-        this.providerWebsite=providerWebsite;
-        this.providerAddress=providerAddress;
-        this.providerOpeningTime=providerOpeningTime;
-        this.providerMail=providerMail;
-        this.providerFacebook=providerFacebook;
-        this.providerLinkedIn=providerLinkedIn;
-        this.providerInstagram=providerInstagram;
-        this.providerTwitter=providerTwitter;
-        this.providerSnapchat=providerSnapchat;
-        this.providerGooglePlus=providerGooglePlus;
-        this.providerLatlong=providerLatlong;
-    }
 
     public int getId() {
         return id;
@@ -144,13 +116,7 @@ public class HistoryItem {
         this.pageId = pageId;
     }
 
-    public String getProviderThumbnail() {
-        return providerThumbnail;
-    }
 
-    public void setProviderThumbnail(String providerThumbnail) {
-        this.providerThumbnail = providerThumbnail;
-    }
 
     public String getProviderPhone() {
         return providerPhone;

@@ -29,7 +29,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +44,6 @@ import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
 import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsFragment;
 import qfind.com.qfindappandroid.settingspagefragment.SettingsFragment;
 import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
-
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -75,7 +73,7 @@ public class BaseActivity extends AppCompatActivity {
     SearchData searchData;
     Bundle bundle = new Bundle();
     SharedPreferences qFindPreferences;
-    Typeface mtypeFaceBold,mtypeFaceLight,mtypeFaceItalic;
+    Typeface mtypeFaceBold, mtypeFaceLight, mtypeFaceItalic;
 
 
     @Override
@@ -185,11 +183,11 @@ public class BaseActivity extends AppCompatActivity {
                     if (db.checkFavoriteById(bundle.getInt("providerId"))) {
                         db.deleteFavorite(bundle.getInt("providerId"));
                         infoStarButton.setImageResource(R.drawable.favorite_blank_star);
-                        Util.showToast(getResources().getString(R.string.removed_to_favorites),getApplicationContext());
+                        Util.showToast(getResources().getString(R.string.removed_to_favorites), getApplicationContext());
                     } else {
                         db.addFavorite(favoriteModel);
                         infoStarButton.setImageResource(R.drawable.star_icon);
-                        Util.showToast(getResources().getString(R.string.added_to_favorites),getApplicationContext());
+                        Util.showToast(getResources().getString(R.string.added_to_favorites), getApplicationContext());
                     }
                 } else
                     Util.showToast(getResources().getString(R.string.no_data_to_favorite), getApplicationContext());
@@ -440,27 +438,28 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void hideInfotoolbarBackButton(){
+    public void hideInfotoolbarBackButton() {
         infoBackButton.setVisibility(View.INVISIBLE);
     }
-    public void hideStarandShareButton(){
+
+    public void hideStarandShareButton() {
         infoStarButton.setVisibility(View.INVISIBLE);
         infoShareButton.setVisibility(View.INVISIBLE);
     }
-    public void showStarandShareButton(){
+
+    public void showStarandShareButton() {
         infoStarButton.setVisibility(View.VISIBLE);
         infoShareButton.setVisibility(View.VISIBLE);
     }
 
-    public void isFavoriteSelected(int providerId){
-        DataBaseHandler db=new DataBaseHandler(this);
-        Boolean isFavorite=db.checkFavoriteById(providerId);
+    public void isFavoriteSelected(int providerId) {
+        DataBaseHandler db = new DataBaseHandler(this);
+        Boolean isFavorite = db.checkFavoriteById(providerId);
         SimpleDateFormat sdfdatetime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
-        if(isFavorite){
-        infoStarButton.setImageResource(R.drawable.star_icon);
-        db.updateFavorite(providerId,sdfdatetime.format(new Date()));
-        }
-        else {
+        if (isFavorite) {
+            infoStarButton.setImageResource(R.drawable.star_icon);
+            db.updateFavorite(providerId, sdfdatetime.format(new Date()));
+        } else {
             infoStarButton.setImageResource(R.drawable.favorite_blank_star);
         }
     }
@@ -471,7 +470,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
-                                              String providerNameArabic,String providerLocationArabic,
+                                              String providerNameArabic, String providerLocationArabic,
                                               String providerMobile, String providerAddress,
                                               String providerWebsite, String providerOpeningTime,
                                               String providerMail, String providerFacebook,

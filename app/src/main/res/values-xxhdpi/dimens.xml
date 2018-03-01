@@ -28,6 +28,7 @@
     <dimen name="toolbar_height">200dp</dimen>
     <dimen name="image_height">30dp</dimen>
     <dimen name="image_width">30dp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
     <dimen name="layout_marginTop">80dp</dimen>
