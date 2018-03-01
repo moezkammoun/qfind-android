@@ -34,22 +34,23 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_10"
                     android:paddingEnd="@dimen/padding_20"
+                    android:paddingStart="@dimen/padding_20"
                     android:paddingTop="@dimen/padding_10">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:paddingBottom="@dimen/padding_10"
                         android:paddingTop="@dimen/padding_10"
-                        android:scaleType="centerCrop"
                         android:src="@drawable/main_logo" />
 
                     <ImageView
                         android:id="@+id/hamburger_home"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="@dimen/hamburger_icon_size"
+                        android:layout_height="@dimen/hamburger_icon_size"
                         android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
                         android:src="@drawable/hamburger_icon" />
 
                 </RelativeLayout>

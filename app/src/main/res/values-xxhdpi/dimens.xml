@@ -62,5 +62,10 @@
     <dimen name="info_page_dot_height">8dp</dimen>
     <dimen name="info_page_right_arrow_height">23dp</dimen>
     <dimen name="info_page_right_arrow_width">23dp</dimen>
+    <dimen name="hamburger_icon_size">30dp</dimen>
+    <dimen name="toolbar_hamburger_icon_height">35dp</dimen>
+    <dimen name="toolbar_hamburger_icon_width">30dp</dimen>
+
+
 
 </resources>
