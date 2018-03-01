@@ -124,7 +124,6 @@ public class SettingsFragment extends Fragment {
                 //Do something
                 setLocale(language);
                 dialog.dismiss();
-
             }
         });
         no.setOnClickListener(new View.OnClickListener() {

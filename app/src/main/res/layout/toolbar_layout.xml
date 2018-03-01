@@ -12,7 +12,7 @@
         android:id="@+id/info_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:background="@drawable/toolbar_bg"
+        android:background="@drawable/info_toolbar_bg"
         android:orientation="vertical"
         android:paddingEnd="@dimen/padding_30"
         android:paddingStart="@dimen/padding_30"
@@ -167,14 +167,20 @@
                 android:src="@drawable/search" />
 
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/sideMenu"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="22.5"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/hamburger_menu_white" />
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/sideMenu"
+                android:layout_width="@dimen/toolbar_hamburger_icon_width"
+                android:layout_height="@dimen/toolbar_hamburger_icon_height"
+                android:src="@drawable/hamburger_menu_white"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

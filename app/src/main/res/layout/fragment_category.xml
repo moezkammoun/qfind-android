@@ -17,13 +17,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/category_back_button_height"
                 android:id="@+id/sub_category_back_button"
-                android:layout_weight="1"
                 android:layout_marginStart="@dimen/padding_5"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/back_arrow"
