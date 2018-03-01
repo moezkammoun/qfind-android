@@ -54,6 +54,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     ProgressBar progressBarForPaging;
     GridLayoutManager mLayoutManager;
     boolean isScrolling = false;
+    boolean isLoading = false;
+    boolean firstLoading;
     int currentItem, totalItem, scrolledOutItem;
 
     private CategoryItemAdapter categoryItemAdapter;
@@ -76,7 +78,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     private PicassoLoader picassoLoaderForFragment;
     boolean isSubCategory = false;
     boolean isSecondPage = false;
-    boolean firstLoading;
     int serviceProviderListId;
     int offset = 1;
     int firstVisibleInListview;
@@ -112,10 +113,12 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         ButterKnife.bind(this, view);
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         setupRecyclerViewClickListener();
+        firstLoading = true;
         setFontTypeForText();
         categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(), this,
                 recyclerViewClickListener);
-        firstLoading = true;
+
+
 
         //initialSet();
         if (subCategoryItemList != null || mainCategoryItemList != null || serviceProviderListDetails != null)
@@ -216,9 +219,9 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     @Override
     public void onPause() {
         super.onPause();
-        if (configurationForFragment != null){
+        if (configurationForFragment != null) {
             mAnimCircleIndicator.stop();
-            configurationForFragment=null;
+            configurationForFragment = null;
         }
 
     }
@@ -273,7 +276,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     if (isSubCategory)
                         serviceProviderNameForFragmentTittle = subCategoryItemList.get(position).getSubCategoryName();
                     serviceProviderListId = subCategoryItemList.get(position).getSubCategoryId();
-                    getServiceProviderList(subCategoryItemList.get(position).getSubCategoryId(),
+                    getServiceProviderList(serviceProviderListId,
                             serviceProviderNameForFragmentTittle, offset);
 
                 } else if (Util.categoryPageStatus == 3) {
@@ -302,7 +305,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                             get(position).getServiceProviderName(),
                                     serviceProviderListDetails.get(position).getServiceProviderLocation());
-                        }else{
+                        } else {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                             get(position).getServiceProviderNameArabic(),
                                     serviceProviderListDetails.get(position).getServiceProviderLocationArabic());
@@ -334,7 +337,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                     get(position).getServiceProviderName(), serviceProviderListDetails.
                                     get(position).getServiceProviderLocation());
-                        }else {
+                        } else {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                     get(position).getServiceProviderNameArabic(), serviceProviderListDetails.
                                     get(position).getServiceProviderLocationArabic());
@@ -518,12 +521,20 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     }
 
     public void getServiceProviderList(int categoryId, final String subCategoryName, int pageNumber) {
+
         offset = pageNumber;
         if (offset == 1)
             progressBar.setVisibility(View.VISIBLE);
         int mainCategoryId = categoryId;
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
+            isScrolling = false;
+            isLoading = true;
+            if (firstLoading) {
+                setupRecyclerViewScrollListener();
+                firstLoading = false;
+            }
+
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
             Call<ServiceProviderList> call = apiService.
@@ -543,17 +554,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                             serviceProviderList.getServiceProviderListDetails());
 
                                 categoryFragmentPresenterImpl.getServieProvidersList(serviceProviderListDetails);
-                                if (firstLoading) {
-                                    setupRecyclerViewScrollListener();
-                                    firstLoading = false;
-                                }
+
                                 Util.categoryPageStatus = 3;
                                 offset++;
                                 isSecondPage = false;
                                 categoryFragmentTittleText.setText(subCategoryName);
                                 subCategoryBackButton.setVisibility(View.VISIBLE);
                                 progressBarForPaging.setVisibility(View.GONE);
-
                             } else if (serviceProviderList.getCode().equals("404")) {
                                 Util.categoryPageStatus = 3;
                                 if (offset == 1) {
@@ -571,16 +578,18 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 progressBar.setVisibility(View.GONE);
                                 progressBarForPaging.setVisibility(View.GONE);
                                 setCategoryStatus();
-                            }
 
+                            }
                         }
                     } else {
                         Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
                         //emptyTextView.setVisibility(View.VISIBLE);
                         setCategoryStatus();
+
                     }
                     progressBar.setVisibility(View.GONE);
                     progressBarForPaging.setVisibility(View.GONE);
+                    isLoading = false;
                 }
 
                 @Override
@@ -589,6 +598,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                     progressBar.setVisibility(View.GONE);
                     progressBarForPaging.setVisibility(View.GONE);
                     setCategoryStatus();
+                    isLoading = false;
                 }
             });
         }
@@ -632,7 +642,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                         currentItem = mLayoutManager.getChildCount();
                         totalItem = mLayoutManager.getItemCount();
                         scrolledOutItem = mLayoutManager.findFirstVisibleItemPosition();
-                        if (isScrolling && (currentItem + scrolledOutItem) == totalItem) {
+                        if (!isLoading && isScrolling && (currentItem + scrolledOutItem) == totalItem) {
                             if (!noMoreData) {
                                 isScrolling = false;
                                 progressBarForPaging.setVisibility(View.VISIBLE);
