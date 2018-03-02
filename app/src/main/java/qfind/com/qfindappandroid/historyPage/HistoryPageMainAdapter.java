@@ -61,13 +61,8 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
     }
 
     public void setFontTypeForText() {
-        if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
                     "fonts/Lato-Bold.ttf");
-        }else {
-            mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
-                    "fonts/GE_SS_Unique_Bold.otf");
-        }
     }
 
     @Override

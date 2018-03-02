@@ -42,4 +42,16 @@
     <string name="favorite_alert_message">سيتم حذف البند من المفضلة. هل تريد المتابعة</string>
     <string name="favorite_alert_title">مسح</string>
     <string name="cancel">إلغاء</string>
+    <string name="January">يناير</string>
+    <string name="February">فبراير</string>
+    <string name="March">مارس</string>
+    <string name="April">أبريل</string>
+    <string name="May">مايو</string>
+    <string name="June">يونيو</string>
+    <string name="July">يوليو</string>
+    <string name="August">أغسطس</string>
+    <string name="September">سبتمبر</string>
+    <string name="October">أكتوبر</string>
+    <string name="November">نوفمبر</string>
+    <string name="December">ديسمبر</string>
 </resources>
