@@ -27,13 +27,13 @@
     <string name="already_english">لقد قمت باختيار اللغة العربية بالفعل</string>
     <string name="activity_reload_string">سيتم تحويلك إلى الصفحة الرئيسية بعد تغيير اللغة، هل تريد المتابعة؟</string>
     <string name="no_data_text">No data</string>
-    <string name="no_result_text">No results found</string>
+    <string name="no_result_text">لم يتم العثور على نتائج</string>
     <string name="title_activity_webview">Webview</string>
     <string name="app_name">QFindAppandroid</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="something_went_wrong">Oops! something went wrong</string>
-    <string name="error_in_connecting">Error in connecting the server</string>
+    <string name="something_went_wrong">عفواً! يوجد خطأ ما</string>
+    <string name="error_in_connecting">حدث خطأ أثناء محاولة الاتصال مع الخادم</string>
     <string name="no_data_to_share">No data to share</string>
     <string name="no_data_to_favorite">No data to add favorite</string>
     <string name="english">English</string>
