@@ -179,6 +179,7 @@ public class BaseActivity extends AppCompatActivity {
                     favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
                     favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
                     favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
+                    favoriteModel.setProviderOpeningTimeArabic(bundle.getString("providerOpeningTimeArabic"));
 
                     if (db.checkFavoriteById(bundle.getInt("providerId"))) {
                         db.deleteFavorite(bundle.getInt("providerId"));
@@ -477,7 +478,7 @@ public class BaseActivity extends AppCompatActivity {
                                               String providerLinkedin, String providerInstagram,
                                               String providerTwitter, String providerSnapchat,
                                               String providerGooglePlus, String providerLatLong, String providerLogo,
-                                              int providerId) {
+                                              int providerId,String providerOpeningTimeArabic) {
 
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
@@ -497,6 +498,7 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerLatLong", providerLatLong);
         bundle.putString("providerLogo", providerLogo);
         bundle.putInt("providerId", providerId);
+        bundle.putString("providerOpeningTimeArabic",providerOpeningTimeArabic);
 
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

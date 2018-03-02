@@ -226,6 +226,7 @@ public class HistoryFragment extends Fragment {
                     model.setProviderGooglePlus(list.get(j).getProviderGooglePlus());
                     model.setProviderLatlong(list.get(j).getProviderLatlong());
                     model.setPageId(list.get(j).getPageId());
+                    model.setProviderOpeningTimeArabic(list.get(j).getProviderOpeningTimeArabic());
                     singleItem.add(model);
                 }
                 mainModel.setHistoryPageDataModels(singleItem);

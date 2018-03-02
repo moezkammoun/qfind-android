@@ -1,7 +1,6 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.SharedPreferences;
-
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -117,7 +116,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         setFontTypeForText();
         categoryFragmentPresenterImpl = new CategoryFragmentPresenterImpl(getContext(), this,
                 recyclerViewClickListener);
-
 
 
         //initialSet();
@@ -299,7 +297,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderLogo(),
-                                serviceProviderListDetails.get(position).getServiceProviderId());
+                                serviceProviderListDetails.get(position).getServiceProviderId(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic());
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
@@ -331,7 +330,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderLogo(),
-                                serviceProviderListDetails.get(position).getServiceProviderId());
+                                serviceProviderListDetails.get(position).getServiceProviderId(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic());
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.

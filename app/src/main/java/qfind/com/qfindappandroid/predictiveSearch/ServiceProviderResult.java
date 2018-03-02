@@ -48,6 +48,8 @@ public class ServiceProviderResult {
     private String serviceProviderLogo;
     @SerializedName("message")
     private String message;
+    @SerializedName("service_provider_opening_time_arabic")
+    private String serviceProviderOpeningTimeArabic;
 
     public String getServiceProviderName() {
         return serviceProviderName;
@@ -225,4 +227,11 @@ public class ServiceProviderResult {
         this.message = message;
     }
 
+    public String getServiceProviderOpeningTimeArabic() {
+        return serviceProviderOpeningTimeArabic;
+    }
+
+    public void setServiceProviderOpeningTimeArabic(String serviceProviderOpeningTimeArabic) {
+        this.serviceProviderOpeningTimeArabic = serviceProviderOpeningTimeArabic;
+    }
 }

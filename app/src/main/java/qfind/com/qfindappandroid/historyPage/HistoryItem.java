@@ -27,6 +27,7 @@ public class HistoryItem {
     private String providerSnapchat;
     private String providerGooglePlus;
     private String providerLatlong;
+    private String providerOpeningTimeArabic;
 
     public HistoryItem() {
     }
@@ -212,5 +213,13 @@ public class HistoryItem {
 
     public void setProviderLatlong(String providerLatlong) {
         this.providerLatlong = providerLatlong;
+    }
+
+    public String getProviderOpeningTimeArabic() {
+        return providerOpeningTimeArabic;
+    }
+
+    public void setProviderOpeningTimeArabic(String providerOpeningTimeArabic) {
+        this.providerOpeningTimeArabic = providerOpeningTimeArabic;
     }
 }

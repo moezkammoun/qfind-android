@@ -55,6 +55,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private String KEY_GOOGLE_PLUS = "provider_google_plus";
     private String KEY_MAP = "provider_map_location";
     private String KEY_DAYTIME = "provider_date_time";
+    private String KEY_OPENING_TIME_ARABIC = "provider_opening_time_arabic";
 
 
     SQLiteDatabase writeDB, readDB;
@@ -73,8 +74,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + KEY_WEBSITE + " TEXT," + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT,"
                 + KEY_MAIL + " TEXT," + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT,"
                 + KEY_INSTAGRAM + " TEXT," + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT,"
-                + KEY_GOOGLE_PLUS + " TEXT," + KEY_MAP + " TEXT,"
-                + KEY_TITLE_ARABIC + " TEXT," + KEY_DESCRIPTION_ARABIC + " TEXT " + ")";
+                + KEY_GOOGLE_PLUS + " TEXT," + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT,"
+                + KEY_DESCRIPTION_ARABIC + " TEXT, " + KEY_OPENING_TIME_ARABIC + " TEXT " + ")";
 
         db.execSQL(CREATE_TABLE_HISTORY);
 
@@ -85,8 +86,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT," + KEY_MAIL + " TEXT,"
                 + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT," + KEY_INSTAGRAM + " TEXT,"
                 + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT," + KEY_GOOGLE_PLUS + " TEXT,"
-                + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT,"
-                + KEY_DESCRIPTION_ARABIC + " TEXT " + ")";
+                + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT," + KEY_DESCRIPTION_ARABIC + " TEXT, "
+                + KEY_OPENING_TIME_ARABIC + " TEXT " + ")";
         db.execSQL(CREATE_TABLE_FAVORITE);
     }
 
@@ -119,6 +120,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
         values.put(KEY_DAYTIME, history.getDayTime());
+        values.put(KEY_OPENING_TIME_ARABIC, history.getProviderOpeningTimeArabic());
 
         // Inserting Row
         writeDB.insert(TABLE_HISTORY, null, values);
@@ -147,6 +149,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_MAP, favorite.getProviderLatlong());
         values.put(KEY_TITLE_ARABIC, favorite.getItemArabic());
         values.put(KEY_DESCRIPTION_ARABIC, favorite.getItemDescriptionArabic());
+        values.put(KEY_OPENING_TIME_ARABIC, favorite.getProviderOpeningTimeArabic());
 
         // Inserting Row
         writeDB.insert(TABLE_FAVORITE, null, values);
@@ -203,6 +206,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setProviderLatlong(cursor.getString(19));
                 history.setTitleArabic(cursor.getString(20));
                 history.setDescriptionArabic(cursor.getString(21));
+                history.setProviderOpeningTimeArabic(cursor.getString(22));
 
                 historyList.add(history);
             } while (cursor.moveToNext());
@@ -245,6 +249,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 favModel.setProviderLatlong(cursor.getString(18));
                 favModel.setItemArabic(cursor.getString(19));
                 favModel.setItemDescriptionArabic(cursor.getString(20));
+                favModel.setProviderOpeningTimeArabic(cursor.getString(21));
                 favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }

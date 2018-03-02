@@ -51,7 +51,8 @@ public class ServiceProviderListDetails {
     private String serviceProviderLogo;
     @SerializedName("message")
     private String message;
-
+    @SerializedName("service_provider_opening_time_arabic")
+    private String serviceProviderOpeningTimeArabic;
 
     public String getServiceProviderName() {
         return serviceProviderName;
@@ -139,6 +140,10 @@ public class ServiceProviderListDetails {
         return serviceProviderGoogleplus;
     }
 
+    public String getServiceProviderOpeningTimeArabic() {
+        return serviceProviderOpeningTimeArabic;
+    }
+
     public ServiceProviderListDetails(String serviceProviderName, String serviceProviderAddress,
                                       String serviceProviderLocation, String serviceProviderCategory,
                                       int serviceProviderId, String serviceProviderMail,
@@ -147,7 +152,7 @@ public class ServiceProviderListDetails {
                                       String serviceProviderFacebook, String serviceProviderLinkedin,
                                       String serviceProviderInstagram, String serviceProviderTwitter,
                                       String serviceProviderSnapchat, String serviceProviderGoogleplus,
-                                      String serviceProviderLogo,String message) {
+                                      String serviceProviderLogo, String message,String serviceProviderOpeningTimeArabic) {
         this.message =message;
         this.serviceProviderName = serviceProviderName;
         this.serviceProviderAddress = serviceProviderAddress;
@@ -166,5 +171,6 @@ public class ServiceProviderListDetails {
         this.serviceProviderSnapchat = serviceProviderSnapchat;
         this.serviceProviderGoogleplus = serviceProviderGoogleplus;
         this.serviceProviderLogo = serviceProviderLogo;
+        this.serviceProviderOpeningTimeArabic=serviceProviderOpeningTimeArabic;
     }
 }
