@@ -77,6 +77,7 @@ public class HistoryFragment extends Fragment {
         String filterDate = sdf.format(cal.getTime());
         String currentDate = sdf.format(new Date());
         db.deleteHistory(filterDate);
+        db.deleteHistoryAfter(currentDate);
         List<HistoryDateCount> countList = new ArrayList<HistoryDateCount>();
         countList = db.getDateCount();
 
@@ -120,7 +121,14 @@ public class HistoryFragment extends Fragment {
                     continue;
                 } else {
                     Date ds = null;
-                    DateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+                    DateFormat dateFormat = null;
+                    if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                    dateFormat = new SimpleDateFormat("d MMM yyyy");
+                    }
+                    else{
+                        dateFormat = new SimpleDateFormat("yyyy MMM d");
+                    }
+
                     try {
                         ds = sdf.parse(countList.get(i).getDay());
                     } catch (ParseException e) {
@@ -134,8 +142,66 @@ public class HistoryFragment extends Fragment {
                         dayVar = desDate;
                         day = day + 1;
                     }
-                }
 
+                    String[] parts = dayVar.split(" ");
+
+                    if (getResources().getConfiguration().locale.getLanguage().equals("ar")) {
+                        String month;
+                        switch (parts[1]) {
+                            case "Jan":
+                                month = getResources().getString(R.string.January);
+                                dayVar=dayVar.replace("Jan",month);
+                                break;
+                            case "Feb":
+                                month=getResources().getString(R.string.February);
+                                dayVar=dayVar.replace("Feb",month);
+                                break;
+                            case "Mar":
+                                month=getResources().getString(R.string.March);
+                                dayVar=dayVar.replace("Mar",month);
+                                break;
+                            case "Apr":
+                                month=getResources().getString(R.string.April);
+                                dayVar=dayVar.replace("Apr",month);
+                                break;
+                            case "May":
+                                month=getResources().getString(R.string.May);
+                                dayVar=dayVar.replace("May",month);
+                                break;
+                            case "Jun":
+                                month=getResources().getString(R.string.June);
+                                dayVar=dayVar.replace("Jun",month);
+                                break;
+                            case "Jul":
+                                month=getResources().getString(R.string.July);
+                                dayVar=dayVar.replace("Jul",month);
+                                break;
+                            case "Aug":
+                                month=getResources().getString(R.string.August);
+                                dayVar=dayVar.replace("Aug",month);
+                                break;
+                            case "Sep":
+                                month=getResources().getString(R.string.September);
+                                dayVar=dayVar.replace("Sep",month);
+                                break;
+                            case "Oct":
+                                month=getResources().getString(R.string.October);
+                                dayVar=dayVar.replace("Oct",month);
+                                break;
+                            case "Nov":
+                                month=getResources().getString(R.string.November);
+                                dayVar=dayVar.replace("Nov",month);
+                                break;
+                            case "Dec":
+                                month=getResources().getString(R.string.December);
+                                dayVar=dayVar.replace("Dec",month);
+                                break;
+                            default:
+                                break;
+
+                        }
+                    }
+                }
                 mainModel.setDay(dayVar);
 
                 list = db.getAllHistory(countList.get(i).getDay());
