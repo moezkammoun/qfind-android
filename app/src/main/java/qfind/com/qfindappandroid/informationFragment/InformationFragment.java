@@ -48,7 +48,7 @@ public class InformationFragment extends Fragment {
     String providerName, providerLocation, providerNameArabic, providerLocationArabic,
             providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
-            providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo;
+            providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo,providerOpeningTimeArabic;
     int providerPageId;
     URI uri = null;
     String path;
@@ -99,6 +99,7 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
         dataModel.setDayTime(sdfdatetime.format(new Date()));
+        dataModel.setProviderOpeningTimeArabic(bundle.getString("providerOpeningTimeArabic"));
 
 
         Cursor cursor = db.checkHistoryByDay(bundle.getInt("providerId"));
@@ -156,6 +157,7 @@ public class InformationFragment extends Fragment {
         providerLatLong = bundle.getString("providerLatLong");
         providerLogo = bundle.getString("providerLogo");
         providerId = bundle.getInt("providerId");
+        providerOpeningTimeArabic=bundle.getString("providerOpeningTimeArabic");
         return view;
     }
 
@@ -216,9 +218,15 @@ public class InformationFragment extends Fragment {
         if (providerAddress != null && !providerAddress.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.location_icon,
                     R.drawable.dot_icon, providerAddress, R.drawable.right_arrow));
-        if (providerOpeningTime != null && !providerOpeningTime.equals(""))
-            informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
-                    R.drawable.dot_icon, providerOpeningTime, R.drawable.right_arrow));
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            if (providerOpeningTime != null && !providerOpeningTime.equals(""))
+                informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
+                        R.drawable.dot_icon, providerOpeningTime, R.drawable.right_arrow));
+        }else{
+            if (providerOpeningTimeArabic != null && !providerOpeningTimeArabic.equals(""))
+                informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
+                        R.drawable.dot_icon, providerOpeningTimeArabic, R.drawable.right_arrow));
+        }
         if (providerMail != null && !providerMail.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.mail_icon,
                     R.drawable.dot_icon, providerMail, R.drawable.right_arrow));

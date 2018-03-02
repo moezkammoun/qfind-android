@@ -72,7 +72,7 @@ public class FavoriteFragment extends Fragment {
                         cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
                         cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
                         cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
-                        cn.getProviderLatlong(),cn.getDatetime()
+                        cn.getProviderLatlong(),cn.getDatetime(),cn.getProviderOpeningTimeArabic()
                 );
                 favoriteModelList.add(item);
 

@@ -24,6 +24,8 @@ public class ServiceProviderData {
     private String serviceProviderMapLocation;
     @SerializedName("service_provider_opening_time")
     private String serviceProviderOpeningTime;
+    @SerializedName("service_provider_opening_time_arabic")
+    private String serviceProviderOpeningTimeArabic;
 
     public String getServiceProviderName() {
         return serviceProviderName;
@@ -151,6 +153,14 @@ public class ServiceProviderData {
 
     public void setServiceProviderGoogleplus(String serviceProviderGoogleplus) {
         this.serviceProviderGoogleplus = serviceProviderGoogleplus;
+    }
+
+    public String getServiceProviderOpeningTimeArabic() {
+        return serviceProviderOpeningTimeArabic;
+    }
+
+    public void setServiceProviderOpeningTimeArabic(String serviceProviderOpeningTimeArabic) {
+        this.serviceProviderOpeningTimeArabic = serviceProviderOpeningTimeArabic;
     }
 
     @SerializedName("service_provider_facebook_page")

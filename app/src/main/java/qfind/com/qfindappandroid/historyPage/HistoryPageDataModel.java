@@ -25,6 +25,7 @@ public class HistoryPageDataModel {
     private String providerGooglePlus;
     private String providerLatlong;
     private int pageId;
+    private String providerOpeningTimeArabic;
 
     public HistoryPageDataModel() {
     }
@@ -35,7 +36,7 @@ public class HistoryPageDataModel {
                                 String providerAddress, String providerOpeningTime, String providerMail,
                                 String providerFacebook, String providerLinkedIn, String providerInstagram,
                                 String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                                String providerLatlong,int pageId) {
+                                String providerLatlong,int pageId,String providerOpeningTimeArabic) {
         this.pageName = pageName;
         this.url = url;
         this.description = description;
@@ -52,6 +53,7 @@ public class HistoryPageDataModel {
         this.providerGooglePlus=providerGooglePlus;
         this.providerLatlong=providerLatlong;
         this.pageId=pageId;
+        this.providerOpeningTimeArabic=providerOpeningTimeArabic;
     }
 
     public int getId() {
@@ -205,5 +207,13 @@ public class HistoryPageDataModel {
 
     public void setPageId(int pageId) {
         this.pageId = pageId;
+    }
+
+    public String getProviderOpeningTimeArabic() {
+        return providerOpeningTimeArabic;
+    }
+
+    public void setProviderOpeningTimeArabic(String providerOpeningTimeArabic) {
+        this.providerOpeningTimeArabic = providerOpeningTimeArabic;
     }
 }

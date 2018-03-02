@@ -27,6 +27,7 @@ public class FavoriteModel {
     private String providerSnapchat;
     private String providerGooglePlus;
     private String providerLatlong;
+    private String providerOpeningTimeArabic;
 
     public FavoriteModel() {
     }
@@ -36,7 +37,7 @@ public class FavoriteModel {
                          String providerAddress, String providerOpeningTime, String providerMail,
                          String providerFacebook, String providerLinkedIn, String providerInstagram,
                          String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                         String providerLatlong, String datetime) {
+                         String providerLatlong, String datetime,String providerOpeningTimeArabic) {
         this.item = item;
         this.itemDescription = itemDescription;
         this.itemArabic = itemArabic;
@@ -56,6 +57,7 @@ public class FavoriteModel {
         this.providerGooglePlus = providerGooglePlus;
         this.providerLatlong = providerLatlong;
         this.datetime = datetime;
+        this.providerOpeningTimeArabic=providerOpeningTimeArabic;
     }
 
 
@@ -227,5 +229,11 @@ public class FavoriteModel {
         this.providerLatlong = providerLatlong;
     }
 
+    public String getProviderOpeningTimeArabic() {
+        return providerOpeningTimeArabic;
+    }
 
+    public void setProviderOpeningTimeArabic(String providerOpeningTimeArabic) {
+        this.providerOpeningTimeArabic = providerOpeningTimeArabic;
+    }
 }

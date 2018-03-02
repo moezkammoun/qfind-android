@@ -80,7 +80,8 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
                             itemsList.get(getAdapterPosition()).getProviderGooglePlus(),
                             itemsList.get(getAdapterPosition()).getProviderLatlong(),
                             itemsList.get(getAdapterPosition()).getUrl(),
-                            itemsList.get(getAdapterPosition()).getPageId());
+                            itemsList.get(getAdapterPosition()).getPageId(),
+                            itemsList.get(getAdapterPosition()).getProviderOpeningTimeArabic());
 
                 }
             });

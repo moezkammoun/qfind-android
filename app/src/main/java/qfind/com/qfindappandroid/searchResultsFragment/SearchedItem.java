@@ -20,6 +20,7 @@ public class SearchedItem {
     private String providerLatlong;
     private String providerLogo;
     private int providerId;
+    private String providerOpeningTimeArabic;
 
     public SearchedItem() {
     }
@@ -29,7 +30,7 @@ public class SearchedItem {
                         String thumbnail, String phone, String website,
                         String address, String openingTime, String mail, String facebook, String linkedIn,
                         String instagram, String twitter, String snapchat, String googlePlus, String latLong, String logo,
-                        int id) {
+                        int id,String openingTimeArabic) {
         this.providerName = item;
         this.providerLocation = itemDescription;
         this.providerNameArabic=itemArabic;
@@ -49,6 +50,7 @@ public class SearchedItem {
         this.providerLatlong = latLong;
         this.providerLogo=logo;
         this.providerId=id;
+        this.providerOpeningTimeArabic=openingTimeArabic;
 
     }
 
@@ -125,5 +127,9 @@ public class SearchedItem {
     }
     public int getProviderId() {
         return providerId;
+    }
+
+    public String getProviderOpeningTimeArabic() {
+        return providerOpeningTimeArabic;
     }
 }

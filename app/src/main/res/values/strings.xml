@@ -42,5 +42,17 @@
     <string name="favorite_alert_message">Item will be deleted from favorites.Do you want to continue?</string>
     <string name="favorite_alert_title">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="January">Jan</string>
+    <string name="February">Feb</string>
+    <string name="March">Mar</string>
+    <string name="April">Apr</string>
+    <string name="May">May</string>
+    <string name="June">Jun</string>
+    <string name="July">Jul</string>
+    <string name="August">Aug</string>
+    <string name="September">Sep</string>
+    <string name="October">Oct</string>
+    <string name="November">Nov</string>
+    <string name="December">Dec</string>
 
 </resources>

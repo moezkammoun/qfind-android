@@ -193,7 +193,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                 "ProviderMail", "ProviderFacebook", "ProviderLinkedIn",
                 "ProviderInstagram", "ProviderTwitter", "ProviderSnapchat",
                 "ProviderGooglePlus", "ProviderLatlong", "ProviderLogo",
-                1
+                1,"ProiderOpeningTimeArabic"
         );
 
         Toast.makeText(ContainerActivity.this, "URI : " + uri, Toast.LENGTH_SHORT).show();

@@ -98,7 +98,8 @@ public class SearchResultsFragment extends Fragment {
                         searchedItemList.get(position).getProviderGooglePlus(),
                         searchedItemList.get(position).getProviderLatlong(),
                         searchedItemList.get(position).getProviderLogo(),
-                        searchedItemList.get(position).getProviderId()
+                        searchedItemList.get(position).getProviderId(),
+                        searchedItemList.get(position).getProviderOpeningTimeArabic()
                         );
             }
 
@@ -160,7 +161,8 @@ public class SearchResultsFragment extends Fragment {
                                             serviceProviderResultList.get(i).getServiceProviderGoogleplus(),
                                             serviceProviderResultList.get(i).getServiceProviderMapLocation(),
                                             serviceProviderResultList.get(i).getServiceProviderLogo(),
-                                            serviceProviderResultList.get(i).getServiceProviderId());
+                                            serviceProviderResultList.get(i).getServiceProviderId(),
+                                            serviceProviderResultList.get(i).getServiceProviderOpeningTimeArabic());
                                     searchedItemList.add(item);
                                 }
                                 resultsAdapter.notifyDataSetChanged();
