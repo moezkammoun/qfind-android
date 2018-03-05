@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
@@ -103,11 +102,11 @@
         android:id="@+id/normal_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/toolbar_bg"
         android:orientation="horizontal"
+        android:background="@drawable/toolbar_bg"
         android:paddingBottom="@dimen/padding_10"
-        android:paddingEnd="@dimen/padding_10"
         android:paddingStart="@dimen/padding_10"
+        android:paddingEnd="@dimen/padding_10"
         android:paddingTop="@dimen/padding_10"
         android:visibility="visible">
 
@@ -179,8 +178,6 @@
                 android:src="@drawable/hamburger_menu_white"
                 />
         </LinearLayout>
-
-
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>
