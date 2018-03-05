@@ -85,7 +85,9 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
 
                 }
             });
+            setFontTypeForText(title, description);
         }
+
     }
 
     @Override
@@ -110,7 +112,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         }
 
         Picasso.with(mContext).load(historyPageDataModel.getUrl()).placeholder(R.drawable.placeholder)
-                .fit().centerCrop().into(holder.url);
+                .fit().into(holder.url);
     }
 
     @Override
@@ -118,7 +120,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         return itemsList.size();
     }
 
-    public void setFontTypeForText() {
+    public void setFontTypeForText(TextView title, TextView description) {
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mtypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/Lato-Light.ttf");
@@ -126,5 +128,8 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
             mtypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
+
+        title.setTypeface(mtypeFaceLight);
+        description.setTypeface(mtypeFaceLight);
     }
 }

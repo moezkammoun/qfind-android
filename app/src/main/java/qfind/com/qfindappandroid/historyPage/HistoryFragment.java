@@ -122,13 +122,7 @@ public class HistoryFragment extends Fragment {
                 } else {
                     Date ds = null;
                     DateFormat dateFormat = null;
-                    if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                     dateFormat = new SimpleDateFormat("d MMM yyyy");
-                    }
-                    else{
-                        dateFormat = new SimpleDateFormat("yyyy MMM d");
-                    }
-
                     try {
                         ds = sdf.parse(countList.get(i).getDay());
                     } catch (ParseException e) {
