@@ -40,7 +40,7 @@
                         android:layout_width="@dimen/main_logo_width"
                         android:layout_height="@dimen/main_logo_height"
                         android:layout_centerInParent="true"
-                        android:layout_marginBottom="@dimen/padding_10"
+                        android:layout_marginBottom="@dimen/main_logo_padding_10"
                         android:layout_marginTop="@dimen/padding_10"
                         android:src="@drawable/main_logo" />
 
@@ -99,8 +99,8 @@
                 android:id="@+id/q_find_of_the_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="@dimen/padding_5"
+                android:gravity="center_horizontal"
+                android:paddingTop="@dimen/home_page_qfind_padding_5"
                 android:text="@string/qfind_of_the_day"
                 android:textColor="@color/category_tittle_color"
                 android:textSize="@dimen/q_find_of_the_day_text_size" />
@@ -110,9 +110,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9.18"
+            android:layout_marginTop="@dimen/search_text_box_margin_top"
             android:orientation="vertical"
-            android:paddingEnd="@dimen/padding_15"
-            android:paddingStart="@dimen/padding_15">
+            android:paddingEnd="@dimen/home_page_search_box_padding_15"
+            android:paddingStart="@dimen/home_page_search_box_padding_15">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -137,6 +138,7 @@
                         android:inputType="textAutoComplete|textAutoCorrect"
                         android:paddingEnd="@dimen/home_hit_padding"
                         android:paddingStart="@dimen/home_hit_padding"
+                        android:layout_marginStart="@dimen/home_page_search_text_pading_start"
                         android:textSize="@dimen/home_page_find_today_text" />
 
                     <ProgressBar
@@ -153,8 +155,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:paddingBottom="@dimen/padding_5"
-                    android:paddingTop="@dimen/padding_5"
+                    android:paddingBottom="@dimen/home_page_search_bar_icon_padding_5"
+                    android:paddingTop="@dimen/home_page_search_bar_icon_padding_5"
+                    android:paddingStart="@dimen/home_page_search_bar_icon_padding_start_5"
                     android:src="@drawable/logo" />
 
                 <ImageView
@@ -166,6 +169,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:paddingBottom="@dimen/padding_10"
                     android:paddingTop="@dimen/padding_10"
+                    android:paddingEnd="@dimen/home_page_search_bar_icon_padding_start_5"
                     android:src="@drawable/search" />
 
             </RelativeLayout>
@@ -174,41 +178,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="17"
-            android:gravity="center"
-            android:paddingEnd="@dimen/padding_15"
-            android:paddingStart="@dimen/padding_15">
+            android:layout_weight="27.88"
+            android:paddingEnd="@dimen/home_page_search_box_padding_15"
+            android:paddingStart="@dimen/home_page_search_box_padding_15"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/or"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:text="@string/or"
+                android:layout_marginTop="@dimen/home_page_or_text_margin_top"
+                android:layout_marginBottom="@dimen/home_page_or_text_margin_bottom"
                 android:textColor="@color/category_tittle_color"
                 android:textSize="@dimen/q_find_of_the_day_text_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10.88"
-            android:gravity="bottom"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/padding_15"
-            android:paddingStart="@dimen/padding_15">
 
             <Button
                 android:id="@+id/findByCategoryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_bg"
                 android:text="@string/find_by_category"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/text_size_20" />
+                android:textSize="@dimen/q_find_of_the_day_text_size" />
 
         </LinearLayout>
+
+
+
+
 
         <View
             android:layout_width="match_parent"
