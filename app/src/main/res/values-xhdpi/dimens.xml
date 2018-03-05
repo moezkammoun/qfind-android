@@ -72,5 +72,19 @@
     <dimen name="hamburger_icon_size">30dp</dimen>
     <dimen name="toolbar_hamburger_icon_height">35dp</dimen>
     <dimen name="toolbar_hamburger_icon_width">30dp</dimen>
+    <dimen name="home_page_qfind_padding_5">5dp</dimen>
+    <dimen name="home_page_search_box_padding_15">15dp</dimen>
+    <dimen name="home_page_search_bar_icon_padding_5">5dp</dimen>
+    <dimen name="home_page_search_bar_icon_padding_start_5">1dp</dimen>
+    <dimen name="find_by_category_text_size_20">20sp</dimen>
+    <dimen name="search_text_box_margin_top">1dp</dimen>
+    <dimen name="home_page_search_text_pading_start">1dp</dimen>
+    <dimen name="main_logo_padding_10">10dp</dimen>
+    <dimen name="home_page_or_text_margin_top">30dp</dimen>
+    <dimen name="home_page_or_text_margin_bottom">10dp</dimen>
+
+
+
+
 
 </resources>
