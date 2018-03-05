@@ -100,7 +100,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.categoryName.setTypeface(mtypeFaceLight);
             if (mainCategoryItemList != null) {
                 holder.categoryName.setText(mainCategoryItemList.get(position).getCategoryName());
-                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.placeholder).fit().centerCrop().into(holder.categoryThumbnail);
+                picasso.load(mainCategoryItemList.get(position).getCategoryImage()).placeholder(R.drawable.placeholder).fit().into(holder.categoryThumbnail);
             }
         } else if (Util.categoryPageStatus == 2) {
             holder.mainCategoryCardItemLayout.setVisibility(View.VISIBLE);
@@ -109,7 +109,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             holder.subCategoryDescription.setTypeface(mtypeFaceLight);
             if (subCategoryItemList != null) {
                 holder.categoryName.setText(subCategoryItemList.get(position).getSubCategoryName());
-                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.placeholder).fit().centerCrop().into(holder.categoryThumbnail);
+                picasso.load(subCategoryItemList.get(position).getSubCategoryImage()).placeholder(R.drawable.placeholder).fit().into(holder.categoryThumbnail);
             }
         } else if (Util.categoryPageStatus == 3) {
             holder.mainCategoryCardItemLayout.setVisibility(View.GONE);
@@ -125,7 +125,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
                     holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderNameArabic());
                     holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocationArabic());
                 }
-                  picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).fit().centerCrop().into(holder.categoryThumbnail);
+                  picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).fit().into(holder.categoryThumbnail);
             }
         }
     }

@@ -76,5 +76,6 @@
     <dimen name="main_logo_padding_10">10dp</dimen>
     <dimen name="home_page_or_text_margin_top">30dp</dimen>
     <dimen name="home_page_or_text_margin_bottom">10dp</dimen>
+    <dimen name="category_item_padding_10">10dp</dimen>
 
 </resources>

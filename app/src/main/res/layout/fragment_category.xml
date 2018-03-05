@@ -63,7 +63,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="57.9"
-        android:padding="@dimen/padding_10"
+        android:paddingTop="@dimen/padding_10"
+        android:paddingBottom="@dimen/padding_10"
+        android:paddingEnd="@dimen/category_item_padding_10"
+        android:paddingStart="@dimen/category_item_padding_10"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
