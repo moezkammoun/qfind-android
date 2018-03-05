@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources >
-    <dimen name="search_results_padding">80dp</dimen>
+    <dimen name="search_results_padding">30dp</dimen>
     <dimen name="search_results_tittle_text">34sp</dimen>
     <dimen name="search_results_item_text">21sp</dimen>
     <dimen name="search_results_item_text_description">17sp</dimen>
-    <dimen name="search_results_image_size">85dp</dimen>
+    <dimen name="search_results_image_size">55dp</dimen>
     <dimen name="search_results_back_image_size">55dp</dimen>
+    <dimen name="favorite_results_padding">30dp</dimen>
+    <dimen name="favorites_results_item_text">21sp</dimen>
+    <dimen name="favorites_results_item_text_description">17sp</dimen>
+    <dimen name="favorites_results_image_size">55dp</dimen>
+    <dimen name="history_results_padding">30dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="alignment_padding">1dp</dimen>
     <dimen name="home_page_find_today_text">18sp</dimen>
     <dimen name="toolbar_find_today_hint">15sp</dimen>
+    <dimen name="settings_padding_start">100dp</dimen>
+    <dimen name="settings_padding_end">100dp</dimen>
+    <dimen name="settings_padding_top">15dp</dimen>
+    <dimen name="settings_margin_top">1dp</dimen>
     <dimen name="main_logo_height">90dp</dimen>
     <dimen name="main_logo_width">290dp</dimen>
     <dimen name="hamburger_icon_size">40dp</dimen>
@@ -25,5 +34,4 @@
     <dimen name="main_logo_padding_10">30dp</dimen>
     <dimen name="home_page_or_text_margin_top">20dp</dimen>
     <dimen name="home_page_or_text_margin_bottom">10dp</dimen>
-
 </resources>

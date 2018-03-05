@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/favorite_thumbnail"
-                android:layout_width="@dimen/category_thumbnail_width"
-                android:layout_height="@dimen/category_thumbnail_height"
+                android:layout_width="@dimen/favorites_results_image_size"
+                android:layout_height="@dimen/favorites_results_image_size"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                />
@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:text="Four Season Hotel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_15" />
+                        android:textSize="@dimen/favorites_results_item_text" />
 
                     <TextView
                         android:id="@+id/favorite_item_description"
@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:text="Lorem ipsum dolor sit amet,"
                         android:textColor="@color/searchResultsDescriptionColor"
-                        android:textSize="@dimen/text_size_12sp" />
+                        android:textSize="@dimen/favorites_results_item_text_description" />
 
                 </LinearLayout>
             </LinearLayout>

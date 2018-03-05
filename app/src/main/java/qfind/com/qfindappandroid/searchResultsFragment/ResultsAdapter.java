@@ -73,7 +73,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         holder.title.setText(album.getProviderName());
         holder.description.setText(album.getProviderLocation());
         picasso.load(album.getProviderThumbnail()).placeholder(R.drawable.placeholder)
-                .fit().centerCrop().into(holder.thumbnail);
+                .fit().into(holder.thumbnail);
     }
 
 
