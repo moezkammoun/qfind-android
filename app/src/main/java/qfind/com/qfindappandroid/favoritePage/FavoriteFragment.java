@@ -1,6 +1,8 @@
 package qfind.com.qfindappandroid.favoritePage;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 
 public class FavoriteFragment extends Fragment {
@@ -32,7 +35,7 @@ public class FavoriteFragment extends Fragment {
     TextView favoriteTitle;
     @BindView(R.id.progressBarLoading)
     ProgressBar mProgressBarLoading;
-    favoriteAdapter resultsAdapter;
+    favoriteAdapter adapter;
     List<FavoriteModel> favoriteModelList;
     FavoriteModel item;
     Typeface mTypeFace;
@@ -40,6 +43,8 @@ public class FavoriteFragment extends Fragment {
     ImageView backButton;
     @BindView(R.id.empty_text_view_info)
     TextView emptyTextView;
+    FavoriteClickListener  favoriteClickListener;
+    DataBaseHandler db;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -56,8 +61,9 @@ public class FavoriteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setFontTypeForText();
+        setupRecyclerViewClickListener();
         favoriteModelList = new ArrayList<>();
-        DataBaseHandler db = new DataBaseHandler(getContext());
+        db = new DataBaseHandler(getContext());
         Log.d("Reading: ", "Reading all item..");
         List<FavoriteModel> fav = db.getAllFavorites();
         if (fav.size() != 0) {
@@ -77,7 +83,7 @@ public class FavoriteFragment extends Fragment {
                 favoriteModelList.add(item);
 
             }
-            favoriteAdapter adapter = new favoriteAdapter(getContext(), favoriteModelList);
+            adapter = new favoriteAdapter(getContext(), favoriteModelList,favoriteClickListener);
             favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             favoriteView.setAdapter(adapter);
             adapter.notifyItemInserted(0);
@@ -98,7 +104,56 @@ public class FavoriteFragment extends Fragment {
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
     }
 
-    @Override
+    public void setupRecyclerViewClickListener() {
+        favoriteClickListener=new FavoriteClickListener() {
+            @Override
+            public void onClick(View view, final int position, final ArrayList<Integer> arrayList) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+
+                // Setting Dialog Title
+                alertDialog.setTitle(R.string.favorite_alert_title);
+
+                // Setting Dialog Message
+                alertDialog.setMessage(R.string.favorite_alert_message);
+
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton(R.string.favorite_alert_title, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        delete(position, arrayList.get(position));
+                        List<FavoriteModel> isCheck=db.getAllFavorites();
+                        if(isCheck.size()==0){
+                            emptyTextView.setVisibility(View.VISIBLE);
+                            emptyTextView.setText(R.string.no_favorites_yet);
+                        }
+                        else {
+                            emptyTextView.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                // Showing Alert Message
+                alertDialog.show();
+
+            }
+        };
+    }
+    public void delete(int position, int id) {  //removes the row
+        DataBaseHandler db = new DataBaseHandler(getContext());
+        db.deleteFavorite(id);
+        favoriteModelList.remove(position);
+        adapter.notifyItemRemoved(position);
+    }
+
+
+
+        @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -129,4 +184,6 @@ public class FavoriteFragment extends Fragment {
         super.onDetach();
     }
 
+
 }
+
