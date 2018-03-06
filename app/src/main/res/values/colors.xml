@@ -14,6 +14,7 @@
     <color name="categories_background_color">#f0f0f0</color>
     <color name="searchResultsDescriptionColor">#666667</color>
     <color name="black_overlay">#66000000</color>
+    <color name="toolbar_color">#09293A</color>
 
 
 </resources>

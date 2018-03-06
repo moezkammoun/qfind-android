@@ -19,9 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.MainActivity;
@@ -198,9 +196,5 @@ public class SettingsFragment extends Fragment {
             englishButton.setTypeface(mtypeFace);
         }
 
-
-
     }
-
-
 }

@@ -70,7 +70,7 @@
                     android:layout_gravity="center"
                     android:text="@string/menu"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/text_size_19sp" />
+                    android:textSize="@dimen/menu_text_size_19sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                         android:layout_marginTop="@dimen/padding_10"
                         android:text="@string/about_us"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_18sp" />
+                        android:textSize="@dimen/menu_text_size_18sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                         android:layout_marginTop="@dimen/padding_10"
                         android:text="@string/how_to_become_qfinder"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_18sp" />
+                        android:textSize="@dimen/menu_text_size_18sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -157,7 +157,7 @@
                         android:layout_marginTop="@dimen/padding_10"
                         android:text="@string/terms_and_conditions"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_18sp" />
+                        android:textSize="@dimen/menu_text_size_18sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                         android:layout_marginTop="@dimen/padding_10"
                         android:text="@string/contact_us"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_18sp" />
+                        android:textSize="@dimen/menu_text_size_18sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -202,14 +202,9 @@
                         android:layout_marginTop="@dimen/padding_10"
                         android:text="@string/settings"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_18sp" />
+                        android:textSize="@dimen/menu_text_size_18sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/padding_15"
-                        android:background="@color/color_white" />
-                </LinearLayout>
+                   </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

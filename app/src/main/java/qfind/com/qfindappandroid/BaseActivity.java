@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -74,6 +75,7 @@ public class BaseActivity extends AppCompatActivity {
     Bundle bundle = new Bundle();
     SharedPreferences qFindPreferences;
     Typeface mtypeFaceBold, mtypeFaceLight, mtypeFaceItalic;
+    NavigationView navView;
 
 
     @Override
@@ -86,10 +88,18 @@ public class BaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         fullView = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
         activityContainer = (FrameLayout) fullView.findViewById(R.id.activity_content);
+        navView = (NavigationView) fullView.findViewById(R.id.nav_view);
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
         super.setContentView(fullView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (useToolbar()) {
+        toolbar.setPadding(0,0,0,0);
+        toolbar.setContentInsetsAbsolute(0,0);
+        int fullWidth = getResources().getDisplayMetrics().widthPixels;
+        int width = getResources().getDisplayMetrics().widthPixels/3;
+        width = fullWidth - width;
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) navView.getLayoutParams();
+        params.width = width;
+        navView.setLayoutParams(params);        if (useToolbar()) {
             setSupportActionBar(toolbar);
         } else {
             toolbar.setVisibility(View.GONE);
