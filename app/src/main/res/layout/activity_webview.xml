@@ -31,7 +31,7 @@
                     android:layout_marginStart="@dimen/padding_3"
                     android:layout_gravity="center"
                     android:singleLine="true"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/webview_textview_20"
                     android:textAlignment="center"
                     android:ellipsize = "marquee"
                     android:textColor="@color/color_white"

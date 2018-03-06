@@ -20,6 +20,7 @@ import java.util.List;
 import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
+import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 
 /**
  * Created by MoongedePC on 23-Jan-18.
@@ -32,6 +33,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
     private Typeface mTypeFaceLight;
     FavoriteModel favoriteModel;
     ArrayList<Integer> positions = new ArrayList<Integer>();
+    private FavoriteClickListener mListener;
 
     public favoriteAdapter() {
     }
@@ -67,7 +69,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         return itemList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
         public TextView title, description;
         public ImageView thumbnail, favoriteStar;
         public LinearLayout layout;
@@ -79,37 +81,8 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             thumbnail = (ImageView) view.findViewById(R.id.favorite_thumbnail);
             favoriteStar = (ImageView) view.findViewById(R.id.favorite_star);
             layout = (LinearLayout) view.findViewById(R.id.fav_layout);
-            favoriteStar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-                    // Setting Dialog Title
-                    alertDialog.setTitle(R.string.favorite_alert_title);
-
-                    // Setting Dialog Message
-                    alertDialog.setMessage(R.string.favorite_alert_message);
-
-                    // Setting Positive "Yes" Button
-                    alertDialog.setPositiveButton(R.string.favorite_alert_title, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            delete(getAdapterPosition(), positions.get(getAdapterPosition()));
-                        }
-                    });
-
-                    // Setting Negative "NO" Button
-                    alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    // Showing Alert Message
-                    alertDialog.show();
-                }
-            });
-
+            favoriteStar.setOnClickListener(this);
+            
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -139,6 +112,10 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             setFontTypeForText(title, description);
         }
 
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view,getAdapterPosition(),positions);
+        }
     }
 
     public void setFontTypeForText(TextView title, TextView description) {
@@ -153,9 +130,10 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         description.setTypeface(mTypeFaceLight);
     }
 
-    public favoriteAdapter(Context mContext, List<FavoriteModel> itemList) {
+    public favoriteAdapter(Context mContext, List<FavoriteModel> itemList, FavoriteClickListener mListener) {
         this.mContext = mContext;
         this.itemList = itemList;
+        this.mListener=mListener;
     }
 
     public void delete(int position, int id) {  //removes the row

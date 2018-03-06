@@ -15,6 +15,7 @@
     <dimen name="favorites_results_item_text_description">17sp</dimen>
     <dimen name="favorites_results_image_size">55dp</dimen>
     <dimen name="history_results_padding">30dp</dimen>
+    <dimen name="webview_textview_20">30sp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="alignment_padding">1dp</dimen>
     <dimen name="home_page_find_today_text">18sp</dimen>
