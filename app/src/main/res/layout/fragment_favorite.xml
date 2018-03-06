@@ -29,7 +29,7 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/category_tittle_text" />
+            android:textSize="@dimen/search_results_tittle_text" />
     </RelativeLayout>
 
     <RelativeLayout
