@@ -4,8 +4,16 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
     app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp">
+    app:contentInsetStart="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp"
+
+    >
 
     <LinearLayout
         android:id="@+id/info_toolbar"
@@ -33,8 +41,8 @@
 
             <ImageView
                 android:id="@+id/hamburger_info"
-                android:layout_width="@dimen/image_width"
-                android:layout_height="@dimen/image_height"
+                android:layout_width="@dimen/toolbar_hamburger_icon_width"
+                android:layout_height="@dimen/toolbar_hamburger_icon_height"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:src="@drawable/hamburger_menu_white" />
@@ -78,7 +86,7 @@
                 android:layout_alignParentEnd="true"
                 android:singleLine="true"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/text_size_20" />
+                android:textSize="@dimen/info_toolbar_desciption_text_size_20" />
 
         </RelativeLayout>
 
@@ -103,11 +111,12 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
-        android:background="@drawable/toolbar_bg"
+        android:background="@drawable/info_toolbar_bg"
         android:paddingBottom="@dimen/padding_10"
         android:paddingStart="@dimen/padding_10"
         android:paddingEnd="@dimen/padding_10"
         android:paddingTop="@dimen/padding_10"
+        android:baselineAligned="false"
         android:visibility="visible">
 
         <RelativeLayout
@@ -116,6 +125,7 @@
             android:layout_weight="72.82"
             android:background="@drawable/edit_text_border"
             android:focusable="true"
+            android:layout_gravity="center"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
@@ -170,7 +180,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="22.5"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_gravity="center">
             <ImageView
                 android:id="@+id/sideMenu"
                 android:layout_width="@dimen/toolbar_hamburger_icon_width"

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources >
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">20sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">24sp</dimen>
+    <dimen name="design_bottom_navigation_height" tools:override="true">60dp</dimen>
+    <dimen name="bottom_navigation_icon_size" tools:override="true">200dp</dimen>
     <dimen name="search_results_padding">30dp</dimen>
     <dimen name="search_results_tittle_text">34sp</dimen>
     <dimen name="search_results_item_text">21sp</dimen>
@@ -15,7 +19,7 @@
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="alignment_padding">1dp</dimen>
     <dimen name="home_page_find_today_text">18sp</dimen>
-    <dimen name="toolbar_find_today_hint">15sp</dimen>
+    <dimen name="toolbar_find_today_hint">18sp</dimen>
     <dimen name="settings_padding_start">100dp</dimen>
     <dimen name="settings_padding_end">100dp</dimen>
     <dimen name="settings_padding_top">15dp</dimen>
@@ -35,4 +39,17 @@
     <dimen name="main_logo_padding_10">30dp</dimen>
     <dimen name="home_page_or_text_margin_top">20dp</dimen>
     <dimen name="home_page_or_text_margin_bottom">10dp</dimen>
+    <dimen name="category_item_padding_10">40dp</dimen>
+    <dimen name="category_thumbnail_height">55dp</dimen>
+    <dimen name="category_card_item_text_size">21sp</dimen>
+    <dimen name="sub_category_card_item_text_size">17sp</dimen>
+    <dimen name="toolbar_hamburger_icon_height">40dp</dimen>
+    <dimen name="toolbar_hamburger_icon_width">35dp</dimen>
+    <dimen name="toolbar_height">250dp</dimen>
+    <dimen name="info_title_text_size">48sp</dimen>
+    <dimen name="info_toolbar_desciption_text_size_20">25sp</dimen>
+    <dimen name="info_page_tool_bar_margin_bottom">40dp</dimen>
+    <dimen name="layout_marginTop">105dp</dimen>
+    <dimen name="menu_text_size_19sp">25sp</dimen>
+    <dimen name="menu_text_size_18sp">21sp</dimen>
 </resources>
