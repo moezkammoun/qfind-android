@@ -233,9 +233,9 @@ public class InformationFragment extends Fragment {
         if (providerFacebook != null && !providerFacebook.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.facebook_icon,
                     R.drawable.dot_icon, providerFacebook, R.drawable.right_arrow));
-        if (providerLinkedin != null && !providerLinkedin.equals(""))
-            informationData.add(new InformationFragmentModel(R.drawable.linkedin,
-                    R.drawable.dot_icon, providerLinkedin, R.drawable.right_arrow));
+//        if (providerLinkedin != null && !providerLinkedin.equals(""))
+//            informationData.add(new InformationFragmentModel(R.drawable.linkedin,
+//                    R.drawable.dot_icon, providerLinkedin, R.drawable.right_arrow));
         if (providerInstagram != null && !providerInstagram.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.instagram,
                     R.drawable.dot_icon, providerInstagram, R.drawable.right_arrow));
@@ -245,9 +245,9 @@ public class InformationFragment extends Fragment {
         if (providerSnapchat != null && !providerSnapchat.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.snapchat,
                     R.drawable.dot_icon, providerSnapchat, R.drawable.right_arrow));
-        if (providerGooglePlus != null && !providerGooglePlus.equals(""))
-            informationData.add(new InformationFragmentModel(R.drawable.google_plus,
-                    R.drawable.dot_icon, providerGooglePlus, R.drawable.right_arrow));
+//        if (providerGooglePlus != null && !providerGooglePlus.equals(""))
+//            informationData.add(new InformationFragmentModel(R.drawable.google_plus,
+//                    R.drawable.dot_icon, providerGooglePlus, R.drawable.right_arrow));
         return informationData;
     }
 
