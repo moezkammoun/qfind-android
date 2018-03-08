@@ -6,13 +6,13 @@
     <dimen name="bottom_navigation_icon_size" tools:override="true">200dp</dimen>
     <dimen name="search_results_padding">30dp</dimen>
     <dimen name="search_results_tittle_text">34sp</dimen>
-    <dimen name="search_results_item_text">21sp</dimen>
-    <dimen name="search_results_item_text_description">17sp</dimen>
+    <dimen name="search_results_item_text">19sp</dimen>
+    <dimen name="search_results_item_text_description">15sp</dimen>
     <dimen name="search_results_image_size">55dp</dimen>
     <dimen name="search_results_back_image_size">55dp</dimen>
     <dimen name="favorite_results_padding">30dp</dimen>
-    <dimen name="favorites_results_item_text">21sp</dimen>
-    <dimen name="favorites_results_item_text_description">17sp</dimen>
+    <dimen name="favorites_results_item_text">19sp</dimen>
+    <dimen name="favorites_results_item_text_description">15sp</dimen>
     <dimen name="favorites_results_image_size">55dp</dimen>
     <dimen name="history_results_padding">30dp</dimen>
     <dimen name="webview_textview_20">30sp</dimen>
