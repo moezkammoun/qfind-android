@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ import cn.lightsky.infiniteindicator.OnPageClickListener;
 import cn.lightsky.infiniteindicator.Page;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
+import qfind.com.qfindappandroid.homeactivty.RegistrationDetails;
 import qfind.com.qfindappandroid.homeactivty.SearchData;
 import qfind.com.qfindappandroid.predictiveSearch.DelayAutoCompleteTextView;
 import qfind.com.qfindappandroid.predictiveSearch.SearchAutoCompleteAdapter;
@@ -60,6 +62,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     TextView orText;
     @BindView(R.id.ads_place_holder)
     ImageView adsPlaceHolder;
+    @BindView(R.id.progressBarForloading)
+    ProgressBar progressBar;
     Typeface mTypeFace;
     Intent navigationIntent;
     String accessToken;
@@ -77,7 +81,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private PicassoLoader picassoLoader;
     DelayAutoCompleteTextView autoCompleteTextView;
     SearchData searchData;
-
+    private final String clientId = "80581B4C-C060-D166-7893-A4424C15A63D";
+    private final String clientSecret = "0488AFF2-BCE0-BC87-F614-10F055107FEB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +146,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                             navigationIntent.putExtra("SEARCH_TYPE", 4);
                         startActivity(navigationIntent);
                     }
-                } 
+                }
             }
         });
         findByCategoryBtn.setOnClickListener(new View.OnClickListener() {
@@ -149,9 +154,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             public void onClick(View view) {
 
                 if (isNetworkAvailable()) {
-                    navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
-                    navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
-                    startActivity(navigationIntent);
+                    accessToken = qFindPreferences.getString("AccessToken", null);
+                    if (accessToken == null) {
+                       registerTheApp();
+                    } else {
+                       openContainerActivity();
+                    }
                 }
 
             }
@@ -469,5 +477,51 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void onPageClick(int position, Page page) {
 
+    }
+
+    public void openContainerActivity(){
+        navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
+        navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
+        startActivity(navigationIntent);
+    }
+
+    public void registerTheApp(){
+        progressBar.setVisibility(View.VISIBLE);
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<RegistrationDetails> call = apiService.getAccessToken(clientId,clientSecret);
+        call.enqueue(new Callback<RegistrationDetails>() {
+            @Override
+            public void onResponse(Call<RegistrationDetails> call, Response<RegistrationDetails> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        RegistrationDetails registrationDetails = response.body();
+                        if (registrationDetails.getCode().equals("200")) {
+                            SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = qfindPreferences.edit();
+                            editor.putString("AccessToken", registrationDetails.getAccessToken());
+                            editor.putBoolean("AuthTokenStatus",true);
+                            editor.commit();
+                            progressBar.setVisibility(View.GONE);
+                            openContainerActivity();
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
+                        }
+                    }
+
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegistrationDetails> call, Throwable t) {
+                Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 }

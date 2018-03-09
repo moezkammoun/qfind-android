@@ -11,14 +11,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.AppConfig;
 import qfind.com.qfindappandroid.BaseActivity;
+import qfind.com.qfindappandroid.MyApp;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
+import qfind.com.qfindappandroid.homeactivty.QFindOfTheDayDetails;
 import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.informationFragment.ServiceProviderDataResponse;
 import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
@@ -43,7 +47,10 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     private ApiInterface apiService;
     Bundle bundle = new Bundle();
     ServiceProviderResult serviceProviderResult;
-
+    QFindOfTheDayDetails qfindOfTheDayDetails;
+    SharedPreferences.Editor editor;
+    Date d;
+    SimpleDateFormat sdf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,12 +195,12 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void showServiceProvider(Uri uri) {
         showServiceProviderDetailPage(
                 "ProviderName", "ProviderLocation", "ProviderNameArabic",
-                "ProviderLocationArabic","ProviderPhone",
+                "ProviderLocationArabic", "ProviderPhone",
                 "ProviderAddress", "ProviderWebsite", "ProviderOpeningTime",
                 "ProviderMail", "ProviderFacebook", "ProviderLinkedIn",
                 "ProviderInstagram", "ProviderTwitter", "ProviderSnapchat",
                 "ProviderGooglePlus", "ProviderLatlong", "ProviderLogo",
-                1,"ProiderOpeningTimeArabic"
+                1, "ProiderOpeningTimeArabic"
         );
 
         Toast.makeText(ContainerActivity.this, "URI : " + uri, Toast.LENGTH_SHORT).show();
@@ -222,6 +229,51 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     public void onResume() {
         super.onResume();
         setupBottomNavigationBar();
+    }
+
+    public void getAds() {
+        accessToken = qFindPreferences.getString("AccessToken", null);
+        if (accessToken != null) {
+            ApiInterface apiService =
+                    ApiClient.getClient().create(ApiInterface.class);
+            Call<QFindOfTheDayDetails> call = apiService.getQFindOfTheDay(accessToken);
+            call.enqueue(new Callback<QFindOfTheDayDetails>() {
+                @Override
+                public void onResponse(Call<QFindOfTheDayDetails> call, Response<QFindOfTheDayDetails> response) {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                    if (response.isSuccessful()) {
+                        int i;
+                        if (response.body() != null) {
+                            qfindOfTheDayDetails = response.body();
+                            if (qfindOfTheDayDetails.getCode().equals("200")) {
+                                editor = qFindPreferences.edit();
+                                for (i = 0; i < qfindOfTheDayDetails.getAdsData().getImages().size(); i++) {
+                                    editor.putString("AD" + (i + 1), qfindOfTheDayDetails.getAdsData().getImages().get(i));
+                                }
+                                editor.putInt("COUNT", (i));
+                                editor.putInt("UPDATED_ON", getCurrentDate());
+                                editor.commit();
+                                if ((f instanceof CategoryFragment)) {
+                                    CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                                    fragment.getAdsFromPreference();
+                                }
+                               //
+                            } else {
+                                Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
+                            }
+                        }
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<QFindOfTheDayDetails> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     public void getMainCategoryItemsList() {
@@ -286,5 +338,12 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
             });
         }
     }
+
+    public int getCurrentDate() {
+        d = new Date();
+        sdf = new SimpleDateFormat("dd");
+        return Integer.valueOf(sdf.format(d));
+    }
+
 
 }
