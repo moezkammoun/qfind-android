@@ -56,7 +56,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     boolean isLoading = false;
     boolean firstLoading;
     int currentItem, totalItem, scrolledOutItem;
-
+    int updatedDate;
     private CategoryItemAdapter categoryItemAdapter;
     CategoryFragmentPresenterImpl categoryFragmentPresenterImpl;
     public Typeface mtypeFace;
@@ -81,6 +81,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     int offset = 1;
     int firstVisibleInListview;
     boolean noMoreData = false;
+    ArrayList<Page> ads;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -129,57 +130,12 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     @Override
     public void loadAds(ArrayList<Page> adsImages) {
-        if (adsImages.size() > 1) {
-            picassoLoaderForFragment = new PicassoLoader();
-            if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
-                configurationForFragment = new IndicatorConfiguration.Builder()
-                        .imageLoader(picassoLoaderForFragment)
-                        .isStopWhileTouch(true)
-                        .onPageChangeListener(this)
-                        .scrollDurationFactor(6)
-                        .internal(3000)
-                        .isLoop(true)
-                        .isAutoScroll(true)
-                        .onPageClickListener(this)
-                        .direction(RIGHT)
-                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
-                        .build();
-                mAnimCircleIndicator.init(configurationForFragment);
-                mAnimCircleIndicator.notifyDataChange(adsImages);
-            } else {
-                configurationForFragment = new IndicatorConfiguration.Builder()
-                        .imageLoader(picassoLoaderForFragment)
-                        .isStopWhileTouch(true)
-                        .onPageChangeListener(this)
-                        .internal(3000)
-                        .scrollDurationFactor(6)
-                        .isLoop(true)
-                        .isAutoScroll(true)
-                        .onPageClickListener(this)
-                        .direction(LEFT)
-                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
-                        .build();
-                mAnimCircleIndicator.init(configurationForFragment);
-                mAnimCircleIndicator.notifyDataChange(adsImages);
-            }
-        } else {
-            picassoLoaderForFragment = new PicassoLoader();
-            configurationForFragment = new IndicatorConfiguration.Builder()
-                    .imageLoader(picassoLoaderForFragment)
-                    .isStopWhileTouch(true)
-                    .onPageChangeListener(null)
-                    .scrollDurationFactor(6)
-                    .internal(3000)
-                    .isLoop(false)
-                    .isAutoScroll(false)
-                    .onPageClickListener(null)
-                    .direction(RIGHT)
-                    .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
-                    .build();
-            mAnimCircleIndicator.init(configurationForFragment);
-            mAnimCircleIndicator.notifyDataChange(adsImages);
-        }
+        updatedDate = qFindPreferences.getInt("UPDATED_ON", 0);
+        if (updatedDate == 0) {
+            updateAds();
 
+        }else
+        setupTheaddBannerImage(adsImages);
 
     }
 
@@ -655,5 +611,72 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         });
 
 
+    }
+
+    public void setupTheaddBannerImage(ArrayList<Page> adsImages) {
+        if (adsImages.size() > 1) {
+            picassoLoaderForFragment = new PicassoLoader();
+            if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+                configurationForFragment = new IndicatorConfiguration.Builder()
+                        .imageLoader(picassoLoaderForFragment)
+                        .isStopWhileTouch(true)
+                        .onPageChangeListener(this)
+                        .scrollDurationFactor(6)
+                        .internal(3000)
+                        .isLoop(true)
+                        .isAutoScroll(true)
+                        .onPageClickListener(this)
+                        .direction(RIGHT)
+                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                        .build();
+                mAnimCircleIndicator.init(configurationForFragment);
+                mAnimCircleIndicator.notifyDataChange(adsImages);
+            } else {
+                configurationForFragment = new IndicatorConfiguration.Builder()
+                        .imageLoader(picassoLoaderForFragment)
+                        .isStopWhileTouch(true)
+                        .onPageChangeListener(this)
+                        .internal(3000)
+                        .scrollDurationFactor(6)
+                        .isLoop(true)
+                        .isAutoScroll(true)
+                        .onPageClickListener(this)
+                        .direction(LEFT)
+                        .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                        .build();
+                mAnimCircleIndicator.init(configurationForFragment);
+                mAnimCircleIndicator.notifyDataChange(adsImages);
+            }
+        } else {
+            picassoLoaderForFragment = new PicassoLoader();
+            configurationForFragment = new IndicatorConfiguration.Builder()
+                    .imageLoader(picassoLoaderForFragment)
+                    .isStopWhileTouch(true)
+                    .onPageChangeListener(null)
+                    .scrollDurationFactor(6)
+                    .internal(3000)
+                    .isLoop(false)
+                    .isAutoScroll(false)
+                    .onPageClickListener(null)
+                    .direction(RIGHT)
+                    .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                    .build();
+            mAnimCircleIndicator.init(configurationForFragment);
+            mAnimCircleIndicator.notifyDataChange(adsImages);
+        }
+
+    }
+
+    public void updateAds(){
+        ((ContainerActivity) getActivity()).getAds();
+
+    }
+
+    public void getAdsFromPreference() {
+        ads = new ArrayList<>();
+        for (int i = 0; i < qFindPreferences.getInt("COUNT", 0); i++) {
+            ads.add(new Page("", qFindPreferences.getString("AD" + (i + 1), null)));
+        }
+        setupTheaddBannerImage(ads);
     }
 }

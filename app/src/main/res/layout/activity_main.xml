@@ -193,24 +193,33 @@
                 android:layout_marginBottom="@dimen/home_page_or_text_margin_bottom"
                 android:textColor="@color/category_tittle_color"
                 android:textSize="@dimen/q_find_of_the_day_text_size" />
-
-            <Button
-                android:id="@+id/findByCategoryBtn"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/button_bg"
-                android:text="@string/find_by_category"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/q_find_of_the_day_text_size" />
+                android:layout_gravity="bottom">
+
+                <Button
+                    android:id="@+id/findByCategoryBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_bg"
+                    android:text="@string/find_by_category"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/q_find_of_the_day_text_size" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarForloading"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
 
         </LinearLayout>
-
-
-
-
-
+        
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
