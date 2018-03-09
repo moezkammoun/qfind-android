@@ -424,7 +424,7 @@ public class InformationFragment extends Fragment {
     private String getDate(long milliSeconds) {
 //        // Create a DateFormatter object for displaying date in specified
 //        // format.
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH);
 //        // Create a calendar object that will convert the date and time value in
 //        // milliseconds to date
         Calendar calendar = Calendar.getInstance();
