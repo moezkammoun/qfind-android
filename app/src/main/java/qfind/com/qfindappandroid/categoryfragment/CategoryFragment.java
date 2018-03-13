@@ -572,6 +572,13 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         emptyTextView.setVisibility(View.VISIBLE);
     }
 
+    public void showServerErrorText() {
+        recyclerView.setVisibility(View.GONE);
+        emptyTextView.setVisibility(View.VISIBLE);
+        emptyTextView.setText(getResources().getString(R.string.something_went_wrong));
+    }
+
+
     public void showRecyclerView() {
         recyclerView.setVisibility(View.VISIBLE);
         emptyTextView.setVisibility(View.GONE);

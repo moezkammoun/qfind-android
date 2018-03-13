@@ -317,16 +317,17 @@ public class InformationFragment extends Fragment {
     }
 
     public String getFacebookPageURL(Context context) {
-        String FACEBOOK_URL = "https://www.facebook.com/publictheband/";
-        String FACEBOOK_PAGE_ID = "publictheband";
+        providerFacebook="100000023467061";
         PackageManager packageManager = context.getPackageManager();
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) { //newer versions of fb app
-                return "fb://facewebmodal/f?href=https://www.facebook.com/" + providerFacebook + "/";
-            } else { //older versions of fb app
-                return "fb://page/" + providerFacebook;
-            }
+//            if (versionCode >= 3002850) { //newer versions of fb app
+//                //return "fb://facewebmodal/f?href=https://www.facebook.com/" + providerFacebook + "/";
+//                return "fb://profile/" + providerFacebook;
+//            } else { //older versions of fb app
+//                return "fb://profile/" + providerFacebook;
+//            }
+            return "fb://profile/" + providerFacebook;
         } catch (PackageManager.NameNotFoundException e) {
             return "https://www.facebook.com/" + providerFacebook + "/"; //normal web url
         }
@@ -397,15 +398,20 @@ public class InformationFragment extends Fragment {
     }
 
     public void openSnapchat(Context context) {
+        providerSnapchat = "exalturesnapch2";
         PackageManager pkManager = context.getPackageManager();
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
             String getPkgInfo = pkgInfo.toString();
             if (getPkgInfo.contains("com.snapchat.android")) {
                 // APP NOT INSTALLED
+//                Intent intent = new Intent(Intent.ACTION_VIEW,
+//                        Uri.parse("https://snapchat.com/add/" + providerSnapchat));
+//                startActivity(intent);
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://snapchat.com/add/" + providerSnapchat));
+                        Uri.parse("snapchat://add/" + providerSnapchat));
                 startActivity(intent);
+
             } else {
                 callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
 
