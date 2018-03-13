@@ -31,6 +31,7 @@
                     android:layout_marginStart="@dimen/padding_3"
                     android:layout_gravity="center"
                     android:singleLine="true"
+                    android:text="@string/app_name"
                     android:textSize="@dimen/webview_textview_20"
                     android:textAlignment="center"
                     android:ellipsize = "marquee"

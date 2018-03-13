@@ -273,7 +273,7 @@ public class InformationFragment extends Fragment {
                         facebookIntent.setData(Uri.parse(facebookUrl));
                         startActivity(facebookIntent);
                     } else {
-                        callWebviewWithUrl("https://www.facebook.com/" + providerFacebook, providerFacebook);
+                        callWebviewWithUrl("https://www.facebook.com/" + providerFacebook);
                     }
 
                 }
@@ -286,7 +286,7 @@ public class InformationFragment extends Fragment {
                 }
                 if (informationData.get(position).getInfo_icon() == R.drawable.web_icon && providerWebsite != null) {
 
-                    callWebviewWithUrl(providerWebsite, providerName);
+                    callWebviewWithUrl(providerWebsite);
 
                 }
                 if (informationData.get(position).getInfo_icon() == R.drawable.location_icon &&
@@ -343,10 +343,9 @@ public class InformationFragment extends Fragment {
         startActivity(Intent.createChooser(emailIntent, "Send mail..."));
     }
 
-    public void callWebviewWithUrl(String url, String tittle) {
+    public void callWebviewWithUrl(String url) {
         Intent intent = new Intent(getContext(), WebviewActivity.class);
         intent.putExtra("url", url);
-        intent.putExtra("Title", tittle);
         startActivity(intent);
     }
 
@@ -363,14 +362,14 @@ public class InformationFragment extends Fragment {
                         Uri.parse("twitter://user?screen_name=" + providerTwitter));
                 startActivity(intent);
             } else {
-                callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
+                callWebviewWithUrl("https://twitter.com/" + providerTwitter);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("https://twitter.com/" + providerTwitter, providerTwitter);
+            callWebviewWithUrl("https://twitter.com/" + providerTwitter);
         }
     }
 
@@ -386,13 +385,13 @@ public class InformationFragment extends Fragment {
                         Uri.parse("http://instagram.com/_u/" + providerInstagram));
                 startActivity(intent);
             } else {
-                callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
+                callWebviewWithUrl("http://instagram.com/" + providerInstagram);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
 
             // APP NOT INSTALLED
-            callWebviewWithUrl("http://instagram.com/" + providerInstagram, providerTwitter);
+            callWebviewWithUrl("http://instagram.com/" + providerInstagram);
         }
 
     }
@@ -413,7 +412,7 @@ public class InformationFragment extends Fragment {
                 startActivity(intent);
 
             } else {
-                callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+                callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat);
 
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -421,7 +420,7 @@ public class InformationFragment extends Fragment {
 
             // APP NOT INSTALLED
             //callWebviewWithUrl("https://twitter.com/"+providerTwitter,providerTwitter);
-            callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat, providerSnapchat);
+            callWebviewWithUrl("https://snapchat.com/add/" + providerSnapchat);
         }
 
 
