@@ -18,11 +18,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
@@ -40,7 +38,6 @@ import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
 
@@ -83,6 +80,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     SearchData searchData;
     private final String clientId = "80581B4C-C060-D166-7893-A4424C15A63D";
     private final String clientSecret = "0488AFF2-BCE0-BC87-F614-10F055107FEB";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,9 +154,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 if (isNetworkAvailable()) {
                     accessToken = qFindPreferences.getString("AccessToken", null);
                     if (accessToken == null) {
-                       registerTheApp();
+                        registerTheApp();
                     } else {
-                       openContainerActivity();
+                        openContainerActivity();
                     }
                 }
 
@@ -252,6 +250,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             ads.add(new Page("", qFindPreferences.getString("AD" + (i + 1), null)));
         }
         loadAdsToSlider(ads);
+
     }
 
     @Override
@@ -272,11 +271,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1",
-                            "ABOUT US");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1");
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2",
-                            "معلومات عنا");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2");
                 }
 
             }
@@ -287,11 +284,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1",
-                            "HOW TO BECOME QFINDER ");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1");
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2",
-                            "كيف تكون كيوفايندر");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2");
                 }
             }
         });
@@ -302,11 +297,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/1",
-                            "TERMS & CONDITIONS ");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/1");
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/2",
-                            "الشروط والأحكام");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/2");
                 }
 
             }
@@ -317,11 +310,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1",
-                            "CONTACT US ");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1"
+                            );
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2",
-                            "لتجدنا");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2"
+                            );
                 }
             }
         });
@@ -478,17 +471,17 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     }
 
-    public void openContainerActivity(){
+    public void openContainerActivity() {
         navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
         navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.CATEGORIES.toString());
         startActivity(navigationIntent);
     }
 
-    public void registerTheApp(){
+    public void registerTheApp() {
         progressBar.setVisibility(View.VISIBLE);
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<RegistrationDetails> call = apiService.getAccessToken(clientId,clientSecret);
+        Call<RegistrationDetails> call = apiService.getAccessToken(clientId, clientSecret);
         call.enqueue(new Callback<RegistrationDetails>() {
             @Override
             public void onResponse(Call<RegistrationDetails> call, Response<RegistrationDetails> response) {
@@ -499,7 +492,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                             SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = qfindPreferences.edit();
                             editor.putString("AccessToken", registrationDetails.getAccessToken());
-                            editor.putBoolean("AuthTokenStatus",true);
+                            editor.putBoolean("AuthTokenStatus", true);
                             editor.commit();
                             progressBar.setVisibility(View.GONE);
                             openContainerActivity();
