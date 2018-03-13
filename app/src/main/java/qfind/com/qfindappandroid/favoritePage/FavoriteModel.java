@@ -28,6 +28,13 @@ public class FavoriteModel {
     private String providerGooglePlus;
     private String providerLatlong;
     private String providerOpeningTimeArabic;
+    private String providerAddressArabic;
+    private String providerClosingTime;
+    private String providerClosingTimeArabic;
+    private String providerOpeningTitle;
+    private String providerClosingTitle;
+    private String providerOpeningTitleArabic;
+    private String providerClosingTitleArabic;
 
     public FavoriteModel() {
     }
@@ -37,7 +44,10 @@ public class FavoriteModel {
                          String providerAddress, String providerOpeningTime, String providerMail,
                          String providerFacebook, String providerLinkedIn, String providerInstagram,
                          String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                         String providerLatlong, String datetime,String providerOpeningTimeArabic) {
+                         String providerLatlong, String datetime,String providerOpeningTimeArabic,
+                         String providerAddressArabic,String providerClosingTime,String providerClosingTimeArabic,
+                         String providerOpeningTitle,String providerClosingTitle,String providerOpeningTitleArabic,
+                         String providerClosingTitleArabic) {
         this.item = item;
         this.itemDescription = itemDescription;
         this.itemArabic = itemArabic;
@@ -58,6 +68,13 @@ public class FavoriteModel {
         this.providerLatlong = providerLatlong;
         this.datetime = datetime;
         this.providerOpeningTimeArabic=providerOpeningTimeArabic;
+        this.providerAddressArabic=providerAddressArabic;
+        this.providerClosingTime=providerClosingTime;
+        this.providerClosingTimeArabic=providerClosingTimeArabic;
+        this.providerOpeningTitle=providerOpeningTitle;
+        this.providerClosingTitle=providerClosingTitle;
+        this.providerOpeningTitleArabic=providerOpeningTitleArabic;
+        this.providerClosingTitleArabic=providerClosingTitleArabic;
     }
 
 
@@ -235,5 +252,61 @@ public class FavoriteModel {
 
     public void setProviderOpeningTimeArabic(String providerOpeningTimeArabic) {
         this.providerOpeningTimeArabic = providerOpeningTimeArabic;
+    }
+
+    public String getProviderAddressArabic() {
+        return providerAddressArabic;
+    }
+
+    public void setProviderAddressArabic(String providerAddressArabic) {
+        this.providerAddressArabic = providerAddressArabic;
+    }
+
+    public String getProviderClosingTime() {
+        return providerClosingTime;
+    }
+
+    public void setProviderClosingTime(String providerClosingTime) {
+        this.providerClosingTime = providerClosingTime;
+    }
+
+    public String getProviderClosingTimeArabic() {
+        return providerClosingTimeArabic;
+    }
+
+    public void setProviderClosingTimeArabic(String providerClosingTimeArabic) {
+        this.providerClosingTimeArabic = providerClosingTimeArabic;
+    }
+
+    public String getProviderOpeningTitle() {
+        return providerOpeningTitle;
+    }
+
+    public void setProviderOpeningTitle(String providerOpeningTitle) {
+        this.providerOpeningTitle = providerOpeningTitle;
+    }
+
+    public String getProviderClosingTitle() {
+        return providerClosingTitle;
+    }
+
+    public void setProviderClosingTitle(String providerClosingTitle) {
+        this.providerClosingTitle = providerClosingTitle;
+    }
+
+    public String getProviderOpeningTitleArabic() {
+        return providerOpeningTitleArabic;
+    }
+
+    public void setProviderOpeningTitleArabic(String providerOpeningTitleArabic) {
+        this.providerOpeningTitleArabic = providerOpeningTitleArabic;
+    }
+
+    public String getProviderClosingTitleArabic() {
+        return providerClosingTitleArabic;
+    }
+
+    public void setProviderClosingTitleArabic(String providerClosingTitleArabic) {
+        this.providerClosingTitleArabic = providerClosingTitleArabic;
     }
 }

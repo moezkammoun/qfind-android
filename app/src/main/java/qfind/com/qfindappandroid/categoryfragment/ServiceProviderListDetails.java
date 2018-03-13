@@ -53,6 +53,19 @@ public class ServiceProviderListDetails {
     private String message;
     @SerializedName("service_provider_opening_time_arabic")
     private String serviceProviderOpeningTimeArabic;
+    @SerializedName("service_provider_closing_time")
+    private String serviceProviderClosingTime;
+    @SerializedName("service_provider_opening_title")
+    private String serviceProviderOpeningTitle;
+    @SerializedName("service_provider_closing_title")
+    private String serviceProviderClosingTitle;
+    @SerializedName("service_provider_opening_title_arabic")
+    private String serviceProviderOpeningTitleArabic;
+    @SerializedName("service_provider_closing_title_arabic")
+    private String serviceProviderClosingTitleArabic;
+    @SerializedName("service_provider_closing_time_arabic")
+    private String serviceProviderClosingTimeArabic;
+
 
     public String getServiceProviderName() {
         return serviceProviderName;
@@ -144,6 +157,30 @@ public class ServiceProviderListDetails {
         return serviceProviderOpeningTimeArabic;
     }
 
+    public String getServiceProviderClosingTime() {
+        return serviceProviderClosingTime;
+    }
+
+    public String getServiceProviderOpeningTitle() {
+        return serviceProviderOpeningTitle;
+    }
+
+    public String getServiceProviderClosingTitle() {
+        return serviceProviderClosingTitle;
+    }
+
+    public String getServiceProviderOpeningTitleArabic() {
+        return serviceProviderOpeningTitleArabic;
+    }
+
+    public String getServiceProviderClosingTitleArabic() {
+        return serviceProviderClosingTitleArabic;
+    }
+
+    public String getServiceProviderClosingTimeArabic() {
+        return serviceProviderClosingTimeArabic;
+    }
+
     public ServiceProviderListDetails(String serviceProviderName, String serviceProviderAddress,
                                       String serviceProviderLocation, String serviceProviderCategory,
                                       int serviceProviderId, String serviceProviderMail,
@@ -152,7 +189,10 @@ public class ServiceProviderListDetails {
                                       String serviceProviderFacebook, String serviceProviderLinkedin,
                                       String serviceProviderInstagram, String serviceProviderTwitter,
                                       String serviceProviderSnapchat, String serviceProviderGoogleplus,
-                                      String serviceProviderLogo, String message,String serviceProviderOpeningTimeArabic) {
+                                      String serviceProviderLogo, String message, String serviceProviderOpeningTimeArabic,
+                                      String serviceProviderClosingTime, String serviceProviderClosingTimeArabic,
+                                      String serviceProviderOpeningTitle, String serviceProviderClosingTitle,
+                                      String serviceProviderOpeningTitleArabic, String serviceProviderClosingTitleArabic) {
         this.message =message;
         this.serviceProviderName = serviceProviderName;
         this.serviceProviderAddress = serviceProviderAddress;
@@ -172,5 +212,11 @@ public class ServiceProviderListDetails {
         this.serviceProviderGoogleplus = serviceProviderGoogleplus;
         this.serviceProviderLogo = serviceProviderLogo;
         this.serviceProviderOpeningTimeArabic=serviceProviderOpeningTimeArabic;
+        this.serviceProviderClosingTime=serviceProviderClosingTime;
+        this.serviceProviderClosingTimeArabic=serviceProviderClosingTimeArabic;
+        this.serviceProviderOpeningTitle=serviceProviderOpeningTitle;
+        this.serviceProviderClosingTitle=serviceProviderClosingTitle;
+        this.serviceProviderOpeningTitleArabic=serviceProviderOpeningTitleArabic;
+        this.serviceProviderClosingTitleArabic=serviceProviderClosingTitleArabic;
     }
 }

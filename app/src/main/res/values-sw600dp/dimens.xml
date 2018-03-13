@@ -6,16 +6,17 @@
     <dimen name="bottom_navigation_icon_size" tools:override="true">200dp</dimen>
     <dimen name="search_results_padding">30dp</dimen>
     <dimen name="search_results_tittle_text">34sp</dimen>
-    <dimen name="search_results_item_text">21sp</dimen>
-    <dimen name="search_results_item_text_description">17sp</dimen>
+    <dimen name="search_results_item_text">19sp</dimen>
+    <dimen name="search_results_item_text_description">15sp</dimen>
     <dimen name="search_results_image_size">55dp</dimen>
     <dimen name="search_results_back_image_size">55dp</dimen>
     <dimen name="favorite_results_padding">30dp</dimen>
-    <dimen name="favorites_results_item_text">21sp</dimen>
-    <dimen name="favorites_results_item_text_description">17sp</dimen>
+    <dimen name="favorites_results_item_text">19sp</dimen>
+    <dimen name="favorites_results_item_text_description">15sp</dimen>
     <dimen name="favorites_results_image_size">55dp</dimen>
     <dimen name="history_results_padding">30dp</dimen>
     <dimen name="webview_textview_20">30sp</dimen>
+    <dimen name="webview_margin_top_20">30dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="alignment_padding">1dp</dimen>
     <dimen name="home_page_find_today_text">18sp</dimen>
@@ -49,7 +50,7 @@
     <dimen name="info_title_text_size">48sp</dimen>
     <dimen name="info_toolbar_desciption_text_size_20">25sp</dimen>
     <dimen name="info_page_tool_bar_margin_bottom">40dp</dimen>
-    <dimen name="layout_marginTop">105dp</dimen>
+    <dimen name="layout_marginTop">115dp</dimen>
     <dimen name="menu_text_size_19sp">25sp</dimen>
     <dimen name="menu_text_size_18sp">21sp</dimen>
 </resources>

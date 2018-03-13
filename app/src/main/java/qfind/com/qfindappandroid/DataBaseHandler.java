@@ -45,7 +45,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private String KEY_MOBILE = "provider_mobile";
     private String KEY_WEBSITE = "provider_website";
     private String KEY_ADDRESS = "provider_address";
+    private String KEY_ADDRESS_ARABIC = "provider_address_arabic";
     private String KEY_OPENING_TIME = "provider_opening_time";
+    private String KEY_CLOSING_TIME = "provider_closing_time";
+    private String KEY_OPENING_TITLE = "provider_opening_title";
+    private String KEY_CLOSING_TITLE = "provider_closing_title";
     private String KEY_MAIL = "provider_mail";
     private String KEY_FACEBOOK = "provider_facebook";
     private String KEY_LINKEDIN = "provider_linkedin";
@@ -56,6 +60,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private String KEY_MAP = "provider_map_location";
     private String KEY_DAYTIME = "provider_date_time";
     private String KEY_OPENING_TIME_ARABIC = "provider_opening_time_arabic";
+    private String KEY_CLOSING_TIME_ARABIC = "provider_closing_time_arabic";
+    private String KEY_OPENING_TITLE_ARABIC = "provider_opening_title_arabic";
+    private String KEY_CLOSING_TITLE_ARABIC = "provider_closing_title_arabic";
 
 
     SQLiteDatabase writeDB, readDB;
@@ -75,7 +82,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + KEY_MAIL + " TEXT," + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT,"
                 + KEY_INSTAGRAM + " TEXT," + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT,"
                 + KEY_GOOGLE_PLUS + " TEXT," + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT,"
-                + KEY_DESCRIPTION_ARABIC + " TEXT, " + KEY_OPENING_TIME_ARABIC + " TEXT " + ")";
+                + KEY_DESCRIPTION_ARABIC + " TEXT, " + KEY_OPENING_TIME_ARABIC + " TEXT,"
+                + KEY_CLOSING_TIME + " TEXT," + KEY_OPENING_TITLE + " TEXT," + KEY_CLOSING_TITLE + " TEXT,"
+                + KEY_CLOSING_TIME_ARABIC + " TEXT," + KEY_OPENING_TITLE_ARABIC + " TEXT,"
+                + KEY_CLOSING_TITLE_ARABIC + " TEXT," + KEY_ADDRESS_ARABIC + " TEXT " + ")";
 
         db.execSQL(CREATE_TABLE_HISTORY);
 
@@ -87,7 +97,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT," + KEY_INSTAGRAM + " TEXT,"
                 + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT," + KEY_GOOGLE_PLUS + " TEXT,"
                 + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT," + KEY_DESCRIPTION_ARABIC + " TEXT, "
-                + KEY_OPENING_TIME_ARABIC + " TEXT " + ")";
+                + KEY_OPENING_TIME_ARABIC + " TEXT," + KEY_ADDRESS_ARABIC + " TEXT,"
+                + KEY_CLOSING_TIME + " TEXT," + KEY_OPENING_TITLE + " TEXT," + KEY_CLOSING_TITLE + " TEXT,"
+                + KEY_CLOSING_TIME_ARABIC + " TEXT," + KEY_OPENING_TITLE_ARABIC + " TEXT,"
+                + KEY_CLOSING_TITLE_ARABIC + " TEXT " + ")";
         db.execSQL(CREATE_TABLE_FAVORITE);
     }
 
@@ -121,6 +134,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
         values.put(KEY_DAYTIME, history.getDayTime());
         values.put(KEY_OPENING_TIME_ARABIC, history.getProviderOpeningTimeArabic());
+        values.put(KEY_ADDRESS_ARABIC, history.getProviderAddressArabic());
+        values.put(KEY_CLOSING_TIME, history.getProviderClosingTime());
+        values.put(KEY_CLOSING_TIME_ARABIC, history.getProviderClosingTimeArabic());
+        values.put(KEY_OPENING_TITLE, history.getProviderOpeningTitle());
+        values.put(KEY_CLOSING_TITLE, history.getProviderClosingTitle());
+        values.put(KEY_OPENING_TITLE_ARABIC, history.getProviderOpeningTitleArabic());
+        values.put(KEY_CLOSING_TITLE_ARABIC, history.getProviderClosingTitleArabic());
 
         // Inserting Row
         writeDB.insert(TABLE_HISTORY, null, values);
@@ -150,6 +170,14 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE_ARABIC, favorite.getItemArabic());
         values.put(KEY_DESCRIPTION_ARABIC, favorite.getItemDescriptionArabic());
         values.put(KEY_OPENING_TIME_ARABIC, favorite.getProviderOpeningTimeArabic());
+        values.put(KEY_ADDRESS_ARABIC, favorite.getProviderAddressArabic());
+        values.put(KEY_CLOSING_TIME, favorite.getProviderClosingTime());
+        values.put(KEY_CLOSING_TIME_ARABIC, favorite.getProviderClosingTimeArabic());
+        values.put(KEY_OPENING_TITLE, favorite.getProviderOpeningTitle());
+        values.put(KEY_CLOSING_TITLE, favorite.getProviderClosingTitle());
+        values.put(KEY_OPENING_TITLE_ARABIC, favorite.getProviderOpeningTitleArabic());
+        values.put(KEY_CLOSING_TITLE_ARABIC, favorite.getProviderClosingTitleArabic());
+
 
         // Inserting Row
         writeDB.insert(TABLE_FAVORITE, null, values);
@@ -207,7 +235,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setTitleArabic(cursor.getString(20));
                 history.setDescriptionArabic(cursor.getString(21));
                 history.setProviderOpeningTimeArabic(cursor.getString(22));
-
+                history.setProviderAddressArabic(cursor.getString(23));
+                history.setProviderClosingTime(cursor.getString(24));
+                history.setProviderClosingTimeArabic(cursor.getString(25));
+                history.setProviderOpeningTitle(cursor.getString(26));
+                history.setProviderClosingTitle(cursor.getString(27));
+                history.setProviderOpeningTitleArabic(cursor.getString(28));
+                history.setProviderClosingTitleArabic(cursor.getString(29));
                 historyList.add(history);
             } while (cursor.moveToNext());
         }
@@ -250,6 +284,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 favModel.setItemArabic(cursor.getString(19));
                 favModel.setItemDescriptionArabic(cursor.getString(20));
                 favModel.setProviderOpeningTimeArabic(cursor.getString(21));
+                favModel.setProviderAddressArabic(cursor.getString(22));
+                favModel.setProviderClosingTime(cursor.getString(23));
+                favModel.setProviderClosingTimeArabic(cursor.getString(24));
+                favModel.setProviderOpeningTitle(cursor.getString(25));
+                favModel.setProviderClosingTitle(cursor.getString(26));
+                favModel.setProviderOpeningTitleArabic(cursor.getString(27));
+                favModel.setProviderClosingTitleArabic(cursor.getString(28));
                 favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }

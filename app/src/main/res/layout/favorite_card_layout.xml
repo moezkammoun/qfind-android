@@ -29,6 +29,7 @@
                 android:id="@+id/favorite_thumbnail"
                 android:layout_width="@dimen/favorites_results_image_size"
                 android:layout_height="@dimen/favorites_results_image_size"
+                android:src="@drawable/placeholder"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                />

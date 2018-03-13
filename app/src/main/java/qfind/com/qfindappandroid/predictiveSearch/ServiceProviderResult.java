@@ -50,6 +50,18 @@ public class ServiceProviderResult {
     private String message;
     @SerializedName("service_provider_opening_time_arabic")
     private String serviceProviderOpeningTimeArabic;
+    @SerializedName("service_provider_closing_time")
+    private String serviceProviderClosingTime;
+    @SerializedName("service_provider_opening_title")
+    private String serviceProviderOpeningTitle;
+    @SerializedName("service_provider_closing_title")
+    private String serviceProviderClosingTitle;
+    @SerializedName("service_provider_opening_title_arabic")
+    private String serviceProviderOpeningTitleArabic;
+    @SerializedName("service_provider_closing_title_arabic")
+    private String serviceProviderClosingTitleArabic;
+    @SerializedName("service_provider_closing_time_arabic")
+    private String serviceProviderClosingTimeArabic;
 
     public String getServiceProviderName() {
         return serviceProviderName;
@@ -233,5 +245,53 @@ public class ServiceProviderResult {
 
     public void setServiceProviderOpeningTimeArabic(String serviceProviderOpeningTimeArabic) {
         this.serviceProviderOpeningTimeArabic = serviceProviderOpeningTimeArabic;
+    }
+
+    public String getServiceProviderClosingTime() {
+        return serviceProviderClosingTime;
+    }
+
+    public void setServiceProviderClosingTime(String serviceProviderClosingTime) {
+        this.serviceProviderClosingTime = serviceProviderClosingTime;
+    }
+
+    public String getServiceProviderOpeningTitle() {
+        return serviceProviderOpeningTitle;
+    }
+
+    public void setServiceProviderOpeningTitle(String serviceProviderOpeningTitle) {
+        this.serviceProviderOpeningTitle = serviceProviderOpeningTitle;
+    }
+
+    public String getServiceProviderClosingTitle() {
+        return serviceProviderClosingTitle;
+    }
+
+    public void setServiceProviderClosingTitle(String serviceProviderClosingTitle) {
+        this.serviceProviderClosingTitle = serviceProviderClosingTitle;
+    }
+
+    public String getServiceProviderOpeningTitleArabic() {
+        return serviceProviderOpeningTitleArabic;
+    }
+
+    public void setServiceProviderOpeningTitleArabic(String serviceProviderOpeningTitleArabic) {
+        this.serviceProviderOpeningTitleArabic = serviceProviderOpeningTitleArabic;
+    }
+
+    public String getServiceProviderClosingTitleArabic() {
+        return serviceProviderClosingTitleArabic;
+    }
+
+    public void setServiceProviderClosingTitleArabic(String serviceProviderClosingTitleArabic) {
+        this.serviceProviderClosingTitleArabic = serviceProviderClosingTitleArabic;
+    }
+
+    public String getServiceProviderClosingTimeArabic() {
+        return serviceProviderClosingTimeArabic;
+    }
+
+    public void setServiceProviderClosingTimeArabic(String serviceProviderClosingTimeArabic) {
+        this.serviceProviderClosingTimeArabic = serviceProviderClosingTimeArabic;
     }
 }

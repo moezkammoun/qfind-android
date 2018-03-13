@@ -34,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/alignment_padding"
                 android:layout_marginStart="@dimen/alignment_padding"
                 android:gravity="center"
                 android:orientation="vertical">

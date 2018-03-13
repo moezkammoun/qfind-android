@@ -35,7 +35,7 @@ public class WebviewActivity extends AppCompatActivity {
     @BindView(R.id.webViewCloseBtn)
     ImageView webViewCloseBtn;
 
-    private String url, toolbarTittleText;
+    private String url;
     Typeface mTypeFace;
 
     @Override
@@ -120,6 +120,5 @@ public class WebviewActivity extends AppCompatActivity {
 
         }
         toolbarTitle.setTypeface(mTypeFace);
-        toolbarTitle.setText(toolbarTittleText);
     }
 }

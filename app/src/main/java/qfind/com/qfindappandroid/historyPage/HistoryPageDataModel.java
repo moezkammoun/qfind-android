@@ -26,6 +26,13 @@ public class HistoryPageDataModel {
     private String providerLatlong;
     private int pageId;
     private String providerOpeningTimeArabic;
+    private String providerAddressArabic;
+    private String providerClosingTime;
+    private String providerClosingTimeArabic;
+    private String providerOpeningTitle;
+    private String providerClosingTitle;
+    private String providerOpeningTitleArabic;
+    private String providerClosingTitleArabic;
 
     public HistoryPageDataModel() {
     }
@@ -36,7 +43,10 @@ public class HistoryPageDataModel {
                                 String providerAddress, String providerOpeningTime, String providerMail,
                                 String providerFacebook, String providerLinkedIn, String providerInstagram,
                                 String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                                String providerLatlong,int pageId,String providerOpeningTimeArabic) {
+                                String providerLatlong,int pageId,String providerOpeningTimeArabic,
+                                String providerAddressArabic,String providerClosingTime,String providerClosingTimeArabic,
+                                String providerOpeningTitle,String providerClosingTitle,String providerOpeningTitleArabic,
+                                String providerClosingTitleArabic) {
         this.pageName = pageName;
         this.url = url;
         this.description = description;
@@ -54,6 +64,13 @@ public class HistoryPageDataModel {
         this.providerLatlong=providerLatlong;
         this.pageId=pageId;
         this.providerOpeningTimeArabic=providerOpeningTimeArabic;
+        this.providerAddressArabic=providerAddressArabic;
+        this.providerClosingTime=providerClosingTime;
+        this.providerClosingTimeArabic=providerClosingTimeArabic;
+        this.providerOpeningTitle=providerOpeningTitle;
+        this.providerClosingTitle=providerClosingTitle;
+        this.providerOpeningTitleArabic=providerOpeningTitleArabic;
+        this.providerClosingTitleArabic=providerClosingTitleArabic;
     }
 
     public int getId() {
@@ -215,5 +232,61 @@ public class HistoryPageDataModel {
 
     public void setProviderOpeningTimeArabic(String providerOpeningTimeArabic) {
         this.providerOpeningTimeArabic = providerOpeningTimeArabic;
+    }
+
+    public String getProviderAddressArabic() {
+        return providerAddressArabic;
+    }
+
+    public void setProviderAddressArabic(String providerAddressArabic) {
+        this.providerAddressArabic = providerAddressArabic;
+    }
+
+    public String getProviderClosingTime() {
+        return providerClosingTime;
+    }
+
+    public void setProviderClosingTime(String providerClosingTime) {
+        this.providerClosingTime = providerClosingTime;
+    }
+
+    public String getProviderClosingTimeArabic() {
+        return providerClosingTimeArabic;
+    }
+
+    public void setProviderClosingTimeArabic(String providerClosingTimeArabic) {
+        this.providerClosingTimeArabic = providerClosingTimeArabic;
+    }
+
+    public String getProviderOpeningTitle() {
+        return providerOpeningTitle;
+    }
+
+    public void setProviderOpeningTitle(String providerOpeningTitle) {
+        this.providerOpeningTitle = providerOpeningTitle;
+    }
+
+    public String getProviderClosingTitle() {
+        return providerClosingTitle;
+    }
+
+    public void setProviderClosingTitle(String providerClosingTitle) {
+        this.providerClosingTitle = providerClosingTitle;
+    }
+
+    public String getProviderOpeningTitleArabic() {
+        return providerOpeningTitleArabic;
+    }
+
+    public void setProviderOpeningTitleArabic(String providerOpeningTitleArabic) {
+        this.providerOpeningTitleArabic = providerOpeningTitleArabic;
+    }
+
+    public String getProviderClosingTitleArabic() {
+        return providerClosingTitleArabic;
+    }
+
+    public void setProviderClosingTitleArabic(String providerClosingTitleArabic) {
+        this.providerClosingTitleArabic = providerClosingTitleArabic;
     }
 }

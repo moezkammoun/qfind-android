@@ -106,7 +106,15 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
                             itemList.get(getAdapterPosition()).getProviderLatlong(),
                             itemList.get(getAdapterPosition()).getUrl(),
                             itemList.get(getAdapterPosition()).getPageId(),
-                            itemList.get(getAdapterPosition()).getProviderOpeningTimeArabic());
+                            itemList.get(getAdapterPosition()).getProviderOpeningTimeArabic(),
+                            itemList.get(getAdapterPosition()).getProviderAddressArabic(),
+                            itemList.get(getAdapterPosition()).getProviderClosingTime(),
+                            itemList.get(getAdapterPosition()).getProviderClosingTimeArabic(),
+                            itemList.get(getAdapterPosition()).getProviderOpeningTitle(),
+                            itemList.get(getAdapterPosition()).getProviderClosingTitle(),
+                            itemList.get(getAdapterPosition()).getProviderOpeningTitleArabic(),
+                            itemList.get(getAdapterPosition()).getProviderClosingTitleArabic()
+                            );
                 }
             });
             setFontTypeForText(title, description);

@@ -221,6 +221,13 @@ public class HistoryFragment extends Fragment {
                     model.setProviderLatlong(list.get(j).getProviderLatlong());
                     model.setPageId(list.get(j).getPageId());
                     model.setProviderOpeningTimeArabic(list.get(j).getProviderOpeningTimeArabic());
+                    model.setProviderAddressArabic(list.get(j).getProviderAddressArabic());
+                    model.setProviderClosingTime(list.get(j).getProviderClosingTime());
+                    model.setProviderClosingTimeArabic(list.get(j).getProviderClosingTimeArabic());
+                    model.setProviderOpeningTitle(list.get(j).getProviderOpeningTitle());
+                    model.setProviderClosingTitle(list.get(j).getProviderClosingTitle());
+                    model.setProviderOpeningTitleArabic(list.get(j).getProviderOpeningTitleArabic());
+                    model.setProviderClosingTitleArabic(list.get(j).getProviderClosingTitleArabic());
                     singleItem.add(model);
                 }
                 mainModel.setHistoryPageDataModels(singleItem);
