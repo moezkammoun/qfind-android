@@ -99,11 +99,22 @@ public class SearchResultsFragment extends Fragment {
                         searchedItemList.get(position).getProviderLatlong(),
                         searchedItemList.get(position).getProviderLogo(),
                         searchedItemList.get(position).getProviderId(),
-                        searchedItemList.get(position).getProviderOpeningTimeArabic()
+                        searchedItemList.get(position).getProviderOpeningTimeArabic(),
+                        searchedItemList.get(position).getProviderAddressArabic(),
+                        searchedItemList.get(position).getProviderClosingTime(),
+                        searchedItemList.get(position).getProviderClosingTimeArabic(),
+                        searchedItemList.get(position).getProviderOpeningTitle(),
+                        searchedItemList.get(position).getProviderClosingTitle(),
+                        searchedItemList.get(position).getProviderOpeningTitleArabic(),
+                        searchedItemList.get(position).getProviderClosingTitleArabic()
                         );
             }
 
         }));
+
+        /* cn.getProviderClosingTime(),cn.getProviderClosingTimeArabic(),cn.getProviderOpeningTitle(),
+                        cn.getProviderClosingTitle(),cn.getProviderOpeningTitleArabic(),cn.getProviderClosingTitleArabic()
+*/
         Bundle bundle = getArguments();
         searchType = bundle.getInt("searchType", 0);
         searchKey = bundle.getString("searchKey");
@@ -162,7 +173,16 @@ public class SearchResultsFragment extends Fragment {
                                             serviceProviderResultList.get(i).getServiceProviderMapLocation(),
                                             serviceProviderResultList.get(i).getServiceProviderLogo(),
                                             serviceProviderResultList.get(i).getServiceProviderId(),
-                                            serviceProviderResultList.get(i).getServiceProviderOpeningTimeArabic());
+                                            serviceProviderResultList.get(i).getServiceProviderOpeningTimeArabic(),
+                                            serviceProviderResultList.get(i).getServiceProviderAddressArabic(),
+                                            serviceProviderResultList.get(i).getServiceProviderClosingTime(),
+                                            serviceProviderResultList.get(i).getServiceProviderClosingTimeArabic(),
+                                            serviceProviderResultList.get(i).getServiceProviderOpeningTitle(),
+                                            serviceProviderResultList.get(i).getServiceProviderClosingTitle(),
+                                            serviceProviderResultList.get(i).getServiceProviderOpeningTitleArabic(),
+                                            serviceProviderResultList.get(i).getServiceProviderClosingTitleArabic()
+
+                                    );
                                     searchedItemList.add(item);
                                 }
                                 resultsAdapter.notifyDataSetChanged();

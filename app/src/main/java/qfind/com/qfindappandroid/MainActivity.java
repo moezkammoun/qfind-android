@@ -229,7 +229,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 }
             });
         }
-
     }
 
     public boolean isAdExpired(Integer updatedDate) {

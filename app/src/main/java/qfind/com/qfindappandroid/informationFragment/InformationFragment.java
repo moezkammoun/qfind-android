@@ -2,6 +2,7 @@ package qfind.com.qfindappandroid.informationFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -48,7 +49,9 @@ public class InformationFragment extends Fragment {
     String providerName, providerLocation, providerNameArabic, providerLocationArabic,
             providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
-            providerTwitter, providerSnapchat, providerGooglePlus, providerLatLong, providerLogo,providerOpeningTimeArabic;
+            providerTwitter, providerSnapchat, providerGooglePlus,providerAddressArabic,
+            providerLatLong, providerLogo,providerOpeningTimeArabic,providerClosingTime,providerClosingTimeArabic,
+            providerOpeningTitle,providerClosingTitle,providerOpeningTitleArabic,providerClosingTitleArabic;
     int providerPageId;
     URI uri = null;
     String path;
@@ -100,7 +103,13 @@ public class InformationFragment extends Fragment {
         dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
         dataModel.setDayTime(sdfdatetime.format(new Date()));
         dataModel.setProviderOpeningTimeArabic(bundle.getString("providerOpeningTimeArabic"));
-
+        dataModel.setProviderAddressArabic(bundle.getString("providerAddressArabic"));
+        dataModel.setProviderClosingTime(bundle.getString("providerClosingTime"));
+        dataModel.setProviderClosingTimeArabic(bundle.getString("providerClosingTimeArabic"));
+        dataModel.setProviderOpeningTitle(bundle.getString("providerOpeningTitle"));
+        dataModel.setProviderClosingTitle(bundle.getString("providerClosingTitle"));
+        dataModel.setProviderOpeningTitleArabic(bundle.getString("providerOpeningTitleArabic"));
+        dataModel.setProviderClosingTitleArabic(bundle.getString("providerClosingTitleArabic"));
 
         Cursor cursor = db.checkHistoryByDay(bundle.getInt("providerId"));
         ArrayList<String> dayList = new ArrayList<String>();
@@ -158,6 +167,13 @@ public class InformationFragment extends Fragment {
         providerLogo = bundle.getString("providerLogo");
         providerId = bundle.getInt("providerId");
         providerOpeningTimeArabic=bundle.getString("providerOpeningTimeArabic");
+        providerAddressArabic=bundle.getString("providerAddressArabic");
+        providerClosingTime=bundle.getString("providerClosingTime");
+        providerClosingTimeArabic=bundle.getString("providerClosingTimeArabic");
+        providerOpeningTitle=bundle.getString("providerOpeningTitle");
+        providerClosingTitle=bundle.getString("providerClosingTitle");
+        providerOpeningTitleArabic=bundle.getString("providerOpeningTitleArabic");
+        providerClosingTitleArabic=bundle.getString("providerClosingTitleArabic");
         return view;
     }
 
@@ -215,17 +231,27 @@ public class InformationFragment extends Fragment {
         else if (path != null && !path.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.web_icon,
                     R.drawable.dot_icon, path, R.drawable.right_arrow));
-        if (providerAddress != null && !providerAddress.equals(""))
-            informationData.add(new InformationFragmentModel(R.drawable.location_icon,
-                    R.drawable.dot_icon, providerAddress, R.drawable.right_arrow));
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            if (providerAddress != null && !providerAddress.equals(""))
+                informationData.add(new InformationFragmentModel(R.drawable.location_icon,
+                        R.drawable.dot_icon, providerAddress, R.drawable.right_arrow));
+        }else {
+            if (providerAddressArabic != null && !providerAddressArabic.equals(""))
+                informationData.add(new InformationFragmentModel(R.drawable.location_icon,
+                        R.drawable.dot_icon, providerAddressArabic, R.drawable.right_arrow));
+        }
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             if (providerOpeningTime != null && !providerOpeningTime.equals(""))
+                providerOpeningTime=providerOpeningTime+providerOpeningTitle+"-"+providerClosingTime+providerClosingTitle;
                 informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
                         R.drawable.dot_icon, providerOpeningTime, R.drawable.right_arrow));
         }else{
-            if (providerOpeningTimeArabic != null && !providerOpeningTimeArabic.equals(""))
+            if (providerOpeningTimeArabic != null && !providerOpeningTimeArabic.equals("")){
+                providerOpeningTimeArabic=providerOpeningTimeArabic+providerOpeningTitleArabic+"-"+providerClosingTimeArabic+providerClosingTitleArabic;
                 informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
                         R.drawable.dot_icon, providerOpeningTimeArabic, R.drawable.right_arrow));
+            }
+
         }
         if (providerMail != null && !providerMail.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.mail_icon,
@@ -319,9 +345,35 @@ public class InformationFragment extends Fragment {
     public String getFacebookPageURL(Context context) {
         String FACEBOOK_URL = "https://www.facebook.com/publictheband/";
         String FACEBOOK_PAGE_ID = "publictheband";
+        String packageNameFacebook = "com.facebook.katana";
+        String packageNameFacebookLite = "com.facebook.lite";
+        providerFacebook="ParagonHotel";
+//        providerFacebook="355356557838717";
         PackageManager packageManager = context.getPackageManager();
         try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            PackageInfo packageInfo=packageManager.getPackageInfo(packageNameFacebook,0);
+            String installedPackages=packageInfo.toString();
+
+            ApplicationInfo ai =
+                    getActivity().getPackageManager().getApplicationInfo(packageNameFacebook,0);
+            boolean appStatus = ai.enabled;
+            if(installedPackages.contains(packageNameFacebook)|| (installedPackages.contains(packageNameFacebookLite)))
+            {
+                if(appStatus) {
+                    return weburl(context);
+                }
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return "https://www.facebook.com/" + providerFacebook + "/"; //normal web url
+        }
+        return "https://www.facebook.com/" + providerFacebook + "/"; //normal web url
+    }
+
+    public String weburl(Context context){
+        PackageManager packageManager = context.getPackageManager();
+        try {
+         int   versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
             if (versionCode >= 3002850) { //newer versions of fb app
                 return "fb://facewebmodal/f?href=https://www.facebook.com/" + providerFacebook + "/";
             } else { //older versions of fb app
@@ -351,6 +403,7 @@ public class InformationFragment extends Fragment {
 
     public void openTwitter(Context context) {
         PackageManager pkManager = context.getPackageManager();
+        providerTwitter="ShashiTharoor";
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.twitter.android", 0);
             String getPkgInfo = pkgInfo.toString();
@@ -375,6 +428,7 @@ public class InformationFragment extends Fragment {
 
     public void openInstagram(Context context) {
         PackageManager pkManager = context.getPackageManager();
+        providerInstagram="cinemawoodofficial";
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.instagram.android", 0);
             String getPkgInfo = pkgInfo.toString();

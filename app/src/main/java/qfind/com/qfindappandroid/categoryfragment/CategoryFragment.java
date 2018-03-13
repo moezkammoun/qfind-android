@@ -254,7 +254,15 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderLogo(),
                                 serviceProviderListDetails.get(position).getServiceProviderId(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic());
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderAddressArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTime(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTimeArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitle(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTitle(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitleArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTitleArabic()
+                                );
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
@@ -287,7 +295,15 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderLogo(),
                                 serviceProviderListDetails.get(position).getServiceProviderId(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic());
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderAddressArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTime(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTimeArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitle(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTitle(),
+                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitleArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderClosingTitleArabic()
+                                );
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.

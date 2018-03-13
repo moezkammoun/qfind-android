@@ -21,6 +21,13 @@ public class SearchedItem {
     private String providerLogo;
     private int providerId;
     private String providerOpeningTimeArabic;
+    private String providerAddressArabic;
+    private String providerClosingTime;
+    private String providerClosingTimeArabic;
+    private String providerOpeningTitle;
+    private String providerClosingTitle;
+    private String providerOpeningTitleArabic;
+    private String providerClosingTitleArabic;
 
     public SearchedItem() {
     }
@@ -30,7 +37,8 @@ public class SearchedItem {
                         String thumbnail, String phone, String website,
                         String address, String openingTime, String mail, String facebook, String linkedIn,
                         String instagram, String twitter, String snapchat, String googlePlus, String latLong, String logo,
-                        int id,String openingTimeArabic) {
+                        int id,String openingTimeArabic,String addressArabic,String closingTime,String closingTimeArabic,
+                        String openingTitle,String closingTitle,String openingTitleArabic,String closingTitleArabic) {
         this.providerName = item;
         this.providerLocation = itemDescription;
         this.providerNameArabic=itemArabic;
@@ -51,6 +59,13 @@ public class SearchedItem {
         this.providerLogo=logo;
         this.providerId=id;
         this.providerOpeningTimeArabic=openingTimeArabic;
+        this.providerAddressArabic=addressArabic;
+        this.providerClosingTime=closingTime;
+        this.providerClosingTimeArabic=closingTimeArabic;
+        this.providerOpeningTitle=openingTitle;
+        this.providerClosingTitle=closingTitle;
+        this.providerOpeningTitleArabic=openingTitleArabic;
+        this.providerClosingTitleArabic=closingTitleArabic;
 
     }
 
@@ -131,5 +146,33 @@ public class SearchedItem {
 
     public String getProviderOpeningTimeArabic() {
         return providerOpeningTimeArabic;
+    }
+
+    public String getProviderAddressArabic() {
+        return providerAddressArabic;
+    }
+
+    public String getProviderClosingTime() {
+        return providerClosingTime;
+    }
+
+    public String getProviderClosingTimeArabic() {
+        return providerClosingTimeArabic;
+    }
+
+    public String getProviderOpeningTitle() {
+        return providerOpeningTitle;
+    }
+
+    public String getProviderClosingTitle() {
+        return providerClosingTitle;
+    }
+
+    public String getProviderOpeningTitleArabic() {
+        return providerOpeningTitleArabic;
+    }
+
+    public String getProviderClosingTitleArabic() {
+        return providerClosingTitleArabic;
     }
 }

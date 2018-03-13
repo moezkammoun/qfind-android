@@ -81,7 +81,15 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
                             itemsList.get(getAdapterPosition()).getProviderLatlong(),
                             itemsList.get(getAdapterPosition()).getUrl(),
                             itemsList.get(getAdapterPosition()).getPageId(),
-                            itemsList.get(getAdapterPosition()).getProviderOpeningTimeArabic());
+                            itemsList.get(getAdapterPosition()).getProviderOpeningTimeArabic(),
+                            itemsList.get(getAdapterPosition()).getProviderAddressArabic(),
+                            itemsList.get(getAdapterPosition()).getProviderClosingTime(),
+                            itemsList.get(getAdapterPosition()).getProviderClosingTimeArabic(),
+                            itemsList.get(getAdapterPosition()).getProviderOpeningTitle(),
+                            itemsList.get(getAdapterPosition()).getProviderClosingTitle(),
+                            itemsList.get(getAdapterPosition()).getProviderOpeningTitleArabic(),
+                            itemsList.get(getAdapterPosition()).getProviderClosingTitleArabic()
+                            );
 
                 }
             });

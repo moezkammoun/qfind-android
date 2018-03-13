@@ -28,6 +28,13 @@ public class HistoryItem {
     private String providerGooglePlus;
     private String providerLatlong;
     private String providerOpeningTimeArabic;
+    private String providerAddressArabic;
+    private String providerClosingTime;
+    private String providerClosingTimeArabic;
+    private String providerOpeningTitle;
+    private String providerOpeningTitleArabic;
+    private String providerClosingTitle;
+    private String providerClosingTitleArabic;
 
     public HistoryItem() {
     }
@@ -221,5 +228,61 @@ public class HistoryItem {
 
     public void setProviderOpeningTimeArabic(String providerOpeningTimeArabic) {
         this.providerOpeningTimeArabic = providerOpeningTimeArabic;
+    }
+
+    public String getProviderAddressArabic() {
+        return providerAddressArabic;
+    }
+
+    public void setProviderAddressArabic(String providerAddressArabic) {
+        this.providerAddressArabic = providerAddressArabic;
+    }
+
+    public String getProviderClosingTime() {
+        return providerClosingTime;
+    }
+
+    public void setProviderClosingTime(String providerClosingTime) {
+        this.providerClosingTime = providerClosingTime;
+    }
+
+    public String getProviderClosingTimeArabic() {
+        return providerClosingTimeArabic;
+    }
+
+    public void setProviderClosingTimeArabic(String providerClosingTimeArabic) {
+        this.providerClosingTimeArabic = providerClosingTimeArabic;
+    }
+
+    public String getProviderOpeningTitle() {
+        return providerOpeningTitle;
+    }
+
+    public void setProviderOpeningTitle(String providerOpeningTitle) {
+        this.providerOpeningTitle = providerOpeningTitle;
+    }
+
+    public String getProviderOpeningTitleArabic() {
+        return providerOpeningTitleArabic;
+    }
+
+    public void setProviderOpeningTitleArabic(String providerOpeningTitleArabic) {
+        this.providerOpeningTitleArabic = providerOpeningTitleArabic;
+    }
+
+    public String getProviderClosingTitle() {
+        return providerClosingTitle;
+    }
+
+    public void setProviderClosingTitle(String providerClosingTitle) {
+        this.providerClosingTitle = providerClosingTitle;
+    }
+
+    public String getProviderClosingTitleArabic() {
+        return providerClosingTitleArabic;
+    }
+
+    public void setProviderClosingTitleArabic(String providerClosingTitleArabic) {
+        this.providerClosingTitleArabic = providerClosingTitleArabic;
     }
 }

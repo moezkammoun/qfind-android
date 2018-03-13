@@ -190,6 +190,13 @@ public class BaseActivity extends AppCompatActivity {
                     favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
                     favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
                     favoriteModel.setProviderOpeningTimeArabic(bundle.getString("providerOpeningTimeArabic"));
+                    favoriteModel.setProviderAddressArabic(bundle.getString("providerAddressArabic"));
+                    favoriteModel.setProviderClosingTime(bundle.getString("providerClosingTime"));
+                    favoriteModel.setProviderClosingTimeArabic(bundle.getString("providerClosingTimeArabic"));
+                    favoriteModel.setProviderOpeningTitle(bundle.getString("providerOpeningTitle"));
+                    favoriteModel.setProviderClosingTitle(bundle.getString("providerClosingTitle"));
+                    favoriteModel.setProviderOpeningTitleArabic(bundle.getString("providerOpeningTitleArabic"));
+                    favoriteModel.setProviderClosingTitleArabic(bundle.getString("providerClosingTitleArabic"));
 
                     if (db.checkFavoriteById(bundle.getInt("providerId"))) {
                         db.deleteFavorite(bundle.getInt("providerId"));
@@ -488,7 +495,10 @@ public class BaseActivity extends AppCompatActivity {
                                               String providerLinkedin, String providerInstagram,
                                               String providerTwitter, String providerSnapchat,
                                               String providerGooglePlus, String providerLatLong, String providerLogo,
-                                              int providerId,String providerOpeningTimeArabic) {
+                                              int providerId,String providerOpeningTimeArabic,
+                                              String providerAddressArabic,String providerClosingTime,String providerClosingTimeArabic,
+                                              String providerOpeningTitle,String providerClosingTitle, String providerOpeningTitleArabic,
+                                              String providerClosingTitleArabic) {
 
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
@@ -509,6 +519,13 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerLogo", providerLogo);
         bundle.putInt("providerId", providerId);
         bundle.putString("providerOpeningTimeArabic",providerOpeningTimeArabic);
+        bundle.putString("providerAddressArabic",providerAddressArabic);
+        bundle.putString("providerClosingTime",providerClosingTime);
+        bundle.putString("providerClosingTimeArabic",providerClosingTimeArabic);
+        bundle.putString("providerOpeningTitle",providerOpeningTitle);
+        bundle.putString("providerClosingTitle",providerClosingTitle);
+        bundle.putString("providerOpeningTitleArabic",providerOpeningTitleArabic);
+        bundle.putString("providerClosingTitleArabic",providerClosingTitleArabic);
 
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
