@@ -32,6 +32,7 @@
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
     <dimen name="webview_textview_20">20sp</dimen>
+    <dimen name="webview_margin_top_20">20dp</dimen>
     <dimen name="layout_marginTop">90dp</dimen>
     <dimen name="settings_margin_top">15dp</dimen>
     <dimen name="settings_padding_start">15dp</dimen>
