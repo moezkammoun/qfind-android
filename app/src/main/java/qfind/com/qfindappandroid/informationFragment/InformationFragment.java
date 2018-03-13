@@ -403,12 +403,14 @@ public class InformationFragment extends Fragment {
 
     public void openTwitter(Context context) {
         PackageManager pkManager = context.getPackageManager();
-        providerTwitter="ShashiTharoor";
+//        providerTwitter="ShashiTharoor";
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.twitter.android", 0);
             String getPkgInfo = pkgInfo.toString();
-
-            if (getPkgInfo.contains("com.twitter.android")) {
+            ApplicationInfo ai =
+                    getActivity().getPackageManager().getApplicationInfo("com.twitter.android",0);
+            boolean appStatus = ai.enabled;
+            if (getPkgInfo.contains("com.twitter.android") && appStatus) {
                 // APP NOT INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
 
@@ -428,12 +430,15 @@ public class InformationFragment extends Fragment {
 
     public void openInstagram(Context context) {
         PackageManager pkManager = context.getPackageManager();
-        providerInstagram="cinemawoodofficial";
+//        providerInstagram="cinemawoodofficial";
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.instagram.android", 0);
             String getPkgInfo = pkgInfo.toString();
+            ApplicationInfo ai =
+                    getActivity().getPackageManager().getApplicationInfo("com.instagram.android",0);
+            boolean appStatus = ai.enabled;
 
-            if (getPkgInfo.contains("com.instagram.android")) {
+            if (getPkgInfo.contains("com.instagram.android") && appStatus) {
                 // APP  INSTALLED
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://instagram.com/_u/" + providerInstagram));
@@ -451,12 +456,15 @@ public class InformationFragment extends Fragment {
     }
 
     public void openSnapchat(Context context) {
-        providerSnapchat = "exalturesnapch2";
+//        providerSnapchat = "exalturesnapch2";
         PackageManager pkManager = context.getPackageManager();
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
             String getPkgInfo = pkgInfo.toString();
-            if (getPkgInfo.contains("com.snapchat.android")) {
+            ApplicationInfo ai =
+                    getActivity().getPackageManager().getApplicationInfo("com.snapchat.android",0);
+            boolean appStatus = ai.enabled;
+            if (getPkgInfo.contains("com.snapchat.android") && appStatus) {
                 // APP NOT INSTALLED
 //                Intent intent = new Intent(Intent.ACTION_VIEW,
 //                        Uri.parse("https://snapchat.com/add/" + providerSnapchat));
