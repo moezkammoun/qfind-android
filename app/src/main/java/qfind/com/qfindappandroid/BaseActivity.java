@@ -368,11 +368,11 @@ public class BaseActivity extends AppCompatActivity {
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1",
-                            "ABOUT US");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1"
+                            );
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2",
-                            "معلومات عنا");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2"
+                          );
                 }
 
             }
@@ -383,11 +383,10 @@ public class BaseActivity extends AppCompatActivity {
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1",
-                            "HOW TO BECOME QFINDER ");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1"
+                            );
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2",
-                            "كيف تكون كيوفايندر");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2");
                 }
 
             }
@@ -398,11 +397,10 @@ public class BaseActivity extends AppCompatActivity {
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/1",
-                            "TERMS & CONDITIONS ");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/1");
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/2",
-                            "الشروط والأحكام");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/3/2"
+                    );
                 }
 
             }
@@ -413,11 +411,10 @@ public class BaseActivity extends AppCompatActivity {
                 fullView.closeDrawer(GravityCompat.END);
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1",
-                            "CONTACT US ");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1"
+                           );
                 } else {
-                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2",
-                            "لتجدنا");
+                    callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2");
                 }
 
             }
@@ -602,10 +599,9 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void callWebviewWithUrl(String url, String tittle) {
+    public void callWebviewWithUrl(String url) {
         Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
         intent.putExtra("url", url);
-        intent.putExtra("Title", tittle);
         startActivity(intent);
     }
 
