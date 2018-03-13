@@ -45,7 +45,6 @@ public class WebviewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         url = getIntent().getStringExtra("url");
-        toolbarTittleText = getIntent().getStringExtra("Title");
 
         if (TextUtils.isEmpty(url)) {
             finish();

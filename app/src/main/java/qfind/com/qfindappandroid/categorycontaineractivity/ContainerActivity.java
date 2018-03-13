@@ -318,6 +318,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                         if ((f instanceof CategoryFragment)) {
                             CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                             fragment.hideLoader();
+                            fragment.showServerErrorText();
                             Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
                         }
 
