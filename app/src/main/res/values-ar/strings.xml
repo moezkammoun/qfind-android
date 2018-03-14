@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="qfind_of_the_day">كيوفايند اليوم</string>
+    <string name="app_name">كيو فايند</string>
     <string name="search_hint">ماذا تريد أن تجد اليوم؟</string>
     <string name="or">أو</string>
     <string name="find_by_category">ابحث بالفئة</string>
@@ -24,12 +25,11 @@
     <string name="removed_to_favorites">تم الحذف من المفضلة</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
-    <string name="already_english">لقد قمت باختيار اللغة العربية بالفعل</string>
+    <string name="already_english">اللغة الحالية عي العربية</string>
     <string name="activity_reload_string">سيتم تحويلك إلى الصفحة الرئيسية بعد تغيير اللغة، هل تريد المتابعة؟</string>
     <string name="no_data_text">No data</string>
     <string name="no_result_text">لم يتم العثور على نتائج</string>
     <string name="title_activity_webview">Webview</string>
-    <string name="app_name">QFindAppandroid</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="something_went_wrong">عفواً! يوجد خطأ ما</string>
@@ -38,7 +38,7 @@
     <string name="no_data_to_favorite">No data to add favorite</string>
     <string name="english">English</string>
     <string name="no_favorites_yet">لم تضف أي مفضلة بعد</string>
-    <string name="no_history_yet">لا يوجد نتائج بخث سابقة</string>
+    <string name="no_history_yet">لا توجد عمليات بحث سابقة</string>
     <string name="favorite_alert_message">سيتم حذف البند من المفضلة. هل تريد المتابعة</string>
     <string name="favorite_alert_title">مسح</string>
     <string name="cancel">إلغاء</string>

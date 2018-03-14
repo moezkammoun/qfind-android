@@ -19,7 +19,7 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="select_language">Select Language</string>
-    <string name="already_english">you have already selected English</string>
+    <string name="already_english">Current Language is English</string>
     <string name="activity_reload_string">you will be redirected to home page, after changing the language.do you want to continue?</string>
     <string name="categories_text">Categories</string>
     <string name="history_text">History</string>
@@ -38,7 +38,7 @@
     <string name="no_data_to_favorite">No data to add favorite</string>
     <string name="title_activity_webview">Webview</string>
     <string name="no_favorites_yet">No favorites yet</string>
-    <string name="no_history_yet">No history yet</string>
+    <string name="no_history_yet">No views yet</string>
     <string name="favorite_alert_message">Item will be deleted from favorites.Do you want to continue?</string>
     <string name="favorite_alert_title">Delete</string>
     <string name="cancel">Cancel</string>
