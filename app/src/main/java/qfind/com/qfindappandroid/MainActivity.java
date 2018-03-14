@@ -18,9 +18,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.lightsky.infiniteindicator.IndicatorConfiguration;
@@ -38,6 +40,7 @@ import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.LEFT;
 import static cn.lightsky.infiniteindicator.IndicatorConfiguration.RIGHT;
 
@@ -311,10 +314,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1"
-                            );
+                    );
                 } else {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2"
-                            );
+                    );
                 }
             }
         });
@@ -440,6 +443,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onPause();
         if (configuration != null)
             animCircleIndicator.stop();
+        if (listener != null)
+            qFindPreferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
     @Override

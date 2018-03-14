@@ -74,8 +74,7 @@ public class FavoriteFragment extends Fragment {
                 // Writing Contacts to log
                 Log.d("item: ", log);
                 item = new FavoriteModel(cn.getItem(), cn.getItemDescription(),cn.getItemArabic(),cn.getItemDescriptionArabic(),
-                        cn.getUrl(), cn.getPageId(),
-                        cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
+                        cn.getUrl(), cn.getPageId(), cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
                         cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
                         cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
                         cn.getProviderLatlong(),cn.getDatetime(),cn.getProviderOpeningTimeArabic(),cn.getProviderAddressArabic(),
@@ -121,7 +120,7 @@ public class FavoriteFragment extends Fragment {
                 // Setting Positive "Yes" Button
                 alertDialog.setPositiveButton(R.string.favorite_alert_title, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        delete(position, arrayList.get(position));
+                        delete(position, arrayList.get(position),arrayList);
                         List<FavoriteModel> isCheck=db.getAllFavorites();
                         if(isCheck.size()==0){
                             emptyTextView.setVisibility(View.VISIBLE);
@@ -146,11 +145,13 @@ public class FavoriteFragment extends Fragment {
             }
         };
     }
-    public void delete(int position, int id) {  //removes the row
+    public void delete(int position, int id,ArrayList<Integer> arrayList) {  //removes the row
         DataBaseHandler db = new DataBaseHandler(getContext());
         db.deleteFavorite(id);
         favoriteModelList.remove(position);
         adapter.notifyItemRemoved(position);
+        arrayList.remove(position);
+//        adapter.notifyDataSetChanged();
     }
 
 
