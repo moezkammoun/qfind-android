@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
-        android:padding="15dp">
+        android:padding="@dimen/info_row_padding_15">
 
         <RelativeLayout
             android:layout_width="0dp"
