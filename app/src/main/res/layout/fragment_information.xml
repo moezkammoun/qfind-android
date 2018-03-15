@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/dummy_navigation"
-        android:paddingEnd="@dimen/padding_30"
-        android:paddingStart="@dimen/padding_30"
-        android:paddingTop="@dimen/padding_30"
+        android:paddingEnd="@dimen/frame_layout_padding_30"
+        android:paddingStart="@dimen/frame_layout_padding_30"
+        android:paddingTop="@dimen/frame_layout_padding_top_30"
         android:visibility="visible">
 
         <RelativeLayout

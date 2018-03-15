@@ -235,13 +235,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setTitleArabic(cursor.getString(20));
                 history.setDescriptionArabic(cursor.getString(21));
                 history.setProviderOpeningTimeArabic(cursor.getString(22));
-                history.setProviderAddressArabic(cursor.getString(23));
-                history.setProviderClosingTime(cursor.getString(24));
-                history.setProviderClosingTimeArabic(cursor.getString(25));
-                history.setProviderOpeningTitle(cursor.getString(26));
-                history.setProviderClosingTitle(cursor.getString(27));
-                history.setProviderOpeningTitleArabic(cursor.getString(28));
-                history.setProviderClosingTitleArabic(cursor.getString(29));
+                history.setProviderClosingTime(cursor.getString(23));
+                history.setProviderOpeningTitle(cursor.getString(24));
+                history.setProviderClosingTitle(cursor.getString(25));
+                history.setProviderClosingTimeArabic(cursor.getString(26));
+                history.setProviderOpeningTitleArabic(cursor.getString(27));
+                history.setProviderClosingTitleArabic(cursor.getString(28));
+                history.setProviderAddressArabic(cursor.getString(29));
                 historyList.add(history);
             } while (cursor.moveToNext());
         }
@@ -286,9 +286,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 favModel.setProviderOpeningTimeArabic(cursor.getString(21));
                 favModel.setProviderAddressArabic(cursor.getString(22));
                 favModel.setProviderClosingTime(cursor.getString(23));
-                favModel.setProviderClosingTimeArabic(cursor.getString(24));
-                favModel.setProviderOpeningTitle(cursor.getString(25));
-                favModel.setProviderClosingTitle(cursor.getString(26));
+                favModel.setProviderOpeningTitle(cursor.getString(24));
+                favModel.setProviderClosingTitle(cursor.getString(25));
+                favModel.setProviderClosingTimeArabic(cursor.getString(26));
                 favModel.setProviderOpeningTitleArabic(cursor.getString(27));
                 favModel.setProviderClosingTitleArabic(cursor.getString(28));
                 favoriteList.add(favModel);

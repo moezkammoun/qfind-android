@@ -49,9 +49,9 @@ public class InformationFragment extends Fragment {
     String providerName, providerLocation, providerNameArabic, providerLocationArabic,
             providerMobile, providerWebsite, providerAddress,
             providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
-            providerTwitter, providerSnapchat, providerGooglePlus,providerAddressArabic,
-            providerLatLong, providerLogo,providerOpeningTimeArabic,providerClosingTime,providerClosingTimeArabic,
-            providerOpeningTitle,providerClosingTitle,providerOpeningTitleArabic,providerClosingTitleArabic;
+            providerTwitter, providerSnapchat, providerGooglePlus, providerAddressArabic,
+            providerLatLong, providerLogo, providerOpeningTimeArabic, providerClosingTime, providerClosingTimeArabic,
+            providerOpeningTitle, providerClosingTitle, providerOpeningTitleArabic, providerClosingTitleArabic;
     int providerPageId;
     URI uri = null;
     String path;
@@ -166,14 +166,14 @@ public class InformationFragment extends Fragment {
         providerLatLong = bundle.getString("providerLatLong");
         providerLogo = bundle.getString("providerLogo");
         providerId = bundle.getInt("providerId");
-        providerOpeningTimeArabic=bundle.getString("providerOpeningTimeArabic");
-        providerAddressArabic=bundle.getString("providerAddressArabic");
-        providerClosingTime=bundle.getString("providerClosingTime");
-        providerClosingTimeArabic=bundle.getString("providerClosingTimeArabic");
-        providerOpeningTitle=bundle.getString("providerOpeningTitle");
-        providerClosingTitle=bundle.getString("providerClosingTitle");
-        providerOpeningTitleArabic=bundle.getString("providerOpeningTitleArabic");
-        providerClosingTitleArabic=bundle.getString("providerClosingTitleArabic");
+        providerOpeningTimeArabic = bundle.getString("providerOpeningTimeArabic");
+        providerAddressArabic = bundle.getString("providerAddressArabic");
+        providerClosingTime = bundle.getString("providerClosingTime");
+        providerClosingTimeArabic = bundle.getString("providerClosingTimeArabic");
+        providerOpeningTitle = bundle.getString("providerOpeningTitle");
+        providerClosingTitle = bundle.getString("providerClosingTitle");
+        providerOpeningTitleArabic = bundle.getString("providerOpeningTitleArabic");
+        providerClosingTitleArabic = bundle.getString("providerClosingTitleArabic");
         return view;
     }
 
@@ -235,21 +235,24 @@ public class InformationFragment extends Fragment {
             if (providerAddress != null && !providerAddress.equals(""))
                 informationData.add(new InformationFragmentModel(R.drawable.location_icon,
                         R.drawable.dot_icon, providerAddress, R.drawable.right_arrow));
-        }else {
+        } else {
             if (providerAddressArabic != null && !providerAddressArabic.equals(""))
                 informationData.add(new InformationFragmentModel(R.drawable.location_icon,
                         R.drawable.dot_icon, providerAddressArabic, R.drawable.right_arrow));
         }
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            String value = "";
             if (providerOpeningTime != null && !providerOpeningTime.equals(""))
-                providerOpeningTime=providerOpeningTime+providerOpeningTitle+"-"+providerClosingTime+providerClosingTitle;
+                value = providerOpeningTime + providerOpeningTitle + "-" + providerClosingTime + providerClosingTitle;
+
+            informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
+                    R.drawable.dot_icon, value, R.drawable.right_arrow));
+        } else {
+            String value = "";
+            if (providerOpeningTimeArabic != null && !providerOpeningTimeArabic.equals("")) {
+                value = providerOpeningTimeArabic + providerOpeningTitleArabic + "-" + providerClosingTimeArabic + providerClosingTitleArabic;
                 informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
-                        R.drawable.dot_icon, providerOpeningTime, R.drawable.right_arrow));
-        }else{
-            if (providerOpeningTimeArabic != null && !providerOpeningTimeArabic.equals("")){
-                providerOpeningTimeArabic=providerOpeningTimeArabic+providerOpeningTitleArabic+"-"+providerClosingTimeArabic+providerClosingTitleArabic;
-                informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
-                        R.drawable.dot_icon, providerOpeningTimeArabic, R.drawable.right_arrow));
+                        R.drawable.dot_icon, value, R.drawable.right_arrow));
             }
 
         }
@@ -350,15 +353,14 @@ public class InformationFragment extends Fragment {
         String packageNameFacebookLite = "com.facebook.lite";
         PackageManager packageManager = context.getPackageManager();
         try {
-            PackageInfo packageInfo=packageManager.getPackageInfo(packageNameFacebook,0);
-            String installedPackages=packageInfo.toString();
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageNameFacebook, 0);
+            String installedPackages = packageInfo.toString();
 
             ApplicationInfo ai =
-                    getActivity().getPackageManager().getApplicationInfo(packageNameFacebook,0);
+                    getActivity().getPackageManager().getApplicationInfo(packageNameFacebook, 0);
             boolean appStatus = ai.enabled;
-            if(installedPackages.contains(packageNameFacebook)|| (installedPackages.contains(packageNameFacebookLite)))
-            {
-                if(appStatus) {
+            if (installedPackages.contains(packageNameFacebook) || (installedPackages.contains(packageNameFacebookLite))) {
+                if (appStatus) {
                     return weburl(context);
                 }
             }
@@ -369,7 +371,7 @@ public class InformationFragment extends Fragment {
         return "https://www.facebook.com/" + providerFacebook + "/"; //normal web url
     }
 
-    public String weburl(Context context){
+    public String weburl(Context context) {
         PackageManager packageManager = context.getPackageManager();
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
@@ -408,7 +410,7 @@ public class InformationFragment extends Fragment {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.twitter.android", 0);
             String getPkgInfo = pkgInfo.toString();
             ApplicationInfo ai =
-                    getActivity().getPackageManager().getApplicationInfo("com.twitter.android",0);
+                    getActivity().getPackageManager().getApplicationInfo("com.twitter.android", 0);
             boolean appStatus = ai.enabled;
             if (getPkgInfo.contains("com.twitter.android") && appStatus) {
                 // APP NOT INSTALLED
@@ -435,7 +437,7 @@ public class InformationFragment extends Fragment {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.instagram.android", 0);
             String getPkgInfo = pkgInfo.toString();
             ApplicationInfo ai =
-                    getActivity().getPackageManager().getApplicationInfo("com.instagram.android",0);
+                    getActivity().getPackageManager().getApplicationInfo("com.instagram.android", 0);
             boolean appStatus = ai.enabled;
 
             if (getPkgInfo.contains("com.instagram.android") && appStatus) {
@@ -462,7 +464,7 @@ public class InformationFragment extends Fragment {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.snapchat.android", 0);
             String getPkgInfo = pkgInfo.toString();
             ApplicationInfo ai =
-                    getActivity().getPackageManager().getApplicationInfo("com.snapchat.android",0);
+                    getActivity().getPackageManager().getApplicationInfo("com.snapchat.android", 0);
             boolean appStatus = ai.enabled;
             if (getPkgInfo.contains("com.snapchat.android") && appStatus) {
                 // APP NOT INSTALLED
@@ -491,7 +493,7 @@ public class InformationFragment extends Fragment {
     private String getDate(long milliSeconds) {
 //        // Create a DateFormatter object for displaying date in specified
 //        // format.
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 //        // Create a calendar object that will convert the date and time value in
 //        // milliseconds to date
         Calendar calendar = Calendar.getInstance();

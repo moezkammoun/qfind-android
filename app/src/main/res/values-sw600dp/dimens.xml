@@ -14,6 +14,9 @@
     <dimen name="favorites_results_item_text">19sp</dimen>
     <dimen name="favorites_results_item_text_description">15sp</dimen>
     <dimen name="favorites_results_image_size">55dp</dimen>
+    <dimen name="frame_layout_padding_30">70dp</dimen>
+    <dimen name="frame_layout_padding_top_30">30dp</dimen>
+    <dimen name="info_row_padding_15">25dp</dimen>
     <dimen name="history_results_padding">30dp</dimen>
     <dimen name="webview_textview_20">30sp</dimen>
     <dimen name="webview_margin_top_20">30dp</dimen>

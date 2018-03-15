@@ -13,7 +13,9 @@
     <dimen name="setting_button__text_size">26sp</dimen>
     <dimen name="category_card_item_text_size">15sp</dimen>
     <dimen name="sub_category_card_item_text_size">13sp</dimen>
-
+    <dimen name="frame_layout_padding_30">30dp</dimen>
+    <dimen name="frame_layout_padding_top_30">30dp</dimen>
+    <dimen name="info_row_padding_15">15dp</dimen>
     <dimen name="text_size_19sp">19sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="padding_10">10dp</dimen>
