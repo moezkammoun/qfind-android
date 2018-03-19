@@ -51,14 +51,22 @@ public class MyApp extends Application {
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
         } else {
-
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("en"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("en");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
         }
         if (!qfindPreferences.getBoolean("AuthTokenStatus", false)) {
             registerTheApp();
         }
-
-
     }
+
+
 
     public void registerTheApp() {
         ApiInterface apiService =
@@ -74,7 +82,7 @@ public class MyApp extends Application {
                             SharedPreferences qfindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = qfindPreferences.edit();
                             editor.putString("AccessToken", registrationDetails.getAccessToken());
-                            editor.putBoolean("AuthTokenStatus",true);
+                            editor.putBoolean("AuthTokenStatus", true);
                             editor.commit();
                         } else {
                             Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
@@ -95,4 +103,6 @@ public class MyApp extends Application {
             }
         });
     }
+
+
 }

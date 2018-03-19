@@ -2,7 +2,6 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -121,11 +120,11 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
                     holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderName());
                     holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocation());
 
-                }else {
+                } else {
                     holder.subCategoryName.setText(serviceProviderListDetails.get(position).getServiceProviderNameArabic());
                     holder.subCategoryDescription.setText(serviceProviderListDetails.get(position).getServiceProviderLocationArabic());
                 }
-                  picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).fit().into(holder.categoryThumbnail);
+                picasso.load(serviceProviderListDetails.get(position).getServiceProviderLogo()).placeholder(R.drawable.placeholder).fit().into(holder.categoryThumbnail);
             }
         }
     }
@@ -172,11 +171,11 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     public void setFontTypeForText() {
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
 
-            mtypeFaceLight= Typeface.createFromAsset(mContext.getAssets(),
+            mtypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/Lato-Light.ttf");
         } else {
 
-            mtypeFaceLight=Typeface.createFromAsset(mContext.getAssets(),
+            mtypeFaceLight = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
     }

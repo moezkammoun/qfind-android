@@ -7,7 +7,6 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">16sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">20sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
-    <dimen name="bottom_navigation_icon" tools:override="true">24dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="settings_tittle_text_size">24sp</dimen>
@@ -19,8 +18,6 @@
     <dimen name="frame_layout_padding_30">30dp</dimen>
     <dimen name="frame_layout_padding_top_30">30dp</dimen>
     <dimen name="info_row_padding_15">15dp</dimen>
-    <dimen name="text_size_19sp">19sp</dimen>
-    <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_5">5dp</dimen>
     <dimen name="padding_15">15dp</dimen>
@@ -30,18 +27,13 @@
     <dimen name="padding_1">1dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="toolbar_height">200dp</dimen>
-    <dimen name="image_height">30dp</dimen>
-    <dimen name="image_width">30dp</dimen>
-    <dimen name="text_size_12sp">12sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
-    <dimen name="text_size_20">20sp</dimen>
     <dimen name="webview_textview_20">20sp</dimen>
     <dimen name="webview_margin_top_20">20dp</dimen>
     <dimen name="layout_marginTop">90dp</dimen>
     <dimen name="settings_margin_top">15dp</dimen>
     <dimen name="settings_padding_start">15dp</dimen>
     <dimen name="settings_padding_end">15dp</dimen>
-    <dimen name="settings_padding_top">15dp</dimen>
     <dimen name="favorite_results_padding">10dp</dimen>
     <dimen name="history_results_padding">10dp</dimen>
     <dimen name="search_results_padding">10dp</dimen>
@@ -52,7 +44,6 @@
     <dimen name="search_results_item_text">16sp</dimen>
     <dimen name="search_results_item_text_description">13sp</dimen>
     <dimen name="search_results_image_size">50dp</dimen>
-    <dimen name="search_results_back_image_size">35dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="alignment_padding">55dp</dimen>
     <dimen name="home_page_find_today_text">14sp</dimen>
@@ -73,8 +64,6 @@
     <dimen name="info_page_icon_width">23dp</dimen>
     <dimen name="info_page_dot_width">8dp</dimen>
     <dimen name="info_page_dot_height">8dp</dimen>
-    <dimen name="info_page_right_arrow_height">23dp</dimen>
-    <dimen name="info_page_right_arrow_width">23dp</dimen>
     <dimen name="hamburger_icon_size">30dp</dimen>
     <dimen name="toolbar_hamburger_icon_height">35dp</dimen>
     <dimen name="toolbar_hamburger_icon_width">30dp</dimen>
@@ -82,7 +71,6 @@
     <dimen name="home_page_search_box_padding_15">15dp</dimen>
     <dimen name="home_page_search_bar_icon_padding_5">5dp</dimen>
     <dimen name="home_page_search_bar_icon_padding_start_5">1dp</dimen>
-    <dimen name="find_by_category_text_size_20">20sp</dimen>
     <dimen name="search_text_box_margin_top">1dp</dimen>
     <dimen name="home_page_search_text_pading_start">1dp</dimen>
     <dimen name="main_logo_padding_10">10dp</dimen>

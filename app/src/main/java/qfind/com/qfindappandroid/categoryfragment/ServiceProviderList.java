@@ -3,7 +3,6 @@ package qfind.com.qfindappandroid.categoryfragment;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dilee on 01-02-2018.
@@ -20,11 +19,14 @@ public class ServiceProviderList {
     public String getResponse() {
         return response;
     }
+
     public String getCode() {
         return code;
     }
-    public ArrayList<ServiceProviderListDetails> getServiceProviderListDetails(){return serviceProviderListDetails;}
 
+    public ArrayList<ServiceProviderListDetails> getServiceProviderListDetails() {
+        return serviceProviderListDetails;
+    }
 
 
 }

@@ -24,7 +24,7 @@ public class MainCategory {
         return code;
     }
 
-    public  ArrayList<MainCategoryItemList> getMainCategoryItemList(){
+    public ArrayList<MainCategoryItemList> getMainCategoryItemList() {
         return mainCategoryItemList;
     }
 }

@@ -10,5 +10,6 @@ import cn.lightsky.infiniteindicator.Page;
 
 public interface CategoryFragmentView {
     public void loadAds(ArrayList<Page> adsImages);
+
     public void setCategoryItemRecyclerView(CategoryItemAdapter categoryItemAdapter);
 }

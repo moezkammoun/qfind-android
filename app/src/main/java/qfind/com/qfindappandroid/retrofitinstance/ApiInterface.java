@@ -40,7 +40,7 @@ public interface ApiInterface {
     @GET("api/get-service-provider")
     Call<ServiceProviderList> getListOfServiceProvider(@Query("token") String token,
                                                        @Query("category") int category, @Query("limit") int limit,
-                                                        @Query("offset") int offset);
+                                                       @Query("offset") int offset);
 
     @GET("api/search-result")
     Call<SearchResultsResponse> getSearchResults(@Query("token") String token,

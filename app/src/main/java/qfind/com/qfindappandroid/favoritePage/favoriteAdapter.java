@@ -1,8 +1,6 @@
 package qfind.com.qfindappandroid.favoritePage;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +18,6 @@ import java.util.List;
 import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
-import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 
 /**
  * Created by MoongedePC on 23-Jan-18.
@@ -53,7 +50,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             holder.title.setText(favoriteModel.getItem());
             holder.description.setText(favoriteModel.getItemDescription());
-        } else{
+        } else {
             holder.title.setText(favoriteModel.getItemArabic());
             holder.description.setText(favoriteModel.getItemDescriptionArabic());
         }
@@ -69,7 +66,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
         return itemList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title, description;
         public ImageView thumbnail, favoriteStar;
         public LinearLayout layout;
@@ -82,7 +79,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
             favoriteStar = (ImageView) view.findViewById(R.id.favorite_star);
             layout = (LinearLayout) view.findViewById(R.id.fav_layout);
             favoriteStar.setOnClickListener(this);
-            
+
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -114,7 +111,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
                             itemList.get(getAdapterPosition()).getProviderClosingTitle(),
                             itemList.get(getAdapterPosition()).getProviderOpeningTitleArabic(),
                             itemList.get(getAdapterPosition()).getProviderClosingTitleArabic()
-                            );
+                    );
                 }
             });
             setFontTypeForText(title, description);
@@ -122,7 +119,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view,getAdapterPosition(),positions);
+            mListener.onClick(view, getAdapterPosition(), positions);
         }
     }
 
@@ -141,7 +138,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
     public favoriteAdapter(Context mContext, List<FavoriteModel> itemList, FavoriteClickListener mListener) {
         this.mContext = mContext;
         this.itemList = itemList;
-        this.mListener=mListener;
+        this.mListener = mListener;
     }
 
     public void delete(int position, int id) {  //removes the row

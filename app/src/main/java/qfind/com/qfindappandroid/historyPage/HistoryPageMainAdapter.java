@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 
 /**
@@ -61,8 +60,8 @@ public class HistoryPageMainAdapter extends RecyclerView.Adapter<HistoryPageMain
     }
 
     public void setFontTypeForText() {
-            mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
-                    "fonts/Lato-Bold.ttf");
+        mtypeFace = Typeface.createFromAsset(mContext.getApplicationContext().getAssets(),
+                "fonts/Lato-Bold.ttf");
     }
 
     @Override

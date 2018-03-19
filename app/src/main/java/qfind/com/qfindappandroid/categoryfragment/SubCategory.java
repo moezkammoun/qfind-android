@@ -24,7 +24,7 @@ public class SubCategory {
         return code;
     }
 
-    public  ArrayList<SubCategoryItemList> getSubCategoryItemList(){
+    public ArrayList<SubCategoryItemList> getSubCategoryItemList() {
         return subCategoryItemList;
     }
 }

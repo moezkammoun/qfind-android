@@ -6,8 +6,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import qfind.com.qfindappandroid.searchResultsFragment.SearchResultsClickListener;
-
 /**
  * Created by MoongedePC on 07-Feb-18.
  */

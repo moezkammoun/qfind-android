@@ -2,7 +2,6 @@ package qfind.com.qfindappandroid.webviewactivity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -119,6 +118,7 @@ public class WebviewActivity extends AppCompatActivity {
                     "fonts/GE_SS_Unique_Bold.otf");
 
         }
+        toolbarTitle.setText(getResources().getString(R.string.app_name));
         toolbarTitle.setTypeface(mTypeFace);
     }
 }

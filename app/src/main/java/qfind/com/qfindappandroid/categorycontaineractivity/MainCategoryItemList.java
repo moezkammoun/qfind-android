@@ -23,8 +23,19 @@ public class MainCategoryItemList {
         this.subCategoryStatus = subCategoryStatus;
     }
 
-    public int getCategoryId(){return categoryId;}
-    public String getCategoryName(){return categoryName;}
-    public String getCategoryImage(){return categoryImage;}
-    public boolean getSubCategoryStatus(){return subCategoryStatus;}
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public String getCategoryImage() {
+        return categoryImage;
+    }
+
+    public boolean getSubCategoryStatus() {
+        return subCategoryStatus;
+    }
 }
