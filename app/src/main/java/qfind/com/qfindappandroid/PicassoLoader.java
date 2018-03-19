@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
-
 import java.io.File;
 
 import cn.lightsky.infiniteindicator.ImageLoader;

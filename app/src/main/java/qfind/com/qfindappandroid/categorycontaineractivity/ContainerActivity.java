@@ -3,22 +3,25 @@ package qfind.com.qfindappandroid.categorycontaineractivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.AppConfig;
 import qfind.com.qfindappandroid.BaseActivity;
-import qfind.com.qfindappandroid.MyApp;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categoryfragment.CategoryFragment;
@@ -51,6 +54,8 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     SharedPreferences.Editor editor;
     Date d;
     SimpleDateFormat sdf;
+    Locale myLocale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +63,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         ButterKnife.bind(this);
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         loadFragmentWithoutBackStack(new CategoryFragment());
+//        showNormalToolbar();
         //getMainCategoryItemsList();
         intent = getIntent();
         fragmentToShow = intent.getStringExtra("SHOW_FRAGMENT");
@@ -200,10 +206,10 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                 "ProviderMail", "ProviderFacebook", "ProviderLinkedIn",
                 "ProviderInstagram", "ProviderTwitter", "ProviderSnapchat",
                 "ProviderGooglePlus", "ProviderLatlong", "ProviderLogo",
-                1, "ProviderOpeningTimeArabic","ProviderAddressArabic",
-                 "ProviderClosingTime","ProvideClosingTimeArabic",
-                "ProviderOpeningTitle","ProviderClosingTitle",
-                "ProviderOpeningTitleArabic","ProviderClosingTitleArabic"
+                1, "ProviderOpeningTimeArabic", "ProviderAddressArabic",
+                "ProviderClosingTime", "ProvideClosingTimeArabic",
+                "ProviderOpeningTitle", "ProviderClosingTitle",
+                "ProviderOpeningTitleArabic", "ProviderClosingTitleArabic"
         );
 
         Toast.makeText(ContainerActivity.this, "URI : " + uri, Toast.LENGTH_SHORT).show();
@@ -231,6 +237,31 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     @Override
     public void onResume() {
         super.onResume();
+        int appLanguage = qFindPreferences.getInt("AppLanguage", 1);
+        if (appLanguage == 2) {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("ar"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("ar");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        } else {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("en"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("en");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        }
+
+        setFontTypeForText();
+        autoCompleteTextView.setHint(getResources().getString(R.string.search_hint));
         setupBottomNavigationBar();
     }
 
@@ -260,7 +291,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                     CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                                     fragment.getAdsFromPreference();
                                 }
-                               //
+                                //
                             } else {
                                 Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
                             }
@@ -280,6 +311,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     }
 
     public void getMainCategoryItemsList() {
+        qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
             ApiInterface apiService =

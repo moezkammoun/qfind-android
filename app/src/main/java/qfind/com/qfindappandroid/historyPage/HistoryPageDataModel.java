@@ -36,41 +36,41 @@ public class HistoryPageDataModel {
 
     public HistoryPageDataModel() {
     }
-    
+
 
     public HistoryPageDataModel(String pageName, String url, String description,
                                 String providerPhone, String providerWebsite,
                                 String providerAddress, String providerOpeningTime, String providerMail,
                                 String providerFacebook, String providerLinkedIn, String providerInstagram,
                                 String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                                String providerLatlong,int pageId,String providerOpeningTimeArabic,
-                                String providerAddressArabic,String providerClosingTime,String providerClosingTimeArabic,
-                                String providerOpeningTitle,String providerClosingTitle,String providerOpeningTitleArabic,
+                                String providerLatlong, int pageId, String providerOpeningTimeArabic,
+                                String providerAddressArabic, String providerClosingTime, String providerClosingTimeArabic,
+                                String providerOpeningTitle, String providerClosingTitle, String providerOpeningTitleArabic,
                                 String providerClosingTitleArabic) {
         this.pageName = pageName;
         this.url = url;
         this.description = description;
-        this.providerPhone=providerPhone;
-        this.providerWebsite=providerWebsite;
-        this.providerAddress=providerAddress;
-        this.providerOpeningTime=providerOpeningTime;
-        this.providerMail=providerMail;
-        this.providerFacebook=providerFacebook;
-        this.providerLinkedIn=providerLinkedIn;
-        this.providerInstagram=providerInstagram;
-        this.providerTwitter=providerTwitter;
-        this.providerSnapchat=providerSnapchat;
-        this.providerGooglePlus=providerGooglePlus;
-        this.providerLatlong=providerLatlong;
-        this.pageId=pageId;
-        this.providerOpeningTimeArabic=providerOpeningTimeArabic;
-        this.providerAddressArabic=providerAddressArabic;
-        this.providerClosingTime=providerClosingTime;
-        this.providerClosingTimeArabic=providerClosingTimeArabic;
-        this.providerOpeningTitle=providerOpeningTitle;
-        this.providerClosingTitle=providerClosingTitle;
-        this.providerOpeningTitleArabic=providerOpeningTitleArabic;
-        this.providerClosingTitleArabic=providerClosingTitleArabic;
+        this.providerPhone = providerPhone;
+        this.providerWebsite = providerWebsite;
+        this.providerAddress = providerAddress;
+        this.providerOpeningTime = providerOpeningTime;
+        this.providerMail = providerMail;
+        this.providerFacebook = providerFacebook;
+        this.providerLinkedIn = providerLinkedIn;
+        this.providerInstagram = providerInstagram;
+        this.providerTwitter = providerTwitter;
+        this.providerSnapchat = providerSnapchat;
+        this.providerGooglePlus = providerGooglePlus;
+        this.providerLatlong = providerLatlong;
+        this.pageId = pageId;
+        this.providerOpeningTimeArabic = providerOpeningTimeArabic;
+        this.providerAddressArabic = providerAddressArabic;
+        this.providerClosingTime = providerClosingTime;
+        this.providerClosingTimeArabic = providerClosingTimeArabic;
+        this.providerOpeningTitle = providerOpeningTitle;
+        this.providerClosingTitle = providerClosingTitle;
+        this.providerOpeningTitleArabic = providerOpeningTitleArabic;
+        this.providerClosingTitleArabic = providerClosingTitleArabic;
     }
 
     public int getId() {

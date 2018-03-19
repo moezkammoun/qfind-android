@@ -134,8 +134,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         if (updatedDate == 0) {
             updateAds();
 
-        }else
-        setupTheaddBannerImage(adsImages);
+        } else
+            setupTheaddBannerImage(adsImages);
 
     }
 
@@ -262,7 +262,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderClosingTitle(),
                                 serviceProviderListDetails.get(position).getServiceProviderOpeningTitleArabic(),
                                 serviceProviderListDetails.get(position).getServiceProviderClosingTitleArabic()
-                                );
+                        );
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
@@ -271,6 +271,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                         } else {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
                                             get(position).getServiceProviderNameArabic(),
+
                                     serviceProviderListDetails.get(position).getServiceProviderLocationArabic());
                         }
 
@@ -303,7 +304,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderClosingTitle(),
                                 serviceProviderListDetails.get(position).getServiceProviderOpeningTitleArabic(),
                                 serviceProviderListDetails.get(position).getServiceProviderClosingTitleArabic()
-                                );
+                        );
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
@@ -323,6 +324,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
     }
 
     public void initialSetUp() {
+        subCategoryBackButton.setImageResource(R.drawable.back_arrow);
         if (Util.categoryPageStatus == 1) {
             if (subCategoryBackButton.getVisibility() == View.VISIBLE) {
                 subCategoryBackButton.setVisibility(View.GONE);
@@ -690,7 +692,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
     }
 
-    public void updateAds(){
+    public void updateAds() {
         ((ContainerActivity) getActivity()).getAds();
 
     }

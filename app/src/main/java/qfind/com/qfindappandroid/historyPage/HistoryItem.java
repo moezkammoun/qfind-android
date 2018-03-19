@@ -125,7 +125,6 @@ public class HistoryItem {
     }
 
 
-
     public String getProviderPhone() {
         return providerPhone;
     }

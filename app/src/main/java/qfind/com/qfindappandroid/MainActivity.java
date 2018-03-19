@@ -2,12 +2,15 @@ package qfind.com.qfindappandroid;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +85,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private PicassoLoader picassoLoader;
     DelayAutoCompleteTextView autoCompleteTextView;
     SearchData searchData;
+    Locale myLocale;
     private final String clientId = "80581B4C-C060-D166-7893-A4424C15A63D";
     private final String clientSecret = "0488AFF2-BCE0-BC87-F614-10F055107FEB";
 
@@ -166,7 +171,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             }
         });
         getQFind();
-        setFontTypeForHomeText();
+//        setFontTypeForHomeText();
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if (key.equals("AccessToken"))
@@ -361,18 +366,23 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             mTypeFace = Typeface.createFromAsset(getAssets(),
                     "fonts/Lato-Bold.ttf");
+            findByCategoryBtn.setText(getResources().getString(R.string.find_by_category));
             findByCategoryBtn.setTypeface(mTypeFace);
             mTypeFace = Typeface.createFromAsset(getAssets(),
                     "fonts/Lato-Regular.ttf");
         } else {
             mTypeFace = Typeface.createFromAsset(getAssets(),
                     "fonts/GE_SS_Unique_Bold.otf");
+            findByCategoryBtn.setText(getResources().getString(R.string.find_by_category));
             findByCategoryBtn.setTypeface(mTypeFace);
             mTypeFace = Typeface.createFromAsset(getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
+        qFindOfTheDayText.setText(getResources().getString(R.string.qfind_of_the_day));
         qFindOfTheDayText.setTypeface(mTypeFace);
+        orText.setText(getResources().getString(R.string.or));
         orText.setTypeface(mTypeFace);
+        autoCompleteTextView.setHint(getResources().getString(R.string.search_hint));
         autoCompleteTextView.setTypeface(mTypeFace);
     }
 
@@ -433,9 +443,33 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onResume() {
         super.onResume();
-        autoCompleteTextView.setText(null);
+        setFontTypeForHomeText();
         if (configuration != null)
             animCircleIndicator.start();
+        int appLanguage = qFindPreferences.getInt("AppLanguage", 1);
+        if (appLanguage == 2) {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("ar"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("ar");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        } else {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("en"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("en");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        }
+        setFontTypeForText();
+        autoCompleteTextView.setText(null);
     }
 
     @Override

@@ -11,8 +11,8 @@ public class HistoryPageMainModel {
     private String day;
     private ArrayList<HistoryPageDataModel> historyPageDataModels;
 
-    public HistoryPageMainModel(String day,ArrayList<HistoryPageDataModel> historyPageDataModels) {
-        this.day= day;
+    public HistoryPageMainModel(String day, ArrayList<HistoryPageDataModel> historyPageDataModels) {
+        this.day = day;
         this.historyPageDataModels = historyPageDataModels;
     }
 

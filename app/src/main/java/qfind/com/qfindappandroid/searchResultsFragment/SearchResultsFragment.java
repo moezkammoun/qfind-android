@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import java.util.List;
 import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.Util;
-import qfind.com.qfindappandroid.informationFragment.InformationFragment;
 import qfind.com.qfindappandroid.predictiveSearch.SearchResultsResponse;
 import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
 import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
@@ -107,7 +105,7 @@ public class SearchResultsFragment extends Fragment {
                         searchedItemList.get(position).getProviderClosingTitle(),
                         searchedItemList.get(position).getProviderOpeningTitleArabic(),
                         searchedItemList.get(position).getProviderClosingTitleArabic()
-                        );
+                );
             }
 
         }));

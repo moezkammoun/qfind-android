@@ -60,7 +60,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/content_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appBarLayout"
@@ -69,7 +68,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/slider_layout"
             android:layout_weight="39.85"
             android:background="@color/color_white">
 
@@ -101,7 +99,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingTop="@dimen/home_page_qfind_padding_5"
-                android:text="@string/qfind_of_the_day"
                 android:textColor="@color/category_tittle_color"
                 android:textSize="@dimen/q_find_of_the_day_text_size" />
         </LinearLayout>
@@ -133,7 +130,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_bg"
-                        android:hint="@string/search_hint"
                         android:imeOptions="flagNoExtractUi|actionSearch"
                         android:inputType="textAutoComplete|textAutoCorrect"
                         android:paddingEnd="@dimen/home_hit_padding"
@@ -188,7 +184,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/or"
                 android:layout_marginTop="@dimen/home_page_or_text_margin_top"
                 android:layout_marginBottom="@dimen/home_page_or_text_margin_bottom"
                 android:textColor="@color/category_tittle_color"
@@ -204,7 +199,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_bg"
-                    android:text="@string/find_by_category"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/q_find_of_the_day_text_size" />
 

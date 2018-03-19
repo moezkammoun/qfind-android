@@ -3,6 +3,8 @@ package qfind.com.qfindappandroid;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -55,6 +58,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView sideMenuTittleTxt, sideMenuAboutUsTxt, sideMenuQfinderTxt, sideMenuTermAndConditionTxt,
             sideMenuContactUsTxt;
     TextView sideMenuSettingsTxt;
+    Locale myLocale;
     int language;
     Toolbar toolbar;
     Fragment fragment;
@@ -85,6 +89,34 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setFontTypeForText();
+        int appLanguage = qFindPreferences.getInt("AppLanguage", 1);
+        if (appLanguage == 2) {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("ar"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("ar");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        } else {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("en"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            myLocale = new Locale("en");
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        }
+    }
+
+    @Override
     public void setContentView(int layoutResID) {
         fullView = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
         activityContainer = (FrameLayout) fullView.findViewById(R.id.activity_content);
@@ -92,14 +124,15 @@ public class BaseActivity extends AppCompatActivity {
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
         super.setContentView(fullView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setPadding(0,0,0,0);
-        toolbar.setContentInsetsAbsolute(0,0);
+        toolbar.setPadding(0, 0, 0, 0);
+        toolbar.setContentInsetsAbsolute(0, 0);
         int fullWidth = getResources().getDisplayMetrics().widthPixels;
-        int width = getResources().getDisplayMetrics().widthPixels/3;
+        int width = getResources().getDisplayMetrics().widthPixels / 3;
         width = fullWidth - width;
         DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) navView.getLayoutParams();
         params.width = width;
-        navView.setLayoutParams(params);        if (useToolbar()) {
+        navView.setLayoutParams(params);
+        if (useToolbar()) {
             setSupportActionBar(toolbar);
         } else {
             toolbar.setVisibility(View.GONE);
@@ -135,7 +168,8 @@ public class BaseActivity extends AppCompatActivity {
         infoStarButton = (ImageView) findViewById(R.id.fav_star_icon);
         infoShareButton = (ImageView) findViewById(R.id.info_share);
         setupSideMenuItemClickListener();
-        setFontTypeForText();
+
+        infoBackButton.setImageResource(R.drawable.white_back_icon);
 
         sideMenuHamburger.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,6 +265,7 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
         autoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.base_autocomplete_edit_text);
+        autoCompleteTextView.setHint(getResources().getString(R.string.search_hint));
         autoCompleteTextView.setThreshold(2);
         autoCompleteTextView.setAdapter(new SearchAutoCompleteAdapter(this));
         autoCompleteTextView.setLoadingIndicator(
@@ -376,10 +411,10 @@ public class BaseActivity extends AppCompatActivity {
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/1"
-                            );
+                    );
                 } else {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/1/2"
-                          );
+                    );
                 }
 
             }
@@ -391,7 +426,7 @@ public class BaseActivity extends AppCompatActivity {
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/1"
-                            );
+                    );
                 } else {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/2/2");
                 }
@@ -419,7 +454,7 @@ public class BaseActivity extends AppCompatActivity {
                 language = qFindPreferences.getInt("AppLanguage", 1);
                 if (language == 1) {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/1"
-                           );
+                    );
                 } else {
                     callWebviewWithUrl("http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/static-pages/4/2");
                 }
@@ -445,6 +480,7 @@ public class BaseActivity extends AppCompatActivity {
 
         infoToolBarTittle = tittle;
         normalToolbar.setVisibility(View.GONE);
+        infoBackButton.setImageResource(R.drawable.white_back_icon);
         infoToolbar.setVisibility(View.VISIBLE);
         infoToolBarMainTittleTxtView.setTypeface(mtypeFaceBold);
         infoToolBarMainTittleTxtView.setText(infoToolBarTittle);
@@ -480,10 +516,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showNormalToolbar() {
-        normalToolbar.setVisibility(View.VISIBLE);
         infoToolbar.setVisibility(View.GONE);
+        normalToolbar.setVisibility(View.VISIBLE);
     }
-
+    
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
                                               String providerNameArabic, String providerLocationArabic,
                                               String providerMobile, String providerAddress,
@@ -492,9 +528,9 @@ public class BaseActivity extends AppCompatActivity {
                                               String providerLinkedin, String providerInstagram,
                                               String providerTwitter, String providerSnapchat,
                                               String providerGooglePlus, String providerLatLong, String providerLogo,
-                                              int providerId,String providerOpeningTimeArabic,
-                                              String providerAddressArabic,String providerClosingTime,String providerClosingTimeArabic,
-                                              String providerOpeningTitle,String providerClosingTitle, String providerOpeningTitleArabic,
+                                              int providerId, String providerOpeningTimeArabic,
+                                              String providerAddressArabic, String providerClosingTime, String providerClosingTimeArabic,
+                                              String providerOpeningTitle, String providerClosingTitle, String providerOpeningTitleArabic,
                                               String providerClosingTitleArabic) {
 
         bundle.putString("providerName", providerName);
@@ -515,14 +551,14 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerLatLong", providerLatLong);
         bundle.putString("providerLogo", providerLogo);
         bundle.putInt("providerId", providerId);
-        bundle.putString("providerOpeningTimeArabic",providerOpeningTimeArabic);
-        bundle.putString("providerAddressArabic",providerAddressArabic);
-        bundle.putString("providerClosingTime",providerClosingTime);
-        bundle.putString("providerClosingTimeArabic",providerClosingTimeArabic);
-        bundle.putString("providerOpeningTitle",providerOpeningTitle);
-        bundle.putString("providerClosingTitle",providerClosingTitle);
-        bundle.putString("providerOpeningTitleArabic",providerOpeningTitleArabic);
-        bundle.putString("providerClosingTitleArabic",providerClosingTitleArabic);
+        bundle.putString("providerOpeningTimeArabic", providerOpeningTimeArabic);
+        bundle.putString("providerAddressArabic", providerAddressArabic);
+        bundle.putString("providerClosingTime", providerClosingTime);
+        bundle.putString("providerClosingTimeArabic", providerClosingTimeArabic);
+        bundle.putString("providerOpeningTitle", providerOpeningTitle);
+        bundle.putString("providerClosingTitle", providerClosingTitle);
+        bundle.putString("providerOpeningTitleArabic", providerOpeningTitleArabic);
+        bundle.putString("providerClosingTitleArabic", providerClosingTitleArabic);
 
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -585,11 +621,18 @@ public class BaseActivity extends AppCompatActivity {
             mtypeFaceLight = Typeface.createFromAsset(getAssets(),
                     "fonts/GE_SS_Unique_Light.otf");
         }
+
+        sideMenuTittleTxt.setText(getResources().getString(R.string.menu));
         sideMenuTittleTxt.setTypeface(mtypeFaceBold);
+        sideMenuAboutUsTxt.setText(getResources().getString(R.string.about_us));
         sideMenuAboutUsTxt.setTypeface(mtypeFaceLight);
+        sideMenuQfinderTxt.setText(getResources().getString(R.string.how_to_become_qfinder));
         sideMenuQfinderTxt.setTypeface(mtypeFaceLight);
+        sideMenuTermAndConditionTxt.setText(getResources().getString(R.string.terms_and_conditions));
         sideMenuTermAndConditionTxt.setTypeface(mtypeFaceLight);
+        sideMenuContactUsTxt.setText(getResources().getString(R.string.contact_us));
         sideMenuContactUsTxt.setTypeface(mtypeFaceLight);
+        sideMenuSettingsTxt.setText(getResources().getString(R.string.settings));
         sideMenuSettingsTxt.setTypeface(mtypeFaceLight);
     }
 

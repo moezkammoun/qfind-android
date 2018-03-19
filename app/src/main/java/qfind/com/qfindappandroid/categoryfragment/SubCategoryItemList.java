@@ -23,8 +23,19 @@ public class SubCategoryItemList {
         this.subCategoryDescription = subCategoryDescription;
     }
 
-    public int getSubCategoryId(){return subCategoryId;}
-    public String getSubCategoryName(){return subCategoryName;}
-    public String getSubCategoryImage(){return subCategoryImage;}
-    public String getSubCategoryDescription(){return subCategoryDescription;}
+    public int getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public String getSubCategoryImage() {
+        return subCategoryImage;
+    }
+
+    public String getSubCategoryDescription() {
+        return subCategoryDescription;
+    }
 }

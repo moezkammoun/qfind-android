@@ -11,14 +11,16 @@ public class ContainerActivityPresenter {
 
     ContainerActivityView containerActivityView;
 
-    public ContainerActivityPresenter(){
+    public ContainerActivityPresenter() {
 
     }
-    public void loadFragmentOncreate(ContainerActivityView containerActivityView, Fragment fragment){
+
+    public void loadFragmentOncreate(ContainerActivityView containerActivityView, Fragment fragment) {
         this.containerActivityView = containerActivityView;
         containerActivityView.loadFragment(fragment);
     }
-    public void loadFragmentOnButtonClick(Fragment fragment){
+
+    public void loadFragmentOnButtonClick(Fragment fragment) {
         containerActivityView.loadFragment(fragment);
     }
 }

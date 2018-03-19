@@ -53,7 +53,6 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         RelativeLayout historyLayout;
 
 
-
         public SingleItemRowHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -89,7 +88,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
                             itemsList.get(getAdapterPosition()).getProviderClosingTitle(),
                             itemsList.get(getAdapterPosition()).getProviderOpeningTitleArabic(),
                             itemsList.get(getAdapterPosition()).getProviderClosingTitleArabic()
-                            );
+                    );
 
                 }
             });
@@ -114,7 +113,7 @@ public class HistoryPageDataAdapter extends RecyclerView.Adapter<HistoryPageData
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             holder.title.setText(historyPageDataModel.getPageName());
             holder.description.setText(historyPageDataModel.getDescription());
-        }else{
+        } else {
             holder.title.setText(historyPageDataModel.getPageNameArabic());
             holder.description.setText(historyPageDataModel.getDescriptionArabic());
         }

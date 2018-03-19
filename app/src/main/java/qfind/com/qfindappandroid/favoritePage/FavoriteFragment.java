@@ -24,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
-import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 
 public class FavoriteFragment extends Fragment {
@@ -43,7 +42,7 @@ public class FavoriteFragment extends Fragment {
     ImageView backButton;
     @BindView(R.id.empty_text_view_info)
     TextView emptyTextView;
-    FavoriteClickListener  favoriteClickListener;
+    FavoriteClickListener favoriteClickListener;
     DataBaseHandler db;
 
     public FavoriteFragment() {
@@ -73,24 +72,23 @@ public class FavoriteFragment extends Fragment {
                         + " ,pid: " + cn.getPageId();
                 // Writing Contacts to log
                 Log.d("item: ", log);
-                item = new FavoriteModel(cn.getItem(), cn.getItemDescription(),cn.getItemArabic(),cn.getItemDescriptionArabic(),
+                item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getItemArabic(), cn.getItemDescriptionArabic(),
                         cn.getUrl(), cn.getPageId(), cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
                         cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
                         cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
-                        cn.getProviderLatlong(),cn.getDatetime(),cn.getProviderOpeningTimeArabic(),cn.getProviderAddressArabic(),
-                        cn.getProviderClosingTime(),cn.getProviderClosingTimeArabic(),cn.getProviderOpeningTitle(),
-                        cn.getProviderClosingTitle(),cn.getProviderOpeningTitleArabic(),cn.getProviderClosingTitleArabic()
+                        cn.getProviderLatlong(), cn.getDatetime(), cn.getProviderOpeningTimeArabic(), cn.getProviderAddressArabic(),
+                        cn.getProviderClosingTime(), cn.getProviderClosingTimeArabic(), cn.getProviderOpeningTitle(),
+                        cn.getProviderClosingTitle(), cn.getProviderOpeningTitleArabic(), cn.getProviderClosingTitleArabic()
                 );
                 favoriteModelList.add(item);
 
             }
-            adapter = new favoriteAdapter(getContext(), favoriteModelList,favoriteClickListener);
+            adapter = new favoriteAdapter(getContext(), favoriteModelList, favoriteClickListener);
             favoriteView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             favoriteView.setAdapter(adapter);
             adapter.notifyItemInserted(0);
             favoriteView.smoothScrollToPosition(0);
-        }
-        else{
+        } else {
             emptyTextView.setVisibility(View.VISIBLE);
             emptyTextView.setText(R.string.no_favorites_yet);
 
@@ -106,7 +104,7 @@ public class FavoriteFragment extends Fragment {
     }
 
     public void setupRecyclerViewClickListener() {
-        favoriteClickListener=new FavoriteClickListener() {
+        favoriteClickListener = new FavoriteClickListener() {
             @Override
             public void onClick(View view, final int position, final ArrayList<Integer> arrayList) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -120,13 +118,12 @@ public class FavoriteFragment extends Fragment {
                 // Setting Positive "Yes" Button
                 alertDialog.setPositiveButton(R.string.favorite_alert_title, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        delete(position, arrayList.get(position),arrayList);
-                        List<FavoriteModel> isCheck=db.getAllFavorites();
-                        if(isCheck.size()==0){
+                        delete(position, arrayList.get(position), arrayList);
+                        List<FavoriteModel> isCheck = db.getAllFavorites();
+                        if (isCheck.size() == 0) {
                             emptyTextView.setVisibility(View.VISIBLE);
                             emptyTextView.setText(R.string.no_favorites_yet);
-                        }
-                        else {
+                        } else {
                             emptyTextView.setVisibility(View.GONE);
                         }
                     }
@@ -145,7 +142,8 @@ public class FavoriteFragment extends Fragment {
             }
         };
     }
-    public void delete(int position, int id,ArrayList<Integer> arrayList) {  //removes the row
+
+    public void delete(int position, int id, ArrayList<Integer> arrayList) {  //removes the row
         DataBaseHandler db = new DataBaseHandler(getContext());
         db.deleteFavorite(id);
         favoriteModelList.remove(position);
@@ -155,8 +153,7 @@ public class FavoriteFragment extends Fragment {
     }
 
 
-
-        @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

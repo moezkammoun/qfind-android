@@ -33,16 +33,16 @@ public class SearchedItem {
     }
 
 
-    public SearchedItem(String item, String itemDescription,String itemArabic,String itemDescriptionArabic,
+    public SearchedItem(String item, String itemDescription, String itemArabic, String itemDescriptionArabic,
                         String thumbnail, String phone, String website,
                         String address, String openingTime, String mail, String facebook, String linkedIn,
                         String instagram, String twitter, String snapchat, String googlePlus, String latLong, String logo,
-                        int id,String openingTimeArabic,String addressArabic,String closingTime,String closingTimeArabic,
-                        String openingTitle,String closingTitle,String openingTitleArabic,String closingTitleArabic) {
+                        int id, String openingTimeArabic, String addressArabic, String closingTime, String closingTimeArabic,
+                        String openingTitle, String closingTitle, String openingTitleArabic, String closingTitleArabic) {
         this.providerName = item;
         this.providerLocation = itemDescription;
-        this.providerNameArabic=itemArabic;
-        this.providerLocationArabic=itemDescriptionArabic;
+        this.providerNameArabic = itemArabic;
+        this.providerLocationArabic = itemDescriptionArabic;
         this.providerThumbnail = thumbnail;
         this.providerPhone = phone;
         this.providerWebsite = website;
@@ -56,16 +56,16 @@ public class SearchedItem {
         this.providerSnapchat = snapchat;
         this.providerGooglePlus = googlePlus;
         this.providerLatlong = latLong;
-        this.providerLogo=logo;
-        this.providerId=id;
-        this.providerOpeningTimeArabic=openingTimeArabic;
-        this.providerAddressArabic=addressArabic;
-        this.providerClosingTime=closingTime;
-        this.providerClosingTimeArabic=closingTimeArabic;
-        this.providerOpeningTitle=openingTitle;
-        this.providerClosingTitle=closingTitle;
-        this.providerOpeningTitleArabic=openingTitleArabic;
-        this.providerClosingTitleArabic=closingTitleArabic;
+        this.providerLogo = logo;
+        this.providerId = id;
+        this.providerOpeningTimeArabic = openingTimeArabic;
+        this.providerAddressArabic = addressArabic;
+        this.providerClosingTime = closingTime;
+        this.providerClosingTimeArabic = closingTimeArabic;
+        this.providerOpeningTitle = openingTitle;
+        this.providerClosingTitle = closingTitle;
+        this.providerOpeningTitleArabic = openingTitleArabic;
+        this.providerClosingTitleArabic = closingTitleArabic;
 
     }
 
@@ -140,6 +140,7 @@ public class SearchedItem {
     public String getProviderLogo() {
         return providerLogo;
     }
+
     public int getProviderId() {
         return providerId;
     }

@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
@@ -283,6 +284,18 @@ public class InformationFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 

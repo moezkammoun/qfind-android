@@ -3,13 +3,11 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">20sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">24sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">60dp</dimen>
-    <dimen name="bottom_navigation_icon_size" tools:override="true">200dp</dimen>
     <dimen name="search_results_padding">30dp</dimen>
     <dimen name="search_results_tittle_text">34sp</dimen>
     <dimen name="search_results_item_text">19sp</dimen>
     <dimen name="search_results_item_text_description">15sp</dimen>
     <dimen name="search_results_image_size">55dp</dimen>
-    <dimen name="search_results_back_image_size">55dp</dimen>
     <dimen name="favorite_results_padding">30dp</dimen>
     <dimen name="favorites_results_item_text">19sp</dimen>
     <dimen name="favorites_results_item_text_description">15sp</dimen>
@@ -26,7 +24,6 @@
     <dimen name="toolbar_find_today_hint">18sp</dimen>
     <dimen name="settings_padding_start">100dp</dimen>
     <dimen name="settings_padding_end">100dp</dimen>
-    <dimen name="settings_padding_top">15dp</dimen>
     <dimen name="settings_margin_top">1dp</dimen>
     <dimen name="main_logo_height">90dp</dimen>
     <dimen name="main_logo_width">290dp</dimen>
@@ -38,7 +35,6 @@
     <dimen name="home_page_search_bar_icon_padding_5">10dp</dimen>
     <dimen name="home_page_search_bar_icon_padding_start_5">10dp</dimen>
     <dimen name="home_page_search_text_pading_start">20dp</dimen>
-    <dimen name="find_by_category_text_size_20">26sp</dimen>
     <dimen name="search_text_box_margin_top">20dp</dimen>
     <dimen name="main_logo_padding_10">30dp</dimen>
     <dimen name="home_page_or_text_margin_top">20dp</dimen>

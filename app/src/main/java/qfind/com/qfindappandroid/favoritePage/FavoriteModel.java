@@ -44,9 +44,9 @@ public class FavoriteModel {
                          String providerAddress, String providerOpeningTime, String providerMail,
                          String providerFacebook, String providerLinkedIn, String providerInstagram,
                          String providerTwitter, String providerSnapchat, String providerGooglePlus,
-                         String providerLatlong, String datetime,String providerOpeningTimeArabic,
-                         String providerAddressArabic,String providerClosingTime,String providerClosingTimeArabic,
-                         String providerOpeningTitle,String providerClosingTitle,String providerOpeningTitleArabic,
+                         String providerLatlong, String datetime, String providerOpeningTimeArabic,
+                         String providerAddressArabic, String providerClosingTime, String providerClosingTimeArabic,
+                         String providerOpeningTitle, String providerClosingTitle, String providerOpeningTitleArabic,
                          String providerClosingTitleArabic) {
         this.item = item;
         this.itemDescription = itemDescription;
@@ -67,14 +67,14 @@ public class FavoriteModel {
         this.providerGooglePlus = providerGooglePlus;
         this.providerLatlong = providerLatlong;
         this.datetime = datetime;
-        this.providerOpeningTimeArabic=providerOpeningTimeArabic;
-        this.providerAddressArabic=providerAddressArabic;
-        this.providerClosingTime=providerClosingTime;
-        this.providerClosingTimeArabic=providerClosingTimeArabic;
-        this.providerOpeningTitle=providerOpeningTitle;
-        this.providerClosingTitle=providerClosingTitle;
-        this.providerOpeningTitleArabic=providerOpeningTitleArabic;
-        this.providerClosingTitleArabic=providerClosingTitleArabic;
+        this.providerOpeningTimeArabic = providerOpeningTimeArabic;
+        this.providerAddressArabic = providerAddressArabic;
+        this.providerClosingTime = providerClosingTime;
+        this.providerClosingTimeArabic = providerClosingTimeArabic;
+        this.providerOpeningTitle = providerOpeningTitle;
+        this.providerClosingTitle = providerClosingTitle;
+        this.providerOpeningTitleArabic = providerOpeningTitleArabic;
+        this.providerClosingTitleArabic = providerClosingTitleArabic;
     }
 
 

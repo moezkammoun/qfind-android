@@ -73,7 +73,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         if (mContext.getResources().getConfiguration().locale.getLanguage().equals("en")) {
             holder.title.setText(album.getProviderName());
             holder.description.setText(album.getProviderLocation());
-        }else{
+        } else {
             holder.title.setText(album.getProviderNameArabic());
             holder.description.setText(album.getProviderLocationArabic());
         }
