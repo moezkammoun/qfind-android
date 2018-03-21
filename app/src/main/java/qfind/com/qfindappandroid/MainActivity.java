@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -231,7 +232,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
                 @Override
                 public void onFailure(Call<QFindOfTheDayDetails> call, Throwable t) {
-                    Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    if (t instanceof IOException) {
+                        Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                    }
                 }
             });
         }
@@ -550,8 +555,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
             @Override
             public void onFailure(Call<RegistrationDetails> call, Throwable t) {
-                Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
-                progressBar.setVisibility(View.GONE);
+                if (t instanceof IOException) {
+                    Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                }
             }
         });
     }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,7 +199,11 @@ public class SearchResultsFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<SearchResultsResponse> call, Throwable t) {
-                    Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    if (t instanceof IOException) {
+                        Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+                    }
                     mEmtyTextView.setVisibility(View.VISIBLE);
                     mProgressBarLoading.setVisibility(View.GONE);
                 }

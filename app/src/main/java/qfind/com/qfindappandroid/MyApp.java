@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 
 import com.squareup.leakcanary.LeakCanary;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import qfind.com.qfindappandroid.homeactivty.RegistrationDetails;
@@ -98,7 +99,11 @@ public class MyApp extends Application {
 
             @Override
             public void onFailure(Call<RegistrationDetails> call, Throwable t) {
-                Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                if (t instanceof IOException) {
+                    Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                } else {
+                    Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                }
 
             }
         });

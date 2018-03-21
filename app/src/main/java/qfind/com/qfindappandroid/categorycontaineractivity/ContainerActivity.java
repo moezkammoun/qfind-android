@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,7 +110,9 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                     "", "", "", "",
                     "", "", "",
                     "", "", "", "",
-                    "", Integer.parseInt(providerId));
+                    "", Integer.parseInt(providerId), "", "",
+                    "", "", "", "",
+                    "", "");
             hideInfotoolbarBackButton();
             hideStarandShareButton();
             getServiceProviderData(Integer.valueOf(providerId));
@@ -123,7 +126,11 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                                               String providerLinkedin, String providerInstagram,
                                                               String providerTwitter, String providerSnapchat,
                                                               String providerGooglePlus, String providerLatLong, String providerLogo,
-                                                              int providerId) {
+                                                              int providerId, String providerOpeningTimeArabic,
+                                                              String providerAddressArabic, String providerClosingTime,
+                                                              String providerClosingTimeArabic, String providerOpeningTitle,
+                                                              String providerClosingTitle, String providerOpeningTitleArabic,
+                                                              String providerClosingTitleArabic) {
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
         bundle.putString("providerMobile", providerMobile);
@@ -140,6 +147,15 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         bundle.putString("providerLatLong", providerLatLong);
         bundle.putString("providerLogo", providerLogo);
         bundle.putInt("providerId", providerId);
+        bundle.putString("providerOpeningTimeArabic", providerOpeningTimeArabic);
+        bundle.putString("providerAddressArabic", providerAddressArabic);
+        bundle.putString("providerClosingTime", providerClosingTime);
+        bundle.putString("providerClosingTimeArabic", providerClosingTimeArabic);
+        bundle.putString("providerOpeningTitle", providerOpeningTitle);
+        bundle.putString("providerClosingTitle", providerClosingTitle);
+        bundle.putString("providerOpeningTitleArabic", providerOpeningTitleArabic);
+        bundle.putString("providerClosingTitleArabic", providerClosingTitleArabic);
+
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         informationFragment.setArguments(bundle);
@@ -148,7 +164,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
 
     }
 
-    public void getServiceProviderData(Integer providerId) {
+    public void getServiceProviderData(int providerId) {
         qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
@@ -164,7 +180,8 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                             if (serviceProviderDataResponse.getCode().equals("200")) {
                                 serviceProviderResult = serviceProviderDataResponse.getResult();
                                 showStarandShareButton();
-                                showServiceProviderDetailPageWithoutBackStack(serviceProviderResult.getServiceProviderName(),
+                                showServiceProviderDetailPageWithoutBackStack(
+                                        serviceProviderResult.getServiceProviderName(),
                                         serviceProviderResult.getServiceProviderLocation(),
                                         serviceProviderResult.getServiceProviderMobile(),
                                         serviceProviderResult.getServiceProviderAddress(),
@@ -179,8 +196,15 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                         serviceProviderResult.getServiceProviderGoogleplus(),
                                         serviceProviderResult.getServiceProviderMapLocation(),
                                         serviceProviderResult.getServiceProviderLogo(),
-                                        serviceProviderResult.getServiceProviderId());
-
+                                        serviceProviderResult.getServiceProviderId(),
+                                        serviceProviderResult.getServiceProviderOpeningTimeArabic(),
+                                        serviceProviderResult.getServiceProviderAddressArabic(),
+                                        serviceProviderResult.getServiceProviderClosingTime(),
+                                        serviceProviderResult.getServiceProviderClosingTimeArabic(),
+                                        serviceProviderResult.getServiceProviderOpeningTitle(),
+                                        serviceProviderResult.getServiceProviderClosingTitle(),
+                                        serviceProviderResult.getServiceProviderOpeningTitleArabic(),
+                                        serviceProviderResult.getServiceProviderClosingTitleArabic());
                             }
                         }
 
@@ -191,7 +215,11 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
 
                 @Override
                 public void onFailure(Call<ServiceProviderDataResponse> call, Throwable t) {
-                    Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    if (t instanceof IOException) {
+                        Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                    }
                 }
             });
         }
@@ -231,7 +259,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -304,7 +331,11 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
 
                 @Override
                 public void onFailure(Call<QFindOfTheDayDetails> call, Throwable t) {
-
+                    if (t instanceof IOException) {
+                        Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
+                    }
                 }
             });
         }
@@ -364,10 +395,14 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                 @Override
                 public void onFailure(Call<MainCategory> call, Throwable t) {
                     Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                    if ((f instanceof CategoryFragment)) {
-                        CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                        fragment.hideLoader();
-                        Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                    if (t instanceof IOException) {
+                        if ((f instanceof CategoryFragment)) {
+                            CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                            fragment.hideLoader();
+                            Util.showToast(getResources().getString(R.string.check_network), getApplicationContext());
+                        }
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getApplicationContext());
                     }
 
                 }
