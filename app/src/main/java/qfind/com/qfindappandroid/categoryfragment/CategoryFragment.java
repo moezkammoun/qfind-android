@@ -1,5 +1,7 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -476,7 +481,11 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
                 @Override
                 public void onFailure(Call<SubCategory> call, Throwable t) {
-                    Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    if (t instanceof IOException) {
+                        Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+                    }
                     isSubCategory = false;
                     isSecondPage = false;
                     subCategoryItemList = null;
@@ -500,6 +509,15 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         if (offset == 1)
             progressBar.setVisibility(View.VISIBLE);
         int mainCategoryId = categoryId;
+        int limit;
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            System.out.println("check istablet " + tabletSize);
+            limit = 20;
+        } else {
+            System.out.println("check istablet " + tabletSize);
+            limit = 10;
+        }
         accessToken = qFindPreferences.getString("AccessToken", null);
         if (accessToken != null) {
             isScrolling = false;
@@ -511,9 +529,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
-            Call<ServiceProviderList> call = apiService.
-                    getListOfServiceProvider(accessToken,
-                            mainCategoryId, 10, offset);
+            Call<ServiceProviderList> call = apiService.getListOfServiceProvider(accessToken, mainCategoryId, limit, offset);
             call.enqueue(new Callback<ServiceProviderList>() {
                 @Override
                 public void onResponse(Call<ServiceProviderList> call, Response<ServiceProviderList> response) {
@@ -568,7 +584,11 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
                 @Override
                 public void onFailure(Call<ServiceProviderList> call, Throwable t) {
-                    Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    if (t instanceof IOException) {
+                        Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    } else {
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+                    }
                     progressBar.setVisibility(View.GONE);
                     progressBarForPaging.setVisibility(View.GONE);
                     setCategoryStatus();
@@ -634,8 +654,6 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 }
             }
         });
-
-
     }
 
     public void setupTheaddBannerImage(ArrayList<Page> adsImages) {

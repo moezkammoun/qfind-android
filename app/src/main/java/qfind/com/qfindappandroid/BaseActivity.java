@@ -519,7 +519,7 @@ public class BaseActivity extends AppCompatActivity {
         infoToolbar.setVisibility(View.GONE);
         normalToolbar.setVisibility(View.VISIBLE);
     }
-    
+
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
                                               String providerNameArabic, String providerLocationArabic,
                                               String providerMobile, String providerAddress,
@@ -529,8 +529,9 @@ public class BaseActivity extends AppCompatActivity {
                                               String providerTwitter, String providerSnapchat,
                                               String providerGooglePlus, String providerLatLong, String providerLogo,
                                               int providerId, String providerOpeningTimeArabic,
-                                              String providerAddressArabic, String providerClosingTime, String providerClosingTimeArabic,
-                                              String providerOpeningTitle, String providerClosingTitle, String providerOpeningTitleArabic,
+                                              String providerAddressArabic, String providerClosingTime,
+                                              String providerClosingTimeArabic, String providerOpeningTitle,
+                                              String providerClosingTitle, String providerOpeningTitleArabic,
                                               String providerClosingTitleArabic) {
 
         bundle.putString("providerName", providerName);
