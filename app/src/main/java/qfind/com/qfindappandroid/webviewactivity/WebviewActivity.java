@@ -64,7 +64,7 @@ public class WebviewActivity extends AppCompatActivity {
                 webViewProgressBar.setVisibility(View.VISIBLE);
                 // Return the app name after finish loading
                 if(newProgress == 100)
-                    webViewProgressBar.setVisibility(View.VISIBLE);
+                    webViewProgressBar.setVisibility(View.GONE);
 
             }
         });
