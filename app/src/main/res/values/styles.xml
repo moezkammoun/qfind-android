@@ -7,13 +7,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionMenuTextColor">@color/color_white</item>
-        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="AppTheme.NoTitle">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="NavigationViewCustomColor">
@@ -23,11 +21,5 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="android:windowDisablePreview">true</item>
-
-    </style>
 
 </resources>

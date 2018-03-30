@@ -78,7 +78,7 @@
     <dimen name="home_page_or_text_margin_bottom">10dp</dimen>
     <dimen name="category_item_padding_10">10dp</dimen>
     <dimen name="info_toolbar_desciption_text_size_20">20sp</dimen>
-
+    <dimen name="splash_screen_loader_width">250dp</dimen>
     <dimen name="menu_text_size_19sp">19sp</dimen>
     <dimen name="menu_text_size_18sp">18sp</dimen>
 
