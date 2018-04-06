@@ -44,11 +44,11 @@ public class WebviewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         url = getIntent().getStringExtra("url");
-
         if (TextUtils.isEmpty(url)) {
             finish();
         }
         setFontTypeForToolbar();
+        webView.invalidate();
         setUpWebView();
         webView.loadUrl(url);
         setUpCloseButtonClickListener();
@@ -57,7 +57,17 @@ public class WebviewActivity extends AppCompatActivity {
     }
 
     public void setUpWebView() {
-        webView.setWebChromeClient(new MyWebChromeClient(this));
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                setProgress(newProgress * 100); //Make the bar disappear after URL is loaded
+                webViewProgressBar.setVisibility(View.VISIBLE);
+                // Return the app name after finish loading
+                if(newProgress == 100)
+                    webViewProgressBar.setVisibility(View.GONE);
+
+            }
+        });
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -67,8 +77,9 @@ public class WebviewActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                webViewProgressBar.setVisibility(View.VISIBLE);
                 webView.loadUrl(url);
-                return true;
+                return false;
             }
 
             @Override
@@ -85,20 +96,12 @@ public class WebviewActivity extends AppCompatActivity {
         });
         webView.clearCache(true);
         webView.clearHistory();
+        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setHorizontalScrollBarEnabled(false);
     }
 
-    private class MyWebChromeClient extends WebChromeClient {
-        Context context;
-
-        private MyWebChromeClient(Context context) {
-            super();
-            this.context = context;
-        }
-
-
-    }
 
     public void setUpCloseButtonClickListener() {
         webViewCloseBtn.setOnClickListener(new View.OnClickListener() {
