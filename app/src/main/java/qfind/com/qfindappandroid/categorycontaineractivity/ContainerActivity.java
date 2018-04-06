@@ -106,13 +106,15 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null) {
             String recipeId = appLinkData.getLastPathSegment();
             String providerId = appLinkData.getQueryParameter("provider_id");
+            String[] day = new String[]{""}, openingTime = new String[]{""}, openingTimeArabic = new String[]{""}, closingTime = new String[]{""}, closingTimeArabic = new String[]{""}, openingTitle = new String[]{""}, openingTitleArabic = new String[]{""}, closingTitle = new String[]{""}, closingTitleArabic = new String[]{""};
+
             showServiceProviderDetailPageWithoutBackStack("", "", "",
-                    "", "", "", "",
-                    "", "", "",
-                    "", "", "", "",
-                    "", Integer.parseInt(providerId), "", "",
-                    "", "", "", "",
-                    "", "");
+                    Integer.parseInt(providerId),"","","","",
+                    "","","","","",
+                    "","","","","",
+                    day,openingTime,closingTime,openingTimeArabic,
+                    closingTimeArabic,openingTitle,closingTitle,
+                    openingTitleArabic,closingTitleArabic);
             hideInfotoolbarBackButton();
             hideStarandShareButton();
             getServiceProviderData(Integer.valueOf(providerId));
@@ -120,23 +122,27 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
     }
 
     public void showServiceProviderDetailPageWithoutBackStack(String providerName, String providerLocation,
-                                                              String providerMobile, String providerAddress,
-                                                              String providerWebsite, String providerOpeningTime,
-                                                              String providerMail, String providerFacebook,
-                                                              String providerLinkedin, String providerInstagram,
-                                                              String providerTwitter, String providerSnapchat,
-                                                              String providerGooglePlus, String providerLatLong, String providerLogo,
-                                                              int providerId, String providerOpeningTimeArabic,
-                                                              String providerAddressArabic, String providerClosingTime,
-                                                              String providerClosingTimeArabic, String providerOpeningTitle,
-                                                              String providerClosingTitle, String providerOpeningTitleArabic,
-                                                              String providerClosingTitleArabic) {
+                                                              String providerLogo, int providerId,
+                                                              String providerNameArabic,String providerLocationArabic,
+                                                              String providerMobile,
+                                                              String providerAddress, String providerWebsite, String providerMail,
+                                                              String providerFacebook, String providerLinkedin, String providerInstagram,
+                                                              String providerTwitter, String providerSnapchat, String providerGooglePlus,
+                                                              String providerLatLong, String providerAddressArabic,
+                                                              String[] providerTimeDay,
+                                                              String[] providerOpeningTime, String[] providerClosingTime,
+                                                              String[] providerOpeningTimeArabic, String[] providerClosingTimeArabic,
+                                                              String[] providerOpeningTitle, String[] providerClosingTitle,
+                                                              String[] providerOpeningTitleArabic, String[] providerClosingTitleArabic) {
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
+        bundle.putString("providerNameArabic", providerNameArabic);
+        bundle.putString("providerLocationArabic", providerLocationArabic);
+        bundle.putString("providerLogo", providerLogo);
+        bundle.putInt("providerId", providerId);
         bundle.putString("providerMobile", providerMobile);
         bundle.putString("providerAddress", providerAddress);
         bundle.putString("providerWebsite", providerWebsite);
-        bundle.putString("providerOpeningTime", providerOpeningTime);
         bundle.putString("providerMail", providerMail);
         bundle.putString("providerFacebook", providerFacebook);
         bundle.putString("providerLinkedIn", providerLinkedin);
@@ -145,16 +151,20 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         bundle.putString("providerSnapchat", providerSnapchat);
         bundle.putString("providerGooglePlus", providerGooglePlus);
         bundle.putString("providerLatLong", providerLatLong);
-        bundle.putString("providerLogo", providerLogo);
-        bundle.putInt("providerId", providerId);
-        bundle.putString("providerOpeningTimeArabic", providerOpeningTimeArabic);
+        bundle.putStringArray("providerOpeningday", providerTimeDay);
+        bundle.putStringArray("providerOpeningTime", providerOpeningTime);
+        bundle.putStringArray("providerOpeningTimeArabic", providerOpeningTimeArabic);
         bundle.putString("providerAddressArabic", providerAddressArabic);
-        bundle.putString("providerClosingTime", providerClosingTime);
-        bundle.putString("providerClosingTimeArabic", providerClosingTimeArabic);
-        bundle.putString("providerOpeningTitle", providerOpeningTitle);
-        bundle.putString("providerClosingTitle", providerClosingTitle);
-        bundle.putString("providerOpeningTitleArabic", providerOpeningTitleArabic);
-        bundle.putString("providerClosingTitleArabic", providerClosingTitleArabic);
+        bundle.putStringArray("providerClosingTime", providerClosingTime);
+        bundle.putStringArray("providerClosingTimeArabic", providerClosingTimeArabic);
+        bundle.putStringArray("providerOpeningTitle", providerOpeningTitle);
+        bundle.putStringArray("providerClosingTitle", providerClosingTitle);
+        bundle.putStringArray("providerOpeningTitleArabic", providerOpeningTitleArabic);
+        bundle.putStringArray("providerClosingTitleArabic", providerClosingTitleArabic);
+        bundle.putString("callFrom", "category");
+
+
+
 
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -180,13 +190,28 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                             if (serviceProviderDataResponse.getCode().equals("200")) {
                                 serviceProviderResult = serviceProviderDataResponse.getResult();
                                 showStarandShareButton();
+                                String[] day = new String[7], openingTime = new String[7], openingTimeArabic = new String[7], closingTime = new String[7], closingTimeArabic = new String[7], openingTitle = new String[7], openingTitleArabic = new String[7], closingTitle = new String[7], closingTitleArabic = new String[7];
+                                for (int i = 0; i < serviceProviderResult.getServiceProviderTimeLists().size(); i++) {
+                                    day[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderTimeDay();
+                                    openingTime[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTime();
+                                    openingTimeArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTimeArabic();
+                                    closingTime[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTime();
+                                    closingTimeArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTimeArabic();
+                                    openingTitle[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitle();
+                                    openingTitleArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitleArabic();
+                                    closingTitle[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTitle();
+                                    closingTitleArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTitleArabic();
+                                }
                                 showServiceProviderDetailPageWithoutBackStack(
                                         serviceProviderResult.getServiceProviderName(),
                                         serviceProviderResult.getServiceProviderLocation(),
+                                        serviceProviderResult.getServiceProviderLogo(),
+                                        serviceProviderResult.getServiceProviderId(),
+                                        serviceProviderResult.getServiceProviderNameArabic(),
+                                        serviceProviderResult.getServiceProviderLocationArabic(),
                                         serviceProviderResult.getServiceProviderMobile(),
                                         serviceProviderResult.getServiceProviderAddress(),
                                         serviceProviderResult.getServiceProviderWebsite(),
-                                        serviceProviderResult.getServiceProviderOpeningTime(),
                                         serviceProviderResult.getServiceProviderMail(),
                                         serviceProviderResult.getServiceProviderFacebook(),
                                         serviceProviderResult.getServiceProviderLinkedin(),
@@ -195,16 +220,10 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                         serviceProviderResult.getServiceProviderSnapchat(),
                                         serviceProviderResult.getServiceProviderGoogleplus(),
                                         serviceProviderResult.getServiceProviderMapLocation(),
-                                        serviceProviderResult.getServiceProviderLogo(),
-                                        serviceProviderResult.getServiceProviderId(),
-                                        serviceProviderResult.getServiceProviderOpeningTimeArabic(),
                                         serviceProviderResult.getServiceProviderAddressArabic(),
-                                        serviceProviderResult.getServiceProviderClosingTime(),
-                                        serviceProviderResult.getServiceProviderClosingTimeArabic(),
-                                        serviceProviderResult.getServiceProviderOpeningTitle(),
-                                        serviceProviderResult.getServiceProviderClosingTitle(),
-                                        serviceProviderResult.getServiceProviderOpeningTitleArabic(),
-                                        serviceProviderResult.getServiceProviderClosingTitleArabic());
+                                        day,openingTime,closingTime,openingTimeArabic,closingTimeArabic,
+                                        openingTitle,closingTitle,openingTitleArabic,closingTitleArabic
+                                        );
                             }
                         }
 
@@ -224,23 +243,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
             });
         }
 
-    }
-
-    public void showServiceProvider(Uri uri) {
-        showServiceProviderDetailPage(
-                "ProviderName", "ProviderLocation", "ProviderNameArabic",
-                "ProviderLocationArabic", "ProviderPhone",
-                "ProviderAddress", "ProviderWebsite", "ProviderOpeningTime",
-                "ProviderMail", "ProviderFacebook", "ProviderLinkedIn",
-                "ProviderInstagram", "ProviderTwitter", "ProviderSnapchat",
-                "ProviderGooglePlus", "ProviderLatlong", "ProviderLogo",
-                1, "ProviderOpeningTimeArabic", "ProviderAddressArabic",
-                "ProviderClosingTime", "ProvideClosingTimeArabic",
-                "ProviderOpeningTitle", "ProviderClosingTitle",
-                "ProviderOpeningTitleArabic", "ProviderClosingTitleArabic"
-        );
-
-        Toast.makeText(ContainerActivity.this, "URI : " + uri, Toast.LENGTH_SHORT).show();
     }
 
     @Override

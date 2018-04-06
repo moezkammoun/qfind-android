@@ -84,33 +84,13 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.MyView
                 @Override
                 public void onClick(View view) {
                     System.out.println("position " + getAdapterPosition());
-                    ((BaseActivity) mContext).showServiceProviderDetailPage(
+                    ((BaseActivity) mContext).showServiceProviderDetailPageInner(
                             itemList.get(getAdapterPosition()).getItem(),
-                            itemList.get(getAdapterPosition()).getItemDescription(),
                             itemList.get(getAdapterPosition()).getItemArabic(),
+                            itemList.get(getAdapterPosition()).getItemDescription(),
                             itemList.get(getAdapterPosition()).getItemDescriptionArabic(),
-                            itemList.get(getAdapterPosition()).getProviderPhone(),
-                            itemList.get(getAdapterPosition()).getProviderAddress(),
-                            itemList.get(getAdapterPosition()).getProviderWebsite(),
-                            itemList.get(getAdapterPosition()).getProviderOpeningTime(),
-                            itemList.get(getAdapterPosition()).getProviderMail(),
-                            itemList.get(getAdapterPosition()).getProviderFacebook(),
-                            itemList.get(getAdapterPosition()).getProviderLinkedIn(),
-                            itemList.get(getAdapterPosition()).getProviderInstagram(),
-                            itemList.get(getAdapterPosition()).getProviderTwitter(),
-                            itemList.get(getAdapterPosition()).getProviderSnapchat(),
-                            itemList.get(getAdapterPosition()).getProviderGooglePlus(),
-                            itemList.get(getAdapterPosition()).getProviderLatlong(),
                             itemList.get(getAdapterPosition()).getUrl(),
-                            itemList.get(getAdapterPosition()).getPageId(),
-                            itemList.get(getAdapterPosition()).getProviderOpeningTimeArabic(),
-                            itemList.get(getAdapterPosition()).getProviderAddressArabic(),
-                            itemList.get(getAdapterPosition()).getProviderClosingTime(),
-                            itemList.get(getAdapterPosition()).getProviderClosingTimeArabic(),
-                            itemList.get(getAdapterPosition()).getProviderOpeningTitle(),
-                            itemList.get(getAdapterPosition()).getProviderClosingTitle(),
-                            itemList.get(getAdapterPosition()).getProviderOpeningTitleArabic(),
-                            itemList.get(getAdapterPosition()).getProviderClosingTitleArabic()
+                            itemList.get(getAdapterPosition()).getPageId()
                     );
                 }
             });

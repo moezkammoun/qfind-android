@@ -2,6 +2,8 @@ package qfind.com.qfindappandroid.predictiveSearch;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 
 public class ServiceProviderResult {
     @SerializedName("service_provider_name")
@@ -30,8 +32,6 @@ public class ServiceProviderResult {
     private String serviceProviderMobile;
     @SerializedName("service_provider_map_location")
     private String serviceProviderMapLocation;
-    @SerializedName("service_provider_opening_time")
-    private String serviceProviderOpeningTime;
     @SerializedName("service_provider_facebook_page")
     private String serviceProviderFacebook;
     @SerializedName("service_provider_linkdin_page")
@@ -48,20 +48,10 @@ public class ServiceProviderResult {
     private String serviceProviderLogo;
     @SerializedName("message")
     private String message;
-    @SerializedName("service_provider_opening_time_arabic")
-    private String serviceProviderOpeningTimeArabic;
-    @SerializedName("service_provider_closing_time")
-    private String serviceProviderClosingTime;
-    @SerializedName("service_provider_opening_title")
-    private String serviceProviderOpeningTitle;
-    @SerializedName("service_provider_closing_title")
-    private String serviceProviderClosingTitle;
-    @SerializedName("service_provider_opening_title_arabic")
-    private String serviceProviderOpeningTitleArabic;
-    @SerializedName("service_provider_closing_title_arabic")
-    private String serviceProviderClosingTitleArabic;
-    @SerializedName("service_provider_closing_time_arabic")
-    private String serviceProviderClosingTimeArabic;
+    @SerializedName("service_provider_time")
+    ArrayList<ServiceProviderTimeList> serviceProviderTimeLists;
+
+
 
     public String getServiceProviderName() {
         return serviceProviderName;
@@ -167,14 +157,6 @@ public class ServiceProviderResult {
         this.serviceProviderMapLocation = serviceProviderMapLocation;
     }
 
-    public String getServiceProviderOpeningTime() {
-        return serviceProviderOpeningTime;
-    }
-
-    public void setServiceProviderOpeningTime(String serviceProviderOpeningTime) {
-        this.serviceProviderOpeningTime = serviceProviderOpeningTime;
-    }
-
     public String getServiceProviderFacebook() {
         return serviceProviderFacebook;
     }
@@ -239,59 +221,42 @@ public class ServiceProviderResult {
         this.message = message;
     }
 
-    public String getServiceProviderOpeningTimeArabic() {
-        return serviceProviderOpeningTimeArabic;
+    public ArrayList<ServiceProviderTimeList> getServiceProviderTimeLists() {
+        return serviceProviderTimeLists;
     }
 
-    public void setServiceProviderOpeningTimeArabic(String serviceProviderOpeningTimeArabic) {
-        this.serviceProviderOpeningTimeArabic = serviceProviderOpeningTimeArabic;
-    }
-
-    public String getServiceProviderClosingTime() {
-        return serviceProviderClosingTime;
-    }
-
-    public void setServiceProviderClosingTime(String serviceProviderClosingTime) {
-        this.serviceProviderClosingTime = serviceProviderClosingTime;
-    }
-
-    public String getServiceProviderOpeningTitle() {
-        return serviceProviderOpeningTitle;
-    }
-
-    public void setServiceProviderOpeningTitle(String serviceProviderOpeningTitle) {
-        this.serviceProviderOpeningTitle = serviceProviderOpeningTitle;
-    }
-
-    public String getServiceProviderClosingTitle() {
-        return serviceProviderClosingTitle;
-    }
-
-    public void setServiceProviderClosingTitle(String serviceProviderClosingTitle) {
-        this.serviceProviderClosingTitle = serviceProviderClosingTitle;
-    }
-
-    public String getServiceProviderOpeningTitleArabic() {
-        return serviceProviderOpeningTitleArabic;
-    }
-
-    public void setServiceProviderOpeningTitleArabic(String serviceProviderOpeningTitleArabic) {
-        this.serviceProviderOpeningTitleArabic = serviceProviderOpeningTitleArabic;
-    }
-
-    public String getServiceProviderClosingTitleArabic() {
-        return serviceProviderClosingTitleArabic;
-    }
-
-    public void setServiceProviderClosingTitleArabic(String serviceProviderClosingTitleArabic) {
-        this.serviceProviderClosingTitleArabic = serviceProviderClosingTitleArabic;
-    }
-
-    public String getServiceProviderClosingTimeArabic() {
-        return serviceProviderClosingTimeArabic;
-    }
-
-    public void setServiceProviderClosingTimeArabic(String serviceProviderClosingTimeArabic) {
-        this.serviceProviderClosingTimeArabic = serviceProviderClosingTimeArabic;
+    public ServiceProviderResult(String serviceProviderName, String serviceProviderAddress,
+                                 String serviceProviderLocation, String serviceProviderCategory,
+                                 String serviceProviderNameArabic, String serviceProviderAddressArabic,
+                                 String serviceProviderLocationArabic, String serviceProviderCategoryArabic,
+                                 int serviceProviderId, String serviceProviderMail, String serviceProviderWebsite,
+                                 String serviceProviderMobile, String serviceProviderMapLocation,
+                                 String serviceProviderFacebook, String serviceProviderLinkedin,
+                                 String serviceProviderInstagram, String serviceProviderTwitter,
+                                 String serviceProviderSnapchat, String serviceProviderGoogleplus,
+                                 String serviceProviderLogo,
+                                 String message, ArrayList<ServiceProviderTimeList> serviceProviderTimeLists) {
+        this.serviceProviderName = serviceProviderName;
+        this.serviceProviderAddress = serviceProviderAddress;
+        this.serviceProviderLocation = serviceProviderLocation;
+        this.serviceProviderCategory = serviceProviderCategory;
+        this.serviceProviderNameArabic = serviceProviderNameArabic;
+        this.serviceProviderAddressArabic = serviceProviderAddressArabic;
+        this.serviceProviderLocationArabic = serviceProviderLocationArabic;
+        this.serviceProviderCategoryArabic = serviceProviderCategoryArabic;
+        this.serviceProviderId = serviceProviderId;
+        this.serviceProviderMail = serviceProviderMail;
+        this.serviceProviderWebsite = serviceProviderWebsite;
+        this.serviceProviderMobile = serviceProviderMobile;
+        this.serviceProviderMapLocation = serviceProviderMapLocation;
+        this.serviceProviderFacebook = serviceProviderFacebook;
+        this.serviceProviderLinkedin = serviceProviderLinkedin;
+        this.serviceProviderInstagram = serviceProviderInstagram;
+        this.serviceProviderTwitter = serviceProviderTwitter;
+        this.serviceProviderSnapchat = serviceProviderSnapchat;
+        this.serviceProviderGoogleplus = serviceProviderGoogleplus;
+        this.serviceProviderLogo = serviceProviderLogo;
+        this.message = message;
+        this.serviceProviderTimeLists = serviceProviderTimeLists;
     }
 }
