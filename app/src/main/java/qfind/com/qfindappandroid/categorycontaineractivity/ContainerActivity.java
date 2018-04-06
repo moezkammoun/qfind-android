@@ -224,15 +224,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                         day,openingTime,closingTime,openingTimeArabic,closingTimeArabic,
                                         openingTitle,closingTitle,openingTitleArabic,closingTitleArabic
                                         );
-
-//                                        serviceProviderResult.getServiceProviderTimeLists().get(1).getServiceProviderOpeningTime(),
-//                                        serviceProviderResult.getServiceProviderOpeningTimeArabic(),
-//                                        serviceProviderResult.getServiceProviderClosingTime(),
-//                                        serviceProviderResult.getServiceProviderClosingTimeArabic(),
-//                                        serviceProviderResult.getServiceProviderOpeningTitle(),
-//                                        serviceProviderResult.getServiceProviderClosingTitle(),
-//                                        serviceProviderResult.getServiceProviderOpeningTitleArabic(),
-//                                        serviceProviderResult.getServiceProviderClosingTitleArabic());
                             }
                         }
 
@@ -253,15 +244,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
         }
 
     }
-
-//    public void showServiceProvider(Uri uri) {
-////        showServiceProviderDetailPage(
-////                "ProviderName", "ProviderLocation", "ProviderNameArabic",
-////                "ProviderLocationArabic", "ProviderLogo",
-////                1);
-//
-//        Toast.makeText(ContainerActivity.this, "URI : " + uri, Toast.LENGTH_SHORT).show();
-//    }
 
     @Override
     public void onBackPressed() {
