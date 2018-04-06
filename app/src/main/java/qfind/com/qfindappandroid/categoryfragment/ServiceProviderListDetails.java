@@ -2,6 +2,8 @@ package qfind.com.qfindappandroid.categoryfragment;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by dilee on 01-02-2018.
  */
@@ -33,8 +35,6 @@ public class ServiceProviderListDetails {
     private String serviceProviderMobile;
     @SerializedName("service_provider_map_location")
     private String serviceProviderMapLocation;
-    @SerializedName("service_provider_opening_time")
-    private String serviceProviderOpeningTime;
     @SerializedName("service_provider_facebook_page")
     private String serviceProviderFacebook;
     @SerializedName("service_provider_linkdin_page")
@@ -51,20 +51,8 @@ public class ServiceProviderListDetails {
     private String serviceProviderLogo;
     @SerializedName("message")
     private String message;
-    @SerializedName("service_provider_opening_time_arabic")
-    private String serviceProviderOpeningTimeArabic;
-    @SerializedName("service_provider_closing_time")
-    private String serviceProviderClosingTime;
-    @SerializedName("service_provider_opening_title")
-    private String serviceProviderOpeningTitle;
-    @SerializedName("service_provider_closing_title")
-    private String serviceProviderClosingTitle;
-    @SerializedName("service_provider_opening_title_arabic")
-    private String serviceProviderOpeningTitleArabic;
-    @SerializedName("service_provider_closing_title_arabic")
-    private String serviceProviderClosingTitleArabic;
-    @SerializedName("service_provider_closing_time_arabic")
-    private String serviceProviderClosingTimeArabic;
+    @SerializedName("service_provider_time")
+    ArrayList<ServiceProviderTimeList> serviceProviderTimeLists;
 
 
     public String getServiceProviderName() {
@@ -125,10 +113,6 @@ public class ServiceProviderListDetails {
         return serviceProviderMapLocation;
     }
 
-    public String getServiceProviderOpeningTime() {
-        return serviceProviderOpeningTime;
-    }
-
     public String getServiceProviderFacebook() {
         return serviceProviderFacebook;
     }
@@ -153,46 +137,22 @@ public class ServiceProviderListDetails {
         return serviceProviderGoogleplus;
     }
 
-    public String getServiceProviderOpeningTimeArabic() {
-        return serviceProviderOpeningTimeArabic;
-    }
 
-    public String getServiceProviderClosingTime() {
-        return serviceProviderClosingTime;
-    }
 
-    public String getServiceProviderOpeningTitle() {
-        return serviceProviderOpeningTitle;
-    }
 
-    public String getServiceProviderClosingTitle() {
-        return serviceProviderClosingTitle;
-    }
-
-    public String getServiceProviderOpeningTitleArabic() {
-        return serviceProviderOpeningTitleArabic;
-    }
-
-    public String getServiceProviderClosingTitleArabic() {
-        return serviceProviderClosingTitleArabic;
-    }
-
-    public String getServiceProviderClosingTimeArabic() {
-        return serviceProviderClosingTimeArabic;
+    public ArrayList<ServiceProviderTimeList> getServiceProviderTimeLists() {
+        return serviceProviderTimeLists;
     }
 
     public ServiceProviderListDetails(String serviceProviderName, String serviceProviderAddress,
                                       String serviceProviderLocation, String serviceProviderCategory,
                                       int serviceProviderId, String serviceProviderMail,
                                       String serviceProviderWebsite, String serviceProviderMobile,
-                                      String serviceProviderMapLocation, String serviceProviderOpeningTime,
+                                      String serviceProviderMapLocation,
                                       String serviceProviderFacebook, String serviceProviderLinkedin,
                                       String serviceProviderInstagram, String serviceProviderTwitter,
                                       String serviceProviderSnapchat, String serviceProviderGoogleplus,
-                                      String serviceProviderLogo, String message, String serviceProviderOpeningTimeArabic,
-                                      String serviceProviderClosingTime, String serviceProviderClosingTimeArabic,
-                                      String serviceProviderOpeningTitle, String serviceProviderClosingTitle,
-                                      String serviceProviderOpeningTitleArabic, String serviceProviderClosingTitleArabic) {
+                                      String serviceProviderLogo, String message) {
         this.message =message;
         this.serviceProviderName = serviceProviderName;
         this.serviceProviderAddress = serviceProviderAddress;
@@ -203,7 +163,6 @@ public class ServiceProviderListDetails {
         this.serviceProviderWebsite = serviceProviderWebsite;
         this.serviceProviderMobile = serviceProviderMobile;
         this.serviceProviderMapLocation = serviceProviderMapLocation;
-        this.serviceProviderOpeningTime = serviceProviderOpeningTime;
         this.serviceProviderFacebook = serviceProviderFacebook;
         this.serviceProviderLinkedin = serviceProviderLinkedin;
         this.serviceProviderInstagram = serviceProviderInstagram;
@@ -211,12 +170,6 @@ public class ServiceProviderListDetails {
         this.serviceProviderSnapchat = serviceProviderSnapchat;
         this.serviceProviderGoogleplus = serviceProviderGoogleplus;
         this.serviceProviderLogo = serviceProviderLogo;
-        this.serviceProviderOpeningTimeArabic=serviceProviderOpeningTimeArabic;
-        this.serviceProviderClosingTime=serviceProviderClosingTime;
-        this.serviceProviderClosingTimeArabic=serviceProviderClosingTimeArabic;
-        this.serviceProviderOpeningTitle=serviceProviderOpeningTitle;
-        this.serviceProviderClosingTitle=serviceProviderClosingTitle;
-        this.serviceProviderOpeningTitleArabic=serviceProviderOpeningTitleArabic;
-        this.serviceProviderClosingTitleArabic=serviceProviderClosingTitleArabic;
-    }
+
+   }
 }

@@ -1,7 +1,10 @@
 package qfind.com.qfindappandroid.informationFragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -9,6 +12,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,9 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -29,14 +35,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import qfind.com.qfindappandroid.BaseActivity;
 import qfind.com.qfindappandroid.DataBaseHandler;
 import qfind.com.qfindappandroid.R;
 import qfind.com.qfindappandroid.SimpleDividerItemDecoration;
+import qfind.com.qfindappandroid.Util;
 import qfind.com.qfindappandroid.categorycontaineractivity.ContainerActivity;
 import qfind.com.qfindappandroid.categoryfragment.RecyclerViewClickListener;
 import qfind.com.qfindappandroid.historyPage.HistoryItem;
+import qfind.com.qfindappandroid.predictiveSearch.ServiceProviderResult;
+import qfind.com.qfindappandroid.retrofitinstance.ApiClient;
+import qfind.com.qfindappandroid.retrofitinstance.ApiInterface;
 import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class InformationFragment extends Fragment {
@@ -46,18 +58,22 @@ public class InformationFragment extends Fragment {
     ProgressBar progressBar;
     TextView emptyTextView;
     ImageView infoStarIcon;
+    ServiceProviderDataResponse serviceProviderDataResponse;
+    ServiceProviderResult serviceProviderResult;
+    SharedPreferences qFindPreferences;
+    String accessToken;
+    Bundle bundle;
 
     String providerName, providerLocation, providerNameArabic, providerLocationArabic,
             providerMobile, providerWebsite, providerAddress,
-            providerOpeningTime, providerMail, providerFacebook, providerLinkedin, providerInstagram,
+            providerMail, providerFacebook, providerLinkedin, providerInstagram,
             providerTwitter, providerSnapchat, providerGooglePlus, providerAddressArabic,
-            providerLatLong, providerLogo, providerOpeningTimeArabic, providerClosingTime, providerClosingTimeArabic,
-            providerOpeningTitle, providerClosingTitle, providerOpeningTitleArabic, providerClosingTitleArabic;
+            providerLatLong, providerLogo;
+    String[] providerOpeningTime = new String[7], providerOpeningTimeDay = new String[7], providerOpeningTimeArabic = new String[7], providerClosingTime = new String[7], providerClosingTimeArabic = new String[7], providerOpeningTitle = new String[7], providerClosingTitle = new String[7], providerOpeningTitleArabic = new String[7], providerClosingTitleArabic = new String[7];
     int providerPageId;
     URI uri = null;
     String path;
     private int language;
-    private int providerId;
     RecyclerViewClickListener recyclerViewClickListener;
 
     public InformationFragment() {
@@ -67,7 +83,6 @@ public class InformationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -75,7 +90,54 @@ public class InformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_information, container, false);
-        Bundle bundle = getArguments();
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBarLoading);
+        bundle = getArguments();
+        String callfrom = bundle.getString("callFrom");
+        if (callfrom.equals("others")) {
+            providerPageId = bundle.getInt("providerId");
+            getServiceProviderDataInner(providerPageId);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            providerPageId = bundle.getInt("providerId");
+            providerName = bundle.getString("providerName");
+            providerLocation = bundle.getString("providerLocation");
+            providerNameArabic = bundle.getString("providerNameArabic");
+            providerLocationArabic = bundle.getString("providerLocationArabic");
+            providerMobile = bundle.getString("providerMobile");
+            providerWebsite = bundle.getString("providerWebsite");
+            if (providerWebsite.contains("http")) {
+
+                try {
+                    uri = new URI(providerWebsite);
+                    path = uri.getAuthority();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            providerAddress = bundle.getString("providerAddress");
+            providerMail = bundle.getString("providerMail");
+            providerFacebook = bundle.getString("providerFacebook");
+            providerLinkedin = bundle.getString("providerLinkedin");
+            providerInstagram = bundle.getString("providerInstagram");
+            providerTwitter = bundle.getString("providerTwitter");
+            providerSnapchat = bundle.getString("providerSnapchat");
+            providerGooglePlus = bundle.getString("providerGooglePlus");
+            providerLatLong = bundle.getString("providerLatLong");
+            providerLogo = bundle.getString("providerLogo");
+            providerPageId = bundle.getInt("providerId");
+            providerOpeningTime = bundle.getStringArray("providerOpeningTime");
+            providerOpeningTimeDay = bundle.getStringArray("providerOpeningday");
+            providerOpeningTimeArabic = bundle.getStringArray("providerOpeningTimeArabic");
+            providerAddressArabic = bundle.getString("providerAddressArabic");
+            providerClosingTime = bundle.getStringArray("providerClosingTime");
+            providerClosingTimeArabic = bundle.getStringArray("providerClosingTimeArabic");
+            providerOpeningTitle = bundle.getStringArray("providerOpeningTitle");
+            providerClosingTitle = bundle.getStringArray("providerClosingTitle");
+            providerOpeningTitleArabic = bundle.getStringArray("providerOpeningTitleArabic");
+            providerClosingTitleArabic = bundle.getStringArray("providerClosingTitleArabic");
+        }
+
 
         DataBaseHandler db = new DataBaseHandler(getContext());
         HistoryItem dataModel = new HistoryItem();
@@ -90,27 +152,7 @@ public class InformationFragment extends Fragment {
         dataModel.setTitleArabic(bundle.getString("providerNameArabic"));
         dataModel.setDescriptionArabic(bundle.getString("providerLocationArabic"));
         dataModel.setPageId(bundle.getInt("providerId"));
-        dataModel.setProviderPhone(bundle.getString("providerMobile"));
-        dataModel.setProviderAddress(bundle.getString("providerAddress"));
-        dataModel.setProviderWebsite(bundle.getString("providerWebsite"));
-        dataModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
-        dataModel.setProviderMail(bundle.getString("providerMail"));
-        dataModel.setProviderFacebook(bundle.getString("providerFacebook"));
-        dataModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
-        dataModel.setProviderInstagram(bundle.getString("providerInstagram"));
-        dataModel.setProviderTwitter(bundle.getString("providerTwitter"));
-        dataModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
-        dataModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
-        dataModel.setProviderLatlong(bundle.getString("providerLatLong"));
         dataModel.setDayTime(sdfdatetime.format(new Date()));
-        dataModel.setProviderOpeningTimeArabic(bundle.getString("providerOpeningTimeArabic"));
-        dataModel.setProviderAddressArabic(bundle.getString("providerAddressArabic"));
-        dataModel.setProviderClosingTime(bundle.getString("providerClosingTime"));
-        dataModel.setProviderClosingTimeArabic(bundle.getString("providerClosingTimeArabic"));
-        dataModel.setProviderOpeningTitle(bundle.getString("providerOpeningTitle"));
-        dataModel.setProviderClosingTitle(bundle.getString("providerClosingTitle"));
-        dataModel.setProviderOpeningTitleArabic(bundle.getString("providerOpeningTitleArabic"));
-        dataModel.setProviderClosingTitleArabic(bundle.getString("providerClosingTitleArabic"));
 
         Cursor cursor = db.checkHistoryByDay(bundle.getInt("providerId"));
         ArrayList<String> dayList = new ArrayList<String>();
@@ -137,68 +179,30 @@ public class InformationFragment extends Fragment {
             db.addHistory(dataModel);
         }
 
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        emptyTextView = (TextView) view.findViewById(R.id.empty_text_view_info);
+        infoStarIcon = (ImageView) view.findViewById(R.id.fav_star_icon);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+//        if (informationData == null)
+//            emptyTextView.setVisibility(View.VISIBLE);
+//        else
+//            progressBar.setVisibility(View.GONE);
+        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
 
         providerPageId = bundle.getInt("providerId");
         providerName = bundle.getString("providerName");
         providerLocation = bundle.getString("providerLocation");
         providerNameArabic = bundle.getString("providerNameArabic");
         providerLocationArabic = bundle.getString("providerLocationArabic");
-        providerMobile = bundle.getString("providerMobile");
-        providerWebsite = bundle.getString("providerWebsite");
-        if (providerWebsite.contains("http")) {
-
-            try {
-                uri = new URI(providerWebsite);
-                path = uri.getAuthority();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-
-        }
-        providerAddress = bundle.getString("providerAddress");
-        providerOpeningTime = bundle.getString("providerOpeningTime");
-        providerMail = bundle.getString("providerMail");
-        providerFacebook = bundle.getString("providerFacebook");
-        providerLinkedin = bundle.getString("providerLinkedin");
-        providerInstagram = bundle.getString("providerInstagram");
-        providerTwitter = bundle.getString("providerTwitter");
-        providerSnapchat = bundle.getString("providerSnapchat");
-        providerGooglePlus = bundle.getString("providerGooglePlus");
-        providerLatLong = bundle.getString("providerLatLong");
-        providerLogo = bundle.getString("providerLogo");
-        providerId = bundle.getInt("providerId");
-        providerOpeningTimeArabic = bundle.getString("providerOpeningTimeArabic");
-        providerAddressArabic = bundle.getString("providerAddressArabic");
-        providerClosingTime = bundle.getString("providerClosingTime");
-        providerClosingTimeArabic = bundle.getString("providerClosingTimeArabic");
-        providerOpeningTitle = bundle.getString("providerOpeningTitle");
-        providerClosingTitle = bundle.getString("providerClosingTitle");
-        providerOpeningTitleArabic = bundle.getString("providerOpeningTitleArabic");
-        providerClosingTitleArabic = bundle.getString("providerClosingTitleArabic");
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBarLoading);
-        emptyTextView = (TextView) view.findViewById(R.id.empty_text_view_info);
-        infoStarIcon = (ImageView) view.findViewById(R.id.fav_star_icon);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        if (adapter != null)
-            adapter.clear();
-        setupRecyclerViewClickListener();
-        adapter = new InformationFragmentAdapter(getContext(), getInformationData(), recyclerViewClickListener);
-        recyclerView.setAdapter(adapter);
-
-        if (informationData == null)
-            emptyTextView.setVisibility(View.VISIBLE);
-        else
-            progressBar.setVisibility(View.GONE);
-        ((ContainerActivity) getActivity()).setupBottomNavigationBar();
 
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
             ((ContainerActivity) getActivity()).showInfoToolbar(providerName, providerLocation);
@@ -206,8 +210,26 @@ public class InformationFragment extends Fragment {
             ((ContainerActivity) getActivity()).showInfoToolbar(providerNameArabic, providerLocationArabic);
         }
 
-
         ((ContainerActivity) getActivity()).isFavoriteSelected(providerPageId);
+
+        if(bundle.getString("callFrom").equals("category")){
+            showInformationData();
+        }
+
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+
+    }
+
+    public void showInformationData() {
+        if (adapter != null)
+            adapter.clear();
+        setupRecyclerViewClickListener();
+        adapter = new InformationFragmentAdapter(getContext(), getInformationData(), recyclerViewClickListener);
+        recyclerView.setAdapter(adapter);
 
         if (providerName.equals("")) {
             progressBar.setVisibility(View.VISIBLE);
@@ -242,16 +264,43 @@ public class InformationFragment extends Fragment {
                         R.drawable.dot_icon, providerAddressArabic, R.drawable.right_arrow));
         }
         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+            Date d = new Date();
+            String dayOfTheWeek = sdf.format(d);
             String value = "";
-            if (providerOpeningTime != null && !providerOpeningTime.equals(""))
-                value = providerOpeningTime + providerOpeningTitle + "-" + providerClosingTime + providerClosingTitle;
-
-            informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
-                    R.drawable.dot_icon, value, R.drawable.right_arrow));
+            if (providerOpeningTime[0] != null && !providerOpeningTime[0].equals("")) {
+                for (int i = 0; i < providerOpeningTimeDay.length; i++) {
+                    if (providerOpeningTimeDay[i].equalsIgnoreCase(dayOfTheWeek)) {
+                        if (providerOpeningTime[i].equalsIgnoreCase("Holiday")) {
+                            value = getResources().getString(R.string.Closed);
+                            break;
+                        } else {
+                            value = providerOpeningTime[i] + providerOpeningTitle[i] + "-" + providerClosingTime[i] + providerClosingTitle[i];
+                            break;
+                        }
+                    }
+                }
+                informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
+                        R.drawable.dot_icon, value, R.drawable.right_arrow));
+            }
         } else {
             String value = "";
-            if (providerOpeningTimeArabic != null && !providerOpeningTimeArabic.equals("")) {
-                value = providerOpeningTimeArabic + providerOpeningTitleArabic + "-" + providerClosingTimeArabic + providerClosingTitleArabic;
+            if (providerOpeningTimeArabic[0] != null && !providerOpeningTimeArabic[0].equals("")) {
+                SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+                Date d = new Date();
+                String dayOfTheWeek = sdf.format(d);
+                for (int i = 0; i < providerOpeningTimeDay.length; i++) {
+                    if (providerOpeningTimeDay[i].equalsIgnoreCase(dayOfTheWeek)) {
+                        if (providerOpeningTime[i].equalsIgnoreCase("Holiday")) {
+                            value = getResources().getString(R.string.Closed);
+                            break;
+                        } else {
+                            value = providerOpeningTimeArabic[i] + providerOpeningTitleArabic[i] + "-" + providerClosingTimeArabic[i]
+                                    + providerClosingTitleArabic[i];
+                            break;
+                        }
+                    }
+                }
                 informationData.add(new InformationFragmentModel(R.drawable.clock_icon,
                         R.drawable.dot_icon, value, R.drawable.right_arrow));
             }
@@ -354,6 +403,11 @@ public class InformationFragment extends Fragment {
                         providerSnapchat != null) {
                     openSnapchat(getContext());
                 }
+                if (informationData.get(position).getInfo_icon() == R.drawable.clock_icon &&
+                        providerOpeningTime != null) {
+                    openTimingsPopUp(getContext());
+                }
+
             }
         };
     }
@@ -503,6 +557,34 @@ public class InformationFragment extends Fragment {
 
     }
 
+    public void openTimingsPopUp(Context context) {
+
+        ArrayList<PopupTimeItem> item = new ArrayList<PopupTimeItem>();
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            for (int i = 0; i < providerOpeningTimeDay.length; i++) {
+                if (providerOpeningTime[i].equals("Holiday")) {
+                    item.add(new PopupTimeItem(providerOpeningTimeDay[i], providerOpeningTime[i], "", "", ""));
+                } else {
+                    item.add(new PopupTimeItem(providerOpeningTimeDay[i], providerOpeningTime[i], providerOpeningTitle[i], providerClosingTime[i], providerClosingTitle[i]));
+                }
+            }
+        } else {
+            for (int i = 0; i < providerOpeningTimeDay.length; i++) {
+                item.add(new PopupTimeItem(providerOpeningTimeDay[i], providerOpeningTimeArabic[i], providerOpeningTitleArabic[i], providerClosingTimeArabic[i], providerClosingTitleArabic[i]));
+            }
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.popup_listview_layout, null);
+        ListView listView = (ListView) view.findViewById(R.id.popupview);
+        listView.setAdapter(new PopupAdapter(getContext(), item));
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
     private String getDate(long milliSeconds) {
 //        // Create a DateFormatter object for displaying date in specified
 //        // format.
@@ -513,5 +595,98 @@ public class InformationFragment extends Fragment {
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
     }
+
+
+    public void getServiceProviderDataInner(int providerId) {
+        progressBar.setVisibility(View.VISIBLE);
+        qFindPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        accessToken = qFindPreferences.getString("AccessToken", null);
+        if (accessToken != null) {
+            ApiInterface apiInterface;
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<ServiceProviderDataResponse> call = apiInterface.getServiceProviderData(accessToken, providerId, "");
+            call.enqueue(new Callback<ServiceProviderDataResponse>() {
+                @Override
+                public void onResponse(Call<ServiceProviderDataResponse> call, Response<ServiceProviderDataResponse> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            serviceProviderDataResponse = response.body();
+                            if (serviceProviderDataResponse.getCode().equals("200")) {
+                                serviceProviderResult = serviceProviderDataResponse.getResult();
+                                String[] day = new String[7], openingTime = new String[7], openingTimeArabic = new String[7], closingTime = new String[7], closingTimeArabic = new String[7], openingTitle = new String[7], openingTitleArabic = new String[7], closingTitle = new String[7], closingTitleArabic = new String[7];
+                                for (int i = 0; i < serviceProviderResult.getServiceProviderTimeLists().size(); i++) {
+                                    day[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderTimeDay();
+                                    openingTime[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTime();
+                                    openingTimeArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTimeArabic();
+                                    closingTime[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTime();
+                                    closingTimeArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTimeArabic();
+                                    openingTitle[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitle();
+                                    openingTitleArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitleArabic();
+                                    closingTitle[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTitle();
+                                    closingTitleArabic[i] = serviceProviderResult.getServiceProviderTimeLists().get(i).getServiceProviderClosingTitleArabic();
+                                }
+
+                                providerName = serviceProviderResult.getServiceProviderName();
+                                providerNameArabic = serviceProviderResult.getServiceProviderNameArabic();
+                                providerLocation = serviceProviderResult.getServiceProviderLocation();
+                                providerLocationArabic = serviceProviderResult.getServiceProviderLocationArabic();
+                                providerLogo = serviceProviderResult.getServiceProviderLogo();
+                                providerPageId = serviceProviderResult.getServiceProviderId();
+                                providerAddress = serviceProviderResult.getServiceProviderAddress();
+                                providerAddressArabic = serviceProviderResult.getServiceProviderAddressArabic();
+                                providerMail = serviceProviderResult.getServiceProviderMail();
+                                providerWebsite = serviceProviderResult.getServiceProviderWebsite();
+                                if (providerWebsite.contains("http")) {
+
+                                    try {
+                                        uri = new URI(providerWebsite);
+                                        path = uri.getAuthority();
+                                    } catch (URISyntaxException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                                providerMobile = serviceProviderResult.getServiceProviderMobile();
+                                providerLatLong = serviceProviderResult.getServiceProviderMapLocation();
+                                providerFacebook = serviceProviderResult.getServiceProviderFacebook();
+                                providerLinkedin = serviceProviderResult.getServiceProviderLinkedin();
+                                providerInstagram = serviceProviderResult.getServiceProviderInstagram();
+                                providerTwitter = serviceProviderResult.getServiceProviderTwitter();
+                                providerSnapchat = serviceProviderResult.getServiceProviderSnapchat();
+                                providerGooglePlus = serviceProviderResult.getServiceProviderGoogleplus();
+                                providerOpeningTimeDay = day;
+                                providerOpeningTime = openingTime;
+                                providerClosingTime = closingTime;
+                                providerOpeningTimeArabic = openingTimeArabic;
+                                providerClosingTimeArabic = closingTimeArabic;
+                                providerOpeningTitle = openingTitle;
+                                providerClosingTitle = closingTitle;
+                                providerOpeningTitleArabic = openingTitleArabic;
+                                providerClosingTitleArabic = closingTitleArabic;
+                                progressBar.setVisibility(View.GONE);
+                                showInformationData();
+
+                            }
+                        }
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ServiceProviderDataResponse> call, Throwable t) {
+                    if (t instanceof IOException) {
+                        progressBar.setVisibility(View.GONE);
+                        Util.showToast(getResources().getString(R.string.check_network), getContext());
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
+                    }
+                }
+            });
+        }
+    }
+
 
 }

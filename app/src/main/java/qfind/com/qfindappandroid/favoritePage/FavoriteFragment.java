@@ -72,14 +72,9 @@ public class FavoriteFragment extends Fragment {
                         + " ,pid: " + cn.getPageId();
                 // Writing Contacts to log
                 Log.d("item: ", log);
-                item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getItemArabic(), cn.getItemDescriptionArabic(),
-                        cn.getUrl(), cn.getPageId(), cn.getProviderPhone(), cn.getProviderWebsite(), cn.getProviderAddress(), cn.getProviderOpeningTime(),
-                        cn.getProviderMail(), cn.getProviderFacebook(), cn.getProviderLinkedIn(),
-                        cn.getProviderInstagram(), cn.getProviderTwitter(), cn.getProviderSnapchat(), cn.getProviderGooglePlus(),
-                        cn.getProviderLatlong(), cn.getDatetime(), cn.getProviderOpeningTimeArabic(), cn.getProviderAddressArabic(),
-                        cn.getProviderClosingTime(), cn.getProviderClosingTimeArabic(), cn.getProviderOpeningTitle(),
-                        cn.getProviderClosingTitle(), cn.getProviderOpeningTitleArabic(), cn.getProviderClosingTitleArabic()
-                );
+                item = new FavoriteModel(cn.getItem(), cn.getItemDescription(), cn.getItemArabic(),
+                        cn.getItemDescriptionArabic(),
+                        cn.getUrl(), cn.getPageId(),cn.getDatetime());
                 favoriteModelList.add(item);
 
             }
@@ -149,7 +144,6 @@ public class FavoriteFragment extends Fragment {
         favoriteModelList.remove(position);
         adapter.notifyItemRemoved(position);
         arrayList.remove(position);
-//        adapter.notifyDataSetChanged();
     }
 
 

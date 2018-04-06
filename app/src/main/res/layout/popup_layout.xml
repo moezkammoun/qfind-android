@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_10"
+    android:layout_gravity="center"
+    android:weightSum="1">
+
+   <LinearLayout
+       android:layout_width="0dp"
+       android:layout_height="wrap_content"
+       android:padding="@dimen/padding_10"
+       android:layout_weight=".4">
+       <TextView
+           android:id="@+id/info_day"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight=".4"
+           android:gravity="center"
+           android:paddingEnd="@dimen/padding_5"
+           android:paddingRight="@dimen/padding_5"
+           android:text="Wednesday"
+           android:textColor="@color/black"
+           android:textSize="@dimen/text_size_12" />
+
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight=".1"
+           android:padding="@dimen/padding_5"
+           android:text=":"
+           android:textColor="@color/black"
+           android:textSize="@dimen/text_size_12" />
+   </LinearLayout>
+    <LinearLayout
+        android:id="@+id/open_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".6"
+        android:padding="@dimen/padding_10"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/opening_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".17"
+            android:gravity="center"
+            android:text="9:30"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/opening_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".15"
+            android:gravity="start"
+            android:text="am"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="@dimen/webview_textview_20" />
+
+        <TextView
+            android:id="@+id/closing_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".17"
+            android:gravity="center"
+            android:text="3:30"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/closing_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".15"
+            android:gravity="center"
+            android:text="pm"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_12" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/closed_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:padding="@dimen/padding_10"
+        android:gravity="center"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Closed"
+            android:textSize="@dimen/text_size_15"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+</LinearLayout>

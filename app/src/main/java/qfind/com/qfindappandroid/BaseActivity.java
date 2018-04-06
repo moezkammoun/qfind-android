@@ -211,27 +211,6 @@ public class BaseActivity extends AppCompatActivity {
                     favoriteModel.setUrl(bundle.getString("providerLogo"));
                     favoriteModel.setPageId(bundle.getInt("providerId"));
                     favoriteModel.setDatetime(sdfdatetime.format(new Date()));
-                    favoriteModel.setProviderPhone(bundle.getString("providerMobile"));
-                    favoriteModel.setProviderAddress(bundle.getString("providerAddress"));
-                    favoriteModel.setProviderWebsite(bundle.getString("providerWebsite"));
-                    favoriteModel.setProviderOpeningTime(bundle.getString("providerOpeningTime"));
-                    favoriteModel.setProviderMail(bundle.getString("providerMail"));
-                    favoriteModel.setProviderFacebook(bundle.getString("providerFacebook"));
-                    favoriteModel.setProviderLinkedIn(bundle.getString("providerLinkedIn"));
-                    favoriteModel.setProviderInstagram(bundle.getString("providerInstagram"));
-                    favoriteModel.setProviderTwitter(bundle.getString("providerTwitter"));
-                    favoriteModel.setProviderSnapchat(bundle.getString("providerSnapchat"));
-                    favoriteModel.setProviderGooglePlus(bundle.getString("providerGooglePlus"));
-                    favoriteModel.setProviderLatlong(bundle.getString("providerLatLong"));
-                    favoriteModel.setProviderOpeningTimeArabic(bundle.getString("providerOpeningTimeArabic"));
-                    favoriteModel.setProviderAddressArabic(bundle.getString("providerAddressArabic"));
-                    favoriteModel.setProviderClosingTime(bundle.getString("providerClosingTime"));
-                    favoriteModel.setProviderClosingTimeArabic(bundle.getString("providerClosingTimeArabic"));
-                    favoriteModel.setProviderOpeningTitle(bundle.getString("providerOpeningTitle"));
-                    favoriteModel.setProviderClosingTitle(bundle.getString("providerClosingTitle"));
-                    favoriteModel.setProviderOpeningTitleArabic(bundle.getString("providerOpeningTitleArabic"));
-                    favoriteModel.setProviderClosingTitleArabic(bundle.getString("providerClosingTitleArabic"));
-
                     if (db.checkFavoriteById(bundle.getInt("providerId"))) {
                         db.deleteFavorite(bundle.getInt("providerId"));
                         infoStarButton.setImageResource(R.drawable.favorite_blank_star);
@@ -520,28 +499,48 @@ public class BaseActivity extends AppCompatActivity {
         normalToolbar.setVisibility(View.VISIBLE);
     }
 
+    public void showServiceProviderDetailPageInner(String providerName, String providerNameArabic, String providerLocation,
+                                                   String providerLocationArabic, String providerLogo, int providerId) {
+        bundle.putString("providerName", providerName);
+        bundle.putString("providerLocation", providerLocation);
+        bundle.putString("providerNameArabic", providerNameArabic);
+        bundle.putString("providerLocationArabic", providerLocationArabic);
+        bundle.putString("providerLogo", providerLogo);
+        bundle.putInt("providerId", providerId);
+        bundle.putString("callFrom", "others");
+
+        InformationFragment informationFragment = new InformationFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        informationFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container, informationFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
+
     public void showServiceProviderDetailPage(String providerName, String providerLocation,
                                               String providerNameArabic, String providerLocationArabic,
-                                              String providerMobile, String providerAddress,
-                                              String providerWebsite, String providerOpeningTime,
-                                              String providerMail, String providerFacebook,
-                                              String providerLinkedin, String providerInstagram,
-                                              String providerTwitter, String providerSnapchat,
-                                              String providerGooglePlus, String providerLatLong, String providerLogo,
-                                              int providerId, String providerOpeningTimeArabic,
-                                              String providerAddressArabic, String providerClosingTime,
-                                              String providerClosingTimeArabic, String providerOpeningTitle,
-                                              String providerClosingTitle, String providerOpeningTitleArabic,
-                                              String providerClosingTitleArabic) {
+                                              String providerLogo, int providerId, String providerMobile,
+                                              String providerAddress, String providerWebsite, String providerMail,
+                                              String providerFacebook, String providerLinkedin, String providerInstagram,
+                                              String providerTwitter, String providerSnapchat, String providerGooglePlus,
+                                              String providerLatLong, String providerAddressArabic,
+                                              String[] providerTimeDay,
+                                              String[] providerOpeningTime, String[] providerClosingTime,
+                                              String[] providerOpeningTimeArabic, String[] providerClosingTimeArabic,
+                                              String[] providerOpeningTitle, String[] providerClosingTitle,
+                                              String[] providerOpeningTitleArabic, String[] providerClosingTitleArabic) {
+
 
         bundle.putString("providerName", providerName);
         bundle.putString("providerLocation", providerLocation);
         bundle.putString("providerNameArabic", providerNameArabic);
         bundle.putString("providerLocationArabic", providerLocationArabic);
+        bundle.putString("providerLogo", providerLogo);
+        bundle.putInt("providerId", providerId);
         bundle.putString("providerMobile", providerMobile);
         bundle.putString("providerAddress", providerAddress);
         bundle.putString("providerWebsite", providerWebsite);
-        bundle.putString("providerOpeningTime", providerOpeningTime);
         bundle.putString("providerMail", providerMail);
         bundle.putString("providerFacebook", providerFacebook);
         bundle.putString("providerLinkedIn", providerLinkedin);
@@ -550,16 +549,17 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putString("providerSnapchat", providerSnapchat);
         bundle.putString("providerGooglePlus", providerGooglePlus);
         bundle.putString("providerLatLong", providerLatLong);
-        bundle.putString("providerLogo", providerLogo);
-        bundle.putInt("providerId", providerId);
-        bundle.putString("providerOpeningTimeArabic", providerOpeningTimeArabic);
+        bundle.putStringArray("providerOpeningday", providerTimeDay);
+        bundle.putStringArray("providerOpeningTime", providerOpeningTime);
+        bundle.putStringArray("providerOpeningTimeArabic", providerOpeningTimeArabic);
         bundle.putString("providerAddressArabic", providerAddressArabic);
-        bundle.putString("providerClosingTime", providerClosingTime);
-        bundle.putString("providerClosingTimeArabic", providerClosingTimeArabic);
-        bundle.putString("providerOpeningTitle", providerOpeningTitle);
-        bundle.putString("providerClosingTitle", providerClosingTitle);
-        bundle.putString("providerOpeningTitleArabic", providerOpeningTitleArabic);
-        bundle.putString("providerClosingTitleArabic", providerClosingTitleArabic);
+        bundle.putStringArray("providerClosingTime", providerClosingTime);
+        bundle.putStringArray("providerClosingTimeArabic", providerClosingTimeArabic);
+        bundle.putStringArray("providerOpeningTitle", providerOpeningTitle);
+        bundle.putStringArray("providerClosingTitle", providerClosingTitle);
+        bundle.putStringArray("providerOpeningTitleArabic", providerOpeningTitleArabic);
+        bundle.putStringArray("providerClosingTitleArabic", providerClosingTitleArabic);
+        bundle.putString("callFrom", "category");
 
         InformationFragment informationFragment = new InformationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

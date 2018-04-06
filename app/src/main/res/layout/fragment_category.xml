@@ -14,32 +14,34 @@
         android:background="@color/categories_background_color"
         android:gravity="center">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/sub_category_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/category_back_button_height"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/padding_5" />
+                android:gravity="center_vertical"
+                android:layout_gravity="start|center_vertical"
+                />
 
             <TextView
                 android:id="@+id/category_fragment_tittle_text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="9"
+                android:layout_gravity="center_horizontal"
+                android:ellipsize="end"
                 android:maxLines="1"
+                android:maxWidth="200dp"
+                android:singleLine="true"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/category_tittle_color"
                 android:textSize="@dimen/category_tittle_text" />
 
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 

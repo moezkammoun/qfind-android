@@ -41,28 +41,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private String KEY_DAY = "day";
     private String KEY_TIME = "time";
     private String KEY_PAGE_ID = "page_id";
-    private String KEY_LOCATION = "provider_location";
-    private String KEY_MOBILE = "provider_mobile";
-    private String KEY_WEBSITE = "provider_website";
-    private String KEY_ADDRESS = "provider_address";
-    private String KEY_ADDRESS_ARABIC = "provider_address_arabic";
-    private String KEY_OPENING_TIME = "provider_opening_time";
-    private String KEY_CLOSING_TIME = "provider_closing_time";
-    private String KEY_OPENING_TITLE = "provider_opening_title";
-    private String KEY_CLOSING_TITLE = "provider_closing_title";
-    private String KEY_MAIL = "provider_mail";
-    private String KEY_FACEBOOK = "provider_facebook";
-    private String KEY_LINKEDIN = "provider_linkedin";
-    private String KEY_INSTAGRAM = "provider_instagram";
-    private String KEY_TWITTER = "provider_twitter";
-    private String KEY_SNAPCHAT = "provider_snapchat";
-    private String KEY_GOOGLE_PLUS = "provider_google_plus";
-    private String KEY_MAP = "provider_map_location";
     private String KEY_DAYTIME = "provider_date_time";
-    private String KEY_OPENING_TIME_ARABIC = "provider_opening_time_arabic";
-    private String KEY_CLOSING_TIME_ARABIC = "provider_closing_time_arabic";
-    private String KEY_OPENING_TITLE_ARABIC = "provider_opening_title_arabic";
-    private String KEY_CLOSING_TITLE_ARABIC = "provider_closing_title_arabic";
 
 
     SQLiteDatabase writeDB, readDB;
@@ -76,31 +55,19 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         String CREATE_TABLE_HISTORY = "CREATE TABLE IF NOT EXISTS " + TABLE_HISTORY + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_DAY + " DATE,"
-                + KEY_DAYTIME + " DATETIME," + KEY_TIME + " TIME," + KEY_IMG + " TEXT," + KEY_DESCRIPTION + " TEXT,"
-                + KEY_PAGE_ID + " INTEGER" + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT,"
-                + KEY_WEBSITE + " TEXT," + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT,"
-                + KEY_MAIL + " TEXT," + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT,"
-                + KEY_INSTAGRAM + " TEXT," + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT,"
-                + KEY_GOOGLE_PLUS + " TEXT," + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT,"
-                + KEY_DESCRIPTION_ARABIC + " TEXT, " + KEY_OPENING_TIME_ARABIC + " TEXT,"
-                + KEY_CLOSING_TIME + " TEXT," + KEY_OPENING_TITLE + " TEXT," + KEY_CLOSING_TITLE + " TEXT,"
-                + KEY_CLOSING_TIME_ARABIC + " TEXT," + KEY_OPENING_TITLE_ARABIC + " TEXT,"
-                + KEY_CLOSING_TITLE_ARABIC + " TEXT," + KEY_ADDRESS_ARABIC + " TEXT " + ")";
+                + KEY_DAYTIME + " DATETIME," + KEY_TIME + " TIME," + KEY_IMG + " TEXT,"
+                + KEY_DESCRIPTION + " TEXT," + KEY_TITLE_ARABIC + " TEXT," + KEY_DESCRIPTION_ARABIC + " TEXT,"
+                + KEY_PAGE_ID + " INTEGER " + ")";
 
         db.execSQL(CREATE_TABLE_HISTORY);
 
         String CREATE_TABLE_FAVORITE = "CREATE TABLE IF NOT EXISTS " + TABLE_FAVORITE + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT," + KEY_IMG + " TEXT,"
-                + KEY_DESCRIPTION + " TEXT," + KEY_PAGE_ID + " INTEGER," + KEY_DAYTIME + " DATETIME,"
-                + KEY_LOCATION + " TEXT," + KEY_MOBILE + " TEXT," + KEY_WEBSITE + " TEXT,"
-                + KEY_ADDRESS + " TEXT," + KEY_OPENING_TIME + " TEXT," + KEY_MAIL + " TEXT,"
-                + KEY_FACEBOOK + " TEXT," + KEY_LINKEDIN + " TEXT," + KEY_INSTAGRAM + " TEXT,"
-                + KEY_TWITTER + " TEXT," + KEY_SNAPCHAT + " TEXT," + KEY_GOOGLE_PLUS + " TEXT,"
-                + KEY_MAP + " TEXT," + KEY_TITLE_ARABIC + " TEXT," + KEY_DESCRIPTION_ARABIC + " TEXT, "
-                + KEY_OPENING_TIME_ARABIC + " TEXT," + KEY_ADDRESS_ARABIC + " TEXT,"
-                + KEY_CLOSING_TIME + " TEXT," + KEY_OPENING_TITLE + " TEXT," + KEY_CLOSING_TITLE + " TEXT,"
-                + KEY_CLOSING_TIME_ARABIC + " TEXT," + KEY_OPENING_TITLE_ARABIC + " TEXT,"
-                + KEY_CLOSING_TITLE_ARABIC + " TEXT " + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT,"
+                + KEY_DAYTIME + " DATETIME," + KEY_IMG + " TEXT,"
+                + KEY_DESCRIPTION + " TEXT," + KEY_TITLE_ARABIC + " TEXT,"
+                + KEY_DESCRIPTION_ARABIC + " TEXT,"
+                + KEY_PAGE_ID + " INTEGER " + ")";
+
         db.execSQL(CREATE_TABLE_FAVORITE);
     }
 
@@ -118,30 +85,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_IMG, history.getImage());
         values.put(KEY_DESCRIPTION, history.getDescription());
         values.put(KEY_PAGE_ID, history.getPageId());
-        values.put(KEY_MOBILE, history.getProviderPhone());
-        values.put(KEY_WEBSITE, history.getProviderWebsite());
-        values.put(KEY_ADDRESS, history.getProviderAddress());
-        values.put(KEY_OPENING_TIME, history.getProviderOpeningTime());
-        values.put(KEY_MAIL, history.getProviderMail());
-        values.put(KEY_FACEBOOK, history.getProviderFacebook());
-        values.put(KEY_LINKEDIN, history.getProviderLinkedIn());
-        values.put(KEY_INSTAGRAM, history.getProviderInstagram());
-        values.put(KEY_TWITTER, history.getProviderTwitter());
-        values.put(KEY_SNAPCHAT, history.getProviderSnapchat());
-        values.put(KEY_GOOGLE_PLUS, history.getProviderGooglePlus());
-        values.put(KEY_MAP, history.getProviderLatlong());
+        values.put(KEY_DAYTIME, history.getDayTime());
         values.put(KEY_TITLE_ARABIC, history.getTitleArabic());
         values.put(KEY_DESCRIPTION_ARABIC, history.getDescriptionArabic());
-        values.put(KEY_DAYTIME, history.getDayTime());
-        values.put(KEY_OPENING_TIME_ARABIC, history.getProviderOpeningTimeArabic());
-        values.put(KEY_ADDRESS_ARABIC, history.getProviderAddressArabic());
-        values.put(KEY_CLOSING_TIME, history.getProviderClosingTime());
-        values.put(KEY_CLOSING_TIME_ARABIC, history.getProviderClosingTimeArabic());
-        values.put(KEY_OPENING_TITLE, history.getProviderOpeningTitle());
-        values.put(KEY_CLOSING_TITLE, history.getProviderClosingTitle());
-        values.put(KEY_OPENING_TITLE_ARABIC, history.getProviderOpeningTitleArabic());
-        values.put(KEY_CLOSING_TITLE_ARABIC, history.getProviderClosingTitleArabic());
-
         // Inserting Row
         writeDB.insert(TABLE_HISTORY, null, values);
         writeDB.close(); // Closing database connection
@@ -155,30 +101,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DESCRIPTION, favorite.getItemDescription());
         values.put(KEY_PAGE_ID, favorite.getPageId());
         values.put(KEY_DAYTIME, favorite.getDatetime());
-        values.put(KEY_MOBILE, favorite.getProviderPhone());
-        values.put(KEY_WEBSITE, favorite.getProviderWebsite());
-        values.put(KEY_ADDRESS, favorite.getProviderAddress());
-        values.put(KEY_OPENING_TIME, favorite.getProviderOpeningTime());
-        values.put(KEY_MAIL, favorite.getProviderMail());
-        values.put(KEY_FACEBOOK, favorite.getProviderFacebook());
-        values.put(KEY_LINKEDIN, favorite.getProviderLinkedIn());
-        values.put(KEY_INSTAGRAM, favorite.getProviderInstagram());
-        values.put(KEY_TWITTER, favorite.getProviderTwitter());
-        values.put(KEY_SNAPCHAT, favorite.getProviderSnapchat());
-        values.put(KEY_GOOGLE_PLUS, favorite.getProviderGooglePlus());
-        values.put(KEY_MAP, favorite.getProviderLatlong());
         values.put(KEY_TITLE_ARABIC, favorite.getItemArabic());
         values.put(KEY_DESCRIPTION_ARABIC, favorite.getItemDescriptionArabic());
-        values.put(KEY_OPENING_TIME_ARABIC, favorite.getProviderOpeningTimeArabic());
-        values.put(KEY_ADDRESS_ARABIC, favorite.getProviderAddressArabic());
-        values.put(KEY_CLOSING_TIME, favorite.getProviderClosingTime());
-        values.put(KEY_CLOSING_TIME_ARABIC, favorite.getProviderClosingTimeArabic());
-        values.put(KEY_OPENING_TITLE, favorite.getProviderOpeningTitle());
-        values.put(KEY_CLOSING_TITLE, favorite.getProviderClosingTitle());
-        values.put(KEY_OPENING_TITLE_ARABIC, favorite.getProviderOpeningTitleArabic());
-        values.put(KEY_CLOSING_TITLE_ARABIC, favorite.getProviderClosingTitleArabic());
-
-
         // Inserting Row
         writeDB.insert(TABLE_FAVORITE, null, values);
         writeDB.close(); // Closing database connection
@@ -219,29 +143,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 history.setTime(cursor.getString(4));
                 history.setImage(cursor.getString(5));
                 history.setDescription(cursor.getString(6));
-                history.setPageId(cursor.getInt(7));
-                history.setProviderPhone(cursor.getString(8));
-                history.setProviderWebsite(cursor.getString(9));
-                history.setProviderAddress(cursor.getString(10));
-                history.setProviderOpeningTime(cursor.getString(11));
-                history.setProviderMail(cursor.getString(12));
-                history.setProviderFacebook(cursor.getString(13));
-                history.setProviderLinkedIn(cursor.getString(14));
-                history.setProviderInstagram(cursor.getString(15));
-                history.setProviderTwitter(cursor.getString(16));
-                history.setProviderSnapchat(cursor.getString(17));
-                history.setProviderGooglePlus(cursor.getString(18));
-                history.setProviderLatlong(cursor.getString(19));
-                history.setTitleArabic(cursor.getString(20));
-                history.setDescriptionArabic(cursor.getString(21));
-                history.setProviderOpeningTimeArabic(cursor.getString(22));
-                history.setProviderClosingTime(cursor.getString(23));
-                history.setProviderOpeningTitle(cursor.getString(24));
-                history.setProviderClosingTitle(cursor.getString(25));
-                history.setProviderClosingTimeArabic(cursor.getString(26));
-                history.setProviderOpeningTitleArabic(cursor.getString(27));
-                history.setProviderClosingTitleArabic(cursor.getString(28));
-                history.setProviderAddressArabic(cursor.getString(29));
+                history.setTitleArabic(cursor.getString(7));
+                history.setDescriptionArabic(cursor.getString(8));
+                history.setPageId(cursor.getInt(9));
                 historyList.add(history);
             } while (cursor.moveToNext());
         }
@@ -265,32 +169,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 FavoriteModel favModel = new FavoriteModel();
                 favModel.setId(Integer.parseInt(cursor.getString(0)));
                 favModel.setItem(cursor.getString(1));
-                favModel.setUrl(cursor.getString(2));
-                favModel.setItemDescription(cursor.getString(3));
-                favModel.setPageId(cursor.getInt(4));
-                favModel.setDatetime(cursor.getString(5));
-                favModel.setProviderPhone(cursor.getString(7));
-                favModel.setProviderWebsite(cursor.getString(8));
-                favModel.setProviderAddress(cursor.getString(9));
-                favModel.setProviderOpeningTime(cursor.getString(10));
-                favModel.setProviderMail(cursor.getString(11));
-                favModel.setProviderFacebook(cursor.getString(12));
-                favModel.setProviderLinkedIn(cursor.getString(13));
-                favModel.setProviderInstagram(cursor.getString(14));
-                favModel.setProviderTwitter(cursor.getString(15));
-                favModel.setProviderSnapchat(cursor.getString(16));
-                favModel.setProviderGooglePlus(cursor.getString(17));
-                favModel.setProviderLatlong(cursor.getString(18));
-                favModel.setItemArabic(cursor.getString(19));
-                favModel.setItemDescriptionArabic(cursor.getString(20));
-                favModel.setProviderOpeningTimeArabic(cursor.getString(21));
-                favModel.setProviderAddressArabic(cursor.getString(22));
-                favModel.setProviderClosingTime(cursor.getString(23));
-                favModel.setProviderOpeningTitle(cursor.getString(24));
-                favModel.setProviderClosingTitle(cursor.getString(25));
-                favModel.setProviderClosingTimeArabic(cursor.getString(26));
-                favModel.setProviderOpeningTitleArabic(cursor.getString(27));
-                favModel.setProviderClosingTitleArabic(cursor.getString(28));
+                favModel.setDatetime(cursor.getString(2));
+                favModel.setUrl(cursor.getString(3));
+                favModel.setItemDescription(cursor.getString(4));
+                favModel.setItemArabic(cursor.getString(5));
+                favModel.setItemDescriptionArabic(cursor.getString(6));
+                favModel.setPageId(cursor.getInt(7));
                 favoriteList.add(favModel);
             } while (cursor.moveToNext());
         }
