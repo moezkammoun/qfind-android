@@ -5,7 +5,6 @@
     android:background="@drawable/splash_bg">
 
     <ProgressBar
-        android:id="@+id/circular_progress_bar"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="@dimen/splash_screen_loader_width"
         android:layout_height="@dimen/splash_screen_loader_width"
