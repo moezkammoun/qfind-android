@@ -1,7 +1,5 @@
 package qfind.com.qfindappandroid.categoryfragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,8 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -240,15 +236,28 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
                 } else if (Util.categoryPageStatus == 3) {
                     if (isSubCategory) {
+                        String[] day = new String[7], openingTime = new String[7], openingTimeArabic = new String[7], closingTime = new String[7], closingTimeArabic = new String[7], openingTitle = new String[7], openingTitleArabic = new String[7], closingTitle = new String[7], closingTitleArabic = new String[7];
+                        for (int i = 0; i < serviceProviderListDetails.get(position).getServiceProviderTimeLists().size(); i++) {
+                            day[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderDay();
+                            openingTime[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTime();
+                            openingTimeArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTimeArabic();
+                            closingTime[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTime();
+                            closingTimeArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTimeArabic();
+                            openingTitle[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitle();
+                            openingTitleArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitleArabic();
+                            closingTitle[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTitle();
+                            closingTitleArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTitleArabic();
+                        }
                         ((BaseActivity) getActivity()).showServiceProviderDetailPage(
                                 serviceProviderListDetails.get(position).getServiceProviderName(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderNameArabic(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocationArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderLogo(),
+                                serviceProviderListDetails.get(position).getServiceProviderId(),
                                 serviceProviderListDetails.get(position).getServiceProviderMobile(),
                                 serviceProviderListDetails.get(position).getServiceProviderAddress(),
                                 serviceProviderListDetails.get(position).getServiceProviderWebsite(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTime(),
                                 serviceProviderListDetails.get(position).getServiceProviderMail(),
                                 serviceProviderListDetails.get(position).getServiceProviderFacebook(),
                                 serviceProviderListDetails.get(position).getServiceProviderLinkedin(),
@@ -257,17 +266,10 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
-                                serviceProviderListDetails.get(position).getServiceProviderLogo(),
-                                serviceProviderListDetails.get(position).getServiceProviderId(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic(),
                                 serviceProviderListDetails.get(position).getServiceProviderAddressArabic(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTime(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTimeArabic(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitle(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTitle(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitleArabic(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTitleArabic()
-                        );
+                                day,openingTime,closingTime,openingTimeArabic,closingTimeArabic,openingTitle,
+                                closingTitle,openingTitleArabic,closingTitleArabic
+                                );
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
                             ((ContainerActivity) getActivity()).showInfoToolbar(serviceProviderListDetails.
@@ -282,15 +284,28 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
 
 
                     } else {
+                        String[] day = new String[7], openingTime = new String[7], openingTimeArabic = new String[7], closingTime = new String[7], closingTimeArabic = new String[7], openingTitle = new String[7], openingTitleArabic = new String[7], closingTitle = new String[7], closingTitleArabic = new String[7];
+                        for (int i = 0; i < serviceProviderListDetails.get(position).getServiceProviderTimeLists().size(); i++) {
+                            day[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderDay();
+                            openingTime[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTime();
+                            openingTimeArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTimeArabic();
+                            closingTime[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTime();
+                            closingTimeArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTimeArabic();
+                            openingTitle[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitle();
+                            openingTitleArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderOpeningTitleArabic();
+                            closingTitle[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTitle();
+                            closingTitleArabic[i] = serviceProviderListDetails.get(position).getServiceProviderTimeLists().get(i).getServiceProviderClosingTitleArabic();
+                        }
                         ((BaseActivity) getActivity()).showServiceProviderDetailPage(
                                 serviceProviderListDetails.get(position).getServiceProviderName(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocation(),
                                 serviceProviderListDetails.get(position).getServiceProviderNameArabic(),
                                 serviceProviderListDetails.get(position).getServiceProviderLocationArabic(),
+                                serviceProviderListDetails.get(position).getServiceProviderLogo(),
+                                serviceProviderListDetails.get(position).getServiceProviderId(),
                                 serviceProviderListDetails.get(position).getServiceProviderMobile(),
                                 serviceProviderListDetails.get(position).getServiceProviderAddress(),
                                 serviceProviderListDetails.get(position).getServiceProviderWebsite(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTime(),
                                 serviceProviderListDetails.get(position).getServiceProviderMail(),
                                 serviceProviderListDetails.get(position).getServiceProviderFacebook(),
                                 serviceProviderListDetails.get(position).getServiceProviderLinkedin(),
@@ -299,16 +314,9 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                                 serviceProviderListDetails.get(position).getServiceProviderSnapchat(),
                                 serviceProviderListDetails.get(position).getServiceProviderGoogleplus(),
                                 serviceProviderListDetails.get(position).getServiceProviderMapLocation(),
-                                serviceProviderListDetails.get(position).getServiceProviderLogo(),
-                                serviceProviderListDetails.get(position).getServiceProviderId(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTimeArabic(),
                                 serviceProviderListDetails.get(position).getServiceProviderAddressArabic(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTime(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTimeArabic(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitle(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTitle(),
-                                serviceProviderListDetails.get(position).getServiceProviderOpeningTitleArabic(),
-                                serviceProviderListDetails.get(position).getServiceProviderClosingTitleArabic()
+                                day,openingTime,closingTime,openingTimeArabic,closingTimeArabic,openingTitle,
+                                closingTitle,openingTitleArabic,closingTitleArabic
                         );
 
                         if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
@@ -346,6 +354,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 subCategoryBackButton.setVisibility(View.VISIBLE);
             }
             if (isSubCategory) {
+
                 categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
                 categoryFragmentPresenterImpl.getImagesForAds();
                 if (subCategoryItemList == null) {
@@ -353,6 +362,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 } else
                     categoryFragmentPresenterImpl.getSubCategoryItemsDetails(subCategoryItemList);
             } else {
+
                 categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
                 categoryFragmentPresenterImpl.getImagesForAds();
                 if (serviceProviderListDetails == null) {
@@ -367,6 +377,7 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
                 subCategoryBackButton.setVisibility(View.VISIBLE);
             }
             if (isSubCategory) {
+
                 categoryFragmentTittleText.setText(serviceProviderNameForFragmentTittle);
             } else {
                 categoryFragmentTittleText.setText(subCategoryNameForFragmentTittle);
@@ -512,10 +523,8 @@ public class CategoryFragment extends Fragment implements CategoryFragmentView, 
         int limit;
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
         if (tabletSize) {
-            System.out.println("check istablet " + tabletSize);
             limit = 20;
         } else {
-            System.out.println("check istablet " + tabletSize);
             limit = 10;
         }
         accessToken = qFindPreferences.getString("AccessToken", null);

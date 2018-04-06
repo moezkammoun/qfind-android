@@ -12,6 +12,12 @@ public class ServiceProviderDataResponse {
     @SerializedName("result")
     private ServiceProviderResult result;
 
+    public ServiceProviderDataResponse(String response, String code, ServiceProviderResult result) {
+        this.response = response;
+        this.code = code;
+        this.result = result;
+    }
+
     public String getResponse() {
         return response;
     }

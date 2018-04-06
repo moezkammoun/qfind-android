@@ -9,7 +9,7 @@ public class SearchedItem {
     private String providerPhone;
     private String providerWebsite;
     private String providerAddress;
-    private String providerOpeningTime;
+    private String[] providerOpeningTime;
     private String providerMail;
     private String providerFacebook;
     private String providerLinkedIn;
@@ -20,14 +20,15 @@ public class SearchedItem {
     private String providerLatlong;
     private String providerLogo;
     private int providerId;
-    private String providerOpeningTimeArabic;
+    private String[] providerOpeningTimeArabic;
     private String providerAddressArabic;
-    private String providerClosingTime;
-    private String providerClosingTimeArabic;
-    private String providerOpeningTitle;
-    private String providerClosingTitle;
-    private String providerOpeningTitleArabic;
-    private String providerClosingTitleArabic;
+    private String[] providerClosingTime;
+    private String[] providerClosingTimeArabic;
+    private String[] providerOpeningTitle;
+    private String[] providerClosingTitle;
+    private String[] providerOpeningTitleArabic;
+    private String[] providerClosingTitleArabic;
+    private String[] providerTimeDay;
 
     public SearchedItem() {
     }
@@ -35,10 +36,10 @@ public class SearchedItem {
 
     public SearchedItem(String item, String itemDescription, String itemArabic, String itemDescriptionArabic,
                         String thumbnail, String phone, String website,
-                        String address, String openingTime, String mail, String facebook, String linkedIn,
+                        String address, String mail, String facebook, String linkedIn,
                         String instagram, String twitter, String snapchat, String googlePlus, String latLong, String logo,
-                        int id, String openingTimeArabic, String addressArabic, String closingTime, String closingTimeArabic,
-                        String openingTitle, String closingTitle, String openingTitleArabic, String closingTitleArabic) {
+                        int id, String addressArabic,String[] day, String[] openingTime, String[] openingTimeArabic, String[] closingTime, String[] closingTimeArabic,
+                        String[] openingTitle, String[] closingTitle, String[] openingTitleArabic, String[] closingTitleArabic) {
         this.providerName = item;
         this.providerLocation = itemDescription;
         this.providerNameArabic = itemArabic;
@@ -58,6 +59,7 @@ public class SearchedItem {
         this.providerLatlong = latLong;
         this.providerLogo = logo;
         this.providerId = id;
+        this.providerTimeDay=day;
         this.providerOpeningTimeArabic = openingTimeArabic;
         this.providerAddressArabic = addressArabic;
         this.providerClosingTime = closingTime;
@@ -101,7 +103,7 @@ public class SearchedItem {
         return providerAddress;
     }
 
-    public String getProviderOpeningTime() {
+    public String[] getProviderOpeningTime() {
         return providerOpeningTime;
     }
 
@@ -145,7 +147,7 @@ public class SearchedItem {
         return providerId;
     }
 
-    public String getProviderOpeningTimeArabic() {
+    public String[] getProviderOpeningTimeArabic() {
         return providerOpeningTimeArabic;
     }
 
@@ -153,27 +155,31 @@ public class SearchedItem {
         return providerAddressArabic;
     }
 
-    public String getProviderClosingTime() {
+    public String[] getProviderClosingTime() {
         return providerClosingTime;
     }
 
-    public String getProviderClosingTimeArabic() {
+    public String[] getProviderClosingTimeArabic() {
         return providerClosingTimeArabic;
     }
 
-    public String getProviderOpeningTitle() {
+    public String[] getProviderOpeningTitle() {
         return providerOpeningTitle;
     }
 
-    public String getProviderClosingTitle() {
+    public String[] getProviderClosingTitle() {
         return providerClosingTitle;
     }
 
-    public String getProviderOpeningTitleArabic() {
+    public String[] getProviderOpeningTitleArabic() {
         return providerOpeningTitleArabic;
     }
 
-    public String getProviderClosingTitleArabic() {
+    public String[] getProviderClosingTitleArabic() {
         return providerClosingTitleArabic;
+    }
+
+    public String[] getProviderTimeDay() {
+        return providerTimeDay;
     }
 }

@@ -54,4 +54,12 @@
     <string name="October">أكتوبر</string>
     <string name="November">نوفمبر</string>
     <string name="December">ديسمبر</string>
+    <string name="Monday">الاثنين</string>
+    <string name="Tuesday">الثلاثاء</string>
+    <string name="Wednesday">الأربعاء</string>
+    <string name="Thursday">الخميس</string>
+    <string name="Friday">الجمعة</string>
+    <string name="Saturday">السبت</string>
+    <string name="Sunday">الأحد</string>
+    <string name="Closed">مغلق</string>
 </resources>

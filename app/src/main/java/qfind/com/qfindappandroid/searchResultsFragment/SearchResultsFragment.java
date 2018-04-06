@@ -79,33 +79,14 @@ public class SearchResultsFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new SearchResultsClickListener() {
             @Override
             public void onClick(View view, int position) {
-                ((BaseActivity) getActivity()).showServiceProviderDetailPage(
+                ((BaseActivity) getActivity()).showServiceProviderDetailPageInner(
                         searchedItemList.get(position).getProviderName(),
-                        searchedItemList.get(position).getProviderLocation(),
                         searchedItemList.get(position).getProviderNameArabic(),
+                        searchedItemList.get(position).getProviderLocation(),
                         searchedItemList.get(position).getProviderLocationArabic(),
-                        searchedItemList.get(position).getProviderPhone(),
-                        searchedItemList.get(position).getProviderAddress(),
-                        searchedItemList.get(position).getProviderWebsite(),
-                        searchedItemList.get(position).getProviderOpeningTime(),
-                        searchedItemList.get(position).getProviderMail(),
-                        searchedItemList.get(position).getProviderFacebook(),
-                        searchedItemList.get(position).getProviderLinkedIn(),
-                        searchedItemList.get(position).getProviderInstagram(),
-                        searchedItemList.get(position).getProviderTwitter(),
-                        searchedItemList.get(position).getProviderSnapchat(),
-                        searchedItemList.get(position).getProviderGooglePlus(),
-                        searchedItemList.get(position).getProviderLatlong(),
                         searchedItemList.get(position).getProviderLogo(),
-                        searchedItemList.get(position).getProviderId(),
-                        searchedItemList.get(position).getProviderOpeningTimeArabic(),
-                        searchedItemList.get(position).getProviderAddressArabic(),
-                        searchedItemList.get(position).getProviderClosingTime(),
-                        searchedItemList.get(position).getProviderClosingTimeArabic(),
-                        searchedItemList.get(position).getProviderOpeningTitle(),
-                        searchedItemList.get(position).getProviderClosingTitle(),
-                        searchedItemList.get(position).getProviderOpeningTitleArabic(),
-                        searchedItemList.get(position).getProviderClosingTitleArabic()
+                        searchedItemList.get(position).getProviderId()
+
                 );
             }
 
@@ -153,7 +134,20 @@ public class SearchResultsFragment extends Fragment {
                                 serviceProviderResultList = searchResultsResponse.getResult();
                                 searchedItemList.clear();
                                 for (int i = 0; i < serviceProviderResultList.size(); i++) {
-                                    item = new SearchedItem(serviceProviderResultList.get(i).getServiceProviderName(),
+                                    String[] day = new String[0], openingTime = new String[0], openingTimeArabic = new String[0], closingTime = new String[0], closingTimeArabic = new String[0], openingTitle = new String[0], openingTitleArabic = new String[0], closingTitle = new String[0], closingTitleArabic = new String[0];
+                                    for (int j = 0; j < serviceProviderResultList.get(i).getServiceProviderTimeLists().size(); j++) {
+                                        day[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderTimeDay();
+                                        openingTime[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderOpeningTime();
+                                        openingTimeArabic[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderOpeningTimeArabic();
+                                        closingTime[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderClosingTime();
+                                        closingTimeArabic[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderClosingTimeArabic();
+                                        openingTitle[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderOpeningTitle();
+                                        openingTitleArabic[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderOpeningTitleArabic();
+                                        closingTitle[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderClosingTitle();
+                                        closingTitleArabic[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderClosingTitleArabic();
+                                    }
+                                    item = new SearchedItem(
+                                            serviceProviderResultList.get(i).getServiceProviderName(),
                                             serviceProviderResultList.get(i).getServiceProviderLocation(),
                                             serviceProviderResultList.get(i).getServiceProviderNameArabic(),
                                             serviceProviderResultList.get(i).getServiceProviderLocationArabic(),
@@ -161,7 +155,6 @@ public class SearchResultsFragment extends Fragment {
                                             serviceProviderResultList.get(i).getServiceProviderMobile(),
                                             serviceProviderResultList.get(i).getServiceProviderWebsite(),
                                             serviceProviderResultList.get(i).getServiceProviderAddress(),
-                                            serviceProviderResultList.get(i).getServiceProviderOpeningTime(),
                                             serviceProviderResultList.get(i).getServiceProviderMail(),
                                             serviceProviderResultList.get(i).getServiceProviderFacebook(),
                                             serviceProviderResultList.get(i).getServiceProviderLinkedin(),
@@ -172,16 +165,9 @@ public class SearchResultsFragment extends Fragment {
                                             serviceProviderResultList.get(i).getServiceProviderMapLocation(),
                                             serviceProviderResultList.get(i).getServiceProviderLogo(),
                                             serviceProviderResultList.get(i).getServiceProviderId(),
-                                            serviceProviderResultList.get(i).getServiceProviderOpeningTimeArabic(),
-                                            serviceProviderResultList.get(i).getServiceProviderAddressArabic(),
-                                            serviceProviderResultList.get(i).getServiceProviderClosingTime(),
-                                            serviceProviderResultList.get(i).getServiceProviderClosingTimeArabic(),
-                                            serviceProviderResultList.get(i).getServiceProviderOpeningTitle(),
-                                            serviceProviderResultList.get(i).getServiceProviderClosingTitle(),
-                                            serviceProviderResultList.get(i).getServiceProviderOpeningTitleArabic(),
-                                            serviceProviderResultList.get(i).getServiceProviderClosingTitleArabic()
-
-                                    );
+                                            serviceProviderResultList.get(i).getServiceProviderAddressArabic(),day,
+                                            openingTime,openingTimeArabic,closingTime,closingTimeArabic,
+                                            openingTitle,closingTitle,openingTitleArabic,closingTitleArabic);
                                     searchedItemList.add(item);
                                 }
                                 resultsAdapter.notifyDataSetChanged();
