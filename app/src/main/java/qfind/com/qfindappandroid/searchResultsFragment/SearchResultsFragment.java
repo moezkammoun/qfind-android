@@ -134,7 +134,7 @@ public class SearchResultsFragment extends Fragment {
                                 serviceProviderResultList = searchResultsResponse.getResult();
                                 searchedItemList.clear();
                                 for (int i = 0; i < serviceProviderResultList.size(); i++) {
-                                    String[] day = new String[0], openingTime = new String[0], openingTimeArabic = new String[0], closingTime = new String[0], closingTimeArabic = new String[0], openingTitle = new String[0], openingTitleArabic = new String[0], closingTitle = new String[0], closingTitleArabic = new String[0];
+                                    String[] day = new String[7], openingTime = new String[7], openingTimeArabic = new String[7], closingTime = new String[7], closingTimeArabic = new String[7], openingTitle = new String[7], openingTitleArabic = new String[7], closingTitle = new String[7], closingTitleArabic = new String[7];
                                     for (int j = 0; j < serviceProviderResultList.get(i).getServiceProviderTimeLists().size(); j++) {
                                         day[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderTimeDay();
                                         openingTime[j] = serviceProviderResultList.get(i).getServiceProviderTimeLists().get(j).getServiceProviderOpeningTime();
