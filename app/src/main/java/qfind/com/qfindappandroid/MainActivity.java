@@ -221,7 +221,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                                 editor.commit();
                                 getAdsFromPreference();
                             } else {
-                                Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
+                       
                             }
                         }
 
@@ -542,7 +542,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                             openContainerActivity();
                         } else {
                             progressBar.setVisibility(View.GONE);
-                            Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
                         }
                     }
 

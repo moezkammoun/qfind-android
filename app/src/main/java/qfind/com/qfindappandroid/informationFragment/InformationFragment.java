@@ -73,7 +73,6 @@ public class InformationFragment extends Fragment {
     int providerPageId;
     URI uri = null;
     String path;
-    private int language;
     RecyclerViewClickListener recyclerViewClickListener;
 
     public InformationFragment() {
@@ -192,10 +191,6 @@ public class InformationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
-//        if (informationData == null)
-//            emptyTextView.setVisibility(View.VISIBLE);
-//        else
-//            progressBar.setVisibility(View.GONE);
         ((ContainerActivity) getActivity()).setupBottomNavigationBar();
 
         providerPageId = bundle.getInt("providerId");
@@ -312,9 +307,6 @@ public class InformationFragment extends Fragment {
         if (providerFacebook != null && !providerFacebook.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.facebook_icon,
                     R.drawable.dot_icon, providerFacebook, R.drawable.right_arrow));
-//        if (providerLinkedin != null && !providerLinkedin.equals(""))
-//            informationData.add(new InformationFragmentModel(R.drawable.linkedin,
-//                    R.drawable.dot_icon, providerLinkedin, R.drawable.right_arrow));
         if (providerInstagram != null && !providerInstagram.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.instagram,
                     R.drawable.dot_icon, providerInstagram, R.drawable.right_arrow));
@@ -324,9 +316,6 @@ public class InformationFragment extends Fragment {
         if (providerSnapchat != null && !providerSnapchat.equals(""))
             informationData.add(new InformationFragmentModel(R.drawable.snapchat,
                     R.drawable.dot_icon, providerSnapchat, R.drawable.right_arrow));
-//        if (providerGooglePlus != null && !providerGooglePlus.equals(""))
-//            informationData.add(new InformationFragmentModel(R.drawable.google_plus,
-//                    R.drawable.dot_icon, providerGooglePlus, R.drawable.right_arrow));
         return informationData;
     }
 
@@ -413,9 +402,6 @@ public class InformationFragment extends Fragment {
     }
 
     public String getFacebookPageURL(Context context) {
-
-        String FACEBOOK_URL = "https://www.facebook.com/publictheband/";
-        String FACEBOOK_PAGE_ID = "publictheband";
         String packageNameFacebook = "com.facebook.katana";
         String packageNameFacebookLite = "com.facebook.lite";
         PackageManager packageManager = context.getPackageManager();
@@ -535,9 +521,6 @@ public class InformationFragment extends Fragment {
             boolean appStatus = ai.enabled;
             if (getPkgInfo.contains("com.snapchat.android") && appStatus) {
                 // APP NOT INSTALLED
-//                Intent intent = new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("https://snapchat.com/add/" + providerSnapchat));
-//                startActivity(intent);
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("snapchat://add/" + providerSnapchat));
                 startActivity(intent);

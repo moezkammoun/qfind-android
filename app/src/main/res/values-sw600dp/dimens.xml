@@ -51,5 +51,5 @@
     <dimen name="layout_marginTop">115dp</dimen>
     <dimen name="menu_text_size_19sp">25sp</dimen>
     <dimen name="menu_text_size_18sp">21sp</dimen>
-    <dimen name="splash_screen_loader_width">280dp</dimen>
+    <dimen name="splash_screen_loader_width">300dp</dimen>
 </resources>

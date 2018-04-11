@@ -39,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ContainerActivity extends BaseActivity implements ContainerActivityView {
+public class ContainerActivity extends BaseActivity {
 
     Fragment fragment;
     Intent intent;
@@ -321,8 +321,6 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                     fragment.getAdsFromPreference();
                                 }
                                 //
-                            } else {
-                                Util.showToast(getResources().getString(R.string.un_authorised), getApplicationContext());
                             }
                         }
                     } else {
@@ -377,7 +375,7 @@ public class ContainerActivity extends BaseActivity implements ContainerActivity
                                     CategoryFragment fragment = (CategoryFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
                                     fragment.hideLoader();
                                     fragment.showNoDataText();
-                                    //Util.showToast(getResources().getString(R.string.something_went_wrong), getApplicationContext());
+//                                    Util.showToast(getResources().getString(R.string.something_went_wrong), getApplicationContext());
                                 }
                             }
                         }
