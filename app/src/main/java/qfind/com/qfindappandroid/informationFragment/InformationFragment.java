@@ -458,7 +458,6 @@ public class InformationFragment extends Fragment {
 
     public void openTwitter(Context context) {
         PackageManager pkManager = context.getPackageManager();
-//        providerTwitter="ShashiTharoor";
         try {
             PackageInfo pkgInfo = pkManager.getPackageInfo("com.twitter.android", 0);
             String getPkgInfo = pkgInfo.toString();
