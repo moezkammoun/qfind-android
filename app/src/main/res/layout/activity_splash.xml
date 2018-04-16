@@ -4,25 +4,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/splash_bg">
 
-    <ProgressBar
-        android:id="@+id/circular_progress_bar"
-        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="@dimen/splash_screen_loader_width"
-        android:layout_height="@dimen/splash_screen_loader_width"
-        android:max="5000"
-        android:progress="0"
-        android:layout_centerInParent="true"
-        android:background="@drawable/circular_progressbar_bg"
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/circular_progress_bar" />
-
     <ImageView
         android:id="@+id/splash_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/splash_screen_loader_width"
+        android:layout_height="@dimen/splash_screen_loader_width"
         android:layout_centerInParent="true"
-        android:clickable="false"
-        android:src="@drawable/splash_icon_for_phone"
-         />
+        android:background="@drawable/animation_list_filling" />
 
 </RelativeLayout>
