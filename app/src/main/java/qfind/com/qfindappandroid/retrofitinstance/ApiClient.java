@@ -18,7 +18,8 @@ public class ApiClient {
 
 
     public static Retrofit getClient() {
-        String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
+//        String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
+        String BASE_URL = "https://www.qfind.qa/";
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.addInterceptor(loggingInterceptor);
         client.connectTimeout(2, TimeUnit.MINUTES);
