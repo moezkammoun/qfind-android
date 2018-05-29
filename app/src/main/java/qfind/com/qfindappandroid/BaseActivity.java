@@ -52,7 +52,7 @@ import qfind.com.qfindappandroid.webviewactivity.WebviewActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
-    String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
+    String BASE_URL = "https://www.qfind.qa/";
     protected LinearLayout sideMenuAboutUsLayout, sideMenuQFinderLayout, sideMenuTermsAndConditionLayout,
             sideMenuContactUsLayout, sideMenuSettingsLayout;
     TextView sideMenuTittleTxt, sideMenuAboutUsTxt, sideMenuQfinderTxt, sideMenuTermAndConditionTxt,
