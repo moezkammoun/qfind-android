@@ -8,6 +8,7 @@ buildscript {
         maven {
             url 'https://maven.fabric.io/public'
         }
+        mavenCentral()
 
     }
     dependencies {
@@ -29,7 +30,6 @@ allprojects {
             url "https://maven.google.com"
 
         }
-        mavenCentral()
     }
 }
 
