@@ -272,7 +272,7 @@ public class BaseActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!autoCompleteTextView.getText().toString().equals("")) {
+                if ((autoCompleteTextView.getText().toString().length()>0)) {
                     keyboard = getCurrentFocus();
                     if (keyboard != null) {
                         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -289,6 +289,10 @@ public class BaseActivity extends AppCompatActivity {
                     bundle.putString("searchKey", autoCompleteTextView.getText().toString());
                     fragment.setArguments(bundle);
                     loadFragment(fragment);
+                }
+                else{
+                    autoCompleteTextView.setText(null);
+                    autoCompleteTextView.clearFocus();
                 }
             }
         });

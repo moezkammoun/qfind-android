@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!autoCompleteTextView.getText().toString().equals("")) {
+                if ((autoCompleteTextView.getText().toString().length()>0)) {
                     if (isNetworkAvailable()) {
                         navigationIntent = new Intent(MainActivity.this, ContainerActivity.class);
                         navigationIntent.putExtra("SHOW_FRAGMENT", AppConfig.Fragments.SEARCH_RESULTS.toString());
@@ -153,6 +153,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                             navigationIntent.putExtra("SEARCH_TYPE", 4);
                         startActivity(navigationIntent);
                     }
+                }
+                else{
+                    autoCompleteTextView.setText(null);
+                    autoCompleteTextView.clearFocus();
                 }
             }
         });

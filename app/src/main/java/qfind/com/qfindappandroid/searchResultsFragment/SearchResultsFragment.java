@@ -175,8 +175,14 @@ public class SearchResultsFragment extends Fragment {
                                 mEmtyTextView.setVisibility(View.VISIBLE);
                             }
                         }
+//                        if(searchResultsResponse.getCode().equals("404")){
+//                            mEmtyTextView.setVisibility(View.VISIBLE);
+//                        }
 
                     } else {
+                       if(response.code()==500){
+                           mEmtyTextView.setVisibility(View.VISIBLE);
+                       }
                         Util.showToast(getResources().getString(R.string.error_in_connecting), getContext());
                         mEmtyTextView.setVisibility(View.VISIBLE);
                     }
