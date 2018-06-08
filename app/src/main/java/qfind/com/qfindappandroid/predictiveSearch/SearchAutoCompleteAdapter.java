@@ -31,7 +31,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
     private SharedPreferences qFindPreferences;
     private String accessToken;
     private int language;
-    String BASE_URL = "http://ec2-18-219-90-185.us-east-2.compute.amazonaws.com/";
+    String BASE_URL = "https://www.qfind.qa/";
 
     public SearchAutoCompleteAdapter(Context context) {
         mContext = context;
@@ -69,10 +69,12 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 final FilterResults filterResults = new FilterResults();
-                if (constraint != null) {
-                    List<SearchData> predictiveData = getPrediction(constraint.toString());
-                    filterResults.values = predictiveData;
-                    filterResults.count = predictiveData.size();
+                if(!(constraint.toString().startsWith(" "))) {
+                    if ((constraint.toString().trim().length()) > 0) {
+                        List<SearchData> predictiveData = getPrediction(constraint.toString());
+                        filterResults.values = predictiveData;
+                        filterResults.count = predictiveData.size();
+                    }
                 }
                 return filterResults;
             }
